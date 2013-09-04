@@ -22,12 +22,15 @@ class Hiopl {
 		void SetSampleRate(int hz);
 		void SetWaveform(int ch, int osc, Waveform wave);
 		Waveform GetWaveform(int ch, int osc);
-		void Hiopl::KeyOn(int ch, int frq);
+		void KeyOn(int ch, float frqHz);
+		void KeyOff(int ch);
 		void _WriteReg(Bit32u reg, Bit8u value);
+		void _ClearRegBits(Bit32u reg, Bit8u mask);
 		~Hiopl();
 	private:
 		Adlib::Handler *adlib;
 		Bit8u regCache[256];
 		Bit32s *Buf32;
 		bool _CheckParams(int ch, int osc);
+		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
 };

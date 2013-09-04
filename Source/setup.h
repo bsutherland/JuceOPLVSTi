@@ -24,6 +24,9 @@
 #ifdef _MSC_VER
 #pragma warning ( disable : 4786 )
 #pragma warning ( disable : 4290 )
+#pragma warning ( disable : 4512 )	// assignment operator could not be generated
+#pragma warning ( disable : 4100 )	// unreferenced parameter
+
 #endif
 
 

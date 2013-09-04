@@ -11,6 +11,14 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+enum
+{
+	// Parameters Tags
+	pOsc1Wave = 0,
+	pOsc2Wave,
+	
+	pNumParams
+};
 
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
@@ -30,7 +38,7 @@ const String JuceOplvstiAudioProcessor::getName() const
 
 int JuceOplvstiAudioProcessor::getNumParameters()
 {
-    return 0;
+    return pNumParams;
 }
 
 float JuceOplvstiAudioProcessor::getParameter (int index)
@@ -40,10 +48,22 @@ float JuceOplvstiAudioProcessor::getParameter (int index)
 
 void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 {
+	switch (index) {
+	case pOsc1Wave:
+		break;
+	case pOsc2Wave:
+		break;
+	}
 }
 
 const String JuceOplvstiAudioProcessor::getParameterName (int index)
 {
+	switch (index) {
+	case pOsc1Wave:
+		return "Carrier waveform";
+	case pOsc2Wave:
+		return "Modulator waveform";
+	}
     return String::empty;
 }
 
@@ -126,36 +146,9 @@ void JuceOplvstiAudioProcessor::changeProgramName (int index, const String& newN
 //==============================================================================
 void JuceOplvstiAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	Opl->SetSampleRate(sampleRate);
+	Opl->SetSampleRate((int)sampleRate);
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-
-	Opl->_WriteReg(0x20,0x32);
-	Opl->_WriteReg(0x23,0x21);
-	Opl->_WriteReg(0x40,0x1a);
-	Opl->_WriteReg(0x43,0x09);
-	Opl->_WriteReg(0x60,0x84);
-	Opl->_WriteReg(0x63,0x84);
-	Opl->_WriteReg(0x80,0x29);
-	Opl->_WriteReg(0x83,0x44);
-	Opl->_WriteReg(0xe3,0x00);
-	Opl->_WriteReg(0xe0,0x02);
-	Opl->_WriteReg(0xc0,0x06);
-	Opl->_WriteReg(0xa0,0x8b);
-	Opl->_WriteReg(0xb0,0x26);
-	Opl->_WriteReg(0x21,0x32);
-	Opl->_WriteReg(0x24,0x21);
-	Opl->_WriteReg(0x41,0x1a);
-	Opl->_WriteReg(0x44,0x09);
-	Opl->_WriteReg(0x61,0x84);
-	Opl->_WriteReg(0x64,0x84);
-	Opl->_WriteReg(0x81,0x29);
-	Opl->_WriteReg(0x84,0x44);
-	Opl->_WriteReg(0xe4,0x00);
-	Opl->_WriteReg(0xe1,0x02);
-	Opl->_WriteReg(0xc1,0x06);
-	Opl->_WriteReg(0xa1,0x8b);
-	Opl->_WriteReg(0xb1,0x2a);
 }
 
 void JuceOplvstiAudioProcessor::releaseResources()
@@ -167,6 +160,21 @@ void JuceOplvstiAudioProcessor::releaseResources()
 void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
 	buffer.clear(0, 0, buffer.getNumSamples());
+	MidiBuffer::Iterator midi_buffer_iterator(midiMessages);
+
+	MidiMessage midi_message(0);
+	int sample_number;
+	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
+		if (midi_message.isNoteOn()) {
+			//note on at sample_number samples after 
+			//the begining of the current buffer
+			float noteHz = MidiMessage::getMidiNoteInHertz(midi_message.getNoteNumber());
+			Opl->KeyOn(0, noteHz);
+		}
+		else if (midi_message.isNoteOff()) {
+			Opl->KeyOff(0);
+		}
+	}
 	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));
 }
 
