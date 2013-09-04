@@ -17,6 +17,14 @@ void Hiopl::Generate(int length, short* buffer) {
 	}
 }
 
+void Hiopl::Generate(int length, float* buffer) {
+	// This would be better done using Juce's built in audio format conversion.
+	adlib->Generate(length, Buf32);
+	for (int i = 0; i < length; i++) {
+		buffer[i] = (float)(Buf32[i])/32768.0f;
+	}
+}
+
 void Hiopl::SetSampleRate(int hz) {
 	adlib->Init(hz);
 }

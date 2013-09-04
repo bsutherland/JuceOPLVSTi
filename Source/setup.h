@@ -54,11 +54,11 @@ public:
    
 };
 
-class Value {
+class DbxValue {
 /* 
  * Multitype storage container that is aware of the currently stored type in it.
- * Value st = "hello";
- * Value in = 1;
+ * DbxValue st = "hello";
+ * DbxValue in = 1;
  * st = 12 //Exception
  * in = 12 //works
  */
@@ -73,39 +73,39 @@ public:
 	enum Etype { V_NONE, V_HEX, V_BOOL, V_INT, V_STRING, V_DOUBLE,V_CURRENT} type;
 	
 	/* Constructors */
-	Value()                      :_string(0),   type(V_NONE)                  { };
-	Value(Hex in)                :_hex(in),     type(V_HEX)                   { };
-	Value(int in)                :_int(in),     type(V_INT)                   { };
-	Value(bool in)               :_bool(in),    type(V_BOOL)                  { };
-	Value(double in)             :_double(in),  type(V_DOUBLE)                { };
-	Value(std::string const& in) :_string(new std::string(in)),type(V_STRING) { };
-	Value(char const * const in) :_string(new std::string(in)),type(V_STRING) { };
-	Value(Value const& in):_string(0) {plaincopy(in);}
-	~Value() { destroy();};
-	Value(std::string const& in,Etype _t) :_string(0),type(V_NONE) {SetValue(in,_t);}
+	DbxValue()                      :_string(0),   type(V_NONE)                  { };
+	DbxValue(Hex in)                :_hex(in),     type(V_HEX)                   { };
+	DbxValue(int in)                :_int(in),     type(V_INT)                   { };
+	DbxValue(bool in)               :_bool(in),    type(V_BOOL)                  { };
+	DbxValue(double in)             :_double(in),  type(V_DOUBLE)                { };
+	DbxValue(std::string const& in) :_string(new std::string(in)),type(V_STRING) { };
+	DbxValue(char const * const in) :_string(new std::string(in)),type(V_STRING) { };
+	DbxValue(DbxValue const& in):_string(0) {plaincopy(in);}
+	~DbxValue() { destroy();};
+	DbxValue(std::string const& in,Etype _t) :_string(0),type(V_NONE) {SetDbxValue(in,_t);}
 	
 	/* Assigment operators */
-	Value& operator= (Hex in) throw(WrongType)                { return copy(Value(in));}
-	Value& operator= (int in) throw(WrongType)                { return copy(Value(in));}
-	Value& operator= (bool in) throw(WrongType)               { return copy(Value(in));}
-	Value& operator= (double in) throw(WrongType)             { return copy(Value(in));}
-	Value& operator= (std::string const& in) throw(WrongType) { return copy(Value(in));}
-	Value& operator= (char const * const in) throw(WrongType) { return copy(Value(in));}
-	Value& operator= (Value const& in) throw(WrongType)       { return copy(Value(in));}
+	DbxValue& operator= (Hex in) throw(WrongType)                { return copy(DbxValue(in));}
+	DbxValue& operator= (int in) throw(WrongType)                { return copy(DbxValue(in));}
+	DbxValue& operator= (bool in) throw(WrongType)               { return copy(DbxValue(in));}
+	DbxValue& operator= (double in) throw(WrongType)             { return copy(DbxValue(in));}
+	DbxValue& operator= (std::string const& in) throw(WrongType) { return copy(DbxValue(in));}
+	DbxValue& operator= (char const * const in) throw(WrongType) { return copy(DbxValue(in));}
+	DbxValue& operator= (DbxValue const& in) throw(WrongType)       { return copy(DbxValue(in));}
 
-	bool operator== (Value const & other);
+	bool operator== (DbxValue const & other);
 	operator bool () const throw(WrongType);
 	operator Hex () const throw(WrongType);
 	operator int () const throw(WrongType);
 	operator double () const throw(WrongType);
 	operator char const* () const throw(WrongType);
-	void SetValue(std::string const& in,Etype _type = V_CURRENT) throw(WrongType);
+	void SetDbxValue(std::string const& in,Etype _type = V_CURRENT) throw(WrongType);
 	std::string ToString() const;
 
 private:
 	void destroy() throw();
-	Value& copy(Value const& in) throw(WrongType);
-	void plaincopy(Value const& in) throw();
+	DbxValue& copy(DbxValue const& in) throw(WrongType);
+	void plaincopy(DbxValue const& in) throw();
 	void set_hex(std::string const& in);
 	void set_int(std::string const&in);
 	void set_bool(std::string const& in);
@@ -115,104 +115,104 @@ private:
 
 class Property {
 public:
-	struct Changeable { enum Value {Always, WhenIdle,OnlyAtStart};};
+	struct Changeable { enum DbxValue {Always, WhenIdle,OnlyAtStart};};
 	const std::string propname;
 
-	Property(std::string const& _propname, Changeable::Value when):propname(_propname),change(when) { }
+	Property(std::string const& _propname, Changeable::DbxValue when):propname(_propname),change(when) { }
 	void Set_values(const char * const * in);
 	void Set_help(std::string const& str);
 	char const* Get_help();
-	virtual	void SetValue(std::string const& str)=0;
-	Value const& GetValue() const { return value;}
-	Value const& Get_Default_Value() const { return default_value; }
-	//CheckValue returns true  if value is in suggested_values;
+	virtual	void SetDbxValue(std::string const& str)=0;
+	DbxValue const& GetDbxValue() const { return value;}
+	DbxValue const& Get_Default_DbxValue() const { return default_value; }
+	//CheckDbxValue returns true  if value is in suggested_values;
 	//Type specific properties are encouraged to override this and check for type
 	//specific features.
-	virtual bool CheckValue(Value const& in, bool warn);
+	virtual bool CheckDbxValue(DbxValue const& in, bool warn);
 	//Set interval value to in or default if in is invalid. force always sets the value.
-	void SetVal(Value const& in, bool forced,bool warn=true) {if(forced || CheckValue(in,warn)) value = in; else value = default_value;}
+	void SetVal(DbxValue const& in, bool forced,bool warn=true) {if(forced || CheckDbxValue(in,warn)) value = in; else value = default_value;}
 	virtual ~Property(){ } 
-	virtual const std::vector<Value>& GetValues() const;
-	Value::Etype Get_type(){return default_value.type;}
+	virtual const std::vector<DbxValue>& GetDbxValues() const;
+	DbxValue::Etype Get_type(){return default_value.type;}
 
 protected:
-	Value value;
-	std::vector<Value> suggested_values;
-	typedef std::vector<Value>::iterator iter;
-	Value default_value;
-	const Changeable::Value change;
+	DbxValue value;
+	std::vector<DbxValue> suggested_values;
+	typedef std::vector<DbxValue>::iterator iter;
+	DbxValue default_value;
+	const Changeable::DbxValue change;
 };
 
 class Prop_int:public Property {
 public:
-	Prop_int(std::string const& _propname,Changeable::Value when, int _value)
+	Prop_int(std::string const& _propname,Changeable::DbxValue when, int _value)
 		:Property(_propname,when) { 
 		default_value = value = _value;
 		min = max = -1;
 	}
-	Prop_int(std::string const&  _propname,Changeable::Value when, int _min,int _max,int _value)
+	Prop_int(std::string const&  _propname,Changeable::DbxValue when, int _min,int _max,int _value)
 		:Property(_propname,when) { 
 		default_value = value = _value;
 		min = _min;
 		max = _max;
 	}
-	void SetMinMax(Value const& min,Value const& max) {this->min = min; this->max=max;}
-	void SetValue(std::string const& in);
+	void SetMinMax(DbxValue const& min,DbxValue const& max) {this->min = min; this->max=max;}
+	void SetDbxValue(std::string const& in);
 	~Prop_int(){ }
-	virtual bool CheckValue(Value const& in, bool warn);
+	virtual bool CheckDbxValue(DbxValue const& in, bool warn);
 private:
-	Value min,max;
+	DbxValue min,max;
 };
 
 class Prop_double:public Property {
 public:
-	Prop_double(std::string const & _propname, Changeable::Value when, double _value)
+	Prop_double(std::string const & _propname, Changeable::DbxValue when, double _value)
 		:Property(_propname,when){
 		default_value = value = _value;
 	}
-	void SetValue(std::string const& input);
+	void SetDbxValue(std::string const& input);
 	~Prop_double(){ }
 };
 
 class Prop_bool:public Property {
 public:
-	Prop_bool(std::string const& _propname, Changeable::Value when, bool _value)
+	Prop_bool(std::string const& _propname, Changeable::DbxValue when, bool _value)
 		:Property(_propname,when) { 
 		default_value = value = _value;
 	}
-	void SetValue(std::string const& in);
+	void SetDbxValue(std::string const& in);
 	~Prop_bool(){ }
 };
 
 class Prop_string:public Property{
 public:
-	Prop_string(std::string const& _propname, Changeable::Value when, char const * const _value)
+	Prop_string(std::string const& _propname, Changeable::DbxValue when, char const * const _value)
 		:Property(_propname,when) { 
 		default_value = value = _value;
 	}
-	void SetValue(std::string const& in);
-	virtual bool CheckValue(Value const& in, bool warn);
+	void SetDbxValue(std::string const& in);
+	virtual bool CheckDbxValue(DbxValue const& in, bool warn);
 	~Prop_string(){ }
 };
 class Prop_path:public Prop_string{
 public:
 	std::string realpath;
-	Prop_path(std::string const& _propname, Changeable::Value when, char const * const _value)
+	Prop_path(std::string const& _propname, Changeable::DbxValue when, char const * const _value)
 		:Prop_string(_propname,when,_value) { 
 		default_value = value = _value;
 		realpath = _value;
 	}
-	void SetValue(std::string const& in);
+	void SetDbxValue(std::string const& in);
 	~Prop_path(){ }
 };
 
 class Prop_hex:public Property {
 public:
-	Prop_hex(std::string const& _propname, Changeable::Value when, Hex _value)
+	Prop_hex(std::string const& _propname, Changeable::DbxValue when, Hex _value)
 		:Property(_propname,when) { 
 		default_value = value = _value;
 	}
-	void SetValue(std::string const& in);
+	void SetDbxValue(std::string const& in);
 	~Prop_hex(){ }
 };
 
@@ -242,7 +242,7 @@ public:
 	void ExecuteDestroy(bool destroyall=true);
 	const char* GetName() const {return sectionname.c_str();}
 
-	virtual std::string GetPropValue(std::string const& _property) const =0;
+	virtual std::string GetPropDbxValue(std::string const& _property) const =0;
 	virtual void HandleInputline(std::string const& _line)=0;
 	virtual void PrintData(FILE* outfile) const =0;
 	virtual ~Section() { /*Children must call executedestroy ! */}
@@ -258,14 +258,14 @@ private:
 
 public:
 	Section_prop(std::string const&  _sectionname):Section(_sectionname){}
-	Prop_int* Add_int(std::string const& _propname, Property::Changeable::Value when, int _value=0);
-	Prop_string* Add_string(std::string const& _propname, Property::Changeable::Value when, char const * const _value=NULL);
-	Prop_path* Add_path(std::string const& _propname, Property::Changeable::Value when, char const * const _value=NULL);
-	Prop_bool*  Add_bool(std::string const& _propname, Property::Changeable::Value when, bool _value=false);
-	Prop_hex* Add_hex(std::string const& _propname, Property::Changeable::Value when, Hex _value=0);
+	Prop_int* Add_int(std::string const& _propname, Property::Changeable::DbxValue when, int _value=0);
+	Prop_string* Add_string(std::string const& _propname, Property::Changeable::DbxValue when, char const * const _value=NULL);
+	Prop_path* Add_path(std::string const& _propname, Property::Changeable::DbxValue when, char const * const _value=NULL);
+	Prop_bool*  Add_bool(std::string const& _propname, Property::Changeable::DbxValue when, bool _value=false);
+	Prop_hex* Add_hex(std::string const& _propname, Property::Changeable::DbxValue when, Hex _value=0);
 //	void Add_double(char const * const _propname, double _value=0.0);   
-	Prop_multival *Add_multi(std::string const& _propname, Property::Changeable::Value when,std::string const& sep);
-	Prop_multival_remain *Add_multiremain(std::string const& _propname, Property::Changeable::Value when,std::string const& sep);
+	Prop_multival *Add_multi(std::string const& _propname, Property::Changeable::DbxValue when,std::string const& sep);
+	Prop_multival_remain *Add_multiremain(std::string const& _propname, Property::Changeable::DbxValue when,std::string const& sep);
 
 	Property* Get_prop(int index);
 	int Get_int(std::string const& _propname) const;
@@ -278,7 +278,7 @@ public:
 	Prop_multival_remain* Get_multivalremain(std::string const& _propname) const;
 	void HandleInputline(std::string const& gegevens);
 	void PrintData(FILE* outfile) const;
-	virtual std::string GetPropValue(std::string const& _property) const;
+	virtual std::string GetPropDbxValue(std::string const& _property) const;
 	//ExecuteDestroy should be here else the destroy functions use destroyed properties
 	virtual ~Section_prop();
 };
@@ -289,21 +289,21 @@ protected:
 	std::string seperator;
 	void make_default_value();
 public:
-	Prop_multival(std::string const& _propname, Changeable::Value when,std::string const& sep):Property(_propname,when), section(new Section_prop("")),seperator(sep) {
+	Prop_multival(std::string const& _propname, Changeable::DbxValue when,std::string const& sep):Property(_propname,when), section(new Section_prop("")),seperator(sep) {
 		default_value = value = "";
 	}
 	Section_prop *GetSection() { return section; }
 	const Section_prop *GetSection() const { return section; }
-	virtual void SetValue(std::string const& input);
-	virtual const std::vector<Value>& GetValues() const;
+	virtual void SetDbxValue(std::string const& input);
+	virtual const std::vector<DbxValue>& GetDbxValues() const;
 	~Prop_multival() { delete section; }
 }; //value bevat totale string. setvalue zet elk van de sub properties en checked die.
 
 class Prop_multival_remain:public Prop_multival{
 public:
-	Prop_multival_remain(std::string const& _propname, Changeable::Value when,std::string const& sep):Prop_multival(_propname,when,sep){ }
+	Prop_multival_remain(std::string const& _propname, Changeable::DbxValue when,std::string const& sep):Prop_multival(_propname,when,sep){ }
 
-	virtual void SetValue(std::string const& input);
+	virtual void SetDbxValue(std::string const& input);
 };
 
    
@@ -313,7 +313,7 @@ public:
 	~Section_line(){ExecuteDestroy(true);}
 	void HandleInputline(std::string const& gegevens);
 	void PrintData(FILE* outfile) const;
-	virtual std::string GetPropValue(std::string const& _property) const;
+	virtual std::string GetPropDbxValue(std::string const& _property) const;
 	std::string data;
 };
 

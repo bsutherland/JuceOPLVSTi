@@ -18,6 +18,7 @@ class Hiopl {
 	public:
 		Hiopl(int buflen);
 		void Generate(int length, short* buffer);
+		void Generate(int length, float* buffer);
 		void SetSampleRate(int hz);
 		void SetWaveform(int ch, int osc, Waveform wave);
 		Waveform GetWaveform(int ch, int osc);

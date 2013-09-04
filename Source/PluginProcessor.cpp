@@ -10,14 +10,12 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "hiopl.h"
 
 
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 {
-	Opl = new Hiopl(buflen);
-	Opl->SetSampleRate(SAMPLE_RATE);
+	Opl = new Hiopl(44100);	// 1 second at 44100
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -128,8 +126,36 @@ void JuceOplvstiAudioProcessor::changeProgramName (int index, const String& newN
 //==============================================================================
 void JuceOplvstiAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+	Opl->SetSampleRate(sampleRate);
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+	Opl->_WriteReg(0x20,0x32);
+	Opl->_WriteReg(0x23,0x21);
+	Opl->_WriteReg(0x40,0x1a);
+	Opl->_WriteReg(0x43,0x09);
+	Opl->_WriteReg(0x60,0x84);
+	Opl->_WriteReg(0x63,0x84);
+	Opl->_WriteReg(0x80,0x29);
+	Opl->_WriteReg(0x83,0x44);
+	Opl->_WriteReg(0xe3,0x00);
+	Opl->_WriteReg(0xe0,0x02);
+	Opl->_WriteReg(0xc0,0x06);
+	Opl->_WriteReg(0xa0,0x8b);
+	Opl->_WriteReg(0xb0,0x26);
+	Opl->_WriteReg(0x21,0x32);
+	Opl->_WriteReg(0x24,0x21);
+	Opl->_WriteReg(0x41,0x1a);
+	Opl->_WriteReg(0x44,0x09);
+	Opl->_WriteReg(0x61,0x84);
+	Opl->_WriteReg(0x64,0x84);
+	Opl->_WriteReg(0x81,0x29);
+	Opl->_WriteReg(0x84,0x44);
+	Opl->_WriteReg(0xe4,0x00);
+	Opl->_WriteReg(0xe1,0x02);
+	Opl->_WriteReg(0xc1,0x06);
+	Opl->_WriteReg(0xa1,0x8b);
+	Opl->_WriteReg(0xb1,0x2a);
 }
 
 void JuceOplvstiAudioProcessor::releaseResources()
@@ -140,22 +166,8 @@ void JuceOplvstiAudioProcessor::releaseResources()
 
 void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < getNumInputChannels(); ++channel)
-    {
-        float* channelData = buffer.getSampleData (channel);
-
-        // ..do something to the data...
-    }
-
-    // In case we have more outputs than inputs, we'll clear any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
-    {
-        buffer.clear (i, 0, buffer.getNumSamples());
-    }
+	buffer.clear(0, 0, buffer.getNumSamples());
+	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));
 }
 
 //==============================================================================
