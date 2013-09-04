@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="1.0.0"
+              bundleIdentifier="com.plainweave.JuceOPLVSTi" buildVST="1" buildAU="1"
+              pluginName="JuceOPLVSTi" pluginDesc="JuceOPLVSTi" pluginManufacturer="Plainweave Software"
+              pluginManufacturerCode="Manu" pluginCode="Plug" pluginChannelConfigs="{0, 1}"
+              pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
+              pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
+              pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.JuceOPLVSTi"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0">
+  <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
+    <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
+      <FILE id="BZFxoj" name="adlib.h" compile="0" resource="0" file="Source/adlib.h"/>
+      <FILE id="c6G4EF" name="config.h" compile="0" resource="0" file="Source/config.h"/>
+      <FILE id="TnpE3r" name="dbopl.cpp" compile="1" resource="0" file="Source/dbopl.cpp"/>
+      <FILE id="r3zBZz" name="dbopl.h" compile="0" resource="0" file="Source/dbopl.h"/>
+      <FILE id="pXX3j1" name="dosbox.h" compile="0" resource="0" file="Source/dosbox.h"/>
+      <FILE id="TLHYVa" name="hardware.h" compile="0" resource="0" file="Source/hardware.h"/>
+      <FILE id="fZWteg" name="hiopl.cpp" compile="1" resource="0" file="Source/hiopl.cpp"/>
+      <FILE id="OiMwKI" name="hiopl.h" compile="0" resource="0" file="Source/hiopl.h"/>
+      <FILE id="mZbr8b" name="inout.h" compile="0" resource="0" file="Source/inout.h"/>
+      <FILE id="ZBjR5F" name="logging.h" compile="0" resource="0" file="Source/logging.h"/>
+      <FILE id="aR7Eu7" name="mixer.h" compile="0" resource="0" file="Source/mixer.h"/>
+      <FILE id="KCyK6B" name="opl.h" compile="0" resource="0" file="Source/opl.h"/>
+      <FILE id="t6cmDm" name="pic.h" compile="0" resource="0" file="Source/pic.h"/>
+      <FILE id="Phxzxb" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="IvGocs" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="PUM7RE" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="jHO5FF" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="ep2XEF" name="setup.h" compile="0" resource="0" file="Source/setup.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_audio" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
+  <EXPORTFORMATS>
+    <VS2012 targetFolder="Builds/VisualStudio2012" juceFolder="..\..\..\..\Users\bruce\Documents\juce\modules"
+            vstFolder="c:\SDKs\vstsdk2.4">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="JuceOPLVSTi"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="2" targetName="JuceOPLVSTi"/>
+      </CONFIGURATIONS>
+    </VS2012>
+  </EXPORTFORMATS>
+</JUCERPROJECT>
