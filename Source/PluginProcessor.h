@@ -13,6 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "hiopl.h"
+#include "FloatParameter.h"
 
 
 //==============================================================================
@@ -69,6 +70,7 @@ public:
 
 private:
 	Hiopl *Opl;
+	std::vector<FloatParameter*> params;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)

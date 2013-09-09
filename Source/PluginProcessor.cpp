@@ -10,20 +10,19 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
-enum
-{
-	// Parameters Tags
-	pOsc1Wave = 0,
-	pOsc2Wave,
-	
-	pNumParams
-};
+#include "EnumFloatParameter.h"
 
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 {
 	Opl = new Hiopl(44100);	// 1 second at 44100
+	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine"};
+	params.push_back(new EnumFloatParameter("Carrier Wave",
+		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Wave",
+		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
+	);
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -38,38 +37,27 @@ const String JuceOplvstiAudioProcessor::getName() const
 
 int JuceOplvstiAudioProcessor::getNumParameters()
 {
-    return pNumParams;
+	return params.size();
 }
 
 float JuceOplvstiAudioProcessor::getParameter (int index)
 {
-    return 0.0f;
+    return params[index]->getParameter();
 }
 
 void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 {
-	switch (index) {
-	case pOsc1Wave:
-		break;
-	case pOsc2Wave:
-		break;
-	}
+	params[index]->setParameter(newValue);
 }
 
 const String JuceOplvstiAudioProcessor::getParameterName (int index)
 {
-	switch (index) {
-	case pOsc1Wave:
-		return "Carrier waveform";
-	case pOsc2Wave:
-		return "Modulator waveform";
-	}
-    return String::empty;
+	return params[index]->getName();
 }
 
 const String JuceOplvstiAudioProcessor::getParameterText (int index)
 {
-    return String::empty;
+    return params[index]->getParameterText();
 }
 
 const String JuceOplvstiAudioProcessor::getInputChannelName (int channelIndex) const
@@ -167,8 +155,8 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
 		if (midi_message.isNoteOn()) {
 			//note on at sample_number samples after 
-			//the begining of the current buffer
-			float noteHz = MidiMessage::getMidiNoteInHertz(midi_message.getNoteNumber());
+			//the beginning of the current buffer
+			float noteHz = (float)MidiMessage::getMidiNoteInHertz(midi_message.getNoteNumber());
 			Opl->KeyOn(0, noteHz);
 		}
 		else if (midi_message.isNoteOff()) {
@@ -181,7 +169,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 //==============================================================================
 bool JuceOplvstiAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return false; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
