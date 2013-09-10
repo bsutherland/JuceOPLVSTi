@@ -1,12 +1,36 @@
 #include "Hiopl.h"
 
 #include <assert.h>
+#include "../JuceLibraryCode/JuceHeader.h"
 
 // A higher level wrapper around the DOSBox OPL emulator.
 
 Hiopl::Hiopl(int buflen) {
 	adlib = new DBOPL::Handler();
 	Buf32 = new Bit32s[buflen];
+	_op1offset[1] = 0x0;
+	_op1offset[2] = 0x1;
+	_op1offset[3] = 0x2;
+	_op1offset[4] = 0x8;
+	_op1offset[5] = 0x9;
+	_op1offset[6] = 0xa;
+	_op1offset[7] = 0x10;
+	_op1offset[8] = 0x11;
+	_op1offset[9] = 0x12;
+	
+	_op2offset[1] = 0x3;
+	_op2offset[2] = 0x4;
+	_op2offset[3] = 0x5;
+	_op2offset[4] = 0xb;
+	_op2offset[5] = 0xc;
+	_op2offset[6] = 0xd;
+	_op2offset[7] = 0x13;
+	_op2offset[8] = 0x14;
+	_op2offset[9] = 0x15;
+
+	for (int i = 0; i < 256; i++) {
+		_WriteReg(i, 0);
+	}
 }
 
 void Hiopl::Generate(int length, short* buffer) {
@@ -23,24 +47,40 @@ void Hiopl::Generate(int length, float* buffer) {
 	for (int i = 0; i < length; i++) {
 		buffer[i] = (float)(Buf32[i])/32768.0f;
 	}
+	/*
+	AudioData::ConverterInstance<
+		AudioData::Pointer <AudioData::Int16,
+			AudioData::NativeEndian,
+			AudioData::Interleaved,
+			AudioData::Const>,
+		AudioData::Pointer <AudioData::Float32,
+			AudioData::NativeEndian,
+			AudioData::NonInterleaved,
+			AudioData::NonConst>
+	>converter;
+	converter.convertSamples(buffer, 0, Buf32, 0, length);
+	*/
 }
 
 void Hiopl::SetSampleRate(int hz) {
 	adlib->Init(hz);
 	_WriteReg(0x20,0x32);	// modulator multiplier 2
 	_WriteReg(0x23,0x21);	// carrier multiplier 1
-	_WriteReg(0x40,0x1a);	// modulator level
-	_WriteReg(0x43,0x09);	// carrier level
+	_WriteReg(0x40,0x1a);	// modulator attenuation
+	_WriteReg(0x43,0x09);	// carrier attenuation
 	_WriteReg(0x60,0x84);	// AD
 	_WriteReg(0x63,0x84);	// AD
 	_WriteReg(0x80,0x29);	// SR
 	_WriteReg(0x83,0x44);	// SR
-	_WriteReg(0xe3,0x00);	// wave select
-	_WriteReg(0xe0,0x02);	// wave select
-	_WriteReg(0xc0,0x06);	// carrier self-feedback level
+	//_WriteReg(0xe3,0x00);	// wave select
+	//_WriteReg(0xe0,0x02);	// wave select
+	//_WriteReg(0xc0,0x06);	// carrier self-feedback level
 }
 
-void Hiopl::_WriteReg(Bit32u reg, Bit8u value) {
+void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
+	if (mask > 0) {
+		value = (regCache[reg] & (~mask)) | (value & mask);
+	}
 	adlib->WriteReg(reg, value);
 	regCache[reg] = value;
 }
@@ -50,13 +90,23 @@ void Hiopl::_ClearRegBits(Bit32u reg, Bit8u mask) {
 }
 
 void Hiopl::SetWaveform(int ch, int osc, Waveform wave) {
-	assert(_CheckParams(ch, osc));
-	_WriteReg(0xe0+2*ch+osc, (Bit8u)wave);
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0xe0+offset, (Bit8u)wave);
 }
 
 Waveform Hiopl::GetWaveform(int ch, int osc) {
 	assert(_CheckParams(ch, osc));
 	return static_cast<Waveform>(regCache[0xe0+2*ch+osc]);
+}
+
+void Hiopl::SetAttenuation(int ch, int osc, int level) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x40+offset, (Bit8u)level, 0x3f);
+}
+
+void Hiopl::SetFrequencyMultiple(int ch, int osc, FreqMultiple mult) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x20+offset, (Bit8u)mult);//, 0xf);
 }
 
 void Hiopl::KeyOn(int ch, float frqHz) {
@@ -115,5 +165,10 @@ Hiopl::~Hiopl() {
 };
 
 bool Hiopl::_CheckParams(int ch, int osc) {
-	return ch >= 0 && ch < CHANNELS && osc >= 0 && osc < OSCILLATORS;
+	return ch > 0 && ch <= CHANNELS && osc > 0 && osc <= OSCILLATORS;
+}
+
+int Hiopl::_GetOffset(int ch, int osc) {
+	assert(_CheckParams(ch, osc));
+	return (1 == osc) ? _op1offset[ch] : _op2offset[ch];
 }

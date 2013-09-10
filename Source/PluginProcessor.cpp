@@ -1,13 +1,3 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic startup code for a Juce application.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "EnumFloatParameter.h"
@@ -22,6 +12,22 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	);
 	params.push_back(new EnumFloatParameter("Modulator Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
+	);
+	const String levels[] = {"-0.75 dB", "-1.5 dB", "-3 dB", "-6 dB", "-12 dB", "-24 dB"};
+	params.push_back(new EnumFloatParameter("Carrier Attenuation",
+		StringArray(levels, sizeof(levels)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Attenuation",
+		StringArray(levels, sizeof(levels)/sizeof(String)))
+	);
+	const String frq_multipliers[] = {
+		"x0.5", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x10", "x12", "x12", "x15", "x15"
+	};
+	params.push_back(new EnumFloatParameter("Carrier Frequency Multiplier",
+		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Frequency Multiplier",
+		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
 	);
 }
 
@@ -47,7 +53,22 @@ float JuceOplvstiAudioProcessor::getParameter (int index)
 
 void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 {
-	params[index]->setParameter(newValue);
+	FloatParameter* p = params[index];
+	p->setParameter(newValue);
+	String name = p->getName();
+	if (name == "Carrier Wave") {
+		Opl->SetWaveform(1, 1, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
+	} else 	if (name == "Modulator Wave") {
+		Opl->SetWaveform(1, 2, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name == "Modulator Attenuation") {
+		Opl->SetAttenuation(1, 1, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name == "Carrier Attenuation") {
+		Opl->SetAttenuation(1, 2, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name == "Carrier Frequency Multiplier") {
+		Opl->SetFrequencyMultiple(1, 1, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name == "Modulator Frequency Multiplier") {
+		Opl->SetFrequencyMultiple(1, 2, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
+	}
 }
 
 const String JuceOplvstiAudioProcessor::getParameterName (int index)
