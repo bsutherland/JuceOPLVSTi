@@ -20,6 +20,15 @@ int EnumFloatParameter::getParameterIndex(void)
 	return i;
 }
 
+void EnumFloatParameter::setParameterIndex(int i)
+{
+	this->value = (float)i/(float)values.size();
+	if (this->value < 0.0f)
+		this->value = 0.0f;
+	else if (this->value > 1.0f)
+		this->value = 1.0f;
+}
+
 String EnumFloatParameter::getParameterText(void)
 {
 	return values[this->getParameterIndex()];

@@ -14,11 +14,10 @@ enum FreqMultiple
 };
 
 
-const int CHANNELS = 9;
-const int OSCILLATORS = 2;
-
 class Hiopl {
 	public:
+		static const int CHANNELS = 9;
+		static const int OSCILLATORS = 2;
 		Hiopl(int buflen);
 		void Generate(int length, short* buffer);
 		void Generate(int length, float* buffer);

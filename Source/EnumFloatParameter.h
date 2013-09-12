@@ -8,6 +8,7 @@ public:
 	~EnumFloatParameter(void);
 	String getParameterText(void);
 	int getParameterIndex(void);
+	void EnumFloatParameter::setParameterIndex(int);
 private:
 	StringArray values;
 };

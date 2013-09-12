@@ -43,6 +43,8 @@ public:
 
     float getParameter (int index);
     void setParameter (int index, float newValue);
+	void setEnumParameter (String name, int newValue);
+	void setIntParameter (String name, int newValue);
 
     const String getParameterName (int index);
     const String getParameterText (int index);
@@ -71,6 +73,8 @@ public:
 private:
 	Hiopl *Opl;
 	std::vector<FloatParameter*> params;
+	std::map<String, int> paramIdxByName;
+	static const std::map<String, float[]> programs;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)

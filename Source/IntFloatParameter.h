@@ -8,6 +8,7 @@ public:
 	~IntFloatParameter(void);
 	String getParameterText(void);
 	int getParameterValue(void);
+	void setParameterValue(int i);
 private:
 	int min;
 	int max;
