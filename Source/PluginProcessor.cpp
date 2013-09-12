@@ -1,6 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "EnumFloatParameter.h"
+#include "IntFloatParameter.h"
 
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
@@ -29,6 +30,14 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Frequency Multiplier",
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
 	);
+	params.push_back(new IntFloatParameter("Carrier Attack", 0, 15));
+	params.push_back(new IntFloatParameter("Carrier Sustain", 0, 15));
+	params.push_back(new IntFloatParameter("Carrier Decay", 0, 15));
+	params.push_back(new IntFloatParameter("Carrier Release", 0, 15));
+	params.push_back(new IntFloatParameter("Modulator Attack", 0, 15));
+	params.push_back(new IntFloatParameter("Modulator Sustain", 0, 15));
+	params.push_back(new IntFloatParameter("Modulator Decay", 0, 15));
+	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -56,18 +65,18 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 	FloatParameter* p = params[index];
 	p->setParameter(newValue);
 	String name = p->getName();
-	if (name == "Carrier Wave") {
-		Opl->SetWaveform(1, 1, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
-	} else 	if (name == "Modulator Wave") {
-		Opl->SetWaveform(1, 2, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
-	} else if (name == "Modulator Attenuation") {
-		Opl->SetAttenuation(1, 1, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
-	} else if (name == "Carrier Attenuation") {
-		Opl->SetAttenuation(1, 2, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
-	} else if (name == "Carrier Frequency Multiplier") {
-		Opl->SetFrequencyMultiple(1, 1, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
-	} else if (name == "Modulator Frequency Multiplier") {
-		Opl->SetFrequencyMultiple(1, 2, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
+	int osc = 1;	// Carrier
+	if (name.startsWith("Modulator")) {
+		osc = 2;
+	}
+	if (name.endsWith("Wave")) {
+		Opl->SetWaveform(1, osc, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.endsWith("Attenuation")) {
+		Opl->SetAttenuation(1, osc, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.endsWith("Frequency Multiplier")) {
+		Opl->SetFrequencyMultiple(1, osc, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.endsWith("Attack")) {
+		Opl->SetEnvelopeAttack(1, osc, ((IntFloatParameter*)p)->getParameterValue());
 	}
 }
 

@@ -109,13 +109,31 @@ void Hiopl::SetFrequencyMultiple(int ch, int osc, FreqMultiple mult) {
 	_WriteReg(0x20+offset, (Bit8u)mult);//, 0xf);
 }
 
+void Hiopl::SetEnvelopeAttack(int ch, int osc, int t) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x60+offset, (Bit8u)t<<4, 0xf0);
+}
+
+void Hiopl::SetEnvelopeDecay(int ch, int osc, int t) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x60+offset, (Bit8u)t, 0x0f);
+}
+
+void Hiopl::SetEnvelopeSustain(int ch, int osc, int level) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x80+offset, (Bit8u)level<<4, 0xf0);
+}
+
+void Hiopl::SetEnvelopeRelease(int ch, int osc, int t) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x80+offset, (Bit8u)t, 0x0f);
+}
+
 void Hiopl::KeyOn(int ch, float frqHz) {
 	unsigned int fnum, block;
 	_milliHertzToFnum((unsigned int)(frqHz * 1000.0), &fnum, &block);
 	_WriteReg(0xa0, fnum % 0x100);
 	_WriteReg(0xb0, 0x20|((block&0x7)<<2)|(0x3&(fnum/0x100)));
-	//_WriteReg(0xa0, 0x8b);
-	//_WriteReg(0xb0, 0x26);
 }
 
 void Hiopl::KeyOff(int ch) {

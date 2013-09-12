@@ -1,5 +1,5 @@
 #pragma once
-#include "c:\code\game\fm\juceoplvsti\source\floatparameter.h"
+#include "FloatParameter.h"
 class EnumFloatParameter :
 	public FloatParameter
 {

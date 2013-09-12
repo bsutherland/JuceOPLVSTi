@@ -27,6 +27,10 @@ class Hiopl {
 		Waveform GetWaveform(int ch, int osc);
 		void SetAttenuation(int ch, int osc, int level);
 		void SetFrequencyMultiple(int ch, int osc, FreqMultiple mult);
+		void SetEnvelopeAttack(int ch, int osc, int t);
+		void SetEnvelopeDecay(int ch, int osc, int t);
+		void SetEnvelopeSustain(int ch, int osc, int level);
+		void SetEnvelopeRelease(int ch, int osc, int t);
 		void KeyOn(int ch, float frqHz);
 		void KeyOff(int ch);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
