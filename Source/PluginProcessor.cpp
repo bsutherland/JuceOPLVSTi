@@ -12,6 +12,8 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	for (int i = 1; i <= Hiopl::CHANNELS; i++) {
 		Opl->EnableSustain(i, 1);
 		Opl->EnableSustain(i, 2);
+		Opl->EnableKeyscaling(i, 1);
+		Opl->EnableKeyscaling(i, 2);
 	}
 
 	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine"};
@@ -21,19 +23,21 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
 	); setParameter(params.size()-1, 0.0f);
-	/*
-	const String levels[] = {"-0.75 dB", "-1.5 dB", "-3 dB", "-6 dB", "-12 dB", "-24 dB"};
+	const String levels[] = {"0.00 dB", "0.75 dB", "1.50 dB", "2.25 dB", "3.00 dB", "3.75 dB", "4.50 dB", "5.25 dB", "6.00 dB", "6.75 dB", "7.50 dB", "8.25 dB", "9.00 dB", "9.75 dB", "10.50 dB", "11.25 dB", "12.00 dB", "12.75 dB", "13.50 dB", "14.25 dB", "15.00 dB", "15.75 dB", "16.50 dB", "17.25 dB", "18.00 dB", "18.75 dB", "19.50 dB", "20.25 dB", "21.00 dB", "21.75 dB", "22.50 dB", "23.25 dB", "24.00 dB", "24.75 dB", "25.50 dB", "26.25 dB", "27.00 dB", "27.75 dB", "28.50 dB", "29.25 dB", "30.00 dB", "30.75 dB", "31.50 dB", "32.25 dB", "33.00 dB", "33.75 dB", "34.50 dB", "35.25 dB", "36.00 dB", "36.75 dB", "37.50 dB", "38.25 dB", "39.00 dB", "39.75 dB", "40.50 dB", "41.25 dB", "42.00 dB", "42.75 dB", "43.50 dB", "44.25 dB", "45.00 dB", "45.75 dB", "46.50 dB", "47.25 dB"};
 	params.push_back(new EnumFloatParameter("Carrier Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
 	); setParameter(params.size()-1,0.0f);
 	params.push_back(new EnumFloatParameter("Modulator Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
 	); setParameter(params.size()-1,0.75f);
-	*/
-	params.push_back(new IntFloatParameter("Carrier Attenuation", 0, 63));
-	setParameter(params.size()-1, 0.0f);
-	params.push_back(new IntFloatParameter("Modulator Attenuation", 0, 63));
-	setParameter(params.size()-1, 0.75f);
+	
+	const String ksrs[] = {"None","1.5 dB/8ve","3 dB/8ve","6 dB/8ve"};
+	params.push_back(new EnumFloatParameter("Carrier KSR",
+		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
+	); setParameter(params.size()-1,0.0f);
+	params.push_back(new EnumFloatParameter("Modulator KSR",
+		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
+	); setParameter(params.size()-1,0.0f);
 
 	const String frq_multipliers[] = {
 		"x0.5", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x10", "x12", "x12", "x15", "x15"
@@ -65,7 +69,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
 	setParameter(params.size()-1, 0.25f);
 
-	for(int i = 0; i < params.size(); i++) {
+	for(unsigned int i = 0; i < params.size(); i++) {
 		paramIdxByName[params[i]->getName()] = i;
 	}
 
@@ -121,8 +125,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 	if (name.endsWith("Wave")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetWaveform(c, osc, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attenuation")) {
-		//Opl->SetAttenuation(1, osc, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
-		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((IntFloatParameter*)p)->getParameterValue());
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
+		//for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Frequency Multiplier")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetFrequencyMultiple(c, osc, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attack")) {
@@ -135,6 +139,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeRelease(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Feedback")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetModulatorFeedback(c, ((IntFloatParameter*)p)->getParameterValue());
+	} else if (name.endsWith("")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
 	}
 
 }

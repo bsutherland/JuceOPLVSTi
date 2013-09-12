@@ -92,6 +92,11 @@ void Hiopl::SetAttenuation(int ch, int osc, int level) {
 	_WriteReg(0x40+offset, (Bit8u)level, 0x3f);
 }
 
+void Hiopl::SetKsr(int ch, int osc, int level) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x40+offset, (Bit8u)level<<6, 0xc0);
+}
+
 void Hiopl::SetFrequencyMultiple(int ch, int osc, FreqMultiple mult) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0x20+offset, (Bit8u)mult, 0xf);
@@ -120,6 +125,11 @@ void Hiopl::SetEnvelopeRelease(int ch, int osc, int t) {
 void Hiopl::EnableSustain(int ch, int osc) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0x20+offset, (Bit8u)0x20, 0x20);
+}
+
+void Hiopl::EnableKeyscaling(int ch, int osc) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x20+offset, (Bit8u)0x10, 0x10);
 }
 
 void Hiopl::SetModulatorFeedback(int ch, int level) {

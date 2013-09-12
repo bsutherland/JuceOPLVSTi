@@ -23,8 +23,10 @@ class Hiopl {
 		void Generate(int length, float* buffer);
 		void SetSampleRate(int hz);
 		void EnableWaveformControl();
+		void EnableKeyscaling(int ch, int osc);
 		void SetWaveform(int ch, int osc, Waveform wave);
 		void SetAttenuation(int ch, int osc, int level);
+		void SetKsr(int ch, int osc, int level);
 		void SetFrequencyMultiple(int ch, int osc, FreqMultiple mult);
 		void SetEnvelopeAttack(int ch, int osc, int t);
 		void SetEnvelopeDecay(int ch, int osc, int t);
