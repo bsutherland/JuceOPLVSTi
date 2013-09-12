@@ -7,37 +7,52 @@
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 {
 	Opl = new Hiopl(44100);	// 1 second at 44100
+	Opl->SetSampleRate(44100);
+	Opl->EnableSustain(1, 1);
+	Opl->EnableSustain(1, 2);
+
 	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine"};
 	params.push_back(new EnumFloatParameter("Carrier Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
-	);
+	); setParameter(params.size()-1, 0.0f);
 	params.push_back(new EnumFloatParameter("Modulator Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
-	);
+	); setParameter(params.size()-1,0.0f);
+	
 	const String levels[] = {"-0.75 dB", "-1.5 dB", "-3 dB", "-6 dB", "-12 dB", "-24 dB"};
 	params.push_back(new EnumFloatParameter("Carrier Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
-	);
+	); setParameter(params.size()-1,0.0f);
 	params.push_back(new EnumFloatParameter("Modulator Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
-	);
+	); setParameter(params.size()-1,0.75f);
+	
 	const String frq_multipliers[] = {
 		"x0.5", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x10", "x12", "x12", "x15", "x15"
 	};
 	params.push_back(new EnumFloatParameter("Carrier Frequency Multiplier",
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
-	);
+	); setParameter(params.size()-1, 0.08f);
 	params.push_back(new EnumFloatParameter("Modulator Frequency Multiplier",
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
-	);
+	); setParameter(params.size()-1, 0.15f);
+	
 	params.push_back(new IntFloatParameter("Carrier Attack", 0, 15));
-	params.push_back(new IntFloatParameter("Carrier Sustain", 0, 15));
+	setParameter(params.size()-1,0.5f);
 	params.push_back(new IntFloatParameter("Carrier Decay", 0, 15));
+	setParameter(params.size()-1,0.25f);
+	params.push_back(new IntFloatParameter("Carrier Sustain", 0, 15));
+	setParameter(params.size()-1,0.125f);
 	params.push_back(new IntFloatParameter("Carrier Release", 0, 15));
+	setParameter(params.size()-1,0.5f);
 	params.push_back(new IntFloatParameter("Modulator Attack", 0, 15));
-	params.push_back(new IntFloatParameter("Modulator Sustain", 0, 15));
+	setParameter(params.size()-1,0.5f);
 	params.push_back(new IntFloatParameter("Modulator Decay", 0, 15));
+	setParameter(params.size()-1,0.25f);
+	params.push_back(new IntFloatParameter("Modulator Sustain", 0, 15));
+	setParameter(params.size()-1,0.25f);
 	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
+	setParameter(params.size()-1,0.25f);
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -65,9 +80,9 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 	FloatParameter* p = params[index];
 	p->setParameter(newValue);
 	String name = p->getName();
-	int osc = 1;	// Carrier
+	int osc = 2;	// Carrier
 	if (name.startsWith("Modulator")) {
-		osc = 2;
+		osc = 1;
 	}
 	if (name.endsWith("Wave")) {
 		Opl->SetWaveform(1, osc, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
@@ -77,7 +92,14 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		Opl->SetFrequencyMultiple(1, osc, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attack")) {
 		Opl->SetEnvelopeAttack(1, osc, ((IntFloatParameter*)p)->getParameterValue());
+	} else if (name.endsWith("Decay")) {
+		Opl->SetEnvelopeDecay(1, osc, ((IntFloatParameter*)p)->getParameterValue());
+	} else if (name.endsWith("Sustain")) {
+		Opl->SetEnvelopeSustain(1, osc, ((IntFloatParameter*)p)->getParameterValue());
+	} else if (name.endsWith("Release")) {
+		Opl->SetEnvelopeRelease(1, osc, ((IntFloatParameter*)p)->getParameterValue());
 	}
+
 }
 
 const String JuceOplvstiAudioProcessor::getParameterName (int index)
@@ -164,7 +186,7 @@ void JuceOplvstiAudioProcessor::changeProgramName (int index, const String& newN
 //==============================================================================
 void JuceOplvstiAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	Opl->SetSampleRate((int)sampleRate);
+	//Opl->SetSampleRate((int)sampleRate);
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 }

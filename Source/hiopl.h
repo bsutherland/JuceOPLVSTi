@@ -31,6 +31,7 @@ class Hiopl {
 		void SetEnvelopeDecay(int ch, int osc, int t);
 		void SetEnvelopeSustain(int ch, int osc, int level);
 		void SetEnvelopeRelease(int ch, int osc, int t);
+		void EnableSustain(int ch, int osc);
 		void KeyOn(int ch, float frqHz);
 		void KeyOff(int ch);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);

@@ -64,17 +64,6 @@ void Hiopl::Generate(int length, float* buffer) {
 
 void Hiopl::SetSampleRate(int hz) {
 	adlib->Init(hz);
-	_WriteReg(0x20,0x32);	// modulator multiplier 2
-	_WriteReg(0x23,0x21);	// carrier multiplier 1
-	_WriteReg(0x40,0x1a);	// modulator attenuation
-	_WriteReg(0x43,0x09);	// carrier attenuation
-	_WriteReg(0x60,0x84);	// AD
-	_WriteReg(0x63,0x84);	// AD
-	_WriteReg(0x80,0x29);	// SR
-	_WriteReg(0x83,0x44);	// SR
-	//_WriteReg(0xe3,0x00);	// wave select
-	//_WriteReg(0xe0,0x02);	// wave select
-	//_WriteReg(0xc0,0x06);	// carrier self-feedback level
 }
 
 void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
@@ -127,6 +116,11 @@ void Hiopl::SetEnvelopeSustain(int ch, int osc, int level) {
 void Hiopl::SetEnvelopeRelease(int ch, int osc, int t) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0x80+offset, (Bit8u)t, 0x0f);
+}
+
+void Hiopl::EnableSustain(int ch, int osc) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x20+offset, (Bit8u)0x20, 0x20);
 }
 
 void Hiopl::KeyOn(int ch, float frqHz) {
