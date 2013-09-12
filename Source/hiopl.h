@@ -23,8 +23,8 @@ class Hiopl {
 		void Generate(int length, short* buffer);
 		void Generate(int length, float* buffer);
 		void SetSampleRate(int hz);
+		void EnableWaveformControl();
 		void SetWaveform(int ch, int osc, Waveform wave);
-		Waveform GetWaveform(int ch, int osc);
 		void SetAttenuation(int ch, int osc, int level);
 		void SetFrequencyMultiple(int ch, int osc, FreqMultiple mult);
 		void SetEnvelopeAttack(int ch, int osc, int t);
@@ -32,6 +32,7 @@ class Hiopl {
 		void SetEnvelopeSustain(int ch, int osc, int level);
 		void SetEnvelopeRelease(int ch, int osc, int t);
 		void EnableSustain(int ch, int osc);
+		void SetModulatorFeedback(int ch, int level);
 		void KeyOn(int ch, float frqHz);
 		void KeyOff(int ch);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
@@ -43,6 +44,7 @@ class Hiopl {
 		Bit32s *Buf32;
 		bool _CheckParams(int ch, int osc);
 		int _GetOffset(int ch, int osc);
+		int _GetOffset(int ch);
 		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
 		std::map<int, int> _op1offset;
 		std::map<int, int> _op2offset;

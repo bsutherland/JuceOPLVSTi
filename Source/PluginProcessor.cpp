@@ -8,6 +8,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 {
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
+	Opl->EnableWaveformControl();
 	Opl->EnableSustain(1, 1);
 	Opl->EnableSustain(1, 2);
 
@@ -18,7 +19,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
 	); setParameter(params.size()-1,0.0f);
-	
+	/*
 	const String levels[] = {"-0.75 dB", "-1.5 dB", "-3 dB", "-6 dB", "-12 dB", "-24 dB"};
 	params.push_back(new EnumFloatParameter("Carrier Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
@@ -26,7 +27,12 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
 	); setParameter(params.size()-1,0.75f);
-	
+	*/
+	params.push_back(new IntFloatParameter("Carrier Attenuation", 0, 63));
+	setParameter(params.size()-1,0.0f);
+	params.push_back(new IntFloatParameter("Modulator Attenuation", 0, 63));
+	setParameter(params.size()-1,0.75f);
+
 	const String frq_multipliers[] = {
 		"x0.5", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x10", "x12", "x12", "x15", "x15"
 	};
@@ -36,6 +42,9 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Frequency Multiplier",
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
 	); setParameter(params.size()-1, 0.15f);
+
+	params.push_back(new IntFloatParameter("Modulator Feedback", 0, 7));
+	setParameter(params.size()-1,0.0f);
 	
 	params.push_back(new IntFloatParameter("Carrier Attack", 0, 15));
 	setParameter(params.size()-1,0.5f);
@@ -53,6 +62,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	setParameter(params.size()-1,0.25f);
 	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
 	setParameter(params.size()-1,0.25f);
+
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -87,7 +97,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 	if (name.endsWith("Wave")) {
 		Opl->SetWaveform(1, osc, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attenuation")) {
-		Opl->SetAttenuation(1, osc, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
+		//Opl->SetAttenuation(1, osc, 0x1<<((EnumFloatParameter*)p)->getParameterIndex());
+		Opl->SetAttenuation(1, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Frequency Multiplier")) {
 		Opl->SetFrequencyMultiple(1, osc, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attack")) {
@@ -98,6 +109,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		Opl->SetEnvelopeSustain(1, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Release")) {
 		Opl->SetEnvelopeRelease(1, osc, ((IntFloatParameter*)p)->getParameterValue());
+	} else if (name.endsWith("Feedback")) {
+		Opl->SetModulatorFeedback(1, ((IntFloatParameter*)p)->getParameterValue());
 	}
 
 }
@@ -209,10 +222,10 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			//note on at sample_number samples after 
 			//the beginning of the current buffer
 			float noteHz = (float)MidiMessage::getMidiNoteInHertz(midi_message.getNoteNumber());
-			Opl->KeyOn(0, noteHz);
+			Opl->KeyOn(1, noteHz);
 		}
 		else if (midi_message.isNoteOff()) {
-			Opl->KeyOff(0);
+			Opl->KeyOff(1);
 		}
 	}
 	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));

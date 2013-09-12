@@ -78,14 +78,13 @@ void Hiopl::_ClearRegBits(Bit32u reg, Bit8u mask) {
 	_WriteReg(reg, regCache[reg] & ~mask);
 }
 
-void Hiopl::SetWaveform(int ch, int osc, Waveform wave) {
-	int offset = this->_GetOffset(ch, osc);
-	_WriteReg(0xe0+offset, (Bit8u)wave);
+void Hiopl::EnableWaveformControl() {
+	_WriteReg(0x01, 0x20);
 }
 
-Waveform Hiopl::GetWaveform(int ch, int osc) {
-	assert(_CheckParams(ch, osc));
-	return static_cast<Waveform>(regCache[0xe0+2*ch+osc]);
+void Hiopl::SetWaveform(int ch, int osc, Waveform wave) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0xe0+offset, (Bit8u)wave, 0x3);
 }
 
 void Hiopl::SetAttenuation(int ch, int osc, int level) {
@@ -95,7 +94,7 @@ void Hiopl::SetAttenuation(int ch, int osc, int level) {
 
 void Hiopl::SetFrequencyMultiple(int ch, int osc, FreqMultiple mult) {
 	int offset = this->_GetOffset(ch, osc);
-	_WriteReg(0x20+offset, (Bit8u)mult);//, 0xf);
+	_WriteReg(0x20+offset, (Bit8u)mult, 0xf);
 }
 
 void Hiopl::SetEnvelopeAttack(int ch, int osc, int t) {
@@ -123,15 +122,22 @@ void Hiopl::EnableSustain(int ch, int osc) {
 	_WriteReg(0x20+offset, (Bit8u)0x20, 0x20);
 }
 
+void Hiopl::SetModulatorFeedback(int ch, int level) {
+	int offset = this->_GetOffset(ch);
+	_WriteReg(0xc0+offset, (Bit8u)level, 0x0e);
+}
+
 void Hiopl::KeyOn(int ch, float frqHz) {
 	unsigned int fnum, block;
+	int offset = this->_GetOffset(ch);
 	_milliHertzToFnum((unsigned int)(frqHz * 1000.0), &fnum, &block);
-	_WriteReg(0xa0, fnum % 0x100);
-	_WriteReg(0xb0, 0x20|((block&0x7)<<2)|(0x3&(fnum/0x100)));
+	_WriteReg(0xa0+offset, fnum % 0x100);
+	_WriteReg(0xb0+offset, 0x20|((block&0x7)<<2)|(0x3&(fnum/0x100)));
 }
 
 void Hiopl::KeyOff(int ch) {
-	_ClearRegBits(0xb0, 0x20);
+	int offset = this->_GetOffset(ch);
+	_ClearRegBits(0xb0+offset, 0x20);
 }
 
 // from libgamemusic, opl-util.cpp
@@ -176,11 +182,16 @@ Hiopl::~Hiopl() {
 	delete Buf32;
 };
 
-bool Hiopl::_CheckParams(int ch, int osc) {
+bool Hiopl::_CheckParams(int ch, int osc=OSCILLATORS) {
 	return ch > 0 && ch <= CHANNELS && osc > 0 && osc <= OSCILLATORS;
 }
 
 int Hiopl::_GetOffset(int ch, int osc) {
 	assert(_CheckParams(ch, osc));
 	return (1 == osc) ? _op1offset[ch] : _op2offset[ch];
+}
+
+int Hiopl::_GetOffset(int ch) {
+	assert(_CheckParams(ch));
+	return ch - 1;
 }
