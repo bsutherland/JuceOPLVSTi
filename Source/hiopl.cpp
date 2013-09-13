@@ -94,7 +94,7 @@ void Hiopl::SetAttenuation(int ch, int osc, int level) {
 
 void Hiopl::SetKsr(int ch, int osc, int level) {
 	int offset = this->_GetOffset(ch, osc);
-	_WriteReg(0x40+offset, (Bit8u)level<<6, 0xc0);
+	_WriteReg(0x40+offset, (Bit8u)(level<<6), 0xc0);
 }
 
 void Hiopl::SetFrequencyMultiple(int ch, int osc, FreqMultiple mult) {

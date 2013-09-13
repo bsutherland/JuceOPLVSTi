@@ -74,7 +74,9 @@ private:
 	Hiopl *Opl;
 	std::vector<FloatParameter*> params;
 	std::map<String, int> paramIdxByName;
-	static const std::map<String, float[]> programs;
+	std::map<String, std::vector<float>> programs;
+	std::vector<String> program_order;
+	int i_program;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)

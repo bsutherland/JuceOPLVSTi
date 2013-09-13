@@ -6,6 +6,7 @@
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 {
+	// Initalize OPL
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
@@ -16,65 +17,90 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		Opl->EnableKeyscaling(i, 2);
 	}
 
+
+	// Initialize parameters
+
 	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine"};
 	params.push_back(new EnumFloatParameter("Carrier Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
-	); setParameter(params.size()-1, 0.0f);
+	);
 	params.push_back(new EnumFloatParameter("Modulator Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
-	); setParameter(params.size()-1, 0.0f);
-	const String levels[] = {"0.00 dB", "0.75 dB", "1.50 dB", "2.25 dB", "3.00 dB", "3.75 dB", "4.50 dB", "5.25 dB", "6.00 dB", "6.75 dB", "7.50 dB", "8.25 dB", "9.00 dB", "9.75 dB", "10.50 dB", "11.25 dB", "12.00 dB", "12.75 dB", "13.50 dB", "14.25 dB", "15.00 dB", "15.75 dB", "16.50 dB", "17.25 dB", "18.00 dB", "18.75 dB", "19.50 dB", "20.25 dB", "21.00 dB", "21.75 dB", "22.50 dB", "23.25 dB", "24.00 dB", "24.75 dB", "25.50 dB", "26.25 dB", "27.00 dB", "27.75 dB", "28.50 dB", "29.25 dB", "30.00 dB", "30.75 dB", "31.50 dB", "32.25 dB", "33.00 dB", "33.75 dB", "34.50 dB", "35.25 dB", "36.00 dB", "36.75 dB", "37.50 dB", "38.25 dB", "39.00 dB", "39.75 dB", "40.50 dB", "41.25 dB", "42.00 dB", "42.75 dB", "43.50 dB", "44.25 dB", "45.00 dB", "45.75 dB", "46.50 dB", "47.25 dB"};
-	params.push_back(new EnumFloatParameter("Carrier Attenuation",
-		StringArray(levels, sizeof(levels)/sizeof(String)))
-	); setParameter(params.size()-1,0.0f);
-	params.push_back(new EnumFloatParameter("Modulator Attenuation",
-		StringArray(levels, sizeof(levels)/sizeof(String)))
-	); setParameter(params.size()-1,0.75f);
-	
-	const String ksrs[] = {"None","1.5 dB/8ve","3 dB/8ve","6 dB/8ve"};
-	params.push_back(new EnumFloatParameter("Carrier KSR",
-		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
-	); setParameter(params.size()-1,0.0f);
-	params.push_back(new EnumFloatParameter("Modulator KSR",
-		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
-	); setParameter(params.size()-1,0.0f);
+	);
 
 	const String frq_multipliers[] = {
 		"x0.5", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x10", "x12", "x12", "x15", "x15"
 	};
 	params.push_back(new EnumFloatParameter("Carrier Frequency Multiplier",
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
-	); setParameter(params.size()-1, 0.08f);
+	);
 	params.push_back(new EnumFloatParameter("Modulator Frequency Multiplier",
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
-	); setParameter(params.size()-1, 0.15f);
+	);
+
+	const String levels[] = {"0.00 dB", "0.75 dB", "1.50 dB", "2.25 dB", "3.00 dB", "3.75 dB", "4.50 dB", "5.25 dB", "6.00 dB", "6.75 dB", "7.50 dB", "8.25 dB", "9.00 dB", "9.75 dB", "10.50 dB", "11.25 dB", "12.00 dB", "12.75 dB", "13.50 dB", "14.25 dB", "15.00 dB", "15.75 dB", "16.50 dB", "17.25 dB", "18.00 dB", "18.75 dB", "19.50 dB", "20.25 dB", "21.00 dB", "21.75 dB", "22.50 dB", "23.25 dB", "24.00 dB", "24.75 dB", "25.50 dB", "26.25 dB", "27.00 dB", "27.75 dB", "28.50 dB", "29.25 dB", "30.00 dB", "30.75 dB", "31.50 dB", "32.25 dB", "33.00 dB", "33.75 dB", "34.50 dB", "35.25 dB", "36.00 dB", "36.75 dB", "37.50 dB", "38.25 dB", "39.00 dB", "39.75 dB", "40.50 dB", "41.25 dB", "42.00 dB", "42.75 dB", "43.50 dB", "44.25 dB", "45.00 dB", "45.75 dB", "46.50 dB", "47.25 dB"};
+	params.push_back(new EnumFloatParameter("Carrier Attenuation",
+		StringArray(levels, sizeof(levels)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Attenuation",
+		StringArray(levels, sizeof(levels)/sizeof(String)))
+	);
+	
+	const String ksrs[] = {"None","1.5 dB/8ve","3 dB/8ve","6 dB/8ve"};
+	params.push_back(new EnumFloatParameter("Carrier KSR",
+		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator KSR",
+		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
+	);
 
 	params.push_back(new IntFloatParameter("Modulator Feedback", 0, 7));
-	setParameter(params.size()-1, 0.0f);
-	
 	params.push_back(new IntFloatParameter("Carrier Attack", 0, 15));
-	setParameter(params.size()-1, 0.5f);
 	params.push_back(new IntFloatParameter("Carrier Decay", 0, 15));
-	setParameter(params.size()-1, 0.25f);
 	params.push_back(new IntFloatParameter("Carrier Sustain", 0, 15));
-	setParameter(params.size()-1, 0.125f);
 	params.push_back(new IntFloatParameter("Carrier Release", 0, 15));
-	setParameter(params.size()-1, 0.5f);
 	params.push_back(new IntFloatParameter("Modulator Attack", 0, 15));
-	setParameter(params.size()-1, 0.5f);
 	params.push_back(new IntFloatParameter("Modulator Decay", 0, 15));
-	setParameter(params.size()-1, 0.25f);
 	params.push_back(new IntFloatParameter("Modulator Sustain", 0, 15));
-	setParameter(params.size()-1, 0.25f);
 	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
-	setParameter(params.size()-1, 0.25f);
 
 	for(unsigned int i = 0; i < params.size(); i++) {
 		paramIdxByName[params[i]->getName()] = i;
 	}
 
-	//programs["
+	// Initialize programs (presets)
 
+	const float a_filt_pad[] = {
+		0.f, 0.f,	// waveforms
+		0.f, 0.f,	// frequency multipliers
+		0.0f, 0.f,	// attenuation
+		0.f, 0.f,	// KSR / 8ve
+		1.f,		// feeback
+		// envelopes
+		1.0f/15.0f, 2.0f/15.0f, 10.0f/15.0f, 1.0f/15.0f,
+		1.0f/15.0f, 5.0f/15.0f, 1.0f/15.0f, 1.0f/15.0f,
+	};
+	std::vector<float> v_filt_pad (a_filt_pad, a_filt_pad + sizeof(a_filt_pad) / sizeof(float));
+	programs["Filter Pad"] = std::vector<float>(v_filt_pad);
+
+	const float a_sust_bass[] = {
+		0.f, 0.5f,
+		1.0f/15.0f, 2.0f/15.0f,	// frequency multipliers
+		0.f, 0.41f,
+		0.f, 0.f,
+		0.f,					// feedback
+		// envelopes
+		8.0f/15.0f, 4.0f/15.0f, 4.0f/15.0f, 4.0f/15.0f,
+		8.0f/15.0f, 4.0f/15.0f, 2.0f/15.0f, 9.0f/15.0f,
+	};
+	std::vector<float> v_sust_bass (a_sust_bass, a_sust_bass + sizeof(a_sust_bass) / sizeof(float));
+	programs["Cyberpunk Sust Bass"] = std::vector<float>(v_sust_bass);
+
+	for(std::map<String,std::vector<float>>::iterator it = programs.begin(); it != programs.end(); ++it) {
+		program_order.push_back(it->first);
+	}
+	setCurrentProgram(0);
+	
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -126,7 +152,6 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetWaveform(c, osc, (Waveform)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attenuation")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
-		//for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Frequency Multiplier")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetFrequencyMultiple(c, osc, (FreqMultiple)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.endsWith("Attack")) {
@@ -139,8 +164,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeRelease(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Feedback")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetModulatorFeedback(c, ((IntFloatParameter*)p)->getParameterValue());
-	} else if (name.endsWith("")) {
-		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetAttenuation(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.endsWith("KSR")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetKsr(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
 	}
 
 }
@@ -205,21 +230,26 @@ double JuceOplvstiAudioProcessor::getTailLengthSeconds() const
 
 int JuceOplvstiAudioProcessor::getNumPrograms()
 {
-    return 0;
+    return programs.size();
 }
 
 int JuceOplvstiAudioProcessor::getCurrentProgram()
 {
-    return 0;
+    return i_program;
 }
 
 void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 {
+	i_program = index;
+	std::vector<float> &v_params = programs[getProgramName(index)];
+	for (unsigned int i = 0; i < params.size() && i < v_params.size(); i++) {
+		setParameter(i, v_params[i]);
+	}
 }
 
 const String JuceOplvstiAudioProcessor::getProgramName (int index)
 {
-    return String::empty;
+    return program_order[index];
 }
 
 void JuceOplvstiAudioProcessor::changeProgramName (int index, const String& newName)
