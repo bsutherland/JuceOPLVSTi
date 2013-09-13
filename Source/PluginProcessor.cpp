@@ -100,7 +100,9 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		program_order.push_back(it->first);
 	}
 	setCurrentProgram(0);
-	
+	for (int i = 0; i < Hiopl::CHANNELS+1; i++) {
+		active_notes[i] = NO_NOTE;
+	}	
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -278,15 +280,27 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 	MidiMessage midi_message(0);
 	int sample_number;
 	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
-		int ch = 1 + (midi_message.getNoteNumber() % Hiopl::CHANNELS);	// kind of hackish, but..
+		//int ch = 1 + (midi_message.getNoteNumber() % Hiopl::CHANNELS);	// kind of hackish, but..
 		if (midi_message.isNoteOn()) {
 			//note on at sample_number samples after 
 			//the beginning of the current buffer
-			float noteHz = (float)MidiMessage::getMidiNoteInHertz(midi_message.getNoteNumber());
+			int n = midi_message.getNoteNumber();
+			float noteHz = (float)MidiMessage::getMidiNoteInHertz(n);
+			int ch = 1;
+			while (ch <= Hiopl::CHANNELS && NO_NOTE != active_notes[ch]) {
+				ch += 1;
+			}
 			Opl->KeyOn(ch, noteHz);
+			active_notes[ch] = n;
 		}
 		else if (midi_message.isNoteOff()) {
+			int n = midi_message.getNoteNumber();
+			int ch = 1;
+			while (ch <= Hiopl::CHANNELS && n != active_notes[ch]) {
+				ch += 1;
+			}
 			Opl->KeyOff(ch);
+			active_notes[ch] = NO_NOTE;
 		}
 	}
 	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));

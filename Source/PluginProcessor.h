@@ -77,6 +77,8 @@ private:
 	std::map<String, std::vector<float>> programs;
 	std::vector<String> program_order;
 	int i_program;
+	static const int NO_NOTE=-1;
+	int active_notes[Hiopl::CHANNELS+1];	// keyed by channel
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)
