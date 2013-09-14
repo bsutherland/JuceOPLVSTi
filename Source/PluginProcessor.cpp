@@ -105,6 +105,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 
 void JuceOplvstiAudioProcessor::initPrograms()
 {
+	// these ones from the Syndicate in-game music
     const float i_params_0[] = {
         0.000000f, 0.660000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
@@ -209,6 +210,68 @@ void JuceOplvstiAudioProcessor::initPrograms()
     };
     std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
     programs["Instr 97283"] = std::vector<float>(v_i_params_97283);
+
+	// The start of the Dune 2 introduction
+    const float i_params_3136[] = {
+        0.000000f, 0.660000f,  // waveforms
+        0.133333f, 0.133333f,  // frq multipliers
+        0.000000f, 0.333333f,  // attenuation
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.000000f, 0.330000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.571429f,            // feedback
+        1.0f, 0.1f, 0.1f, 0.3f,  // adsr
+        1.0f, 0.4f, 0.2f, 0.3f,  // adsr
+    };
+    std::vector<float> v_i_params_3136 (i_params_3136, i_params_3136 + sizeof(i_params_3136) / sizeof(float));
+    programs["Instr 3136"] = std::vector<float>(v_i_params_3136);
+
+    const float i_params_7254[] = {
+        0.000000f, 0.330000f,  // waveforms
+        0.066667f, 0.066667f,  // frq multipliers
+        0.253968f, 0.476190f,  // attenuation
+        1.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
+        1.0f, 1.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.000000f, 0.330000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.571429f,            // feedback
+        0.1f, 0.1f, 0.1f, 0.1f,  // adsr
+        0.2f, 0.1f, 0.1f, 0.0f,  // adsr
+    };
+    std::vector<float> v_i_params_7254 (i_params_7254, i_params_7254 + sizeof(i_params_7254) / sizeof(float));
+    programs["Instr 7254"] = std::vector<float>(v_i_params_7254);
+
+    const float i_params_20108[] = {
+        0.000000f, 0.000000f,  // waveforms
+        0.400000f, 0.066667f,  // frq multipliers
+        0.238095f, 0.000000f,  // attenuation
+        1.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        0.000000f, 0.330000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.000000f,            // feedback
+        0.1f, 0.1f, 0.1f, 0.1f,  // adsr
+        0.1f, 0.1f, 0.1f, 0.1f,  // adsr
+    };
+    std::vector<float> v_i_params_20108 (i_params_20108, i_params_20108 + sizeof(i_params_20108) / sizeof(float));
+    programs["Instr 20108"] = std::vector<float>(v_i_params_20108);
+
+    const float i_params_27550[] = {
+        1.000000f, 0.000000f,  // waveforms
+        0.000000f, 0.066667f,  // frq multipliers
+        0.238095f, 0.793651f,  // attenuation
+        0.0f, 1.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.571429f,            // feedback
+        1.0f, 0.0f, 1.0f, 1.0f,  // adsr
+        0.9f, 0.1f, 0.0f, 1.0f,  // adsr
+    };
+    std::vector<float> v_i_params_27550 (i_params_27550, i_params_27550 + sizeof(i_params_27550) / sizeof(float));
+    programs["Instr 27550"] = std::vector<float>(v_i_params_27550);
+
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()

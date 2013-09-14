@@ -305,23 +305,28 @@ def output_instrument_vst_program(json_i, ts):
     try:
         d = json.loads(json_i)
         m=d[0]; c=d[1]
+        lines = [
+            '    const float i_params_%d[] = {' % ts,
+            '        %.6ff, %.6ff,  // waveforms' % (W2F[c['wav']], W2F[m['wav']]),
+            '        %.6ff, %.6ff,  // frq multipliers' % (m2f(c['fm_mult']), m2f(m['fm_mult'])),
+            '        %.6ff, %.6ff,  // attenuation' %     (a2f(c['db']), a2f(m['db'])),
+            '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(c[x]) for x in ['tre', 'vib', 'sus', 'ksr']]),
+            '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(m[x]) for x in ['tre', 'vib', 'sus', 'ksr']]),
+            '        %.6ff, %.6ff,  // KSR/8ve' % (D2F[c['db_oct']], D2F[m['db_oct']]),
+            '        %.6ff,            // algorithm' % (1.0 if 'ADD'==d[2]['alg'] else 0.0),
+            '        %.6ff,            // feedback' % (float(d[2]['feedback'])/7.0),
+            '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(c[x]) for x in ['a', 'd', 's', 'r']]),
+            '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(m[x]) for x in ['a', 'd', 's', 'r']]),
+            '    };',
+            '    std::vector<float> v_i_params_%d (i_params_%d, i_params_%d + sizeof(i_params_%d) / sizeof(float));' % (ts,ts,ts,ts),
+            '    programs["Instr %d"] = std::vector<float>(v_i_params_%d);' % (ts, ts),
+        ]
         print
-        print '    const float i_params_%d[] = {' % ts
-        print '        %.6ff, %.6ff,  // waveforms' % (W2F[c['wav']], W2F[m['wav']])
-        print '        %.6ff, %.6ff,  // frq multipliers' % (m2f(c['fm_mult']), m2f(m['fm_mult']))
-        print '        %.6ff, %.6ff,  // attenuation' %     (a2f(c['db']), a2f(m['db']))
-        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(c[x]) for x in ['tre', 'vib', 'sus', 'ksr']])
-        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(m[x]) for x in ['tre', 'vib', 'sus', 'ksr']])
-        print '        %.6ff, %.6ff,  // KSR/8ve' % (D2F[c['db_oct']], D2F[m['db_oct']])
-        print '        %.6ff,            // algorithm' % (1.0 if 'ADD'==d[2]['alg'] else 0.0)
-        print '        %.6ff,            // feedback' % (float(d[2]['feedback'])/7.0)
-        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(c[x]) for x in ['a', 'd', 's', 'r']])
-        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(m[x]) for x in ['a', 'd', 's', 'r']])
-        print '    };'
-        print '    std::vector<float> v_i_params_%d (i_params_%d, i_params_%d + sizeof(i_params_%d) / sizeof(float));' % (ts,ts,ts,ts)
-        print '    programs["Instr %d"] = std::vector<float>(v_i_params_%d);' % (ts, ts)
+        print '\n'.join(lines)
     except KeyError:
-        print 'incomplete instrument?'
+        pass
+        #print
+        #print '// incomplete instrument..'
 
 def main(argv):
     events = parse_opldump(sys.stdin)
