@@ -24,6 +24,7 @@ class JuceOplvstiAudioProcessor  : public AudioProcessor
 public:
     //==============================================================================
     JuceOplvstiAudioProcessor();
+	void initPrograms();
     ~JuceOplvstiAudioProcessor();
 
     //==============================================================================

@@ -10,13 +10,6 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
-	for (int i = 1; i <= Hiopl::CHANNELS; i++) {
-		Opl->EnableSustain(i, 1);
-		Opl->EnableSustain(i, 2);
-		Opl->EnableKeyscaling(i, 1);
-		Opl->EnableKeyscaling(i, 2);
-	}
-
 
 	// Initialize parameters
 
@@ -45,7 +38,33 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
 	);
-	
+
+	const String onoff[] = {"Disable", "Enable"};
+	params.push_back(new EnumFloatParameter("Carrier Tremolo",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Carrier Vibrato",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Carrier Sustain",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Carrier Keyscaling",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Tremolo",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Vibrato",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Sustain",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Keyscaling",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
+
 	const String ksrs[] = {"None","1.5 dB/8ve","3 dB/8ve","6 dB/8ve"};
 	params.push_back(new EnumFloatParameter("Carrier KSR",
 		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
@@ -57,44 +76,18 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new IntFloatParameter("Modulator Feedback", 0, 7));
 	params.push_back(new IntFloatParameter("Carrier Attack", 0, 15));
 	params.push_back(new IntFloatParameter("Carrier Decay", 0, 15));
-	params.push_back(new IntFloatParameter("Carrier Sustain", 0, 15));
+	params.push_back(new IntFloatParameter("Carrier Sustain Level", 0, 15));
 	params.push_back(new IntFloatParameter("Carrier Release", 0, 15));
 	params.push_back(new IntFloatParameter("Modulator Attack", 0, 15));
 	params.push_back(new IntFloatParameter("Modulator Decay", 0, 15));
-	params.push_back(new IntFloatParameter("Modulator Sustain", 0, 15));
+	params.push_back(new IntFloatParameter("Modulator Sustain Level", 0, 15));
 	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
 
 	for(unsigned int i = 0; i < params.size(); i++) {
 		paramIdxByName[params[i]->getName()] = i;
 	}
 
-	// Initialize programs (presets)
-
-	const float a_filt_pad[] = {
-		0.f, 0.f,	// waveforms
-		0.f, 0.f,	// frequency multipliers
-		0.0f, 0.f,	// attenuation
-		0.f, 0.f,	// KSR / 8ve
-		1.f,		// feeback
-		// envelopes
-		1.0f/15.0f, 2.0f/15.0f, 10.0f/15.0f, 1.0f/15.0f,
-		1.0f/15.0f, 5.0f/15.0f, 1.0f/15.0f, 1.0f/15.0f,
-	};
-	std::vector<float> v_filt_pad (a_filt_pad, a_filt_pad + sizeof(a_filt_pad) / sizeof(float));
-	programs["Filter Pad"] = std::vector<float>(v_filt_pad);
-
-	const float a_sust_bass[] = {
-		0.f, 0.5f,
-		1.0f/15.0f, 2.0f/15.0f,	// frequency multipliers
-		0.f, 0.41f,
-		0.f, 0.f,
-		0.f,					// feedback
-		// envelopes
-		8.0f/15.0f, 4.0f/15.0f, 4.0f/15.0f, 4.0f/15.0f,
-		8.0f/15.0f, 4.0f/15.0f, 2.0f/15.0f, 9.0f/15.0f,
-	};
-	std::vector<float> v_sust_bass (a_sust_bass, a_sust_bass + sizeof(a_sust_bass) / sizeof(float));
-	programs["Cyberpunk Sust Bass"] = std::vector<float>(v_sust_bass);
+	initPrograms();
 
 	for(std::map<String,std::vector<float>>::iterator it = programs.begin(); it != programs.end(); ++it) {
 		program_order.push_back(it->first);
@@ -103,6 +96,109 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	for (int i = 0; i < Hiopl::CHANNELS+1; i++) {
 		active_notes[i] = NO_NOTE;
 	}	
+}
+
+void JuceOplvstiAudioProcessor::initPrograms()
+{
+	
+    const float i_params_0[] = {
+        0.000000f, 0.660000f,  // waveforms
+        0.066667f, 0.133333f,  // frq multipliers
+        0.142857f, 0.412698f,  // attenuation
+        0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // feedback
+        0.5f, 0.3f, 0.3f, 0.3f,  // adsr
+        0.5f, 0.3f, 0.1f, 0.6f,  // adsr
+    };
+    std::vector<float> v_i_params_0 (i_params_0, i_params_0 + sizeof(i_params_0) / sizeof(float));
+    programs["Instr 0"] = std::vector<float>(v_i_params_0);
+
+    const float i_params_19189[] = {
+        0.000000f, 0.000000f,  // waveforms
+        0.066667f, 0.200000f,  // frq multipliers
+        0.000000f, 0.285714f,  // attenuation
+        0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.571429f,            // feedback
+        1.0f, 1.0f, 0.0f, 0.3f,  // adsr
+        1.0f, 0.5f, 0.2f, 0.3f,  // adsr
+    };
+    std::vector<float> v_i_params_19189 (i_params_19189, i_params_19189 + sizeof(i_params_19189) / sizeof(float));
+    programs["Instr 19189"] = std::vector<float>(v_i_params_19189);
+
+    const float i_params_38377[] = {
+        0.000000f, 0.330000f,  // waveforms
+        0.066667f, 0.066667f,  // frq multipliers
+        0.000000f, 0.460317f,  // attenuation
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // feedback
+        1.0f, 0.3f, 0.5f, 0.5f,  // adsr
+        1.0f, 0.1f, 0.9f, 1.0f,  // adsr
+    };
+    std::vector<float> v_i_params_38377 (i_params_38377, i_params_38377 + sizeof(i_params_38377) / sizeof(float));
+    programs["Instr 38377"] = std::vector<float>(v_i_params_38377);
+
+    const float i_params_38392[] = {
+        0.000000f, 0.000000f,  // waveforms
+        0.000000f, 0.000000f,  // frq multipliers
+        0.000000f, 0.000000f,  // attenuation
+        0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // feedback
+        0.1f, 0.1f, 0.7f, 0.1f,  // adsr
+        0.1f, 0.9f, 0.1f, 0.1f,  // adsr
+    };
+    std::vector<float> v_i_params_38392 (i_params_38392, i_params_38392 + sizeof(i_params_38392) / sizeof(float));
+    programs["Instr 38392"] = std::vector<float>(v_i_params_38392);
+
+    const float i_params_39687[] = {
+        0.000000f, 0.000000f,  // waveforms
+        0.066667f, 0.333333f,  // frq multipliers
+        0.000000f, 0.301587f,  // attenuation
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 1.000000f,  // KSR/8ve
+        0.571429f,            // feedback
+        1.0f, 0.3f, 0.1f, 0.3f,  // adsr
+        1.0f, 0.7f, 0.0f, 0.4f,  // adsr
+    };
+    std::vector<float> v_i_params_39687 (i_params_39687, i_params_39687 + sizeof(i_params_39687) / sizeof(float));
+    programs["Instr 39687"] = std::vector<float>(v_i_params_39687);
+
+    const float i_params_76784[] = {
+        0.000000f, 0.660000f,  // waveforms
+        0.066667f, 0.133333f,  // frq multipliers
+        0.000000f, 0.428571f,  // attenuation
+        0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // feedback
+        1.0f, 0.3f, 0.4f, 0.4f,  // adsr
+        1.0f, 0.4f, 0.5f, 0.3f,  // adsr
+    };
+    std::vector<float> v_i_params_76784 (i_params_76784, i_params_76784 + sizeof(i_params_76784) / sizeof(float));
+    programs["Instr 76784"] = std::vector<float>(v_i_params_76784);
+
+    const float i_params_97283[] = {
+        0.000000f, 0.660000f,  // waveforms
+        0.133333f, 0.400000f,  // frq multipliers
+        0.000000f, 0.365079f,  // attenuation
+        0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
+        0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.660000f,  // KSR/8ve
+        0.000000f,            // feedback
+        0.6f, 0.7f, 0.0f, 0.2f,  // adsr
+        0.6f, 0.7f, 0.1f, 0.1f,  // adsr
+    };
+    std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
+    programs["Instr 97283"] = std::vector<float>(v_i_params_97283);
+
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -160,7 +256,7 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeAttack(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Decay")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeDecay(c, osc, ((IntFloatParameter*)p)->getParameterValue());
-	} else if (name.endsWith("Sustain")) {
+	} else if (name.endsWith("Sustain Level")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeSustain(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Release")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeRelease(c, osc, ((IntFloatParameter*)p)->getParameterValue());
@@ -168,6 +264,14 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetModulatorFeedback(c, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("KSR")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetKsr(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.endsWith("Keyscaling")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableKeyscaling(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.endsWith("Sustain")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableSustain(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.endsWith("Tremolo")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableTremolo(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.endsWith("Vibrato")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableVibrato(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	}
 
 }

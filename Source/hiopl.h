@@ -23,7 +23,14 @@ class Hiopl {
 		void Generate(int length, float* buffer);
 		void SetSampleRate(int hz);
 		void EnableWaveformControl();
-		void EnableKeyscaling(int ch, int osc);
+
+		void EnableTremolo(int ch, int osc, bool enable);
+		void EnableVibrato(int ch, int osc, bool enable);
+		void EnableSustain(int ch, int osc, bool enable);
+		void EnableKeyscaling(int ch, int osc, bool enable);
+		// true = additive; false = frequency modulation
+		void EnableAdditiveSynthesis(int ch, bool enable);
+		
 		void SetWaveform(int ch, int osc, Waveform wave);
 		void SetAttenuation(int ch, int osc, int level);
 		void SetKsr(int ch, int osc, int level);
@@ -32,7 +39,7 @@ class Hiopl {
 		void SetEnvelopeDecay(int ch, int osc, int t);
 		void SetEnvelopeSustain(int ch, int osc, int level);
 		void SetEnvelopeRelease(int ch, int osc, int t);
-		void EnableSustain(int ch, int osc);
+		
 		void SetModulatorFeedback(int ch, int level);
 		void KeyOn(int ch, float frqHz);
 		void KeyOff(int ch);

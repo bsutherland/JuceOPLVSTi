@@ -122,14 +122,29 @@ void Hiopl::SetEnvelopeRelease(int ch, int osc, int t) {
 	_WriteReg(0x80+offset, (Bit8u)t, 0x0f);
 }
 
-void Hiopl::EnableSustain(int ch, int osc) {
+void Hiopl::EnableTremolo(int ch, int osc, bool enable) {
 	int offset = this->_GetOffset(ch, osc);
-	_WriteReg(0x20+offset, (Bit8u)0x20, 0x20);
+	_WriteReg(0x20+offset, enable ? 0x80 : 0x0, 0x80);
 }
 
-void Hiopl::EnableKeyscaling(int ch, int osc) {
+void Hiopl::EnableVibrato(int ch, int osc, bool enable) {
 	int offset = this->_GetOffset(ch, osc);
-	_WriteReg(0x20+offset, (Bit8u)0x10, 0x10);
+	_WriteReg(0x20+offset, enable ? 0x40 : 0x0, 0x40);
+}
+
+void Hiopl::EnableSustain(int ch, int osc, bool enable) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x20+offset, enable ? 0x20 : 0x0, 0x20);
+}
+
+void Hiopl::EnableKeyscaling(int ch, int osc, bool enable) {
+	int offset = this->_GetOffset(ch, osc);
+	_WriteReg(0x20+offset, enable ? 0x10 : 0x0, 0x10);
+}
+
+void Hiopl::EnableAdditiveSynthesis(int ch, bool enable) {
+	int offset = this->_GetOffset(ch);
+	_WriteReg(0xc0+offset, enable ? 0x1 : 0x0, 0x1);
 }
 
 void Hiopl::SetModulatorFeedback(int ch, int level) {
