@@ -313,6 +313,7 @@ def output_instrument_vst_program(json_i, ts):
         print '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(c[x]) for x in ['tre', 'vib', 'sus', 'ksr']])
         print '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(m[x]) for x in ['tre', 'vib', 'sus', 'ksr']])
         print '        %.6ff, %.6ff,  // KSR/8ve' % (D2F[c['db_oct']], D2F[m['db_oct']])
+        print '        %.6ff,            // algorithm' % (1.0 if 'ADD'==d[2]['alg'] else 0.0)
         print '        %.6ff,            // feedback' % (float(d[2]['feedback'])/7.0)
         print '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(c[x]) for x in ['a', 'd', 's', 'r']])
         print '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(m[x]) for x in ['a', 'd', 's', 'r']])

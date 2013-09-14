@@ -73,6 +73,11 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
 	);
 
+	const String algos[] = {"Frequency Modulation", "Additive"};
+	params.push_back(new EnumFloatParameter("Algorithm",
+		StringArray(algos, sizeof(algos)/sizeof(String)))
+	);
+
 	params.push_back(new IntFloatParameter("Modulator Feedback", 0, 7));
 	params.push_back(new IntFloatParameter("Carrier Attack", 0, 15));
 	params.push_back(new IntFloatParameter("Carrier Decay", 0, 15));
@@ -100,7 +105,6 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 
 void JuceOplvstiAudioProcessor::initPrograms()
 {
-	
     const float i_params_0[] = {
         0.000000f, 0.660000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
@@ -108,6 +112,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.000000f,            // feedback
         0.5f, 0.3f, 0.3f, 0.3f,  // adsr
         0.5f, 0.3f, 0.1f, 0.6f,  // adsr
@@ -122,6 +127,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.571429f,            // feedback
         1.0f, 1.0f, 0.0f, 0.3f,  // adsr
         1.0f, 0.5f, 0.2f, 0.3f,  // adsr
@@ -136,6 +142,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.000000f,            // feedback
         1.0f, 0.3f, 0.5f, 0.5f,  // adsr
         1.0f, 0.1f, 0.9f, 1.0f,  // adsr
@@ -150,6 +157,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.000000f,            // feedback
         0.1f, 0.1f, 0.7f, 0.1f,  // adsr
         0.1f, 0.9f, 0.1f, 0.1f,  // adsr
@@ -164,6 +172,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 1.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.571429f,            // feedback
         1.0f, 0.3f, 0.1f, 0.3f,  // adsr
         1.0f, 0.7f, 0.0f, 0.4f,  // adsr
@@ -178,6 +187,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.000000f,            // feedback
         1.0f, 0.3f, 0.4f, 0.4f,  // adsr
         1.0f, 0.4f, 0.5f, 0.3f,  // adsr
@@ -192,13 +202,13 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.660000f,  // KSR/8ve
+        0.000000f,            // algorithm
         0.000000f,            // feedback
         0.6f, 0.7f, 0.0f, 0.2f,  // adsr
         0.6f, 0.7f, 0.1f, 0.1f,  // adsr
     };
     std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
     programs["Instr 97283"] = std::vector<float>(v_i_params_97283);
-
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -272,6 +282,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableTremolo(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.endsWith("Vibrato")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableVibrato(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.endsWith("Algorithm")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableAdditiveSynthesis(c, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	}
 
 }
