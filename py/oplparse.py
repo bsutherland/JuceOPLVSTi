@@ -54,14 +54,15 @@ def interpret_00(reg, val, ev):
 def interpret_20(reg, val, ev):
     ch, op = reg_to_chan_and_op(reg)
     ev[2]['ch'] = ch
-    bitfields = {7: 'AM', 6: 'vib', 5: 'sus', 4:'ksr'}
+    bitfields = {7: 'tre', 6: 'vib', 5: 'sus', 4:'ksr'}
     bf = val & 0xf0
     opts = []
     for b, opt in bitfields.iteritems():
         optset = 'X' if (bf & (0x1 << b)) else '-'
         opts.append('%s:%s' % (opt, optset))
+        ev[op-1][opt]=optset
     fm_mult = val & 0x0f
-    mults = {0:0.5, 0xb:0xa, 0xd:0xc, 0xf:0xe}
+    mults = {0:0.5, 11:10, 13:12, 14:15}
     fm_mult = mults.get(fm_mult, fm_mult)
     opts.append('fm_mult:x%d' % (fm_mult))
     ev[op-1]['fm_mult'] = fm_mult
@@ -74,16 +75,18 @@ def interpret_40(reg, val, ev):
     ch, op = reg_to_chan_and_op(reg)
     ev[2]['ch'] = ch
     bit_db = {5:24, 4:12, 3:6, 2:3, 1:1.5, 0:0.75}
-    oct_db = {0:0, 0x40:3, 0x80:1.5, 0xC0:6}
-    lvl = 0
+    oct_db = {0:0, 0x40:1.5, 0x80:3, 0xC0:6}
+    lvl = 0.0
     for b, db in bit_db.iteritems():
         if (val & (0x1 << b)):
             lvl += db
-    oct_scale = '-%d dB/8ve' % oct_db[val & 0xC0]
+    db_oct = oct_db[val & 0xC0]
+    oct_scale = '-%d dB/8ve' % db_oct
     factor = _db_atten_to_factor(lvl)
     ev[op-1]['db'] = lvl
+    ev[op-1]['db_oct'] = db_oct
     ev[op-1]['scale'] = factor
-    print '%d dB; (x%.4f) %s' % (lvl, factor, oct_scale) ,  
+    print '%.2f dB; (x%.4f) %s' % (lvl, factor, oct_scale) ,  
 
 def interpret_60(reg, val, ev):
     ch, op = reg_to_chan_and_op(reg)
@@ -111,6 +114,10 @@ def interpret_A0(reg, val, ev):
     
 def interpret_B0(reg, val, ev):
     global freq_lsb
+    try:
+        freq_lsb
+    except NameError:
+        freq_lsb = 0
     oct = (val >> 2) & 0x7
     fnum = ((val & 0x3) << 8) + freq_lsb
     chan = 1 + reg % 0xB0
@@ -149,6 +156,8 @@ def interpret_BD(reg, val, ev):
 def interpret_C0(reg, val, ev):
     alg = 'ADD' if val & 0x1 else 'MODULATE'
     feedback = (val >> 1) & 0xc
+    ev[2]['alg'] = alg
+    ev[2]['feedback'] = feedback
     print 'feedback: %d  algo: %s' % (feedback, alg) ,
 
 def interpret_E0(reg, val, ev):
@@ -238,23 +247,24 @@ def get_javascript_for(event):
     return indent + indent.join(lines)
         
     
-def find_unique_instruments(events, js_filename):
+def find_unique_instruments(events):
     instruments = dict()
+    ilist = list()
     timestamps = events.keys()
     timestamps.sort()
-    js_out = open(js_filename, 'wb')
-    with js_out:
-        js_out.write('song = function(sch, opl2) {\n')
-        for t in timestamps:
-            js_out.write('    sch.addAbsolute(%d, function() {\n' % t)
-            js_out.write('        console.log(%d);\n' % t)
-            js_out.write(get_javascript_for(events[t]))
-            js_out.write('    });\n')
-            instr_json = json.dumps(events[t])
-            if instr_json not in instruments:
-                instruments[instr_json] = t
-        js_out.write('};\n')
-    return instruments
+    for t in timestamps:
+        ev = events[t]
+        try:     # get rid of fields which don't define uniqueness
+            del ev[2]['key']
+            del ev[2]['ch']
+            del ev[1]['frq']
+        except KeyError:
+            pass
+        instr_json = json.dumps(ev, indent=2)
+        if instr_json not in instruments:
+            instruments[instr_json] = t
+            ilist.append(instr_json)
+    return ilist, instruments
 
 def print_instrument(json_i, ts):
     print
@@ -268,12 +278,57 @@ def print_instrument(json_i, ts):
         print 'Envelopes:    %1x %1x %1x %1x    %1x %1x %1x %1x' % envs
     except KeyError:
         print 'incomplete instrument?'
-    
+
+# Conversions mapping to VST floating point values
+W2F = {'SIN':0, 'HALFSIN':.33, 'ABSSIN':.66, 'QUARTSIN':1}
+def m2f(mult):
+    if mult < 1:  # half frq
+        return 0
+    else:
+        return float(mult)/15.0
+
+def a2f(att_db):
+    a = float(att_db)/0.75
+    return a/63.0
+
+def b2f(bool_param):
+    if 'X' == bool_param:
+        return 1.0
+    else:
+        return 0.0
+D2F = {0:0.0,1.5:0.33,3.0:0.66,6.0:1.0}
+
+def e2f(env_val):
+    return float(env_val)/15.0
+
+def output_instrument_vst_program(json_i, ts):
+    try:
+        d = json.loads(json_i)
+        m=d[0]; c=d[1]
+        print
+        print '    const float i_params_%d[] = {' % ts
+        print '        %.6ff, %.6ff,  // waveforms' % (W2F[c['wav']], W2F[m['wav']])
+        print '        %.6ff, %.6ff,  // frq multipliers' % (m2f(c['fm_mult']), m2f(m['fm_mult']))
+        print '        %.6ff, %.6ff,  // attenuation' %     (a2f(c['db']), a2f(m['db']))
+        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(c[x]) for x in ['tre', 'vib', 'sus', 'ksr']])
+        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // tre / vib / sus / ks' % tuple([b2f(m[x]) for x in ['tre', 'vib', 'sus', 'ksr']])
+        print '        %.6ff, %.6ff,  // KSR/8ve' % (D2F[c['db_oct']], D2F[m['db_oct']])
+        print '        %.6ff,            // feedback' % (float(d[2]['feedback'])/7.0)
+        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(c[x]) for x in ['a', 'd', 's', 'r']])
+        print '        %.1ff, %.1ff, %.1ff, %.1ff,  // adsr' % tuple([e2f(m[x]) for x in ['a', 'd', 's', 'r']])
+        print '    };'
+        print '    std::vector<float> v_i_params_%d (i_params_%d, i_params_%d + sizeof(i_params_%d) / sizeof(float));' % (ts,ts,ts,ts)
+        print '    programs["Instr %d"] = std::vector<float>(v_i_params_%d);' % (ts, ts)
+    except KeyError:
+        print 'incomplete instrument?'
+
 def main(argv):
     events = parse_opldump(sys.stdin)
-    instruments = find_unique_instruments(events, argv[1])
-    for i in instruments:
-        print_instrument(i, instruments[i])
+    ilist, instruments = find_unique_instruments(events)
+    for i in ilist:
+        output_instrument_vst_program(i, instruments[i])
+        #print i, instruments[i]
+        #print_instrument(i, instruments[i])
 
 if '__main__' == __name__:
     main(sys.argv)
