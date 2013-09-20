@@ -119,7 +119,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.5f, 0.3f, 0.1f, 0.6f,  // adsr
     };
     std::vector<float> v_i_params_0 (i_params_0, i_params_0 + sizeof(i_params_0) / sizeof(float));
-    programs["Instr 0"] = std::vector<float>(v_i_params_0);
+    programs["Mercenary Bass"] = std::vector<float>(v_i_params_0);
 
     const float i_params_19189[] = {
         0.000000f, 0.000000f,  // waveforms
@@ -134,7 +134,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.5f, 0.2f, 0.3f,  // adsr
     };
     std::vector<float> v_i_params_19189 (i_params_19189, i_params_19189 + sizeof(i_params_19189) / sizeof(float));
-    programs["Instr 19189"] = std::vector<float>(v_i_params_19189);
+    programs["Patrol Bass"] = std::vector<float>(v_i_params_19189);
 
     const float i_params_38377[] = {
         0.000000f, 0.330000f,  // waveforms
@@ -149,7 +149,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.1f, 0.9f, 1.0f,  // adsr
     };
     std::vector<float> v_i_params_38377 (i_params_38377, i_params_38377 + sizeof(i_params_38377) / sizeof(float));
-    programs["Instr 38377"] = std::vector<float>(v_i_params_38377);
+    programs["Subdue Bass"] = std::vector<float>(v_i_params_38377);
 
     const float i_params_38392[] = {
         0.000000f, 0.000000f,  // waveforms
@@ -164,7 +164,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.9f, 0.1f, 0.1f,  // adsr
     };
     std::vector<float> v_i_params_38392 (i_params_38392, i_params_38392 + sizeof(i_params_38392) / sizeof(float));
-    programs["Instr 38392"] = std::vector<float>(v_i_params_38392);
+    programs["Dark Future Sweep"] = std::vector<float>(v_i_params_38392);
 
     const float i_params_39687[] = {
         0.000000f, 0.000000f,  // waveforms
@@ -179,7 +179,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.7f, 0.0f, 0.4f,  // adsr
     };
     std::vector<float> v_i_params_39687 (i_params_39687, i_params_39687 + sizeof(i_params_39687) / sizeof(float));
-    programs["Instr 39687"] = std::vector<float>(v_i_params_39687);
+    programs["Sinister Bass"] = std::vector<float>(v_i_params_39687);
 
     const float i_params_76784[] = {
         0.000000f, 0.660000f,  // waveforms
@@ -194,7 +194,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.4f, 0.5f, 0.3f,  // adsr
     };
     std::vector<float> v_i_params_76784 (i_params_76784, i_params_76784 + sizeof(i_params_76784) / sizeof(float));
-    programs["Instr 76784"] = std::vector<float>(v_i_params_76784);
+    programs["Buzcut Bass"] = std::vector<float>(v_i_params_76784);
 
     const float i_params_97283[] = {
         0.000000f, 0.660000f,  // waveforms
@@ -209,7 +209,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.6f, 0.7f, 0.1f, 0.1f,  // adsr
     };
     std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
-    programs["Instr 97283"] = std::vector<float>(v_i_params_97283);
+    programs["Death Toll Bell"] = std::vector<float>(v_i_params_97283);
 
 	// The start of the Dune 2 introduction
     const float i_params_3136[] = {
@@ -225,7 +225,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.4f, 0.2f, 0.3f,  // adsr
     };
     std::vector<float> v_i_params_3136 (i_params_3136, i_params_3136 + sizeof(i_params_3136) / sizeof(float));
-    programs["Instr 3136"] = std::vector<float>(v_i_params_3136);
+    programs["Westwood Chime"] = std::vector<float>(v_i_params_3136);
 
     const float i_params_7254[] = {
         0.000000f, 0.330000f,  // waveforms
@@ -240,7 +240,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.2f, 0.1f, 0.1f, 0.0f,  // adsr
     };
     std::vector<float> v_i_params_7254 (i_params_7254, i_params_7254 + sizeof(i_params_7254) / sizeof(float));
-    programs["Instr 7254"] = std::vector<float>(v_i_params_7254);
+    programs["Desert Pipe"] = std::vector<float>(v_i_params_7254);
 
     const float i_params_20108[] = {
         0.000000f, 0.000000f,  // waveforms
@@ -255,7 +255,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
     };
     std::vector<float> v_i_params_20108 (i_params_20108, i_params_20108 + sizeof(i_params_20108) / sizeof(float));
-    programs["Instr 20108"] = std::vector<float>(v_i_params_20108);
+    programs["Y2180 Strings"] = std::vector<float>(v_i_params_20108);
 
     const float i_params_27550[] = {
         1.000000f, 0.000000f,  // waveforms
@@ -270,7 +270,37 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.9f, 0.1f, 0.0f, 1.0f,  // adsr
     };
     std::vector<float> v_i_params_27550 (i_params_27550, i_params_27550 + sizeof(i_params_27550) / sizeof(float));
-    programs["Instr 27550"] = std::vector<float>(v_i_params_27550);
+    programs["Emperor Chord"] = std::vector<float>(v_i_params_27550);
+
+    const float i_params_harpsi[] = {
+        0.330000f, 0.330000f,  // waveforms
+        0.066667f, 0.200000f,  // frq multipliers
+        0.142857f, 0.260000f,  // attenuation
+        0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        0.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.000000f,            // feedback
+        0.85f, 0.3f, 0.3f, 0.3f,  // adsr
+        0.85f, 0.3f, 0.1f, 0.6f,  // adsr
+    };
+    std::vector<float> v_i_params_harpsi (i_params_harpsi, i_params_harpsi + sizeof(i_params_harpsi) / sizeof(float));
+    programs["Harpsi"] = std::vector<float>(v_i_params_harpsi);
+
+    const float i_params_tromba[] = {
+        0.000000f, 0.330000f,  // waveforms
+        0.066667f, 0.000000f,  // frq multipliers
+        0.142857f, 0.220000f,  // attenuation
+        0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        1.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.500000f,            // feedback
+        0.45f, 0.3f, 0.3f, 0.3f,  // adsr
+        0.45f, 0.45f, 0.1f, 0.6f,  // adsr
+    };
+    std::vector<float> v_i_params_tromba (i_params_tromba, i_params_tromba + sizeof(i_params_tromba) / sizeof(float));
+    programs["Tromba"] = std::vector<float>(v_i_params_tromba);
 
 }
 
