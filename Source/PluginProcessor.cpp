@@ -499,6 +499,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			while (ch <= Hiopl::CHANNELS && NO_NOTE != active_notes[ch]) {
 				ch += 1;
 			}
+			Opl->SetAttenuation(ch, 2, 63 - (midi_message.getVelocity() / 2));
 			Opl->KeyOn(ch, noteHz);
 			active_notes[ch] = n;
 		}
