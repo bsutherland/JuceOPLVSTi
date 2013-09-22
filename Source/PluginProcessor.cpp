@@ -302,6 +302,21 @@ void JuceOplvstiAudioProcessor::initPrograms()
     std::vector<float> v_i_params_tromba (i_params_tromba, i_params_tromba + sizeof(i_params_tromba) / sizeof(float));
     programs["Tromba"] = std::vector<float>(v_i_params_tromba);
 
+    const float i_params_bassdrum[] = {
+        0.000000f, 1.000000f,  // waveforms
+        0.000000f, 0.000000f,  // frq multipliers
+        0.000000f, 0.090000f,  // attenuation
+        1.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
+        1.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
+        0.000000f, 0.000000f,  // KSR/8ve
+        0.000000f,            // algorithm
+        0.500000f,            // feedback
+        1.00f, 0.5f, 0.3f, 0.4f,  // adsr
+        1.00f, 0.75f, 0.5f, 0.5f,  // adsr
+    };
+    std::vector<float> v_i_params_bassdrum (i_params_bassdrum, i_params_bassdrum + sizeof(i_params_bassdrum) / sizeof(float));
+    programs["bassdrum"] = std::vector<float>(v_i_params_bassdrum);
+
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -530,15 +545,19 @@ AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 //==============================================================================
 void JuceOplvstiAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+	destData.ensureSize(sizeof(float) * getNumParameters());
+	for (int i = 0; i < getNumParameters(); i++) {
+		float p = getParameter(i);
+		destData.copyFrom((void*)&p, i*sizeof(float), sizeof(float));
+	}
 }
 
 void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+	float* fdata = (float*)data;
+	for (unsigned int i = 0; i < sizeInBytes / sizeof(float); i++) {
+		setParameter(i, fdata[i]);
+	}	
 }
 
 //==============================================================================
