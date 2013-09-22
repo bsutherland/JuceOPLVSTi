@@ -26,14 +26,16 @@ class Hiopl {
 
 		void EnableTremolo(int ch, int osc, bool enable);
 		void EnableVibrato(int ch, int osc, bool enable);
+		void VibratoDepth(bool high);
+		void TremoloDepth(bool high);
 		void EnableSustain(int ch, int osc, bool enable);
-		void EnableKeyscaling(int ch, int osc, bool enable);
+		void EnableKsr(int ch, int osc, bool enable);
 		// true = additive; false = frequency modulation
 		void EnableAdditiveSynthesis(int ch, bool enable);
 		
 		void SetWaveform(int ch, int osc, Waveform wave);
 		void SetAttenuation(int ch, int osc, int level);
-		void SetKsr(int ch, int osc, int level);
+		void SetKsl(int ch, int osc, int level);
 		void SetFrequencyMultiple(int ch, int osc, FreqMultiple mult);
 		void SetEnvelopeAttack(int ch, int osc, int t);
 		void SetEnvelopeDecay(int ch, int osc, int t);

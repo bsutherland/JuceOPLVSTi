@@ -7,6 +7,7 @@
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 {
 	// Initalize OPL
+	velocity = false;
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
@@ -31,6 +32,10 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
 	);
 
+	const String onoff[] = {"Disable", "Enable"};
+	params.push_back(new EnumFloatParameter("Velocity Scaling",
+		StringArray(onoff, sizeof(onoff)/sizeof(String)))
+	);
 	const String levels[] = {"0.00 dB", "0.75 dB", "1.50 dB", "2.25 dB", "3.00 dB", "3.75 dB", "4.50 dB", "5.25 dB", "6.00 dB", "6.75 dB", "7.50 dB", "8.25 dB", "9.00 dB", "9.75 dB", "10.50 dB", "11.25 dB", "12.00 dB", "12.75 dB", "13.50 dB", "14.25 dB", "15.00 dB", "15.75 dB", "16.50 dB", "17.25 dB", "18.00 dB", "18.75 dB", "19.50 dB", "20.25 dB", "21.00 dB", "21.75 dB", "22.50 dB", "23.25 dB", "24.00 dB", "24.75 dB", "25.50 dB", "26.25 dB", "27.00 dB", "27.75 dB", "28.50 dB", "29.25 dB", "30.00 dB", "30.75 dB", "31.50 dB", "32.25 dB", "33.00 dB", "33.75 dB", "34.50 dB", "35.25 dB", "36.00 dB", "36.75 dB", "37.50 dB", "38.25 dB", "39.00 dB", "39.75 dB", "40.50 dB", "41.25 dB", "42.00 dB", "42.75 dB", "43.50 dB", "44.25 dB", "45.00 dB", "45.75 dB", "46.50 dB", "47.25 dB"};
 	params.push_back(new EnumFloatParameter("Carrier Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
@@ -39,7 +44,15 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(levels, sizeof(levels)/sizeof(String)))
 	);
 
-	const String onoff[] = {"Disable", "Enable"};
+	const String depth[] = {"Light", "Heavy"};
+	params.push_back(new EnumFloatParameter("Tremolo Depth",
+		StringArray(depth, sizeof(depth)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Vibrato Depth",
+		StringArray(depth, sizeof(depth)/sizeof(String)))
+	);
+
+
 	params.push_back(new EnumFloatParameter("Carrier Tremolo",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
 	);
@@ -49,7 +62,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Carrier Sustain",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
 	);
-	params.push_back(new EnumFloatParameter("Carrier Keyscaling",
+	params.push_back(new EnumFloatParameter("Carrier Keyscale Rate",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
 	);
 	params.push_back(new EnumFloatParameter("Modulator Tremolo",
@@ -61,15 +74,15 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new EnumFloatParameter("Modulator Sustain",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
 	);
-	params.push_back(new EnumFloatParameter("Modulator Keyscaling",
+	params.push_back(new EnumFloatParameter("Modulator Keyscale Rate",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
 	);
 
 	const String ksrs[] = {"None","1.5 dB/8ve","3 dB/8ve","6 dB/8ve"};
-	params.push_back(new EnumFloatParameter("Carrier KSR",
+	params.push_back(new EnumFloatParameter("Carrier Keyscale Level",
 		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
 	);
-	params.push_back(new EnumFloatParameter("Modulator KSR",
+	params.push_back(new EnumFloatParameter("Modulator Keyscale Level",
 		StringArray(ksrs, sizeof(ksrs)/sizeof(String)))
 	);
 
@@ -109,7 +122,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_0[] = {
         0.000000f, 0.660000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.142857f, 0.412698f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -124,7 +139,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_19189[] = {
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.285714f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -139,7 +156,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_38377[] = {
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.460317f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -154,7 +173,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_38392[] = {
         0.000000f, 0.000000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.000000f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -169,7 +190,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_39687[] = {
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.333333f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.301587f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 1.000000f,  // KSR/8ve
@@ -184,7 +207,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_76784[] = {
         0.000000f, 0.660000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.428571f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -199,7 +224,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_97283[] = {
         0.000000f, 0.660000f,  // waveforms
         0.133333f, 0.400000f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.365079f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.660000f,  // KSR/8ve
@@ -215,7 +242,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_3136[] = {
         0.000000f, 0.660000f,  // waveforms
         0.133333f, 0.133333f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.333333f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.330000f,  // KSR/8ve
@@ -230,7 +259,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_7254[] = {
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.253968f, 0.476190f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         1.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         1.0f, 1.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.330000f,  // KSR/8ve
@@ -245,7 +276,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_20108[] = {
         0.000000f, 0.000000f,  // waveforms
         0.400000f, 0.066667f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.238095f, 0.000000f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         1.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.000000f, 0.330000f,  // KSR/8ve
@@ -260,7 +293,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_27550[] = {
         1.000000f, 0.000000f,  // waveforms
         0.000000f, 0.066667f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.238095f, 0.793651f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 1.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -275,7 +310,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_harpsi[] = {
         0.330000f, 0.330000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.142857f, 0.260000f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         0.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -290,7 +327,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_tromba[] = {
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.000000f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.142857f, 0.220000f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         1.0f, 0.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -305,7 +344,9 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_bassdrum[] = {
         0.000000f, 1.000000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
+		0.000000f,			   // velocity scaling
         0.000000f, 0.090000f,  // attenuation
+		0.000000f, 0.000000f,  // tremolo / vibrato depth
         1.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
         1.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
         0.000000f, 0.000000f,  // KSR/8ve
@@ -380,10 +421,10 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetEnvelopeRelease(c, osc, ((IntFloatParameter*)p)->getParameterValue());
 	} else if (name.endsWith("Feedback")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetModulatorFeedback(c, ((IntFloatParameter*)p)->getParameterValue());
-	} else if (name.endsWith("KSR")) {
-		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetKsr(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
-	} else if (name.endsWith("Keyscaling")) {
-		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableKeyscaling(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.endsWith("Keyscale Level")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->SetKsl(c, osc, ((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.endsWith("Keyscale Rate")) {
+		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableKsr(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.endsWith("Sustain")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableSustain(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.endsWith("Tremolo")) {
@@ -392,6 +433,12 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableVibrato(c, osc, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.endsWith("Algorithm")) {
 		for(int c=1;c<=Hiopl::CHANNELS;c++) Opl->EnableAdditiveSynthesis(c, ((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.startsWith("Tremolo Depth")) {
+		Opl->TremoloDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.startsWith("Vibrato Depth")) {
+		Opl->VibratoDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.startsWith("Velocity Scaling")) {
+		velocity = ((EnumFloatParameter*)p)->getParameterIndex() > 0;
 	}
 
 }
@@ -514,7 +561,9 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			while (ch <= Hiopl::CHANNELS && NO_NOTE != active_notes[ch]) {
 				ch += 1;
 			}
-			Opl->SetAttenuation(ch, 2, 63 - (midi_message.getVelocity() / 2));
+			if (velocity) {
+				Opl->SetAttenuation(ch, 2, 63 - (midi_message.getVelocity() / 2));
+			}
 			Opl->KeyOn(ch, noteHz);
 			active_notes[ch] = n;
 		}

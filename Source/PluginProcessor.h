@@ -78,6 +78,7 @@ private:
 	std::map<String, std::vector<float>> programs;
 	std::vector<String> program_order;
 	int i_program;
+	bool velocity;
 	static const int NO_NOTE=-1;
 	int active_notes[Hiopl::CHANNELS+1];	// keyed by channel
 

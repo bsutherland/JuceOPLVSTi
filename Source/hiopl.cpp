@@ -92,7 +92,7 @@ void Hiopl::SetAttenuation(int ch, int osc, int level) {
 	_WriteReg(0x40+offset, (Bit8u)level, 0x3f);
 }
 
-void Hiopl::SetKsr(int ch, int osc, int level) {
+void Hiopl::SetKsl(int ch, int osc, int level) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0x40+offset, (Bit8u)(level<<6), 0xc0);
 }
@@ -132,12 +132,20 @@ void Hiopl::EnableVibrato(int ch, int osc, bool enable) {
 	_WriteReg(0x20+offset, enable ? 0x40 : 0x0, 0x40);
 }
 
+void Hiopl::TremoloDepth(bool high) {
+	_WriteReg(0xbd, high ? 0x80 : 0x0, 0x80);
+}
+
+void Hiopl::VibratoDepth(bool high) {
+	_WriteReg(0xbd, high ? 0x40 : 0x0, 0x40);
+}
+
 void Hiopl::EnableSustain(int ch, int osc, bool enable) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0x20+offset, enable ? 0x20 : 0x0, 0x20);
 }
 
-void Hiopl::EnableKeyscaling(int ch, int osc, bool enable) {
+void Hiopl::EnableKsr(int ch, int osc, bool enable) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0x20+offset, enable ? 0x10 : 0x0, 0x10);
 }
