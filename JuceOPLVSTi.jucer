@@ -41,9 +41,6 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="IvGocs" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="PUM7RE" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="jHO5FF" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="ep2XEF" name="setup.h" compile="0" resource="0" file="Source/setup.h"/>
     </GROUP>
   </MAINGROUP>
