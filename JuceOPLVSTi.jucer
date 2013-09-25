@@ -10,6 +10,20 @@
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0">
   <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
+      <FILE id="CGPOGV" name="IntFloatParameter.cpp" compile="1" resource="0"
+            file="Source/IntFloatParameter.cpp"/>
+      <FILE id="uAEGVV" name="IntFloatParameter.h" compile="0" resource="0"
+            file="Source/IntFloatParameter.h"/>
+      <FILE id="GnuXsD" name="EnumFloatParameter.cpp" compile="1" resource="0"
+            file="Source/EnumFloatParameter.cpp"/>
+      <FILE id="GQm1JF" name="EnumFloatParameter.h" compile="0" resource="0"
+            file="Source/EnumFloatParameter.h"/>
+      <FILE id="cyDyMZ" name="FloatParameter.cpp" compile="1" resource="0"
+            file="Source/FloatParameter.cpp"/>
+      <FILE id="RwbIyF" name="FloatParameter.h" compile="0" resource="0"
+            file="Source/FloatParameter.h"/>
+      <FILE id="SyIvF1" name="PluginGui.cpp" compile="1" resource="0" file="Source/PluginGui.cpp"/>
+      <FILE id="a2DQGI" name="PluginGui.h" compile="0" resource="0" file="Source/PluginGui.h"/>
       <FILE id="BZFxoj" name="adlib.h" compile="0" resource="0" file="Source/adlib.h"/>
       <FILE id="c6G4EF" name="config.h" compile="0" resource="0" file="Source/config.h"/>
       <FILE id="TnpE3r" name="dbopl.cpp" compile="1" resource="0" file="Source/dbopl.cpp"/>

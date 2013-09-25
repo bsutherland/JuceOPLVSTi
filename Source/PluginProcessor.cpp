@@ -1,5 +1,5 @@
 #include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "PluginGui.h"
 #include "EnumFloatParameter.h"
 #include "IntFloatParameter.h"
 
@@ -583,12 +583,12 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 //==============================================================================
 bool JuceOplvstiAudioProcessor::hasEditor() const
 {
-    return false; // (change this to false if you choose to not supply an editor)
+    return true; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 {
-    return new JuceOplvstiAudioProcessorEditor (this);
+    return new PluginGui (this);
 }
 
 //==============================================================================
