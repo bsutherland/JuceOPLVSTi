@@ -92,6 +92,39 @@ private:
     ScopedPointer<ImageButton> abssineImageButton;
     ScopedPointer<ImageButton> quartersineImageButton;
     ScopedPointer<Label> waveLabel;
+    ScopedPointer<ToggleButton> tremoloButton;
+    ScopedPointer<ToggleButton> vibratoButton;
+    ScopedPointer<ToggleButton> sustainButton;
+    ScopedPointer<ToggleButton> keyscaleEnvButton;
+    ScopedPointer<Slider> keyscaleSlider;
+    ScopedPointer<Label> frequencyLabel2;
+    ScopedPointer<Label> dbLabel2;
+    ScopedPointer<GroupComponent> groupComponent2;
+    ScopedPointer<ComboBox> frequencyComboBox2;
+    ScopedPointer<Label> frequencyLabel3;
+    ScopedPointer<Slider> aSlider2;
+    ScopedPointer<Label> aLabel2;
+    ScopedPointer<Slider> dSlider2;
+    ScopedPointer<Label> dLabel3;
+    ScopedPointer<Slider> sSlider2;
+    ScopedPointer<Label> dLabel4;
+    ScopedPointer<Slider> rSlider2;
+    ScopedPointer<Label> rLabel2;
+    ScopedPointer<Slider> attenuationSlider2;
+    ScopedPointer<Label> attenuationLabel2;
+    ScopedPointer<Label> dbLabel3;
+    ScopedPointer<ImageButton> sineImageButton2;
+    ScopedPointer<ImageButton> halfsineImageButton2;
+    ScopedPointer<ImageButton> abssineImageButton2;
+    ScopedPointer<ImageButton> quartersineImageButton2;
+    ScopedPointer<Label> waveLabel2;
+    ScopedPointer<ToggleButton> tremoloButton2;
+    ScopedPointer<ToggleButton> vibratoButton2;
+    ScopedPointer<ToggleButton> sustainButton2;
+    ScopedPointer<ToggleButton> keyscaleEnvButton2;
+    ScopedPointer<Slider> keyscaleSlider2;
+    ScopedPointer<Label> frequencyLabel4;
+    ScopedPointer<Label> dbLabel4;
 
 
     //==============================================================================
