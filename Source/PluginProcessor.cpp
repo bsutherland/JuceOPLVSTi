@@ -110,10 +110,11 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	for(std::map<String,std::vector<float>>::iterator it = programs.begin(); it != programs.end(); ++it) {
 		program_order.push_back(it->first);
 	}
+	
 	setCurrentProgram(0);
 	for (int i = 0; i < Hiopl::CHANNELS+1; i++) {
 		active_notes[i] = NO_NOTE;
-	}	
+	}
 }
 
 void JuceOplvstiAudioProcessor::initPrograms()
@@ -396,6 +397,20 @@ void JuceOplvstiAudioProcessor::setEnumParameter (String name, int index)
 	setParameter(i, p->getParameter());
 }
 
+int JuceOplvstiAudioProcessor::getIntParameter (String name)
+{
+	int i = paramIdxByName[name];
+	IntFloatParameter* p = (IntFloatParameter*)params[i];
+	return p->getParameterValue();
+}
+
+int JuceOplvstiAudioProcessor::getEnumParameter (String name)
+{
+	int i = paramIdxByName[name];
+	EnumFloatParameter* p = (EnumFloatParameter*)params[i];
+	return p->getParameterIndex();
+}
+
 void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 {
 	FloatParameter* p = params[index];
@@ -518,6 +533,10 @@ void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 	for (unsigned int i = 0; i < params.size() && i < v_params.size(); i++) {
 		setParameter(i, v_params[i]);
 	}
+	PluginGui* gui = (PluginGui*)getActiveEditor();
+	if (gui) {
+		gui->updateFromParameters();
+	}
 }
 
 const String JuceOplvstiAudioProcessor::getProgramName (int index)
@@ -588,7 +607,9 @@ bool JuceOplvstiAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 {
-    return new PluginGui (this);
+	PluginGui* gui = new PluginGui(this);
+	gui->updateFromParameters();
+	return gui;
 }
 
 //==============================================================================

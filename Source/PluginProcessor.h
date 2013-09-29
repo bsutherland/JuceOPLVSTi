@@ -46,6 +46,8 @@ public:
     void setParameter (int index, float newValue);
 	void setEnumParameter (String name, int newValue);
 	void setIntParameter (String name, int newValue);
+	int getIntParameter (String name);
+	int getEnumParameter (String name);
 
     const String getParameterName (int index);
     const String getParameterText (int index);

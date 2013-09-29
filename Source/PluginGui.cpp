@@ -24,6 +24,58 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
+void PluginGui::updateFromParameters()
+{
+	sineImageButton->setToggleState(false, false);
+	halfsineImageButton->setToggleState(false, false);
+	abssineImageButton->setToggleState(false, false);
+	quartersineImageButton->setToggleState(false, false);
+	switch(processor->getEnumParameter("Modulator Wave")) {
+		case 0: sineImageButton->setToggleState(true, false); break;
+		case 1: halfsineImageButton->setToggleState(true, false); break;
+		case 2: abssineImageButton->setToggleState(true, false); break;
+		case 3: quartersineImageButton->setToggleState(true, false); break;
+	}
+	sineImageButton2->setToggleState(false, false);
+	halfsineImageButton2->setToggleState(false, false);
+	abssineImageButton2->setToggleState(false, false);
+	quartersineImageButton2->setToggleState(false, false);
+	switch(processor->getEnumParameter("Carrier Wave")) {
+		case 0: sineImageButton2->setToggleState(true, false); break;
+		case 1: halfsineImageButton2->setToggleState(true, false); break;
+		case 2: abssineImageButton2->setToggleState(true, false); break;
+		case 3: quartersineImageButton2->setToggleState(true, false); break;
+	}
+
+	frequencyComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Frequency Multiplier"), true);
+	frequencyComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Frequency Multiplier"), true);
+
+	attenuationSlider->setValue(processor->getEnumParameter("Modulator Attenuation") * -0.75, NotificationType::dontSendNotification);
+	attenuationSlider2->setValue(processor->getEnumParameter("Carrier Attenuation") * -0.75, NotificationType::dontSendNotification);
+
+	aSlider->setValue(processor->getIntParameter("Modulator Attack"), NotificationType::dontSendNotification);
+	dSlider->setValue(processor->getIntParameter("Modulator Decay"), NotificationType::dontSendNotification);
+	sSlider->setValue(processor->getIntParameter("Modulator Sustain Level"), NotificationType::dontSendNotification);
+	rSlider->setValue(processor->getIntParameter("Modulator Release"), NotificationType::dontSendNotification);
+	aSlider2->setValue(processor->getIntParameter("Carrier Attack"), NotificationType::dontSendNotification);
+	dSlider2->setValue(processor->getIntParameter("Carrier Decay"), NotificationType::dontSendNotification);
+	sSlider2->setValue(processor->getIntParameter("Carrier Sustain Level"), NotificationType::dontSendNotification);
+	rSlider2->setValue(processor->getIntParameter("Carrier Release"), NotificationType::dontSendNotification);
+
+	keyscaleSlider->setValue(processor->getIntParameter("Modulator Keyscale Level"), NotificationType::dontSendNotification);
+	keyscaleSlider2->setValue(processor->getIntParameter("Carrier Keyscale Level"), NotificationType::dontSendNotification);
+
+
+	if (processor->getEnumParameter("Modulator Tremolo")) tremoloButton->setToggleState(true, false);
+	if (processor->getEnumParameter("Modulator Vibrato")) vibratoButton->setToggleState(true, false);
+	if (processor->getEnumParameter("Modulator Sustain")) sustainButton->setToggleState(true, false);
+	if (processor->getEnumParameter("Modulator Keyscale Rate")) keyscaleEnvButton->setToggleState(true, false);
+
+	if (processor->getEnumParameter("Carrier Tremolo")) tremoloButton2->setToggleState(true, false);
+	if (processor->getEnumParameter("Carrier Vibrato")) vibratoButton2->setToggleState(true, false);
+	if (processor->getEnumParameter("Carrier Sustain")) sustainButton2->setToggleState(true, false);
+	if (processor->getEnumParameter("Carrier Keyscale Rate")) keyscaleEnvButton2->setToggleState(true, false);
+}
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -396,7 +448,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     addAndMakeVisible (sineImageButton2 = new ImageButton ("sine image button"));
     sineImageButton2->setTooltip ("sine");
     sineImageButton2->setButtonText ("Sine");
-    sineImageButton2->setRadioGroupId (1);
+    sineImageButton2->setRadioGroupId (2);
     sineImageButton2->addListener (this);
 
     sineImageButton2->setImages (false, true, true,
@@ -406,7 +458,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     addAndMakeVisible (halfsineImageButton2 = new ImageButton ("half sine image button"));
     halfsineImageButton2->setTooltip ("half sine");
     halfsineImageButton2->setButtonText ("Half Sine");
-    halfsineImageButton2->setRadioGroupId (1);
+    halfsineImageButton2->setRadioGroupId (2);
     halfsineImageButton2->addListener (this);
 
     halfsineImageButton2->setImages (false, true, true,
@@ -416,7 +468,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     addAndMakeVisible (abssineImageButton2 = new ImageButton ("abs sine image button"));
     abssineImageButton2->setTooltip ("abs sine");
     abssineImageButton2->setButtonText ("Abs Sine");
-    abssineImageButton2->setRadioGroupId (1);
+    abssineImageButton2->setRadioGroupId (2);
     abssineImageButton2->addListener (this);
 
     abssineImageButton2->setImages (false, true, true,
@@ -426,7 +478,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     addAndMakeVisible (quartersineImageButton2 = new ImageButton ("quarter sine image button"));
     quartersineImageButton2->setTooltip ("quarter sine");
     quartersineImageButton2->setButtonText ("Quarter Sine");
-    quartersineImageButton2->setRadioGroupId (1);
+    quartersineImageButton2->setRadioGroupId (2);
     quartersineImageButton2->addListener (this);
 
     quartersineImageButton2->setImages (false, true, true,
@@ -1141,26 +1193,26 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="sine image button" id="27e01d31ba835965" memberName="sineImageButton2"
                virtualName="" explicitFocusOrder="0" pos="120 352 34 30" tooltip="sine"
-               buttonText="Sine" connectedEdges="0" needsCallback="1" radioGroupId="1"
+               buttonText="Sine" connectedEdges="0" needsCallback="1" radioGroupId="2"
                keepProportions="1" resourceNormal="full_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="half sine image button" id="6e9afdb08dd4edac" memberName="halfsineImageButton2"
                virtualName="" explicitFocusOrder="0" pos="176 352 34 30" tooltip="half sine"
-               buttonText="Half Sine" connectedEdges="0" needsCallback="1" radioGroupId="1"
+               buttonText="Half Sine" connectedEdges="0" needsCallback="1" radioGroupId="2"
                keepProportions="1" resourceNormal="half_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="abs sine image button" id="361941cfa04130c1" memberName="abssineImageButton2"
                virtualName="" explicitFocusOrder="0" pos="232 352 34 30" tooltip="abs sine"
-               buttonText="Abs Sine" connectedEdges="0" needsCallback="1" radioGroupId="1"
+               buttonText="Abs Sine" connectedEdges="0" needsCallback="1" radioGroupId="2"
                keepProportions="1" resourceNormal="abs_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="quarter sine image button" id="3fa62f49fdd1a41f" memberName="quartersineImageButton2"
                virtualName="" explicitFocusOrder="0" pos="288 352 34 30" tooltip="quarter sine"
                buttonText="Quarter Sine" connectedEdges="0" needsCallback="1"
-               radioGroupId="1" keepProportions="1" resourceNormal="quarter_sine_png"
+               radioGroupId="2" keepProportions="1" resourceNormal="quarter_sine_png"
                opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
                colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
   <LABEL name="wave label" id="c810628f3c772781" memberName="waveLabel2"

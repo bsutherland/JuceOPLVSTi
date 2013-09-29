@@ -30,9 +30,7 @@
 //==============================================================================
 /**
                                                                     //[Comments]
-    An auto-generated component, created by the Introjucer.
-
-    Describe your class and how it works here!
+	This is a GUI for the OPL2 VST plugin, created in Juce.
                                                                     //[/Comments]
 */
 class PluginGui  : public AudioProcessorEditor,
@@ -47,6 +45,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+	void updateFromParameters();
     //[/UserMethods]
 
     void paint (Graphics& g);
