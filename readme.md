@@ -52,14 +52,14 @@ The code I wrote is basically conversion glue between the DOSBox OPL emulator, t
 
 ## Building ##
 
-So far I've only built under Windows. Thanks to Juce, it should be possible to build under OSX and Linux too. Volunteers to build OSX/Linux releases would be appreciated (XCode required for OSX).
+So far I've only built under Windows. Thanks to Juce, it should be possible to build under OSX and Linux too. **Volunteers to build OSX/Linux releases would be appreciated** (XCode required for OSX).
 
 ### Windows Build Instructions ###
 
-1) Download Juce (http://www.juce.com/)
-2) Build and run "The Introjucer"
-3) Open JuceOPLVSTi.jucer
+1. Download Juce (http://www.juce.com/)
+2. Build and run "The Introjucer"
+3. Open JuceOPLVSTi.jucer
    - Make any changes to the GUI layout and components here (PluginEditor.cpp).
    - Save PluginEditor.cpp if modified
-4) Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
-5) Build!
+4. Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
+5. Build!
