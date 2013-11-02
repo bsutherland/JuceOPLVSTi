@@ -50,10 +50,16 @@ The VST was written using Juce, a cross-platform C++ library inspired by the Jav
 
 The code I wrote is basically conversion glue between the DOSBox OPL emulator, the VST interface, and human friendly values.
 
-## Bulding ##
+## Building ##
 
-You need Juce and Microsoft Visual Studio to build this plugin. I used Visual Studio Express 2012.
+So far I've only built under Windows. Thanks to Juce, it should be possible to build under OSX and Linux too. Volunteers to build OSX/Linux releases would be appreciated (XCode required for OSX).
 
-http://www.juce.com/downloads
+### Windows Build Instructions ###
 
-After downloading the code, build the "Introjucer" app and open JuceOPLVSTI.jucer (this is the project file). Go to File and hit "Save Project and Open in Visual Studio". This will generate a bunch of source code for you in the JuceLibraryCode directory, and a Visual Studio project file in the Builds directory. After that you should be able to build the project.
+1) Download Juce (http://www.juce.com/)
+2) Build and run "The Introjucer"
+3) Open JuceOPLVSTi.jucer
+   - Make any changes to the GUI layout and components here (PluginEditor.cpp).
+   - Save PluginEditor.cpp if modified
+4) Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
+5) Build!

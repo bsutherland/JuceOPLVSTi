@@ -124,6 +124,15 @@ private:
     ScopedPointer<Slider> keyscaleSlider2;
     ScopedPointer<Label> frequencyLabel4;
     ScopedPointer<Label> dbLabel4;
+    ScopedPointer<GroupComponent> groupComponent3;
+    ScopedPointer<Slider> tremoloSlider;
+    ScopedPointer<Label> frequencyLabel5;
+    ScopedPointer<Label> dbLabel5;
+    ScopedPointer<Slider> vibratoSlider;
+    ScopedPointer<Label> frequencyLabel6;
+    ScopedPointer<Label> dbLabel6;
+    ScopedPointer<Slider> feedbackSlider;
+    ScopedPointer<Label> frequencyLabel7;
 
 
     //==============================================================================
