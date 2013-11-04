@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="1.0.0"
+<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.9.1"
               bundleIdentifier="com.plainweave.JuceOPLVSTi" buildVST="1" buildAU="1"
               pluginName="JuceOPLVSTi" pluginDesc="JuceOPLVSTi" pluginManufacturer="Plainweave Software"
               pluginManufacturerCode="Manu" pluginCode="Plug" pluginChannelConfigs="{0, 1}"
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
-              pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.JuceOPLVSTi"
+              pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0">
   <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
@@ -64,7 +64,7 @@
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
   <EXPORTFORMATS>
     <VS2012 targetFolder="Builds/VisualStudio2012" juceFolder="..\..\..\..\Users\bruce\Documents\juce\modules"
-            vstFolder="c:\SDKs\vstsdk2.4">
+            vstFolder="c:\SDKs\vstsdk2.4" extraLinkerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="JuceOPLVSTi"/>
