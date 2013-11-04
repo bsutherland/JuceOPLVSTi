@@ -755,7 +755,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	sustainButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
     //[/UserPreSize]
 
-    setSize (430, 800);
+    setSize (440, 810);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -1187,7 +1187,7 @@ BEGIN_JUCER_METADATA
                  parentClasses="public AudioProcessorEditor" constructorParams="JuceOplvstiAudioProcessor* ownerFilter"
                  variableInitialisers=" AudioProcessorEditor (ownerFilter)" snapPixels="8"
                  snapActive="1" snapShown="1" overlayOpacity="0.33" fixedSize="0"
-                 initialWidth="430" initialHeight="800">
+                 initialWidth="440" initialHeight="810">
   <BACKGROUND backgroundColour="ff000000"/>
   <GROUPCOMPONENT name="new group" id="d2c7c07bf2d78c30" memberName="groupComponent"
                   virtualName="" explicitFocusOrder="0" pos="16 8 408 336" outlinecol="ff007f00"
