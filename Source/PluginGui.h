@@ -133,6 +133,10 @@ private:
     ScopedPointer<Label> dbLabel6;
     ScopedPointer<Slider> feedbackSlider;
     ScopedPointer<Label> frequencyLabel7;
+    ScopedPointer<ComboBox> velocityComboBox;
+    ScopedPointer<Label> attenuationLabel3;
+    ScopedPointer<ComboBox> velocityComboBox2;
+    ScopedPointer<Label> attenuationLabel4;
 
 
     //==============================================================================

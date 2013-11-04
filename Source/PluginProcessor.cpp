@@ -32,6 +32,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
 	);
 
+	// note: No longer used. It's just a placeholder.
 	const String onoff[] = {"Disable", "Enable"};
 	params.push_back(new EnumFloatParameter("Velocity Scaling",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
@@ -101,6 +102,14 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	params.push_back(new IntFloatParameter("Modulator Sustain Level", 0, 15));
 	params.push_back(new IntFloatParameter("Modulator Release", 0, 15));
 
+	const String sensitivitySettings[] = {"None", "Low", "High"};
+	params.push_back(new EnumFloatParameter("Carrier Velocity Sensitivity",
+		StringArray(sensitivitySettings, sizeof(sensitivitySettings)/sizeof(String)))
+	);
+	params.push_back(new EnumFloatParameter("Modulator Velocity Sensitivity",
+		StringArray(sensitivitySettings, sizeof(sensitivitySettings)/sizeof(String)))
+	);
+
 	for(unsigned int i = 0; i < params.size(); i++) {
 		paramIdxByName[params[i]->getName()] = i;
 	}
@@ -133,6 +142,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         0.5f, 0.3f, 0.3f, 0.3f,  // adsr
         0.5f, 0.3f, 0.1f, 0.6f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_0 (i_params_0, i_params_0 + sizeof(i_params_0) / sizeof(float));
     programs["Mercenary Bass"] = std::vector<float>(v_i_params_0);
@@ -150,6 +160,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.571429f,            // feedback
         1.0f, 1.0f, 0.0f, 0.3f,  // adsr
         1.0f, 0.5f, 0.2f, 0.3f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_19189 (i_params_19189, i_params_19189 + sizeof(i_params_19189) / sizeof(float));
     programs["Patrol Bass"] = std::vector<float>(v_i_params_19189);
@@ -167,6 +178,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         1.0f, 0.3f, 0.5f, 0.5f,  // adsr
         1.0f, 0.1f, 0.9f, 1.0f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_38377 (i_params_38377, i_params_38377 + sizeof(i_params_38377) / sizeof(float));
     programs["Subdue Bass"] = std::vector<float>(v_i_params_38377);
@@ -184,6 +196,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         0.1f, 0.1f, 0.7f, 0.1f,  // adsr
         0.1f, 0.9f, 0.1f, 0.1f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_38392 (i_params_38392, i_params_38392 + sizeof(i_params_38392) / sizeof(float));
     programs["Dark Future Sweep"] = std::vector<float>(v_i_params_38392);
@@ -201,6 +214,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.571429f,            // feedback
         1.0f, 0.3f, 0.1f, 0.3f,  // adsr
         1.0f, 0.7f, 0.0f, 0.4f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_39687 (i_params_39687, i_params_39687 + sizeof(i_params_39687) / sizeof(float));
     programs["Sinister Bass"] = std::vector<float>(v_i_params_39687);
@@ -218,6 +232,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         1.0f, 0.3f, 0.4f, 0.4f,  // adsr
         1.0f, 0.4f, 0.5f, 0.3f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_76784 (i_params_76784, i_params_76784 + sizeof(i_params_76784) / sizeof(float));
     programs["Buzcut Bass"] = std::vector<float>(v_i_params_76784);
@@ -235,6 +250,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         0.6f, 0.7f, 0.0f, 0.2f,  // adsr
         0.6f, 0.7f, 0.1f, 0.1f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
     programs["Death Toll Bell"] = std::vector<float>(v_i_params_97283);
@@ -253,6 +269,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.571429f,            // feedback
         1.0f, 0.1f, 0.1f, 0.3f,  // adsr
         1.0f, 0.4f, 0.2f, 0.3f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_3136 (i_params_3136, i_params_3136 + sizeof(i_params_3136) / sizeof(float));
     programs["Westwood Chime"] = std::vector<float>(v_i_params_3136);
@@ -270,6 +287,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.571429f,            // feedback
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
         0.2f, 0.1f, 0.1f, 0.0f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_7254 (i_params_7254, i_params_7254 + sizeof(i_params_7254) / sizeof(float));
     programs["Desert Pipe"] = std::vector<float>(v_i_params_7254);
@@ -287,6 +305,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_20108 (i_params_20108, i_params_20108 + sizeof(i_params_20108) / sizeof(float));
     programs["Y2180 Strings"] = std::vector<float>(v_i_params_20108);
@@ -304,6 +323,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.571429f,            // feedback
         1.0f, 0.0f, 1.0f, 1.0f,  // adsr
         0.9f, 0.1f, 0.0f, 1.0f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_27550 (i_params_27550, i_params_27550 + sizeof(i_params_27550) / sizeof(float));
     programs["Emperor Chord"] = std::vector<float>(v_i_params_27550);
@@ -321,6 +341,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.000000f,            // feedback
         0.85f, 0.3f, 0.3f, 0.3f,  // adsr
         0.85f, 0.3f, 0.1f, 0.6f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_harpsi (i_params_harpsi, i_params_harpsi + sizeof(i_params_harpsi) / sizeof(float));
     programs["Harpsi"] = std::vector<float>(v_i_params_harpsi);
@@ -338,6 +359,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.500000f,            // feedback
         0.45f, 0.3f, 0.3f, 0.3f,  // adsr
         0.45f, 0.45f, 0.1f, 0.6f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_tromba (i_params_tromba, i_params_tromba + sizeof(i_params_tromba) / sizeof(float));
     programs["Tromba"] = std::vector<float>(v_i_params_tromba);
@@ -355,6 +377,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.500000f,            // feedback
         1.00f, 0.5f, 0.3f, 0.4f,  // adsr
         1.00f, 0.75f, 0.5f, 0.5f,  // adsr
+		0.0f, 0.0f,				 // velocity sensitivity
     };
     std::vector<float> v_i_params_bassdrum (i_params_bassdrum, i_params_bassdrum + sizeof(i_params_bassdrum) / sizeof(float));
     programs["bassdrum"] = std::vector<float>(v_i_params_bassdrum);
@@ -452,10 +475,7 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		Opl->TremoloDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.startsWith("Vibrato Depth")) {
 		Opl->VibratoDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
-	} else if (name.startsWith("Velocity Scaling")) {
-		velocity = ((EnumFloatParameter*)p)->getParameterIndex() > 0;
 	}
-
 }
 
 const String JuceOplvstiAudioProcessor::getParameterName (int index)
@@ -580,8 +600,27 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			while (ch <= Hiopl::CHANNELS && NO_NOTE != active_notes[ch]) {
 				ch += 1;
 			}
-			if (velocity) {
-				Opl->SetAttenuation(ch, 2, 63 - (midi_message.getVelocity() / 2));
+			switch (getEnumParameter("Carrier Velocity Sensitivity")) {
+				case 0:
+					Opl->SetAttenuation(ch, 2, getEnumParameter("Carrier Attenuation"));
+					break;
+				case 1:
+					Opl->SetAttenuation(ch, 2, 16 - (midi_message.getVelocity() / 8));
+					break;
+				case 2:
+					Opl->SetAttenuation(ch, 2, 32 - (midi_message.getVelocity() / 4));
+					break;
+			}
+			switch (getEnumParameter("Modulator Velocity Sensitivity")) {
+				case 0:
+					Opl->SetAttenuation(ch, 1, getEnumParameter("Modulator Attenuation"));
+					break;
+				case 1:
+					Opl->SetAttenuation(ch, 1, 32 - (midi_message.getVelocity() / 4));
+					break;
+				case 2:
+					Opl->SetAttenuation(ch, 1, 63 - (midi_message.getVelocity() / 2));
+					break;
 			}
 			Opl->KeyOn(ch, noteHz);
 			active_notes[ch] = n;
