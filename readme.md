@@ -2,6 +2,8 @@
 
 This VST instrument emulates the OPL2 sound chip.
 
+See here for Windows binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi/
+
 ## What's an OPL2? ##
 
 The OPL2 is a digital sound synthesis chip developed by Yamaha in the mid 1980s. Among other products, it was used in sound cards for PC, including the Adlib card, and later the Sound Blaster Pro, which had two OPL2 chips for stereo output.
