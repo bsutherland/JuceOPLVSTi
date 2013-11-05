@@ -57,9 +57,10 @@ So far I've only built under Windows. Thanks to Juce, it should be possible to b
 ### Windows Build Instructions ###
 
 1. Download Juce (http://www.juce.com/)
-2. Build and run "The Introjucer"
-3. Open JuceOPLVSTi.jucer
+2. Download the VST SDK (http://www.steinberg.net/en/company/developer.html)
+3. Build and run "The Introjucer"
+4. Open JuceOPLVSTi.jucer
    - Make any changes to the GUI layout and components here (PluginEditor.cpp).
    - Save PluginEditor.cpp if modified
-4. Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
-5. Build!
+5. Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
+6. Build!
