@@ -23,6 +23,7 @@ class Hiopl {
 		void Generate(int length, float* buffer);
 		void SetSampleRate(int hz);
 		void EnableWaveformControl();
+		void EnableOpl3Mode();
 
 		void EnableTremolo(int ch, int osc, bool enable);
 		void EnableVibrato(int ch, int osc, bool enable);

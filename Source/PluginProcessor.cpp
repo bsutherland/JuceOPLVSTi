@@ -11,10 +11,11 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
+	//Opl->EnableOpl3Mode();
 
 	// Initialize parameters
 
-	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine"};
+	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine", "Alternating Sine", "Camel Sine", "Square", "Logarithmic Sawtooth"};
 	params.push_back(new EnumFloatParameter("Carrier Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
 	);
@@ -32,11 +33,6 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(frq_multipliers, sizeof(frq_multipliers)/sizeof(String)))
 	);
 
-	// note: No longer used. It's just a placeholder.
-	const String onoff[] = {"Disable", "Enable"};
-	params.push_back(new EnumFloatParameter("Velocity Scaling",
-		StringArray(onoff, sizeof(onoff)/sizeof(String)))
-	);
 	const String levels[] = {"0.00 dB", "0.75 dB", "1.50 dB", "2.25 dB", "3.00 dB", "3.75 dB", "4.50 dB", "5.25 dB", "6.00 dB", "6.75 dB", "7.50 dB", "8.25 dB", "9.00 dB", "9.75 dB", "10.50 dB", "11.25 dB", "12.00 dB", "12.75 dB", "13.50 dB", "14.25 dB", "15.00 dB", "15.75 dB", "16.50 dB", "17.25 dB", "18.00 dB", "18.75 dB", "19.50 dB", "20.25 dB", "21.00 dB", "21.75 dB", "22.50 dB", "23.25 dB", "24.00 dB", "24.75 dB", "25.50 dB", "26.25 dB", "27.00 dB", "27.75 dB", "28.50 dB", "29.25 dB", "30.00 dB", "30.75 dB", "31.50 dB", "32.25 dB", "33.00 dB", "33.75 dB", "34.50 dB", "35.25 dB", "36.00 dB", "36.75 dB", "37.50 dB", "38.25 dB", "39.00 dB", "39.75 dB", "40.50 dB", "41.25 dB", "42.00 dB", "42.75 dB", "43.50 dB", "44.25 dB", "45.00 dB", "45.75 dB", "46.50 dB", "47.25 dB"};
 	params.push_back(new EnumFloatParameter("Carrier Attenuation",
 		StringArray(levels, sizeof(levels)/sizeof(String)))
@@ -53,7 +49,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(depth, sizeof(depth)/sizeof(String)))
 	);
 
-
+	const String onoff[] = {"Disable", "Enable"};
 	params.push_back(new EnumFloatParameter("Carrier Tremolo",
 		StringArray(onoff, sizeof(onoff)/sizeof(String)))
 	);
@@ -130,9 +126,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
 {
 	// these ones from the Syndicate in-game music
     const float i_params_0[] = {
-        0.000000f, 0.660000f,  // waveforms
+        0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.142857f, 0.412698f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -150,7 +145,6 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_19189[] = {
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.285714f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
@@ -166,9 +160,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Patrol Bass"] = std::vector<float>(v_i_params_19189);
 
     const float i_params_38377[] = {
-        0.000000f, 0.330000f,  // waveforms
+        0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.460317f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
@@ -186,7 +179,6 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_38392[] = {
         0.000000f, 0.000000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.000000f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -204,7 +196,6 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_39687[] = {
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.333333f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.301587f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
@@ -220,9 +211,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Sinister Bass"] = std::vector<float>(v_i_params_39687);
 
     const float i_params_76784[] = {
-        0.000000f, 0.660000f,  // waveforms
+        0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.428571f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -238,9 +228,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Buzcut Bass"] = std::vector<float>(v_i_params_76784);
 
     const float i_params_97283[] = {
-        0.000000f, 0.660000f,  // waveforms
+        0.000000f, 0.330000f,  // waveforms
         0.133333f, 0.400000f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.365079f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 1.0f,  // tre / vib / sus / ks
@@ -257,9 +246,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
 
 	// The start of the Dune 2 introduction
     const float i_params_3136[] = {
-        0.000000f, 0.660000f,  // waveforms
+        0.000000f, 0.330000f,  // waveforms
         0.133333f, 0.133333f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.333333f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
@@ -275,9 +263,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Westwood Chime"] = std::vector<float>(v_i_params_3136);
 
     const float i_params_7254[] = {
-        0.000000f, 0.330000f,  // waveforms
+        0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.253968f, 0.476190f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         1.0f, 1.0f, 1.0f, 1.0f,  // tre / vib / sus / ks
@@ -295,7 +282,6 @@ void JuceOplvstiAudioProcessor::initPrograms()
     const float i_params_20108[] = {
         0.000000f, 0.000000f,  // waveforms
         0.400000f, 0.066667f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.238095f, 0.000000f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         1.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -311,9 +297,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Y2180 Strings"] = std::vector<float>(v_i_params_20108);
 
     const float i_params_27550[] = {
-        1.000000f, 0.000000f,  // waveforms
+        0.500000f, 0.000000f,  // waveforms
         0.000000f, 0.066667f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.238095f, 0.793651f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 1.0f, 0.0f, 0.0f,  // tre / vib / sus / ks
@@ -329,9 +314,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Emperor Chord"] = std::vector<float>(v_i_params_27550);
 
     const float i_params_harpsi[] = {
-        0.330000f, 0.330000f,  // waveforms
+        0.330000f, 0.160000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.142857f, 0.260000f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -347,9 +331,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Harpsi"] = std::vector<float>(v_i_params_harpsi);
 
     const float i_params_tromba[] = {
-        0.000000f, 0.330000f,  // waveforms
+        0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.000000f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.142857f, 0.220000f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         0.0f, 0.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -365,9 +348,8 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Tromba"] = std::vector<float>(v_i_params_tromba);
 
     const float i_params_bassdrum[] = {
-        0.000000f, 1.000000f,  // waveforms
+        0.000000f, 0.500000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
-		0.000000f,			   // velocity scaling
         0.000000f, 0.090000f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
         1.0f, 1.0f, 1.0f, 0.0f,  // tre / vib / sus / ks
@@ -590,7 +572,6 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 	MidiMessage midi_message(0);
 	int sample_number;
 	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
-		//int ch = 1 + (midi_message.getNoteNumber() % Hiopl::CHANNELS);	// kind of hackish, but..
 		if (midi_message.isNoteOn()) {
 			//note on at sample_number samples after 
 			//the beginning of the current buffer

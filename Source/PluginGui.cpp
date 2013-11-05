@@ -30,21 +30,38 @@ void PluginGui::updateFromParameters()
 	halfsineImageButton->setToggleState(false, false);
 	abssineImageButton->setToggleState(false, false);
 	quartersineImageButton->setToggleState(false, false);
+	alternatingsineImageButton->setToggleState(false, false);
+	camelsineImageButton->setToggleState(false, false);
+	squareImageButton->setToggleState(false, false);
+	logsawImageButton->setToggleState(false, false);
 	switch(processor->getEnumParameter("Modulator Wave")) {
 		case 0: sineImageButton->setToggleState(true, false); break;
 		case 1: halfsineImageButton->setToggleState(true, false); break;
 		case 2: abssineImageButton->setToggleState(true, false); break;
 		case 3: quartersineImageButton->setToggleState(true, false); break;
+		case 4: alternatingsineImageButton->setToggleState(true, false); break;
+		case 5: camelsineImageButton->setToggleState(true, false); break;
+		case 6: squareImageButton->setToggleState(true, false); break;
+		case 7: logsawImageButton->setToggleState(true, false); break;
+
 	}
 	sineImageButton2->setToggleState(false, false);
 	halfsineImageButton2->setToggleState(false, false);
 	abssineImageButton2->setToggleState(false, false);
 	quartersineImageButton2->setToggleState(false, false);
+	alternatingsineImageButton2->setToggleState(false, false);
+	camelsineImageButton2->setToggleState(false, false);
+	squareImageButton2->setToggleState(false, false);
+	logsawImageButton2->setToggleState(false, false);
 	switch(processor->getEnumParameter("Carrier Wave")) {
 		case 0: sineImageButton2->setToggleState(true, false); break;
 		case 1: halfsineImageButton2->setToggleState(true, false); break;
 		case 2: abssineImageButton2->setToggleState(true, false); break;
 		case 3: quartersineImageButton2->setToggleState(true, false); break;
+		case 4: alternatingsineImageButton2->setToggleState(true, false); break;
+		case 5: camelsineImageButton2->setToggleState(true, false); break;
+		case 6: squareImageButton2->setToggleState(true, false); break;
+		case 7: logsawImageButton2->setToggleState(true, false); break;
 	}
 
 	frequencyComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Frequency Multiplier"), true);
@@ -676,6 +693,86 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     attenuationLabel4->setColour (TextEditor::textColourId, Colours::black);
     attenuationLabel4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
+    addAndMakeVisible (alternatingsineImageButton = new ImageButton ("alternating sine image button"));
+    alternatingsineImageButton->setTooltip ("alternating sine");
+    alternatingsineImageButton->setButtonText ("Alternating Sine");
+    alternatingsineImageButton->setRadioGroupId (1);
+    alternatingsineImageButton->addListener (this);
+
+    alternatingsineImageButton->setImages (false, true, true,
+                                           ImageCache::getFromMemory (alternating_sine_png, alternating_sine_pngSize), 0.500f, Colour (0x00000000),
+                                           Image(), 0.500f, Colour (0x00000000),
+                                           Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (camelsineImageButton = new ImageButton ("camel sine image button"));
+    camelsineImageButton->setTooltip ("camel sine");
+    camelsineImageButton->setButtonText ("Camel Sine");
+    camelsineImageButton->setRadioGroupId (1);
+    camelsineImageButton->addListener (this);
+
+    camelsineImageButton->setImages (false, true, true,
+                                     ImageCache::getFromMemory (camel_sine_png, camel_sine_pngSize), 0.500f, Colour (0x00000000),
+                                     Image(), 0.500f, Colour (0x00000000),
+                                     Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (squareImageButton = new ImageButton ("square image button"));
+    squareImageButton->setTooltip ("square");
+    squareImageButton->setButtonText ("Square");
+    squareImageButton->setRadioGroupId (1);
+    squareImageButton->addListener (this);
+
+    squareImageButton->setImages (false, true, true,
+                                  ImageCache::getFromMemory (square_png, square_pngSize), 0.500f, Colour (0x00000000),
+                                  Image(), 0.500f, Colour (0x00000000),
+                                  Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (logsawImageButton = new ImageButton ("logsaw image button"));
+    logsawImageButton->setTooltip ("logarithmic sawtooth");
+    logsawImageButton->setButtonText ("Logarithmic Sawtooth");
+    logsawImageButton->setRadioGroupId (1);
+    logsawImageButton->addListener (this);
+
+    logsawImageButton->setImages (false, true, true,
+                                  ImageCache::getFromMemory (logarithmic_saw_png, logarithmic_saw_pngSize), 0.500f, Colour (0x00000000),
+                                  Image(), 0.500f, Colour (0x00000000),
+                                  Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (alternatingsineImageButton2 = new ImageButton ("alternating sine image button"));
+    alternatingsineImageButton2->setTooltip ("alternating sine");
+    alternatingsineImageButton2->setButtonText ("Alternating Sine");
+    alternatingsineImageButton2->setRadioGroupId (2);
+    alternatingsineImageButton2->addListener (this);
+
+    alternatingsineImageButton2->setImages (false, true, true,
+                                            ImageCache::getFromMemory (alternating_sine_png, alternating_sine_pngSize), 0.500f, Colour (0x00000000),
+                                            Image(), 0.500f, Colour (0x00000000),
+                                            Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (camelsineImageButton2 = new ImageButton ("camel sine image button"));
+    camelsineImageButton2->setTooltip ("camel sine");
+    camelsineImageButton2->setButtonText ("Camel Sine");
+    camelsineImageButton2->setRadioGroupId (2);
+    camelsineImageButton2->addListener (this);
+
+    camelsineImageButton2->setImages (false, true, true,
+                                      ImageCache::getFromMemory (camel_sine_png, camel_sine_pngSize), 0.500f, Colour (0x00000000),
+                                      Image(), 0.500f, Colour (0x00000000),
+                                      Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (squareImageButton2 = new ImageButton ("square image button"));
+    squareImageButton2->setTooltip ("square");
+    squareImageButton2->setButtonText ("Square");
+    squareImageButton2->setRadioGroupId (2);
+    squareImageButton2->addListener (this);
+
+    squareImageButton2->setImages (false, true, true,
+                                   ImageCache::getFromMemory (square_png, square_pngSize), 0.500f, Colour (0x00000000),
+                                   Image(), 0.500f, Colour (0x00000000),
+                                   Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (logsawImageButton2 = new ImageButton ("logsaw image button"));
+    logsawImageButton2->setTooltip ("logarithmic sawtooth");
+    logsawImageButton2->setButtonText ("Logarithmic Sawtooth");
+    logsawImageButton2->setRadioGroupId (2);
+    logsawImageButton2->addListener (this);
+
+    logsawImageButton2->setImages (false, true, true,
+                                   ImageCache::getFromMemory (logarithmic_saw_png, logarithmic_saw_pngSize), 0.500f, Colour (0x00000000),
+                                   Image(), 0.500f, Colour (0x00000000),
+                                   Image(), 1.000f, Colour (0x00000000));
 
     //[UserPreSize]
 	frequencyComboBox->setColour (ComboBox::textColourId, Colour (COLOUR_MID));
@@ -736,6 +833,15 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	halfsineImageButton->setRepaintsOnMouseActivity(false);
 	quartersineImageButton->setClickingTogglesState(true);
 	quartersineImageButton->setRepaintsOnMouseActivity(false);
+	alternatingsineImageButton->setClickingTogglesState(true);
+	alternatingsineImageButton->setRepaintsOnMouseActivity(false);
+	camelsineImageButton->setClickingTogglesState(true);
+	camelsineImageButton->setRepaintsOnMouseActivity(false);
+	squareImageButton->setClickingTogglesState(true);
+	squareImageButton->setRepaintsOnMouseActivity(false);
+	logsawImageButton->setClickingTogglesState(true);
+	logsawImageButton->setRepaintsOnMouseActivity(false);
+
 	sineImageButton2->setClickingTogglesState(true);
 	sineImageButton2->setRepaintsOnMouseActivity(false);
 	abssineImageButton2->setClickingTogglesState(true);
@@ -744,6 +850,14 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	halfsineImageButton2->setRepaintsOnMouseActivity(false);
 	quartersineImageButton2->setClickingTogglesState(true);
 	quartersineImageButton2->setRepaintsOnMouseActivity(false);
+	alternatingsineImageButton2->setClickingTogglesState(true);
+	alternatingsineImageButton2->setRepaintsOnMouseActivity(false);
+	camelsineImageButton2->setClickingTogglesState(true);
+	camelsineImageButton2->setRepaintsOnMouseActivity(false);
+	squareImageButton2->setClickingTogglesState(true);
+	squareImageButton2->setRepaintsOnMouseActivity(false);
+	logsawImageButton2->setClickingTogglesState(true);
+	logsawImageButton2->setRepaintsOnMouseActivity(false);
 
 	tremoloButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	vibratoButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
@@ -833,6 +947,14 @@ PluginGui::~PluginGui()
     attenuationLabel3 = nullptr;
     velocityComboBox2 = nullptr;
     attenuationLabel4 = nullptr;
+    alternatingsineImageButton = nullptr;
+    camelsineImageButton = nullptr;
+    squareImageButton = nullptr;
+    logsawImageButton = nullptr;
+    alternatingsineImageButton2 = nullptr;
+    camelsineImageButton2 = nullptr;
+    squareImageButton2 = nullptr;
+    logsawImageButton2 = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -867,11 +989,11 @@ void PluginGui::resized()
     attenuationSlider->setBounds (312, 200, 72, 96);
     attenuationLabel->setBounds (312, 304, 96, 24);
     dbLabel->setBounds (376, 272, 40, 24);
-    sineImageButton->setBounds (128, 40, 34, 30);
-    halfsineImageButton->setBounds (184, 40, 34, 30);
-    abssineImageButton->setBounds (240, 40, 34, 30);
-    quartersineImageButton->setBounds (296, 40, 34, 30);
-    waveLabel->setBounds (32, 40, 80, 24);
+    sineImageButton->setBounds (88, 40, 34, 30);
+    halfsineImageButton->setBounds (128, 40, 34, 30);
+    abssineImageButton->setBounds (168, 40, 34, 30);
+    quartersineImageButton->setBounds (208, 40, 34, 30);
+    waveLabel->setBounds (32, 40, 48, 24);
     tremoloButton->setBounds (144, 120, 96, 24);
     vibratoButton->setBounds (40, 120, 96, 24);
     sustainButton->setBounds (40, 304, 96, 24);
@@ -893,11 +1015,11 @@ void PluginGui::resized()
     attenuationSlider2->setBounds (312, 544, 72, 96);
     attenuationLabel2->setBounds (312, 648, 96, 24);
     dbLabel3->setBounds (376, 616, 40, 24);
-    sineImageButton2->setBounds (128, 384, 34, 30);
-    halfsineImageButton2->setBounds (184, 384, 34, 30);
-    abssineImageButton2->setBounds (240, 384, 34, 30);
-    quartersineImageButton2->setBounds (296, 384, 34, 30);
-    waveLabel2->setBounds (32, 384, 80, 24);
+    sineImageButton2->setBounds (88, 384, 34, 30);
+    halfsineImageButton2->setBounds (128, 384, 34, 30);
+    abssineImageButton2->setBounds (168, 384, 34, 30);
+    quartersineImageButton2->setBounds (208, 384, 34, 30);
+    waveLabel2->setBounds (32, 384, 48, 24);
     tremoloButton2->setBounds (152, 464, 96, 24);
     vibratoButton2->setBounds (40, 464, 96, 24);
     sustainButton2->setBounds (40, 648, 96, 24);
@@ -918,6 +1040,14 @@ void PluginGui::resized()
     attenuationLabel3->setBounds (272, 168, 64, 24);
     velocityComboBox2->setBounds (336, 512, 72, 24);
     attenuationLabel4->setBounds (272, 512, 64, 24);
+    alternatingsineImageButton->setBounds (288, 40, 34, 30);
+    camelsineImageButton->setBounds (248, 40, 34, 30);
+    squareImageButton->setBounds (328, 40, 34, 30);
+    logsawImageButton->setBounds (368, 40, 34, 30);
+    alternatingsineImageButton2->setBounds (290, 385, 34, 30);
+    camelsineImageButton2->setBounds (250, 385, 34, 30);
+    squareImageButton2->setBounds (330, 385, 34, 30);
+    logsawImageButton2->setBounds (370, 385, 34, 30);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -1163,6 +1293,54 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 		processor->setEnumParameter("Carrier Keyscale Rate", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_keyscaleEnvButton2]
     }
+    else if (buttonThatWasClicked == alternatingsineImageButton)
+    {
+        //[UserButtonCode_alternatingsineImageButton] -- add your button handler code here..
+		processor->setEnumParameter("Modulator Wave", 4);
+        //[/UserButtonCode_alternatingsineImageButton]
+    }
+    else if (buttonThatWasClicked == camelsineImageButton)
+    {
+        //[UserButtonCode_camelsineImageButton] -- add your button handler code here..
+		processor->setEnumParameter("Modulator Wave", 5);
+        //[/UserButtonCode_camelsineImageButton]
+    }
+    else if (buttonThatWasClicked == squareImageButton)
+    {
+        //[UserButtonCode_squareImageButton] -- add your button handler code here..
+		processor->setEnumParameter("Modulator Wave", 6);
+        //[/UserButtonCode_squareImageButton]
+    }
+    else if (buttonThatWasClicked == logsawImageButton)
+    {
+        //[UserButtonCode_logsawImageButton] -- add your button handler code here..
+		processor->setEnumParameter("Modulator Wave", 7);
+        //[/UserButtonCode_logsawImageButton]
+    }
+    else if (buttonThatWasClicked == alternatingsineImageButton2)
+    {
+        //[UserButtonCode_alternatingsineImageButton2] -- add your button handler code here..
+		processor->setEnumParameter("Carrier Wave", 4);
+        //[/UserButtonCode_alternatingsineImageButton2]
+    }
+    else if (buttonThatWasClicked == camelsineImageButton2)
+    {
+        //[UserButtonCode_camelsineImageButton2] -- add your button handler code here..
+		processor->setEnumParameter("Carrier Wave", 5);
+        //[/UserButtonCode_camelsineImageButton2]
+    }
+    else if (buttonThatWasClicked == squareImageButton2)
+    {
+        //[UserButtonCode_squareImageButton2] -- add your button handler code here..
+		processor->setEnumParameter("Carrier Wave", 6);
+        //[/UserButtonCode_squareImageButton2]
+    }
+    else if (buttonThatWasClicked == logsawImageButton2)
+    {
+        //[UserButtonCode_logsawImageButton2] -- add your button handler code here..
+		processor->setEnumParameter("Carrier Wave", 7);
+        //[/UserButtonCode_logsawImageButton2]
+    }
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
@@ -1261,31 +1439,31 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="sine image button" id="5e72e0ec4fc09c1a" memberName="sineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="128 40 34 30" tooltip="sine"
+               virtualName="" explicitFocusOrder="0" pos="88 40 34 30" tooltip="sine"
                buttonText="Sine" connectedEdges="0" needsCallback="1" radioGroupId="1"
                keepProportions="1" resourceNormal="full_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="half sine image button" id="bf9e0504c5e9e5d5" memberName="halfsineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="184 40 34 30" tooltip="half sine"
+               virtualName="" explicitFocusOrder="0" pos="128 40 34 30" tooltip="half sine"
                buttonText="Half Sine" connectedEdges="0" needsCallback="1" radioGroupId="1"
                keepProportions="1" resourceNormal="half_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="abs sine image button" id="1b0b532ac934edae" memberName="abssineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="240 40 34 30" tooltip="abs sine"
+               virtualName="" explicitFocusOrder="0" pos="168 40 34 30" tooltip="abs sine"
                buttonText="Abs Sine" connectedEdges="0" needsCallback="1" radioGroupId="1"
                keepProportions="1" resourceNormal="abs_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="quarter sine image button" id="47d1bd1fd4ae011d" memberName="quartersineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="296 40 34 30" tooltip="quarter sine"
+               virtualName="" explicitFocusOrder="0" pos="208 40 34 30" tooltip="quarter sine"
                buttonText="Quarter Sine" connectedEdges="0" needsCallback="1"
                radioGroupId="1" keepProportions="1" resourceNormal="quarter_sine_png"
                opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
                colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
   <LABEL name="wave label" id="d35c942584ea52a6" memberName="waveLabel"
-         virtualName="" explicitFocusOrder="0" pos="32 40 80 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="32 40 48 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="Wave" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
@@ -1393,31 +1571,31 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="sine image button" id="27e01d31ba835965" memberName="sineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="128 384 34 30" tooltip="sine"
+               virtualName="" explicitFocusOrder="0" pos="88 384 34 30" tooltip="sine"
                buttonText="Sine" connectedEdges="0" needsCallback="1" radioGroupId="2"
                keepProportions="1" resourceNormal="full_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="half sine image button" id="6e9afdb08dd4edac" memberName="halfsineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="184 384 34 30" tooltip="half sine"
+               virtualName="" explicitFocusOrder="0" pos="128 384 34 30" tooltip="half sine"
                buttonText="Half Sine" connectedEdges="0" needsCallback="1" radioGroupId="2"
                keepProportions="1" resourceNormal="half_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="abs sine image button" id="361941cfa04130c1" memberName="abssineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="240 384 34 30" tooltip="abs sine"
+               virtualName="" explicitFocusOrder="0" pos="168 384 34 30" tooltip="abs sine"
                buttonText="Abs Sine" connectedEdges="0" needsCallback="1" radioGroupId="2"
                keepProportions="1" resourceNormal="abs_sine_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="quarter sine image button" id="3fa62f49fdd1a41f" memberName="quartersineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="296 384 34 30" tooltip="quarter sine"
+               virtualName="" explicitFocusOrder="0" pos="208 384 34 30" tooltip="quarter sine"
                buttonText="Quarter Sine" connectedEdges="0" needsCallback="1"
                radioGroupId="2" keepProportions="1" resourceNormal="quarter_sine_png"
                opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
                colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
   <LABEL name="wave label" id="c810628f3c772781" memberName="waveLabel2"
-         virtualName="" explicitFocusOrder="0" pos="32 384 80 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="32 384 48 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="Wave" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
@@ -1517,6 +1695,54 @@ BEGIN_JUCER_METADATA
          edTextCol="ff000000" edBkgCol="0" labelText="Velocity" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="alternating sine image button" id="2a054359a782e92d" memberName="alternatingsineImageButton"
+               virtualName="" explicitFocusOrder="0" pos="288 40 34 30" tooltip="alternating sine"
+               buttonText="Alternating Sine" connectedEdges="0" needsCallback="1"
+               radioGroupId="1" keepProportions="1" resourceNormal="alternating_sine_png"
+               opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
+               colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="camel sine image button" id="d6f66822f7f64480" memberName="camelsineImageButton"
+               virtualName="" explicitFocusOrder="0" pos="248 40 34 30" tooltip="camel sine"
+               buttonText="Camel Sine" connectedEdges="0" needsCallback="1"
+               radioGroupId="1" keepProportions="1" resourceNormal="camel_sine_png"
+               opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
+               colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="square image button" id="85e53fb506289115" memberName="squareImageButton"
+               virtualName="" explicitFocusOrder="0" pos="328 40 34 30" tooltip="square"
+               buttonText="Square" connectedEdges="0" needsCallback="1" radioGroupId="1"
+               keepProportions="1" resourceNormal="square_png" opacityNormal="0.5"
+               colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
+               resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="logsaw image button" id="fca4c858138cdd7b" memberName="logsawImageButton"
+               virtualName="" explicitFocusOrder="0" pos="368 40 34 30" tooltip="logarithmic sawtooth"
+               buttonText="Logarithmic Sawtooth" connectedEdges="0" needsCallback="1"
+               radioGroupId="1" keepProportions="1" resourceNormal="logarithmic_saw_png"
+               opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
+               colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="alternating sine image button" id="32c5f60cc145d464" memberName="alternatingsineImageButton2"
+               virtualName="" explicitFocusOrder="0" pos="290 385 34 30" tooltip="alternating sine"
+               buttonText="Alternating Sine" connectedEdges="0" needsCallback="1"
+               radioGroupId="2" keepProportions="1" resourceNormal="alternating_sine_png"
+               opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
+               colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="camel sine image button" id="215395763c6a03f2" memberName="camelsineImageButton2"
+               virtualName="" explicitFocusOrder="0" pos="250 385 34 30" tooltip="camel sine"
+               buttonText="Camel Sine" connectedEdges="0" needsCallback="1"
+               radioGroupId="2" keepProportions="1" resourceNormal="camel_sine_png"
+               opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
+               colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="square image button" id="d85202a2e5f8b158" memberName="squareImageButton2"
+               virtualName="" explicitFocusOrder="0" pos="330 385 34 30" tooltip="square"
+               buttonText="Square" connectedEdges="0" needsCallback="1" radioGroupId="2"
+               keepProportions="1" resourceNormal="square_png" opacityNormal="0.5"
+               colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
+               resourceDown="" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="logsaw image button" id="d713984cff8b67b5" memberName="logsawImageButton2"
+               virtualName="" explicitFocusOrder="0" pos="370 385 34 30" tooltip="logarithmic sawtooth"
+               buttonText="Logarithmic Sawtooth" connectedEdges="0" needsCallback="1"
+               radioGroupId="2" keepProportions="1" resourceNormal="logarithmic_saw_png"
+               opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
+               colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
@@ -1526,37 +1752,77 @@ END_JUCER_METADATA
 //==============================================================================
 // Binary resources - be careful not to edit any of these sections!
 
-// JUCER_RESOURCE: full_sine_png, 154, "../img/full_sine.png"
-static const unsigned char resource_PluginGui_full_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,17,0,0,0,15,8,6,0,0,0,2,177,36,17,0,0,0,97,73,68,65,84,56,141,99,100,96,96,248,207,
-64,33,96,194,16,89,5,197,36,130,255,112,188,10,7,155,48,198,163,137,72,131,48,189,67,38,192,111,35,17,174,161,138,75,88,224,44,123,60,170,112,201,101,51,48,48,132,65,152,248,157,75,132,87,169,24,176,228,
-184,102,21,149,3,150,56,151,16,72,205,140,12,164,100,64,88,158,10,67,21,38,205,16,28,0,0,120,172,116,52,166,46,206,86,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+// JUCER_RESOURCE: full_sine_png, 203, "../img/full_sine.png"
+static const unsigned char resource_PluginGui_full_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,146,73,68,65,84,88,133,237,151,81,14,64,
+48,16,68,183,226,94,110,225,18,110,230,146,252,116,35,153,166,97,219,21,131,125,63,66,144,241,76,75,147,136,108,66,192,240,116,0,101,60,61,99,133,253,249,158,32,47,48,162,38,208,64,237,120,39,52,70,146,
+224,168,185,250,196,206,102,104,140,68,16,228,232,72,235,59,119,234,10,141,145,8,130,148,51,235,212,120,39,235,117,75,222,230,110,209,24,41,103,86,43,78,163,141,198,72,4,65,250,59,162,116,126,181,105,
+140,68,16,196,175,35,74,227,191,238,135,141,40,198,245,208,15,140,24,161,49,178,3,63,99,23,114,126,178,233,88,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
 
 const char* PluginGui::full_sine_png = (const char*) resource_PluginGui_full_sine_png;
-const int PluginGui::full_sine_pngSize = 154;
+const int PluginGui::full_sine_pngSize = 203;
 
-// JUCER_RESOURCE: half_sine_png, 126, "../img/half_sine.png"
-static const unsigned char resource_PluginGui_half_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,17,0,0,0,15,8,6,0,0,0,2,177,36,17,0,0,0,69,73,68,65,84,56,141,99,100,96,96,248,207,
-64,33,96,194,16,89,5,197,36,130,255,112,188,10,7,155,48,198,163,137,72,131,48,189,67,38,192,111,35,17,174,161,138,75,88,224,44,123,60,170,240,201,29,100,96,96,100,160,73,58,25,53,100,240,24,2,0,70,254,
-59,115,155,0,139,238,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+// JUCER_RESOURCE: half_sine_png, 179, "../img/half_sine.png"
+static const unsigned char resource_PluginGui_half_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,122,73,68,65,84,88,133,237,148,65,10,128,
+32,20,5,191,209,189,186,69,135,236,22,157,172,22,33,193,72,20,102,248,130,55,155,40,50,198,73,77,17,177,133,0,67,111,129,204,120,251,198,130,251,249,27,145,31,20,201,37,88,224,234,249,75,100,138,164,224,
+174,121,58,227,198,101,100,138,88,132,156,107,164,246,159,55,90,43,50,69,44,66,202,147,117,170,252,82,237,184,245,184,200,20,41,79,214,78,200,20,177,8,177,8,177,8,177,8,177,8,177,8,217,1,254,115,12,122,
+78,109,41,249,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
 
 const char* PluginGui::half_sine_png = (const char*) resource_PluginGui_half_sine_png;
-const int PluginGui::half_sine_pngSize = 126;
+const int PluginGui::half_sine_pngSize = 179;
 
-// JUCER_RESOURCE: abs_sine_png, 134, "../img/abs_sine.png"
-static const unsigned char resource_PluginGui_abs_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,17,0,0,0,15,8,6,0,0,0,2,177,36,17,0,0,0,77,73,68,65,84,56,141,99,100,96,96,248,207,
-64,33,96,194,16,89,5,197,216,0,30,185,255,112,188,10,7,155,144,28,30,9,132,24,62,57,6,134,255,152,222,33,19,96,183,9,159,11,209,228,168,226,18,22,56,203,30,143,42,124,114,12,12,12,140,12,52,73,39,163,
-134,12,30,67,0,177,31,63,88,3,168,147,82,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+// JUCER_RESOURCE: abs_sine_png, 181, "../img/abs_sine.png"
+static const unsigned char resource_PluginGui_abs_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,124,73,68,65,84,88,133,237,148,81,10,128,
+32,16,5,215,232,94,221,162,67,118,201,250,81,130,17,209,182,192,13,222,252,21,62,153,125,150,201,204,78,11,192,50,91,160,176,118,87,28,120,222,7,119,126,152,251,65,35,101,34,78,210,122,255,50,23,166,145,
+100,252,107,122,19,183,214,121,115,153,48,141,72,132,220,223,200,232,25,147,143,114,97,26,145,8,169,111,214,205,185,147,55,151,9,211,72,125,179,78,34,76,35,18,33,18,33,18,33,18,33,18,33,18,33,23,197,62,
+17,185,230,123,254,103,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
 
 const char* PluginGui::abs_sine_png = (const char*) resource_PluginGui_abs_sine_png;
-const int PluginGui::abs_sine_pngSize = 134;
+const int PluginGui::abs_sine_pngSize = 181;
 
-// JUCER_RESOURCE: quarter_sine_png, 130, "../img/quarter_sine.png"
-static const unsigned char resource_PluginGui_quarter_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,17,0,0,0,15,8,6,0,0,0,2,177,36,17,0,0,0,73,73,68,65,84,56,141,99,100,96,96,248,
-207,64,33,96,194,16,89,133,71,53,14,57,38,98,20,17,146,99,66,81,20,134,199,0,92,114,24,46,33,19,48,81,234,10,170,185,132,5,206,178,71,18,181,71,83,133,79,238,32,3,3,35,3,77,210,201,168,33,131,199,16,0,
-110,115,10,130,242,45,164,156,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+// JUCER_RESOURCE: quarter_sine_png, 181, "../img/quarter_sine.png"
+static const unsigned char resource_PluginGui_quarter_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,124,73,68,65,84,88,133,237,150,81,10,
+128,32,16,68,215,232,94,221,162,67,118,139,78,150,31,41,209,196,162,174,31,205,199,60,8,177,28,120,77,33,38,51,187,140,128,229,111,129,74,91,228,40,215,40,131,57,154,70,86,247,73,164,133,137,28,113,35,
+245,141,118,152,183,136,230,10,52,141,72,4,121,254,17,252,198,189,68,115,0,77,35,18,65,190,251,200,230,172,244,238,207,230,206,123,160,105,36,153,206,35,111,36,130,72,4,145,8,34,17,68,34,136,68,144,12,
+123,138,13,78,65,207,81,74,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
 
 const char* PluginGui::quarter_sine_png = (const char*) resource_PluginGui_quarter_sine_png;
-const int PluginGui::quarter_sine_pngSize = 130;
+const int PluginGui::quarter_sine_pngSize = 181;
+
+// JUCER_RESOURCE: camel_sine_png, 174, "../img/camel_sine.png"
+static const unsigned char resource_PluginGui_camel_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,117,73,68,65,84,88,133,237,148,209,9,192,
+32,12,68,99,233,94,221,162,67,118,139,78,86,63,218,80,56,41,129,40,245,62,238,129,136,6,225,229,132,20,51,187,140,128,101,182,128,243,45,114,60,43,91,31,38,242,51,107,115,227,93,238,201,115,18,154,68,
+36,130,20,243,57,18,253,117,111,61,128,38,17,137,32,18,65,218,201,186,5,47,122,235,200,121,111,52,137,188,115,100,50,52,137,72,4,145,8,34,17,68,34,136,68,16,137,32,21,146,46,14,97,109,79,27,36,0,0,0,0,
+73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::camel_sine_png = (const char*) resource_PluginGui_camel_sine_png;
+const int PluginGui::camel_sine_pngSize = 174;
+
+// JUCER_RESOURCE: alternating_sine_png, 197, "../img/alternating_sine.png"
+static const unsigned char resource_PluginGui_alternating_sine_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,140,73,68,65,84,88,133,99,100,96,
+96,248,207,48,8,0,211,64,59,0,6,112,59,100,21,20,15,184,67,232,12,88,48,68,96,161,16,134,131,79,35,48,104,66,100,212,33,232,128,145,1,86,142,16,74,11,52,78,43,131,38,68,70,29,130,14,70,29,130,14,48,75,
+86,123,2,58,112,201,103,67,233,169,36,186,224,32,132,26,52,33,130,40,71,8,1,26,151,51,131,38,68,70,29,130,14,70,29,130,14,136,207,53,48,64,163,22,220,160,9,145,81,135,160,3,210,211,8,12,80,185,197,54,
+12,66,132,202,96,208,132,8,0,67,200,18,200,95,246,147,104,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::alternating_sine_png = (const char*) resource_PluginGui_alternating_sine_png;
+const int PluginGui::alternating_sine_pngSize = 197;
+
+// JUCER_RESOURCE: square_png, 179, "../img/square.png"
+static const unsigned char resource_PluginGui_square_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,122,73,68,65,84,88,133,237,150,177,17,128,48,
+12,3,29,142,189,216,130,37,216,44,75,66,99,83,40,85,34,238,80,161,111,146,198,190,143,10,59,45,34,238,16,96,251,91,160,216,223,91,39,59,157,92,185,96,34,197,236,203,216,36,19,153,68,44,130,88,4,177,8,
+98,17,100,156,172,199,98,167,217,186,43,207,156,228,50,137,180,96,255,35,181,107,86,119,148,90,34,22,65,44,130,88,4,177,8,50,238,154,85,200,223,188,76,34,252,174,249,8,153,68,30,246,154,9,40,60,195,35,
+102,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::square_png = (const char*) resource_PluginGui_square_png;
+const int PluginGui::square_pngSize = 179;
+
+// JUCER_RESOURCE: logarithmic_saw_png, 206, "../img/logarithmic_saw.png"
+static const unsigned char resource_PluginGui_logarithmic_saw_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,34,0,0,0,30,8,6,0,0,0,73,255,204,20,0,0,0,149,73,68,65,84,88,133,237,150,81,
+10,128,32,16,68,215,232,94,221,194,75,116,158,46,225,37,235,103,37,24,19,139,218,118,64,31,136,172,32,12,15,87,13,34,178,11,1,147,119,128,204,25,36,233,112,15,226,204,8,130,148,65,156,206,10,177,17,39,
+104,130,204,197,74,212,57,65,109,12,177,145,12,154,193,245,143,33,54,178,64,189,65,125,247,142,193,125,200,170,179,26,166,49,18,196,234,63,210,58,91,208,149,52,70,234,93,243,150,134,1,164,3,35,72,237,
+94,82,104,140,140,32,200,255,65,162,92,118,78,199,70,42,208,4,177,123,107,30,66,99,228,0,184,114,16,107,149,79,109,141,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::logarithmic_saw_png = (const char*) resource_PluginGui_logarithmic_saw_png;
+const int PluginGui::logarithmic_saw_pngSize = 206;
 
 
 //[EndFile] You can add extra defines here...

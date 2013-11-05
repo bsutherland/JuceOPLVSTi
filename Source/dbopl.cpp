@@ -513,7 +513,9 @@ void Operator::WriteE0( const Chip* chip, Bit8u val ) {
 	if ( !(regE0 ^ val) ) 
 		return;
 	//in opl3 mode you can always selet 7 waveforms regardless of waveformselect
-	Bit8u waveForm = val & ( ( 0x3 & chip->waveFormMask ) | (0x7 & chip->opl3Active ) );
+	//Bit8u waveForm = val & ( ( 0x3 & chip->waveFormMask ) | (0x7 & chip->opl3Active ) );
+	// hack: enable all waveforms regardless of opl2/3 mode..
+	Bit8u waveForm = val & (0x7 & chip->waveFormMask);
 	regE0 = val;
 #if ( DBOPL_WAVE == WAVE_HANDLER )
 	waveHandler = WaveHandlerTable[ waveForm ];

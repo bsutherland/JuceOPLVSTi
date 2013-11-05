@@ -7,7 +7,7 @@
 
 Hiopl::Hiopl(int buflen) {
 	adlib = new DBOPL::Handler();
-	Buf32 = new Bit32s[buflen];
+	Buf32 = new Bit32s[buflen*2];
 	_op1offset[1] = 0x0;
 	_op1offset[2] = 0x1;
 	_op1offset[3] = 0x2;
@@ -82,9 +82,13 @@ void Hiopl::EnableWaveformControl() {
 	_WriteReg(0x01, 0x20);
 }
 
+void Hiopl::EnableOpl3Mode() {
+	_WriteReg(0x105, 0x1);
+}
+
 void Hiopl::SetWaveform(int ch, int osc, Waveform wave) {
 	int offset = this->_GetOffset(ch, osc);
-	_WriteReg(0xe0+offset, (Bit8u)wave, 0x3);
+	_WriteReg(0xe0+offset, (Bit8u)wave, 0x7);
 }
 
 void Hiopl::SetAttenuation(int ch, int osc, int level) {
@@ -201,7 +205,7 @@ void Hiopl::_milliHertzToFnum(unsigned int milliHertz,
 	else *block = 0;
 
 	// Slightly more efficient version
-	*fnum = ((unsigned long long)milliHertz << (20 - *block)) / (conversionFactor * 1000.0) + 0.5;
+	*fnum = (unsigned int)(((unsigned long long)milliHertz << (20 - *block)) / (conversionFactor * 1000.0) + 0.5);
 	if ((*block == 7) && (*fnum > 1023)) {
 		// frequency out of range, clipping to maximum value.
 		*fnum = 1023;

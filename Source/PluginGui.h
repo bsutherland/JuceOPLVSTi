@@ -63,6 +63,14 @@ public:
     static const int abs_sine_pngSize;
     static const char* quarter_sine_png;
     static const int quarter_sine_pngSize;
+    static const char* camel_sine_png;
+    static const int camel_sine_pngSize;
+    static const char* alternating_sine_png;
+    static const int alternating_sine_pngSize;
+    static const char* square_png;
+    static const int square_pngSize;
+    static const char* logarithmic_saw_png;
+    static const int logarithmic_saw_pngSize;
 
 
 private:
@@ -137,6 +145,14 @@ private:
     ScopedPointer<Label> attenuationLabel3;
     ScopedPointer<ComboBox> velocityComboBox2;
     ScopedPointer<Label> attenuationLabel4;
+    ScopedPointer<ImageButton> alternatingsineImageButton;
+    ScopedPointer<ImageButton> camelsineImageButton;
+    ScopedPointer<ImageButton> squareImageButton;
+    ScopedPointer<ImageButton> logsawImageButton;
+    ScopedPointer<ImageButton> alternatingsineImageButton2;
+    ScopedPointer<ImageButton> camelsineImageButton2;
+    ScopedPointer<ImageButton> squareImageButton2;
+    ScopedPointer<ImageButton> logsawImageButton2;
 
 
     //==============================================================================
