@@ -82,10 +82,6 @@ void Hiopl::EnableWaveformControl() {
 	_WriteReg(0x01, 0x20);
 }
 
-void Hiopl::EnableOpl3Mode() {
-	_WriteReg(0x105, 0x1);
-}
-
 void Hiopl::SetWaveform(int ch, int osc, Waveform wave) {
 	int offset = this->_GetOffset(ch, osc);
 	_WriteReg(0xe0+offset, (Bit8u)wave, 0x7);

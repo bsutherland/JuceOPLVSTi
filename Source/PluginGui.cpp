@@ -1411,7 +1411,7 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     bool PluginGui::isInterestedInFileDrag (const StringArray& files)
     {
 		// TODO: check extensions?
-        return true;
+        return 1 == files.size();
     }
 
     void PluginGui::fileDragEnter (const StringArray& files, int x, int y)
@@ -1432,6 +1432,9 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 
     void PluginGui::filesDropped (const StringArray& files, int x, int y)
     {
+		if (isInterestedInFileDrag(files)) {
+			processor->loadInstrumentFromFile(files[0]);
+		}
         //message = "files dropped: " + files.joinIntoString ("\n");
 
         //somethingIsBeingDraggedOver = false;

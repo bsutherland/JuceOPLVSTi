@@ -2,6 +2,7 @@
 #include "PluginGui.h"
 #include "EnumFloatParameter.h"
 #include "IntFloatParameter.h"
+#include "SbiLoader.h"
 
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
@@ -11,7 +12,6 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
-	//Opl->EnableOpl3Mode();
 
 	// Initialize parameters
 
@@ -460,6 +460,37 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 	}
 }
 
+void JuceOplvstiAudioProcessor::loadInstrumentFromFile(String filename)
+{
+	FILE* f = fopen(filename.toUTF8(), "rb");
+	unsigned char buf[MAX_INSTRUMENT_FILE_SIZE_BYTES];
+	int n = fread(buf, 1, MAX_INSTRUMENT_FILE_SIZE_BYTES, f);
+	SbiLoader* loader = new SbiLoader();
+	loader->loadInstrumentData(n, buf, this);
+	fclose(f);
+}
+
+void JuceOplvstiAudioProcessor::setParametersByRegister(int register_base, int op, uint8 value)
+{
+	register_base &= 0xF0;
+	switch (register_base) {
+	case 0x20:
+		break;
+	case 0x40:
+		break;
+	case 0x60:
+		break;
+	case 0x80:
+		break;
+	case 0xC0:
+		break;
+	case 0xE0:
+		break;
+	default:
+		break;
+	}
+}
+
 const String JuceOplvstiAudioProcessor::getParameterName (int index)
 {
 	return params[index]->getName();
@@ -482,12 +513,12 @@ const String JuceOplvstiAudioProcessor::getOutputChannelName (int channelIndex) 
 
 bool JuceOplvstiAudioProcessor::isInputChannelStereoPair (int index) const
 {
-    return true;
+    return false;
 }
 
 bool JuceOplvstiAudioProcessor::isOutputChannelStereoPair (int index) const
 {
-    return true;
+    return false;
 }
 
 bool JuceOplvstiAudioProcessor::acceptsMidi() const
