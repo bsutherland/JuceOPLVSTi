@@ -10,6 +10,10 @@
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0">
   <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
+      <FILE id="LVSdHL" name="InstrumentLoader.h" compile="0" resource="0"
+            file="Source/InstrumentLoader.h"/>
+      <FILE id="SX7G0u" name="SbiLoader.cpp" compile="1" resource="0" file="Source/SbiLoader.cpp"/>
+      <FILE id="g2OCfO" name="SbiLoader.h" compile="0" resource="0" file="Source/SbiLoader.h"/>
       <FILE id="CGPOGV" name="IntFloatParameter.cpp" compile="1" resource="0"
             file="Source/IntFloatParameter.cpp"/>
       <FILE id="uAEGVV" name="IntFloatParameter.h" compile="0" resource="0"

@@ -465,26 +465,43 @@ void JuceOplvstiAudioProcessor::loadInstrumentFromFile(String filename)
 	FILE* f = fopen(filename.toUTF8(), "rb");
 	unsigned char buf[MAX_INSTRUMENT_FILE_SIZE_BYTES];
 	int n = fread(buf, 1, MAX_INSTRUMENT_FILE_SIZE_BYTES, f);
+	fclose(f);
 	SbiLoader* loader = new SbiLoader();
 	loader->loadInstrumentData(n, buf, this);
-	fclose(f);
+	updateGuiIfPresent();
 }
 
 void JuceOplvstiAudioProcessor::setParametersByRegister(int register_base, int op, uint8 value)
 {
+	const String operators[] = {"Modulator", "Carrier"};
 	register_base &= 0xF0;
 	switch (register_base) {
 	case 0x20:
+		setEnumParameter(operators[op] + " Tremolo", (value & 0x80) ? 1 : 0);
+		setEnumParameter(operators[op] + " Vibrato", (value & 0x40) ? 1 : 0);
+		setEnumParameter(operators[op] + " Sustain", (value & 0x20) ? 1 : 0);
+		setEnumParameter(operators[op] + " Keyscale Rate", (value & 0x10) ? 1 : 0);
+		setEnumParameter(operators[op] + " Frequency Multiplier", value & 0x0f);
 		break;
 	case 0x40:
+		setEnumParameter(operators[op] + " Keyscale Level", (value & 0xc0) >> 6);
+		setEnumParameter(operators[op] + " Attenuation", value & 0x3f);
 		break;
 	case 0x60:
+		setIntParameter(operators[op] + " Attack", (value & 0xf0) >> 4);
+		setIntParameter(operators[op] + " Decay", value & 0x0f);
 		break;
 	case 0x80:
+		setIntParameter(operators[op] + " Sustain Level", (value & 0xf0) >> 4);
+		setIntParameter(operators[op] + " Release", value & 0x0f);
 		break;
 	case 0xC0:
+		setIntParameter("Modulator Feedback", (value & 0xe) >> 1);
+		setEnumParameter("Algorithm", value & 0x1);
 		break;
 	case 0xE0:
+		printf("Setting wave to %d", value & 0x7);
+		setEnumParameter(operators[op] + " Wave", value & 0x7);
 		break;
 	default:
 		break;
@@ -559,6 +576,14 @@ int JuceOplvstiAudioProcessor::getCurrentProgram()
     return i_program;
 }
 
+void JuceOplvstiAudioProcessor::updateGuiIfPresent()
+{
+	PluginGui* gui = (PluginGui*)getActiveEditor();
+	if (gui) {
+		gui->updateFromParameters();
+	}
+}
+
 void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 {
 	i_program = index;
@@ -566,10 +591,7 @@ void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 	for (unsigned int i = 0; i < params.size() && i < v_params.size(); i++) {
 		setParameter(i, v_params[i]);
 	}
-	PluginGui* gui = (PluginGui*)getActiveEditor();
-	if (gui) {
-		gui->updateFromParameters();
-	}
+	updateGuiIfPresent();
 }
 
 const String JuceOplvstiAudioProcessor::getProgramName (int index)

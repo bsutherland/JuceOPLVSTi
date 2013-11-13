@@ -34,7 +34,6 @@ Hiopl::Hiopl(int buflen) {
 }
 
 void Hiopl::Generate(int length, short* buffer) {
-	//printf("Generating %d samples\n", length);
 	adlib->Generate(length, Buf32);
 	for (int i = 0; i < length; i++) {
 		buffer[i] = (short)(Buf32[i]);

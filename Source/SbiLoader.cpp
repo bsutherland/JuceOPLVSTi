@@ -7,8 +7,8 @@ SbiLoader::SbiLoader(void)
 
 void SbiLoader::loadInstrumentData(int n, const unsigned char* data, JuceOplvstiAudioProcessor *proc)
 {
-	if (strncmp("SBI", (const char*)data, 3)) {
-		data += 40;
+	if (0 == strncmp("SBI", (const char*)data, 3)) {
+		data += 36;
 		proc->setParametersByRegister(0x20, 0, data[0]);
 		proc->setParametersByRegister(0x20, 1, data[1]);
 		proc->setParametersByRegister(0x40, 0, data[2]);

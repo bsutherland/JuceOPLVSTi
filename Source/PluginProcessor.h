@@ -52,6 +52,8 @@ public:
 	void loadInstrumentFromFile(String filename);
 	void setParametersByRegister(int register_base, int op, uint8 value);
 
+	void updateGuiIfPresent();
+
     const String getParameterName (int index);
     const String getParameterText (int index);
 
