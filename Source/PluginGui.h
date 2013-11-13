@@ -34,6 +34,8 @@
                                                                     //[/Comments]
 */
 class PluginGui  : public AudioProcessorEditor,
+                   public FileDragAndDropTarget,
+                   public DragAndDropContainer,
                    public ComboBoxListener,
                    public SliderListener,
                    public ButtonListener
@@ -46,6 +48,11 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
 	void updateFromParameters();
+    bool isInterestedInFileDrag (const StringArray& files);
+    void fileDragEnter (const StringArray& files, int x, int y);
+    void fileDragMove (const StringArray& files, int x, int y);
+    void fileDragExit (const StringArray& files);
+    void filesDropped (const StringArray& files, int x, int y);
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -103,7 +110,6 @@ private:
     ScopedPointer<ToggleButton> vibratoButton;
     ScopedPointer<ToggleButton> sustainButton;
     ScopedPointer<ToggleButton> keyscaleEnvButton;
-    ScopedPointer<Slider> keyscaleSlider;
     ScopedPointer<Label> frequencyLabel2;
     ScopedPointer<Label> dbLabel2;
     ScopedPointer<GroupComponent> groupComponent2;
@@ -129,9 +135,7 @@ private:
     ScopedPointer<ToggleButton> vibratoButton2;
     ScopedPointer<ToggleButton> sustainButton2;
     ScopedPointer<ToggleButton> keyscaleEnvButton2;
-    ScopedPointer<Slider> keyscaleSlider2;
     ScopedPointer<Label> frequencyLabel4;
-    ScopedPointer<Label> dbLabel4;
     ScopedPointer<GroupComponent> groupComponent3;
     ScopedPointer<Slider> tremoloSlider;
     ScopedPointer<Label> frequencyLabel5;
@@ -153,6 +157,11 @@ private:
     ScopedPointer<ImageButton> camelsineImageButton2;
     ScopedPointer<ImageButton> squareImageButton2;
     ScopedPointer<ImageButton> logsawImageButton2;
+    ScopedPointer<ComboBox> algorithmComboBox;
+    ScopedPointer<Label> frequencyLabel8;
+    ScopedPointer<Label> dbLabel4;
+    ScopedPointer<ComboBox> keyscaleAttenuationComboBox2;
+    ScopedPointer<ComboBox> keyscaleAttenuationComboBox;
 
 
     //==============================================================================
