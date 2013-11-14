@@ -101,7 +101,7 @@ const double pitchbend_center = 8192.0;
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
 #define snprintf _snprintf
-#define log2(x) logbase(x, 2)
+#define log2(x) (log(x) / log(2.))
 inline double round( double d )
 {
 return floor( d + 0.5 );

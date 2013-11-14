@@ -1,4 +1,4 @@
-// midiio.cpp written by G�nter Nagler 1995 (gnagler@ihm.tu-graz.ac.at)
+// midiio.cpp written by Günter Nagler 1995 (gnagler@ihm.tu-graz.ac.at)
 #include "midiio.hpp"
 #include <assert.h>
 #ifdef __MSDOS__
@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static const char* copyright = "midiio v1.4 (c) 1995 by G�nter Nagler (" __DATE__ ")";
+static const char* copyright = "midiio v1.4 (c) 1995 by Günter Nagler (" __DATE__ ")";
 
 int compress = 1;
 
