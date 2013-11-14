@@ -70,8 +70,12 @@
 //     - Added detectors for the (at this time) two DRO formats, and a hint
 //       to let us know that the DRO v2.0 format is not supported.
 //
+//  v1.6 / 2013-11-14 / bsa (http://bsutherland.github.io/JuceOPLVSTi)
+//	   - Added -s switch to save detected instruments in Creative Sound
+//       Blaster Instrument format (.sbi)
+//
 
-#define VERSION           "1.5"
+#define VERSION           "1.6"
 #define MAPPING_FILE      "inst.txt"
 
 #define PATCH_NAME_FILE   "patch.txt"
@@ -113,6 +117,7 @@ bool bUsePitchBends = true; // use pitch bends to better match MIDI note frequen
 bool bApproximatePitchbends = false; // if pitchbends are disabled, should we approximate them by playing the nearest note when the pitch changes?
 bool bPerfectMatchesOnly = false;  // if true, only match perfect instruments
 bool bEnableVolume = true; // enable note velocity based on OPL instrument volume
+bool bWriteSbiInstruments = false; // write detected instruments to .SBI files
 
 // Rhythm instruments
 enum RHYTHM_INSTRUMENT {
@@ -240,7 +245,7 @@ void version()
   printf("DRO2MIDI v" VERSION " - Convert raw Adlib captures to General MIDI\n"
 		"Written by malvineous@shikadi.net in 2007\n"
 		"Heavily based upon IMF2MIDI written by Guenter Nagler in 1996\n"
-		"With contributions by Wraithverge (C) 2010.\n"
+		"With contributions by Wraithverge (C) 2010, bsa in 2013\n"
 		"http://www.shikadi.net/utils/\n"
 		"\n"
 	);
@@ -267,6 +272,8 @@ void usage()
 		"       of artificial pitchbends in the output MIDI.\n"
 		"  -v   Disable note velocity and play all notes as loudly as possible,\n"
 		"       instead of trying to match the volume of the OPL note.\n"
+		"  -s   Write detected instruments to .sbi files\n"
+		"       (Creative Sound Blaster Instrument).\n"		
 		"\n"
 		"Supported input formats:\n"
 		" .raw  Rdos RAW OPL capture\n"
@@ -599,6 +606,36 @@ long compareinstr(INSTRUMENT& a, INSTRUMENT& b, RHYTHM_INSTRUMENT ri)
 	}
 }
 
+void writesbi(const char* filename, int instrno, int chanOPL) {
+	char fname[100];
+	char title[32];
+	snprintf(fname, 100, "%s_%03d.sbi", filename, instrno);
+	FILE* f_sbi = fopen(fname, WRITE_BINARY);
+	if (!f_sbi) {
+		fprintf(stderr, "Could not open instrument file %s for writing.\n", filename);
+	} else {
+		fwrite("SBI\x1a", sizeof(char), 4, f_sbi);
+		memset(title, 0, 32);
+		snprintf(title, 32, "dro2midi_%03d", instrno);
+		fwrite(title, sizeof(char), 32, f_sbi);
+		unsigned char instr[16];
+		memset(instr, 0, 16);
+		instr[0] = (unsigned char)reg[chanOPL].reg20[0];
+		instr[1] = (unsigned char)reg[chanOPL].reg20[1];
+		instr[2] = (unsigned char)reg[chanOPL].reg40[0];
+		instr[3] = (unsigned char)reg[chanOPL].reg40[1];
+		instr[4] = (unsigned char)reg[chanOPL].reg60[0];
+		instr[5] = (unsigned char)reg[chanOPL].reg60[1];
+		instr[6] = (unsigned char)reg[chanOPL].reg80[0];
+		instr[7] = (unsigned char)reg[chanOPL].reg80[1];
+		instr[8] = (unsigned char)reg[chanOPL].regE0[0];
+		instr[9] = (unsigned char)reg[chanOPL].regE0[1];
+		instr[10] = (unsigned char)reg[chanOPL].regC0;
+		fwrite(instr, sizeof(char), 16, f_sbi);
+		fclose(f_sbi);
+	}
+}
+
 int findinstr(int chanMIDI)
 {
 	assert((chanMIDI < 9) || ((chanMIDI >= CHAN_BASSDRUM) && (chanMIDI <= CHAN_HIHAT)));
@@ -657,6 +694,9 @@ int findinstr(int chanMIDI)
 					reg[chanOPL].regC0,
 					reg[chanOPL].regE0[0], reg[chanOPL].regE0[1]
 				);
+				if (::bWriteSbiInstruments) {
+					writesbi(output, instrcnt, chanOPL);
+				}
 				break;
 			case TomTom:
 			case HiHat:
@@ -930,6 +970,8 @@ int main(int argc, char**argv)
 		} else if (strncasecmp(*argv, "-v", 2) == 0) {
 			::bEnableVolume = false;
 			printf("Note velocity disabled, all notes will be played as loud as possible.\n");
+		} else if (strncasecmp(*argv, "-s", 2) == 0) {
+			::bWriteSbiInstruments = true;
 		} else if (strncasecmp(*argv, "-c", 2) == 0) {
 			argc--; argv++;
 			if (argc == 0) {
