@@ -114,6 +114,11 @@ is an internal limit as to how quiet a note can sound to prevent it being lost
 entirely.)  If your output MIDI file is much too quiet, this option will cause 
 all notes to be played at maximum velocity.
 
+-s instructs dro2midi to write all detected instruments to a .sbi file. This
+is a 52 byte binary instrument format for OPL chips created by Creative Labs.
+It is supported by applications written to work with the OPL, such as Ad Lib
+Tracker 2.
+
 // inst.txt
 /////////////
 
