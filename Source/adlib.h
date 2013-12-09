@@ -28,6 +28,7 @@
 #include "pic.h"
 #include "hardware.h"
 
+#include <math.h>
 
 namespace Adlib {
 
