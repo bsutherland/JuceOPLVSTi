@@ -67,17 +67,17 @@ void PluginGui::updateFromParameters()
 	frequencyComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Frequency Multiplier"), true);
 	frequencyComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Frequency Multiplier"), true);
 
-	attenuationSlider->setValue(processor->getEnumParameter("Modulator Attenuation") * -0.75, NotificationType::dontSendNotification);
-	attenuationSlider2->setValue(processor->getEnumParameter("Carrier Attenuation") * -0.75, NotificationType::dontSendNotification);
+	attenuationSlider->setValue(processor->getEnumParameter("Modulator Attenuation") * -0.75, juce::NotificationType::dontSendNotification);
+	attenuationSlider2->setValue(processor->getEnumParameter("Carrier Attenuation") * -0.75, juce::NotificationType::dontSendNotification);
 
-	aSlider->setValue(processor->getIntParameter("Modulator Attack"), NotificationType::dontSendNotification);
-	dSlider->setValue(processor->getIntParameter("Modulator Decay"), NotificationType::dontSendNotification);
-	sSlider->setValue(processor->getIntParameter("Modulator Sustain Level"), NotificationType::dontSendNotification);
-	rSlider->setValue(processor->getIntParameter("Modulator Release"), NotificationType::dontSendNotification);
-	aSlider2->setValue(processor->getIntParameter("Carrier Attack"), NotificationType::dontSendNotification);
-	dSlider2->setValue(processor->getIntParameter("Carrier Decay"), NotificationType::dontSendNotification);
-	sSlider2->setValue(processor->getIntParameter("Carrier Sustain Level"), NotificationType::dontSendNotification);
-	rSlider2->setValue(processor->getIntParameter("Carrier Release"), NotificationType::dontSendNotification);
+	aSlider->setValue(processor->getIntParameter("Modulator Attack"), juce::NotificationType::dontSendNotification);
+	dSlider->setValue(processor->getIntParameter("Modulator Decay"), juce::NotificationType::dontSendNotification);
+	sSlider->setValue(processor->getIntParameter("Modulator Sustain Level"), juce::NotificationType::dontSendNotification);
+	rSlider->setValue(processor->getIntParameter("Modulator Release"), juce::NotificationType::dontSendNotification);
+	aSlider2->setValue(processor->getIntParameter("Carrier Attack"), juce::NotificationType::dontSendNotification);
+	dSlider2->setValue(processor->getIntParameter("Carrier Decay"), juce::NotificationType::dontSendNotification);
+	sSlider2->setValue(processor->getIntParameter("Carrier Sustain Level"), juce::NotificationType::dontSendNotification);
+	rSlider2->setValue(processor->getIntParameter("Carrier Release"), juce::NotificationType::dontSendNotification);
 
 	keyscaleAttenuationComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Keyscale Level"), true);
 	keyscaleAttenuationComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Keyscale Level"), true);
@@ -93,9 +93,9 @@ void PluginGui::updateFromParameters()
 	if (processor->getEnumParameter("Carrier Sustain")) sustainButton2->setToggleState(true, false);
 	if (processor->getEnumParameter("Carrier Keyscale Rate")) keyscaleEnvButton2->setToggleState(true, false);
 
-	vibratoSlider->setValue(processor->getEnumParameter("Vibrato Depth") * 7.0 + 7.0, NotificationType::dontSendNotification);
-	tremoloSlider->setValue(processor->getEnumParameter("Tremolo Depth") * 3.8 + 1.0, NotificationType::dontSendNotification);
-	feedbackSlider->setValue(processor->getIntParameter("Modulator Feedback"), NotificationType::dontSendNotification);
+	vibratoSlider->setValue(processor->getEnumParameter("Vibrato Depth") * 7.0 + 7.0, juce::NotificationType::dontSendNotification);
+	tremoloSlider->setValue(processor->getEnumParameter("Tremolo Depth") * 3.8 + 1.0, juce::NotificationType::dontSendNotification);
+	feedbackSlider->setValue(processor->getIntParameter("Modulator Feedback"), juce::NotificationType::dontSendNotification);
 
 	velocityComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Velocity Sensitivity"), true);
 	velocityComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Velocity Sensitivity"), true);

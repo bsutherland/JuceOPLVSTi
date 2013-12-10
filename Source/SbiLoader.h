@@ -1,5 +1,5 @@
 #pragma once
-#include "c:\code\juceoplvsti\source\instrumentloader.h"
+#include "InstrumentLoader.h"
 class SbiLoader :
 	public InstrumentLoader
 {

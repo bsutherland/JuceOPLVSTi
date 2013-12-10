@@ -63,6 +63,10 @@
 #pragma warning(disable : 4996) 
 #endif
 
+#ifndef WIN32
+typedef long long __int64;
+#endif
+
 typedef         double		Real64;
 /* The internal types */
 typedef  unsigned char		Bit8u;
