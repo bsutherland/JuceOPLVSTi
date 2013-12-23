@@ -120,6 +120,7 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	for (int i = 0; i < Hiopl::CHANNELS+1; i++) {
 		active_notes[i] = NO_NOTE;
 	}
+	currentScaledBend = 1.0f;
 }
 
 void JuceOplvstiAudioProcessor::initPrograms()
@@ -364,6 +365,17 @@ void JuceOplvstiAudioProcessor::initPrograms()
     std::vector<float> v_i_params_bassdrum (i_params_bassdrum, i_params_bassdrum + sizeof(i_params_bassdrum) / sizeof(float));
     programs["bassdrum"] = std::vector<float>(v_i_params_bassdrum);
 
+}
+
+void JuceOplvstiAudioProcessor::applyPitchBend()
+{   // apply the currently configured pitch bend to all active notes.
+	for (int i = 1; i <= Hiopl::CHANNELS; i++) {
+		if (NO_NOTE != active_notes[i]) {
+			float f = (float)MidiMessage::getMidiNoteInHertz(active_notes[i]);
+			f *= currentScaledBend;
+			Opl->SetFrequency(i, f);
+		}
+	}
 }
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
@@ -658,6 +670,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			}
 			Opl->KeyOn(ch, noteHz);
 			active_notes[ch] = n;
+			applyPitchBend();
 		}
 		else if (midi_message.isNoteOff()) {
 			int n = midi_message.getNoteNumber();
@@ -667,6 +680,12 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			}
 			Opl->KeyOff(ch);
 			active_notes[ch] = NO_NOTE;
+		}
+		else if (midi_message.isPitchWheel()) {
+			int bend = midi_message.getPitchWheelValue() - 0x2000;	// range -8192 to 8191
+			// 1.05946309436 == (2^(1/1200))^100 == 1 semitone == 100 cents
+			currentScaledBend = 1.0f + bend * .05775f / 8192;
+			applyPitchBend();
 		}
 	}
 	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));

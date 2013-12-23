@@ -46,6 +46,7 @@ class Hiopl {
 		void SetModulatorFeedback(int ch, int level);
 		void KeyOn(int ch, float frqHz);
 		void KeyOff(int ch);
+		void SetFrequency(int ch, float frqHz, bool keyOn=false);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
 		void _ClearRegBits(Bit32u reg, Bit8u mask);
 		~Hiopl();

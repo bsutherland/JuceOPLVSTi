@@ -160,16 +160,21 @@ void Hiopl::SetModulatorFeedback(int ch, int level) {
 }
 
 void Hiopl::KeyOn(int ch, float frqHz) {
-	unsigned int fnum, block;
-	int offset = this->_GetOffset(ch);
-	_milliHertzToFnum((unsigned int)(frqHz * 1000.0), &fnum, &block);
-	_WriteReg(0xa0+offset, fnum % 0x100);
-	_WriteReg(0xb0+offset, 0x20|((block&0x7)<<2)|(0x3&(fnum/0x100)));
+	Hiopl::SetFrequency(ch, frqHz, true);
 }
 
 void Hiopl::KeyOff(int ch) {
 	int offset = this->_GetOffset(ch);
 	_ClearRegBits(0xb0+offset, 0x20);
+}
+
+void Hiopl::SetFrequency(int ch, float frqHz, bool keyOn) {
+	unsigned int fnum, block;
+	int offset = this->_GetOffset(ch);
+	_milliHertzToFnum((unsigned int)(frqHz * 1000.0), &fnum, &block);
+	_WriteReg(0xa0+offset, fnum % 0x100);
+	uint8 trig = (regCache[0xb0+offset] & 0x20) | (keyOn ? 0x20 : 0x00);
+	_WriteReg(0xb0+offset, trig|((block&0x7)<<2)|(0x3&(fnum/0x100)));
 }
 
 // from libgamemusic, opl-util.cpp

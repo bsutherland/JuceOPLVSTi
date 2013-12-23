@@ -24,6 +24,7 @@ public:
     //==============================================================================
     JuceOplvstiAudioProcessor();
 	void initPrograms();
+	void applyPitchBend();
     ~JuceOplvstiAudioProcessor();
 
     //==============================================================================
@@ -88,6 +89,7 @@ private:
 	bool velocity;
 	static const int NO_NOTE=-1;
 	int active_notes[Hiopl::CHANNELS+1];	// keyed by channel
+	float currentScaledBend;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)
