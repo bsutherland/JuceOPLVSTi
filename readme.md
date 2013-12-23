@@ -65,4 +65,5 @@ So far I've only built under Windows. Thanks to Juce, it should be possible to b
    - Make any changes to the GUI layout and components here (PluginEditor.cpp).
    - Save PluginEditor.cpp if modified
 5. Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
-6. Build!
+6. (For Windows XP compatibility) In the project's properties, set platform toolset to v110_xp (Configuration Properties > General).
+7. Build!
