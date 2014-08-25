@@ -122,6 +122,9 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		active_notes[i] = NO_NOTE;
 	}
 	currentScaledBend = 1.0f;
+
+	for (int i = 1; i <= Hiopl::CHANNELS; ++i)
+		available_channels.push_back(i);
 }
 
 void JuceOplvstiAudioProcessor::initPrograms()
@@ -381,7 +384,7 @@ void JuceOplvstiAudioProcessor::applyPitchBend()
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 {
-	for (int i = 0; i < params.size(); ++i)
+	for (int i=0; i < params.size(); ++i)
 		delete params[i];
 }
 
@@ -648,10 +651,22 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			//the beginning of the current buffer
 			int n = midi_message.getNoteNumber();
 			float noteHz = (float)MidiMessage::getMidiNoteInHertz(n);
-			int ch = 1;
-			while (ch <= Hiopl::CHANNELS && NO_NOTE != active_notes[ch]) {
-				ch += 1;
+			int ch;
+
+			if (!available_channels.empty())
+			{
+				ch = available_channels.front();
+				available_channels.pop_front();
 			}
+			else
+			{
+				ch = used_channels.back(); // steal earliest/longest running active channel if out of free channels
+				used_channels.pop_back();
+				Opl->KeyOff(ch);
+			}
+
+			used_channels.push_front(ch);
+
 			switch (getEnumParameter("Carrier Velocity Sensitivity")) {
 				case 0:
 					Opl->SetAttenuation(ch, 2, getEnumParameter("Carrier Attenuation"));
@@ -684,9 +699,23 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			while (ch <= Hiopl::CHANNELS && n != active_notes[ch]) {
 				ch += 1;
 			}
+			if (ch <= Hiopl::CHANNELS)
+			{
+				for (auto i = used_channels.begin(); i != used_channels.end(); ++i)
+				{
+					if (*i == ch)
+					{
+						used_channels.erase(i);
+						available_channels.push_back(ch);
+
+						break;
+					}
+				}
+
 				Opl->KeyOff(ch);
 				active_notes[ch]=NO_NOTE;
 			}
+		}
 		else if (midi_message.isPitchWheel()) {
 			int bend = midi_message.getPitchWheelValue() - 0x2000;	// range -8192 to 8191
 			// 1.05946309436 == (2^(1/1200))^100 == 1 semitone == 100 cents
@@ -714,7 +743,7 @@ AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 template<class T>
 void push(char *&cursor, T value)
 {
-	*reinterpret_cast<T *>(cursor) = value;
+	*reinterpret_cast<T *>(cursor)=value;
 	cursor+=sizeof(T);
 }
 
@@ -775,6 +804,13 @@ void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeI
 	for (int i = 0; i < parametersToLoad; i++) {
 		setParameter(i, fdata[i]);
 	}
+}
+
+// @param idx 1-based channel index
+// @note since this is just reading off pod, "safe" to access without a mutex by other threads such as GUI
+int JuceOplvstiAudioProcessor::isChannelActive(int idx) const
+{
+	return active_notes[idx] != NO_NOTE;
 }
 
 //==============================================================================

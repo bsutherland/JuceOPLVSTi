@@ -21,6 +21,7 @@
 #define __JUCE_HEADER_450C07F5C14097B8__
 
 //[Headers]     -- You can add your own extra header files here --
+#include <array>
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
 //[/Headers]
@@ -36,6 +37,7 @@
 class PluginGui  : public AudioProcessorEditor,
                    public FileDragAndDropTarget,
                    public DragAndDropContainer,
+                   public Timer,
                    public ComboBoxListener,
                    public SliderListener,
                    public ButtonListener
@@ -53,6 +55,7 @@ public:
     void fileDragMove (const StringArray& files, int x, int y);
     void fileDragExit (const StringArray& files);
     void filesDropped (const StringArray& files, int x, int y);
+	void timerCallback();
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -78,12 +81,17 @@ public:
     static const int square_pngSize;
     static const char* logarithmic_saw_png;
     static const int logarithmic_saw_pngSize;
+    static const char* channeloff_png;
+    static const int channeloff_pngSize;
+    static const char* channelon_png;
+    static const int channelon_pngSize;
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	static const uint32 COLOUR_MID = 0xff007f00;
 	JuceOplvstiAudioProcessor* processor;
+	std::array<ScopedPointer<ImageButton>, Hiopl::CHANNELS> channels;
     //[/UserVariables]
 
     //==============================================================================
@@ -162,6 +170,7 @@ private:
     ScopedPointer<Label> dbLabel4;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox2;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox;
+    ScopedPointer<GroupComponent> groupComponent4;
 
 
     //==============================================================================

@@ -797,6 +797,11 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     keyscaleAttenuationComboBox->addItem ("-6.0", 4);
     keyscaleAttenuationComboBox->addListener (this);
 
+    addAndMakeVisible (groupComponent4 = new GroupComponent ("new group",
+                                                             "Channels"));
+    groupComponent4->setTextLabelPosition (Justification::centredLeft);
+    groupComponent4->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
+    groupComponent4->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     //[UserPreSize]
 	frequencyComboBox->setColour (ComboBox::textColourId, Colour (COLOUR_MID));
@@ -908,13 +913,29 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	vibratoButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	keyscaleEnvButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	sustainButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
+
+	for (int i = 0; i < channels.size(); ++i)
+	{
+		ImageButton *channel=new ImageButton("new button");
+
+		addAndMakeVisible(channel);
+		channel->addListener(this);
+
+		channel->setImages(false, true, true,
+			ImageCache::getFromMemory(channeloff_png, channeloff_pngSize), 1.000f, Colour(0x00000000),
+			Image(), 1.000f, Colour(0x00000000),
+			ImageCache::getFromMemory(channelon_png, channelon_pngSize), 1.000f, Colour(0x00000000));
+
+		channels[i]=channel;
+	}
     //[/UserPreSize]
 
-    setSize (440, 810);
+    setSize (440, 874);
 
 
     //[Constructor] You can add your own custom stuff here..
 	processor = ownerFilter;
+	startTimer(1000/30);
     //[/Constructor]
 }
 
@@ -998,6 +1019,7 @@ PluginGui::~PluginGui()
     dbLabel4 = nullptr;
     keyscaleAttenuationComboBox2 = nullptr;
     keyscaleAttenuationComboBox = nullptr;
+    groupComponent4 = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1093,7 +1115,10 @@ void PluginGui::resized()
     dbLabel4->setBounds (336, 440, 72, 16);
     keyscaleAttenuationComboBox2->setBounds (264, 432, 72, 24);
     keyscaleAttenuationComboBox->setBounds (264, 88, 72, 24);
+    groupComponent4->setBounds (16, 800, 408, 64);
     //[UserResized] Add your own custom resize handling here..
+	for (int i = 0; i < channels.size(); ++i)
+		channels[i]->setBounds(32+24*i+4, 824+4, 16, 16);
     //[/UserResized]
 }
 
@@ -1431,6 +1456,12 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 			processor->loadInstrumentFromFile(files[0]);
 		}
     }
+
+	void PluginGui::timerCallback()
+	{
+		for (int i = 0; i < Hiopl::CHANNELS; ++i)
+			channels[i]->setState(processor->isChannelActive(i+1) ? Button::buttonDown : Button::buttonNormal);
+	}
 //[/MiscUserCode]
 
 
@@ -1444,10 +1475,10 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="PluginGui" componentName=""
-                 parentClasses="public AudioProcessorEditor, public FileDragAndDropTarget, public DragAndDropContainer"
+                 parentClasses="public AudioProcessorEditor, public FileDragAndDropTarget, public DragAndDropContainer, public Timer"
                  constructorParams="JuceOplvstiAudioProcessor* ownerFilter" variableInitialisers=" AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.33"
-                 fixedSize="0" initialWidth="440" initialHeight="810">
+                 fixedSize="0" initialWidth="440" initialHeight="874">
   <BACKGROUND backgroundColour="ff000000"/>
   <GROUPCOMPONENT name="new group" id="d2c7c07bf2d78c30" memberName="groupComponent"
                   virtualName="" explicitFocusOrder="0" pos="16 8 408 336" outlinecol="ff007f00"
@@ -1829,6 +1860,9 @@ BEGIN_JUCER_METADATA
             virtualName="" explicitFocusOrder="0" pos="264 88 72 24" editable="0"
             layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
+  <GROUPCOMPONENT name="new group" id="52f9803abb342980" memberName="groupComponent4"
+                  virtualName="" explicitFocusOrder="0" pos="16 800 408 64" outlinecol="ff007f00"
+                  textcol="ff007f00" title="Channels" textpos="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
@@ -1909,6 +1943,30 @@ static const unsigned char resource_PluginGui_logarithmic_saw_png[] = { 137,80,7
 
 const char* PluginGui::logarithmic_saw_png = (const char*) resource_PluginGui_logarithmic_saw_png;
 const int PluginGui::logarithmic_saw_pngSize = 206;
+
+// JUCER_RESOURCE: channeloff_png, 414, "../img/channeloff.png"
+static const unsigned char resource_PluginGui_channeloff_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,16,0,0,0,16,8,6,0,0,0,31,243,255,97,0,0,0,6,98,75,71,68,0,0,0,0,0,0,249,67,187,127,
+0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,0,7,116,73,77,69,7,222,8,25,20,6,56,156,246,144,159,0,0,0,29,105,84,88,116,67,111,109,109,101,110,116,0,0,0,0,0,67,114,101,97,116,101,100,32,
+119,105,116,104,32,71,73,77,80,100,46,101,7,0,0,1,2,73,68,65,84,56,203,165,211,61,78,66,65,20,5,224,143,193,82,119,224,62,104,40,166,196,194,202,10,66,65,137,149,75,120,121,193,21,216,104,108,164,32,178,
+128,183,1,94,66,67,66,172,172,140,27,176,178,192,202,70,139,55,26,2,138,2,39,153,102,230,220,159,185,231,220,154,85,100,14,113,138,46,154,233,118,138,17,10,185,183,101,122,88,9,110,99,129,11,20,104,164,
+83,164,187,69,226,252,128,204,64,230,67,166,239,55,100,250,137,51,176,86,185,122,104,249,11,153,86,226,182,161,150,254,188,192,185,220,141,255,160,234,242,26,71,117,209,25,142,229,27,90,95,69,105,46,58,
+193,107,72,211,30,218,30,67,116,67,146,106,178,67,130,9,154,193,158,8,201,36,113,135,216,136,105,72,14,235,237,144,160,135,81,248,118,92,182,133,10,21,183,129,162,174,244,46,122,194,157,104,166,244,252,
+167,145,24,163,35,247,80,79,186,62,138,14,112,43,122,81,154,111,168,60,198,165,220,85,229,196,245,101,186,199,44,233,60,89,26,88,47,181,221,145,27,127,133,212,246,93,231,79,44,229,73,181,37,137,229,213,
+0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::channeloff_png = (const char*) resource_PluginGui_channeloff_png;
+const int PluginGui::channeloff_pngSize = 414;
+
+// JUCER_RESOURCE: channelon_png, 326, "../img/channelon.png"
+static const unsigned char resource_PluginGui_channelon_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,16,0,0,0,16,8,6,0,0,0,31,243,255,97,0,0,0,6,98,75,71,68,0,0,0,0,0,0,249,67,187,127,
+0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,0,7,116,73,77,69,7,222,8,25,20,6,39,17,254,157,106,0,0,0,29,105,84,88,116,67,111,109,109,101,110,116,0,0,0,0,0,67,114,101,97,116,101,100,32,
+119,105,116,104,32,71,73,77,80,100,46,101,7,0,0,0,170,73,68,65,84,56,203,173,147,177,13,194,48,16,69,159,143,148,176,81,20,101,129,84,84,68,217,5,89,176,0,204,16,193,0,30,0,69,202,8,169,88,131,12,64,145,
+139,176,82,64,116,230,117,182,252,206,242,249,159,99,201,145,45,80,1,13,144,235,110,15,180,64,192,51,198,199,221,66,62,0,55,190,83,227,185,207,139,77,36,159,128,11,191,217,83,146,209,241,248,20,152,110,
+94,35,207,20,148,60,233,24,156,190,249,133,141,157,104,195,172,84,162,221,182,210,72,244,85,22,114,33,17,209,144,88,233,69,19,102,165,21,32,36,20,8,162,217,174,13,114,141,103,156,146,216,49,80,146,1,197,
+74,249,140,231,250,151,97,114,169,227,252,6,230,208,38,246,228,75,209,233,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::channelon_png = (const char*) resource_PluginGui_channelon_png;
+const int PluginGui::channelon_pngSize = 326;
 
 
 //[EndFile] You can add extra defines here...
