@@ -6,6 +6,7 @@
 
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
+	: i_program(-1)
 {
 	// Initalize OPL
 	velocity = false;
@@ -380,6 +381,8 @@ void JuceOplvstiAudioProcessor::applyPitchBend()
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 {
+	for (int i = 0; i < params.size(); ++i)
+		delete params[i];
 }
 
 //==============================================================================
@@ -598,6 +601,9 @@ void JuceOplvstiAudioProcessor::updateGuiIfPresent()
 
 void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 {
+	if (i_program==index)
+		return;
+
 	i_program = index;
 	std::vector<float> &v_params = programs[getProgramName(index)];
 	for (unsigned int i = 0; i < params.size() && i < v_params.size(); i++) {
@@ -634,7 +640,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 	buffer.clear(0, 0, buffer.getNumSamples());
 	MidiBuffer::Iterator midi_buffer_iterator(midiMessages);
 
-	MidiMessage midi_message(0);
+	MidiMessage midi_message;
 	int sample_number;
 	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
 		if (midi_message.isNoteOn()) {
@@ -678,9 +684,9 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			while (ch <= Hiopl::CHANNELS && n != active_notes[ch]) {
 				ch += 1;
 			}
-			Opl->KeyOff(ch);
-			active_notes[ch] = NO_NOTE;
-		}
+				Opl->KeyOff(ch);
+				active_notes[ch]=NO_NOTE;
+			}
 		else if (midi_message.isPitchWheel()) {
 			int bend = midi_message.getPitchWheelValue() - 0x2000;	// range -8192 to 8191
 			// 1.05946309436 == (2^(1/1200))^100 == 1 semitone == 100 cents
@@ -704,22 +710,71 @@ AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 	return gui;
 }
 
+// FIXME: these two funcs and get-/setStateInformation should be replaced by a proper cross-platform archiving API, e.g. eos portable archive or boost text archive
+template<class T>
+void push(char *&cursor, T value)
+{
+	*reinterpret_cast<T *>(cursor) = value;
+	cursor+=sizeof(T);
+}
+
+template<class T>
+void pop(const char *&cursor, T &value)
+{
+	value=*reinterpret_cast<const T *>(cursor);
+	cursor+=sizeof(T);
+}
+
 //==============================================================================
 void JuceOplvstiAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-	destData.ensureSize(sizeof(float) * getNumParameters());
+	destData.ensureSize(sizeof(CURRENT_VERSION)+sizeof(i_program)+sizeof(float) * getNumParameters());
+
+	char *cursor = static_cast<char *>(destData.getData());
+
+	push(cursor, CURRENT_VERSION);
+	push(cursor, i_program);
+
 	for (int i = 0; i < getNumParameters(); i++) {
 		float p = getParameter(i);
-		destData.copyFrom((void*)&p, i*sizeof(float), sizeof(float));
+		push(cursor, p);
 	}
 }
 
 void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+	if (sizeInBytes < sizeof(CURRENT_VERSION))
+		return;
+
+	const char *cursor = static_cast<const char *>(data);
+	const char *end = cursor+sizeInBytes;
+	int version;
+	
+	pop(cursor, version);
+
+	if (version == CURRENT_VERSION)
+	{
+		pop(cursor, i_program);
+
+		const int parametersToLoad = std::min<int>(static_cast<int>(std::distance(cursor, end)) / sizeof(float), getNumParameters());
+
+		for (int i = 0; i < parametersToLoad; i++)
+		{
+			float p;
+
+			pop(cursor, p);
+			setParameter(i, p);
+		}
+
+		return;
+	}
+
 	float* fdata = (float*)data;
-	for (unsigned int i = 0; i < sizeInBytes / sizeof(float); i++) {
+	const int parametersToLoad = std::min<int>(sizeInBytes / sizeof(float), getNumParameters());
+
+	for (int i = 0; i < parametersToLoad; i++) {
 		setParameter(i, fdata[i]);
-	}	
+	}
 }
 
 //==============================================================================
