@@ -91,7 +91,7 @@ private:
 	int i_program;
 	bool velocity;
 	static const int NO_NOTE=-1;
-	static const int CURRENT_VERSION = 0x09720100; // OPL2 v01.00 magic
+	static const char *PROGRAM_INDEX;
 	int active_notes[Hiopl::CHANNELS+1];	// keyed by channel
 	std::deque<int> available_channels;		// most recently freed at end
 	std::deque<int> used_channels;			// most recently used at end

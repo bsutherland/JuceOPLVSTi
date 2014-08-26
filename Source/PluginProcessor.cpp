@@ -4,6 +4,8 @@
 #include "IntFloatParameter.h"
 #include "SbiLoader.h"
 
+const char *JuceOplvstiAudioProcessor::PROGRAM_INDEX = "Program Index";
+
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	: i_program(-1)
@@ -739,61 +741,66 @@ AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 	return gui;
 }
 
-// FIXME: these two funcs and get-/setStateInformation should be replaced by a proper cross-platform archiving API, e.g. eos portable archive or boost text archive
-template<class T>
-void push(char *&cursor, T value)
-{
-	*reinterpret_cast<T *>(cursor)=value;
-	cursor+=sizeof(T);
-}
-
-template<class T>
-void pop(const char *&cursor, T &value)
-{
-	value=*reinterpret_cast<const T *>(cursor);
-	cursor+=sizeof(T);
-}
-
 //==============================================================================
-void JuceOplvstiAudioProcessor::getStateInformation (MemoryBlock& destData)
+
+// JUCE requires that JSON names are valid Identifiers (restricted character set) even though the JSON standard allows any valid string.
+// Per http://www.juce.com/forum/topic/problem-spaces-json-identifier jules allowed Strings to bypass the assertion check
+// but a regression occured in 4317f60 re-enabling this check, so we need to sanitize the names.
+// Technically, the code still works without this, but it will trigger a gargantuan number of assertions hindering effective debugging.
+Identifier stringToIdentifier(const String &s)
 {
-	destData.ensureSize(sizeof(CURRENT_VERSION)+sizeof(i_program)+sizeof(float) * getNumParameters());
+	return s.replaceCharacters(" ", "_");
+}
 
-	char *cursor = static_cast<char *>(destData.getData());
+void JuceOplvstiAudioProcessor::getStateInformation(MemoryBlock& destData)
+{
+	ReferenceCountedObjectPtr<DynamicObject> v(new DynamicObject);
 
-	push(cursor, CURRENT_VERSION);
-	push(cursor, i_program);
+	v->setProperty(stringToIdentifier(PROGRAM_INDEX), i_program);
 
 	for (int i = 0; i < getNumParameters(); i++) {
-		float p = getParameter(i);
-		push(cursor, p);
+		double p = getParameter(i);
+
+		v->setProperty(stringToIdentifier(getParameterName(i)), p);
 	}
+
+	String s = JSON::toString(v.get());
+
+	destData.setSize(s.length());
+	destData.copyFrom(s.getCharPointer(), 0, destData.getSize());
 }
 
 void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-	if (sizeInBytes < sizeof(CURRENT_VERSION))
+	if (sizeInBytes < 1)
 		return;
 
-	const char *cursor = static_cast<const char *>(data);
-	const char *end = cursor+sizeInBytes;
-	int version;
-	
-	pop(cursor, version);
+	const char *first = static_cast<const char *>(data);
+	const char *last = first + sizeInBytes - 1;
 
-	if (version == CURRENT_VERSION)
+	// simple check for JSON data - assume always object
+	if (*first=='{' && *last=='}')
 	{
-		pop(cursor, i_program);
+		// json format
+		String s(first, sizeInBytes);
+		var v = JSON::fromString(s);
 
-		const int parametersToLoad = std::min<int>(static_cast<int>(std::distance(cursor, end)) / sizeof(float), getNumParameters());
-
-		for (int i = 0; i < parametersToLoad; i++)
 		{
-			float p;
+			var program = v[stringToIdentifier(PROGRAM_INDEX)];
 
-			pop(cursor, p);
-			setParameter(i, p);
+			if (!program.isVoid())
+				i_program = program;
 		}
+
+		for (int i=0; i<getNumParameters(); ++i)
+		{
+			var param = v[stringToIdentifier(getParameterName(i))];
+
+			if (!param.isVoid())
+				setParameter(i, param);
+		}
+
+		updateGuiIfPresent();
 
 		return;
 	}
