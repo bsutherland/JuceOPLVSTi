@@ -10,6 +10,7 @@
 #ifndef PLUGINPROCESSOR_H_INCLUDED
 #define PLUGINPROCESSOR_H_INCLUDED
 
+#include <deque>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "hiopl.h"
 #include "FloatParameter.h"
@@ -53,6 +54,8 @@ public:
 	void loadInstrumentFromFile(String filename);
 	void setParametersByRegister(int register_base, int op, uint8 value);
 
+	int isChannelActive(int idx) const;
+
 	void updateGuiIfPresent();
 
     const String getParameterName (int index);
@@ -88,7 +91,10 @@ private:
 	int i_program;
 	bool velocity;
 	static const int NO_NOTE=-1;
+	static const char *PROGRAM_INDEX;
 	int active_notes[Hiopl::CHANNELS+1];	// keyed by channel
+	std::deque<int> available_channels;		// most recently freed at end
+	std::deque<int> used_channels;			// most recently used at end
 	float currentScaledBend;
 
     //==============================================================================

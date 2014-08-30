@@ -4,8 +4,11 @@
 #include "IntFloatParameter.h"
 #include "SbiLoader.h"
 
+const char *JuceOplvstiAudioProcessor::PROGRAM_INDEX = "Program Index";
+
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
+	: i_program(-1)
 {
 	// Initalize OPL
 	velocity = false;
@@ -121,6 +124,9 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		active_notes[i] = NO_NOTE;
 	}
 	currentScaledBend = 1.0f;
+
+	for (int i = 1; i <= Hiopl::CHANNELS; ++i)
+		available_channels.push_back(i);
 }
 
 void JuceOplvstiAudioProcessor::initPrograms()
@@ -380,6 +386,8 @@ void JuceOplvstiAudioProcessor::applyPitchBend()
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 {
+	for (int i=0; i < params.size(); ++i)
+		delete params[i];
 }
 
 //==============================================================================
@@ -598,6 +606,9 @@ void JuceOplvstiAudioProcessor::updateGuiIfPresent()
 
 void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 {
+	if (i_program==index)
+		return;
+
 	i_program = index;
 	std::vector<float> &v_params = programs[getProgramName(index)];
 	for (unsigned int i = 0; i < params.size() && i < v_params.size(); i++) {
@@ -634,7 +645,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 	buffer.clear(0, 0, buffer.getNumSamples());
 	MidiBuffer::Iterator midi_buffer_iterator(midiMessages);
 
-	MidiMessage midi_message(0);
+	MidiMessage midi_message;
 	int sample_number;
 	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
 		if (midi_message.isNoteOn()) {
@@ -642,10 +653,22 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			//the beginning of the current buffer
 			int n = midi_message.getNoteNumber();
 			float noteHz = (float)MidiMessage::getMidiNoteInHertz(n);
-			int ch = 1;
-			while (ch <= Hiopl::CHANNELS && NO_NOTE != active_notes[ch]) {
-				ch += 1;
+			int ch;
+
+			if (!available_channels.empty())
+			{
+				ch = available_channels.front();
+				available_channels.pop_front();
 			}
+			else
+			{
+				ch = used_channels.back(); // steal earliest/longest running active channel if out of free channels
+				used_channels.pop_back();
+				Opl->KeyOff(ch);
+			}
+
+			used_channels.push_front(ch);
+
 			switch (getEnumParameter("Carrier Velocity Sensitivity")) {
 				case 0:
 					Opl->SetAttenuation(ch, 2, getEnumParameter("Carrier Attenuation"));
@@ -678,8 +701,22 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			while (ch <= Hiopl::CHANNELS && n != active_notes[ch]) {
 				ch += 1;
 			}
-			Opl->KeyOff(ch);
-			active_notes[ch] = NO_NOTE;
+			if (ch <= Hiopl::CHANNELS)
+			{
+				for (auto i = used_channels.begin(); i != used_channels.end(); ++i)
+				{
+					if (*i == ch)
+					{
+						used_channels.erase(i);
+						available_channels.push_back(ch);
+
+						break;
+					}
+				}
+
+				Opl->KeyOff(ch);
+				active_notes[ch]=NO_NOTE;
+			}
 		}
 		else if (midi_message.isPitchWheel()) {
 			int bend = midi_message.getPitchWheelValue() - 0x2000;	// range -8192 to 8191
@@ -705,21 +742,82 @@ AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
 }
 
 //==============================================================================
-void JuceOplvstiAudioProcessor::getStateInformation (MemoryBlock& destData)
+
+// JUCE requires that JSON names are valid Identifiers (restricted character set) even though the JSON standard allows any valid string.
+// Per http://www.juce.com/forum/topic/problem-spaces-json-identifier jules allowed Strings to bypass the assertion check
+// but a regression occured in 4317f60 re-enabling this check, so we need to sanitize the names.
+// Technically, the code still works without this, but it will trigger a gargantuan number of assertions hindering effective debugging.
+Identifier stringToIdentifier(const String &s)
 {
-	destData.ensureSize(sizeof(float) * getNumParameters());
+	return s.replaceCharacters(" ", "_");
+}
+
+void JuceOplvstiAudioProcessor::getStateInformation(MemoryBlock& destData)
+{
+	ReferenceCountedObjectPtr<DynamicObject> v(new DynamicObject);
+
+	v->setProperty(stringToIdentifier(PROGRAM_INDEX), i_program);
+
 	for (int i = 0; i < getNumParameters(); i++) {
-		float p = getParameter(i);
-		destData.copyFrom((void*)&p, i*sizeof(float), sizeof(float));
+		double p = getParameter(i);
+
+		v->setProperty(stringToIdentifier(getParameterName(i)), p);
 	}
+
+	String s = JSON::toString(v.get());
+
+	destData.setSize(s.length());
+	destData.copyFrom(s.getCharPointer(), 0, destData.getSize());
 }
 
 void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+	if (sizeInBytes < 1)
+		return;
+
+	const char *first = static_cast<const char *>(data);
+	const char *last = first + sizeInBytes - 1;
+
+	// simple check for JSON data - assume always object
+	if (*first=='{' && *last=='}')
+	{
+		// json format
+		String s(first, sizeInBytes);
+		var v = JSON::fromString(s);
+
+		{
+			var program = v[stringToIdentifier(PROGRAM_INDEX)];
+
+			if (!program.isVoid())
+				i_program = program;
+		}
+
+		for (int i=0; i<getNumParameters(); ++i)
+		{
+			var param = v[stringToIdentifier(getParameterName(i))];
+
+			if (!param.isVoid())
+				setParameter(i, param);
+		}
+
+		updateGuiIfPresent();
+
+		return;
+	}
+
 	float* fdata = (float*)data;
-	for (unsigned int i = 0; i < sizeInBytes / sizeof(float); i++) {
+	const int parametersToLoad = std::min<int>(sizeInBytes / sizeof(float), getNumParameters());
+
+	for (int i = 0; i < parametersToLoad; i++) {
 		setParameter(i, fdata[i]);
-	}	
+	}
+}
+
+// @param idx 1-based channel index
+// @note since this is just reading off pod, "safe" to access without a mutex by other threads such as GUI
+int JuceOplvstiAudioProcessor::isChannelActive(int idx) const
+{
+	return active_notes[idx] != NO_NOTE;
 }
 
 //==============================================================================
