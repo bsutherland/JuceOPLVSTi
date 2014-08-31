@@ -386,7 +386,7 @@ void JuceOplvstiAudioProcessor::applyPitchBend()
 
 JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 {
-	for (int i=0; i < params.size(); ++i)
+	for (unsigned int i=0; i < params.size(); ++i)
 		delete params[i];
 }
 

@@ -914,9 +914,9 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	keyscaleEnvButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	sustainButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 
-	for (int i = 0; i < channels.size(); ++i)
+	for (unsigned int i = 0; i < channels.size(); ++i)
 	{
-		ImageButton *channel=new ImageButton("new button");
+		ImageButton *channel = new ImageButton("new button");
 
 		addAndMakeVisible(channel);
 		channel->addListener(this);
@@ -926,7 +926,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 			Image(), 1.000f, Colour(0x00000000),
 			ImageCache::getFromMemory(channelon_png, channelon_pngSize), 1.000f, Colour(0x00000000));
 
-		channels[i]=channel;
+		channels[i] = channel;
 	}
     //[/UserPreSize]
 
@@ -1117,8 +1117,8 @@ void PluginGui::resized()
     keyscaleAttenuationComboBox->setBounds (264, 88, 72, 24);
     groupComponent4->setBounds (16, 800, 408, 64);
     //[UserResized] Add your own custom resize handling here..
-	for (int i = 0; i < channels.size(); ++i)
-		channels[i]->setBounds(32+24*i+4, 824+4, 16, 16);
+	for (unsigned int i = 0; i < channels.size(); ++i)
+		channels[i]->setBounds(32+44*i+4, 824+4, 16, 16);
     //[/UserResized]
 }
 
