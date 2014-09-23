@@ -1435,7 +1435,11 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 
     bool PluginGui::isInterestedInFileDrag (const StringArray& files)
     {
-        return 1 == files.size() && files[0].toLowerCase().endsWith(".sbi");
+        return 1 == files.size() && (
+			files[0].toLowerCase().endsWith(".sbi")
+			|| files[0].toLowerCase().endsWith(".sb2")
+			|| files[0].toLowerCase().endsWith(".sb0")
+		);
     }
 
     void PluginGui::fileDragEnter (const StringArray& files, int x, int y)
