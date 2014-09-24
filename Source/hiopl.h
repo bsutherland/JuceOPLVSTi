@@ -2,6 +2,7 @@
 
 #include "adlib.h"
 #include "dbopl.h"
+#include "zdopl.h"
 
 enum Waveform
 {
@@ -13,12 +14,19 @@ enum FreqMultiple
 	xHALF=0, x1=1, x2=2, x3=3, x4=4, x5=5, x6=6, x7=7, x8=8, x9=9, x10=10, x12=12, x15=15
 };
 
+enum Emulator
+{
+	DOSBOX=0, ZDOOM=1
+};
+
 
 class Hiopl {
 	public:
 		static const int CHANNELS = 9;
 		static const int OSCILLATORS = 2;
-		Hiopl(int buflen);
+		Hiopl(int buflen, Emulator emulator=ZDOOM);
+		void Hiopl::SetEmulator(Emulator emulator);
+
 		void Generate(int length, short* buffer);
 		void Generate(int length, float* buffer);
 		void SetSampleRate(int hz);
@@ -51,7 +59,9 @@ class Hiopl {
 		void _ClearRegBits(Bit32u reg, Bit8u mask);
 		~Hiopl();
 	private:
+		Emulator emulator;
 		Adlib::Handler *adlib;
+		OPLEmul *zdoom;
 		Bit8u regCache[256];
 		Bit32s *Buf32;
 		bool _CheckParams(int ch, int osc);

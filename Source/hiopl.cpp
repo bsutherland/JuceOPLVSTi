@@ -3,11 +3,14 @@
 #include <assert.h>
 #include "../JuceLibraryCode/JuceHeader.h"
 
-// A higher level wrapper around the DOSBox OPL emulator.
+// A wrapper around the DOSBox and ZDoom OPL emulators.
 
-Hiopl::Hiopl(int buflen) {
+Hiopl::Hiopl(int buflen, Emulator emulator) {
 	adlib = new DBOPL::Handler();
-	Buf32 = new Bit32s[buflen*2];
+	zdoom = JavaOPLCreate(false);
+
+	this->SetEmulator(emulator);
+
 	_op1offset[1] = 0x0;
 	_op1offset[2] = 0x1;
 	_op1offset[3] = 0x2;
@@ -33,32 +36,21 @@ Hiopl::Hiopl(int buflen) {
 	}
 }
 
-void Hiopl::Generate(int length, short* buffer) {
-	adlib->Generate(length, Buf32);
-	for (int i = 0; i < length; i++) {
-		buffer[i] = (short)(Buf32[i]);
-	}
+void Hiopl::SetEmulator(Emulator emulator) {
+	this->emulator = emulator;
 }
 
 void Hiopl::Generate(int length, float* buffer) {
 	// This would be better done using Juce's built in audio format conversion.
-	adlib->Generate(length, Buf32);
-	for (int i = 0; i < length; i++) {
-		buffer[i] = (float)(Buf32[i])/32768.0f;
+	if (DOSBOX == emulator) {
+		adlib->Generate(length, Buf32);
+		for (int i = 0; i < length; i++) {
+			buffer[i] = (float)(Buf32[i])/32768.0f;
+		}
+	} else if (ZDOOM == emulator) {
+		// ZDoom hacked to write mono samples
+		zdoom->Update(buffer, length);
 	}
-	/*
-	AudioData::ConverterInstance<
-		AudioData::Pointer <AudioData::Int16,
-			AudioData::NativeEndian,
-			AudioData::Interleaved,
-			AudioData::Const>,
-		AudioData::Pointer <AudioData::Float32,
-			AudioData::NativeEndian,
-			AudioData::NonInterleaved,
-			AudioData::NonConst>
-	>converter;
-	converter.convertSamples(buffer, 0, Buf32, 0, length);
-	*/
 }
 
 void Hiopl::SetSampleRate(int hz) {
@@ -69,7 +61,11 @@ void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
 	if (mask > 0) {
 		value = (regCache[reg] & (~mask)) | (value & mask);
 	}
-	adlib->WriteReg(reg, value);
+	if (DOSBOX == emulator) {
+		adlib->WriteReg(reg, value);
+	} else if (ZDOOM == emulator) {
+		zdoom->WriteReg(reg, value);
+	}
 	regCache[reg] = value;
 }
 
