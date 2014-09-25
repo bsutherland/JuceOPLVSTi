@@ -171,6 +171,10 @@ private:
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox2;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox;
     ScopedPointer<GroupComponent> groupComponent4;
+    ScopedPointer<GroupComponent> groupComponent5;
+    ScopedPointer<Slider> feedbackSlider2;
+    ScopedPointer<Label> emulatorLabel;
+    ScopedPointer<Label> emulatorLabel2;
 
 
     //==============================================================================

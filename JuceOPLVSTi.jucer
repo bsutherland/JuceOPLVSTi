@@ -11,6 +11,8 @@
               buildVST3="0" buildRTAS="0" buildAAX="0" includeBinaryInAppConfig="1">
   <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
+      <FILE id="hjHmNq" name="zdopl.cpp" compile="1" resource="0" file="Source/zdopl.cpp"/>
+      <FILE id="TQyCKv" name="zdopl.h" compile="0" resource="0" file="Source/zdopl.h"/>
       <FILE id="LVSdHL" name="InstrumentLoader.h" compile="0" resource="0"
             file="Source/InstrumentLoader.h"/>
       <FILE id="SX7G0u" name="SbiLoader.cpp" compile="1" resource="0" file="Source/SbiLoader.cpp"/>
