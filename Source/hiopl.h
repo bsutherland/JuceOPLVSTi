@@ -63,7 +63,6 @@ class Hiopl {
 		Adlib::Handler *adlib;
 		OPLEmul *zdoom;
 		Bit8u regCache[256];
-		Bit32s *Buf32;
 		bool _CheckParams(int ch, int osc);
 		int _GetOffset(int ch, int osc);
 		int _GetOffset(int ch);

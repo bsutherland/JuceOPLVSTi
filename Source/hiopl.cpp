@@ -6,7 +6,6 @@
 // A wrapper around the DOSBox and ZDoom OPL emulators.
 
 Hiopl::Hiopl(int buflen, Emulator emulator) {
-	Buf32 = new Bit32s[buflen*2];
 	adlib = new DBOPL::Handler();
 	zdoom = JavaOPLCreate(false);
 
@@ -47,10 +46,13 @@ void Hiopl::SetEmulator(Emulator emulator) {
 void Hiopl::Generate(int length, float* buffer) {
 	// This would be better done using Juce's built in audio format conversion.
 	if (DOSBOX == emulator) {
-		adlib->Generate(length, Buf32);
+		Bit32s* buf32 = new Bit32s[length];
+		adlib->Generate(length, buf32);
 		for (int i = 0; i < length; i++) {
-			buffer[i] = (float)(Buf32[i])/32768.0f;
+			// The magic divisor is tuned to match to ZDoom output amplitude.
+			buffer[i] = (float)(buf32[i])/4100.0f;
 		}
+		delete buf32;
 	} else if (ZDOOM == emulator) {
 		// ZDoom hacked to write mono samples
 		zdoom->Update(buffer, length);
@@ -65,6 +67,7 @@ void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
 	if (mask > 0) {
 		value = (regCache[reg] & (~mask)) | (value & mask);
 	}
+	// Write to the registers of both emulators.
 	//if (DOSBOX == emulator) {
 		adlib->WriteReg(reg, value);
 	//} else if (ZDOOM == emulator) {
@@ -171,6 +174,10 @@ void Hiopl::KeyOff(int ch) {
 void Hiopl::SetFrequency(int ch, float frqHz, bool keyOn) {
 	unsigned int fnum, block;
 	int offset = this->_GetOffset(ch);
+	// ZDoom emulator seems to be tuned down by two semitones for some reason.
+	if (ZDOOM == emulator) {
+		frqHz *= 1.122461363636364f;
+	}
 	_milliHertzToFnum((unsigned int)(frqHz * 1000.0), &fnum, &block);
 	_WriteReg(0xa0+offset, fnum % 0x100);
 	uint8 trig = (regCache[0xb0+offset] & 0x20) | (keyOn ? 0x20 : 0x00);
@@ -216,7 +223,7 @@ void Hiopl::_milliHertzToFnum(unsigned int milliHertz,
 }
 
 Hiopl::~Hiopl() {
-	delete Buf32;
+
 };
 
 bool Hiopl::_CheckParams(int ch, int osc=OSCILLATORS) {

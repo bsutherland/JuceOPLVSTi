@@ -18,11 +18,6 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 
 	// Initialize parameters
 
-	const String emulators[] = {"DOSBox", "ZDoom"};
-	params.push_back(new EnumFloatParameter("Emulator",
-		StringArray(emulators, sizeof(emulators)/sizeof(String)))
-	);
-
 	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine", "Alternating Sine", "Camel Sine", "Square", "Logarithmic Sawtooth"};
 	params.push_back(new EnumFloatParameter("Carrier Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
@@ -114,6 +109,11 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(sensitivitySettings, sizeof(sensitivitySettings)/sizeof(String)))
 	);
 
+	const String emulators[] = {"DOSBox", "ZDoom"};
+	params.push_back(new EnumFloatParameter("Emulator",
+		StringArray(emulators, sizeof(emulators)/sizeof(String)))
+	);
+
 	for(unsigned int i = 0; i < params.size(); i++) {
 		paramIdxByName[params[i]->getName()] = i;
 	}
@@ -138,7 +138,6 @@ void JuceOplvstiAudioProcessor::initPrograms()
 {
 	// these ones from the Syndicate in-game music
     const float i_params_0[] = {
-		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
         0.142857f, 0.412698f,  // attenuation
@@ -151,12 +150,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.5f, 0.3f, 0.3f, 0.3f,  // adsr
         0.5f, 0.3f, 0.1f, 0.6f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_0 (i_params_0, i_params_0 + sizeof(i_params_0) / sizeof(float));
     programs["Mercenary Bass"] = std::vector<float>(v_i_params_0);
 
     const float i_params_19189[] = {
-		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
         0.000000f, 0.285714f,  // attenuation
@@ -169,13 +168,13 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 1.0f, 0.0f, 0.3f,  // adsr
         1.0f, 0.5f, 0.2f, 0.3f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_19189 (i_params_19189, i_params_19189 + sizeof(i_params_19189) / sizeof(float));
     programs["Patrol Bass"] = std::vector<float>(v_i_params_19189);
 
     const float i_params_38377[] = {
-		0.0f,					// emulator
-        0.000000f, 0.160000f,  // waveforms
+		0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
         0.000000f, 0.460317f,  // attenuation
 		0.000000f, 0.000000f,  // tremolo / vibrato depth
@@ -187,12 +186,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.3f, 0.5f, 0.5f,  // adsr
         1.0f, 0.1f, 0.9f, 1.0f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_38377 (i_params_38377, i_params_38377 + sizeof(i_params_38377) / sizeof(float));
     programs["Subdue Bass"] = std::vector<float>(v_i_params_38377);
 
     const float i_params_38392[] = {
-		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
         0.000000f, 0.000000f,  // attenuation
@@ -205,12 +204,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.1f, 0.7f, 0.1f,  // adsr
         0.1f, 0.9f, 0.1f, 0.1f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_38392 (i_params_38392, i_params_38392 + sizeof(i_params_38392) / sizeof(float));
     programs["Dark Future Sweep"] = std::vector<float>(v_i_params_38392);
 
     const float i_params_39687[] = {
-		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.333333f,  // frq multipliers
         0.000000f, 0.301587f,  // attenuation
@@ -223,12 +222,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.3f, 0.1f, 0.3f,  // adsr
         1.0f, 0.7f, 0.0f, 0.4f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_39687 (i_params_39687, i_params_39687 + sizeof(i_params_39687) / sizeof(float));
     programs["Sinister Bass"] = std::vector<float>(v_i_params_39687);
 
     const float i_params_76784[] = {
-		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
         0.000000f, 0.428571f,  // attenuation
@@ -241,12 +240,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.3f, 0.4f, 0.4f,  // adsr
         1.0f, 0.4f, 0.5f, 0.3f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_76784 (i_params_76784, i_params_76784 + sizeof(i_params_76784) / sizeof(float));
     programs["Buzcut Bass"] = std::vector<float>(v_i_params_76784);
 
     const float i_params_97283[] = {
-		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.133333f, 0.400000f,  // frq multipliers
         0.000000f, 0.365079f,  // attenuation
@@ -259,13 +258,13 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.6f, 0.7f, 0.0f, 0.2f,  // adsr
         0.6f, 0.7f, 0.1f, 0.1f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
     programs["Death Toll Bell"] = std::vector<float>(v_i_params_97283);
 
 	// The start of the Dune 2 introduction
     const float i_params_3136[] = {
-		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.133333f, 0.133333f,  // frq multipliers
         0.000000f, 0.333333f,  // attenuation
@@ -278,12 +277,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.1f, 0.1f, 0.3f,  // adsr
         1.0f, 0.4f, 0.2f, 0.3f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_3136 (i_params_3136, i_params_3136 + sizeof(i_params_3136) / sizeof(float));
     programs["Westwood Chime"] = std::vector<float>(v_i_params_3136);
 
     const float i_params_7254[] = {
-		0.0f,					// emulator
         0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
         0.253968f, 0.476190f,  // attenuation
@@ -296,12 +295,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
         0.2f, 0.1f, 0.1f, 0.0f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_7254 (i_params_7254, i_params_7254 + sizeof(i_params_7254) / sizeof(float));
     programs["Desert Pipe"] = std::vector<float>(v_i_params_7254);
 
     const float i_params_20108[] = {
-		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.400000f, 0.066667f,  // frq multipliers
         0.238095f, 0.000000f,  // attenuation
@@ -314,12 +313,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_20108 (i_params_20108, i_params_20108 + sizeof(i_params_20108) / sizeof(float));
     programs["Y2180 Strings"] = std::vector<float>(v_i_params_20108);
 
     const float i_params_27550[] = {
-		0.0f,					// emulator
         0.500000f, 0.000000f,  // waveforms
         0.000000f, 0.066667f,  // frq multipliers
         0.238095f, 0.793651f,  // attenuation
@@ -332,12 +331,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.0f, 1.0f, 1.0f,  // adsr
         0.9f, 0.1f, 0.0f, 1.0f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_27550 (i_params_27550, i_params_27550 + sizeof(i_params_27550) / sizeof(float));
     programs["Emperor Chord"] = std::vector<float>(v_i_params_27550);
 
     const float i_params_harpsi[] = {
-		0.0f,					// emulator
         0.330000f, 0.160000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
         0.142857f, 0.260000f,  // attenuation
@@ -350,12 +349,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.85f, 0.3f, 0.3f, 0.3f,  // adsr
         0.85f, 0.3f, 0.1f, 0.6f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_harpsi (i_params_harpsi, i_params_harpsi + sizeof(i_params_harpsi) / sizeof(float));
     programs["Harpsi"] = std::vector<float>(v_i_params_harpsi);
 
     const float i_params_tromba[] = {
-		0.0f,					// emulator
         0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.000000f,  // frq multipliers
         0.142857f, 0.220000f,  // attenuation
@@ -368,12 +367,12 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.45f, 0.3f, 0.3f, 0.3f,  // adsr
         0.45f, 0.45f, 0.1f, 0.6f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_tromba (i_params_tromba, i_params_tromba + sizeof(i_params_tromba) / sizeof(float));
     programs["Tromba"] = std::vector<float>(v_i_params_tromba);
 
     const float i_params_bassdrum[] = {
-		0.0f,					// emulator
         0.000000f, 0.500000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
         0.000000f, 0.090000f,  // attenuation
@@ -386,6 +385,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.00f, 0.5f, 0.3f, 0.4f,  // adsr
         1.00f, 0.75f, 0.5f, 0.5f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
+		0.0f,					// emulator
     };
     std::vector<float> v_i_params_bassdrum (i_params_bassdrum, i_params_bassdrum + sizeof(i_params_bassdrum) / sizeof(float));
     programs["bassdrum"] = std::vector<float>(v_i_params_bassdrum);
@@ -417,7 +417,7 @@ const String JuceOplvstiAudioProcessor::getName() const
 
 int JuceOplvstiAudioProcessor::getNumParameters()
 {
-	return params.size();
+	return (int)params.size();
 }
 
 float JuceOplvstiAudioProcessor::getParameter (int index)
@@ -505,7 +505,7 @@ void JuceOplvstiAudioProcessor::loadInstrumentFromFile(String filename)
 {
 	FILE* f = fopen(filename.toUTF8(), "rb");
 	unsigned char buf[MAX_INSTRUMENT_FILE_SIZE_BYTES];
-	int n = fread(buf, 1, MAX_INSTRUMENT_FILE_SIZE_BYTES, f);
+	int n = (int)fread(buf, 1, MAX_INSTRUMENT_FILE_SIZE_BYTES, f);
 	fclose(f);
 	SbiLoader* loader = new SbiLoader();
 	loader->loadInstrumentData(n, buf, this);
@@ -609,7 +609,7 @@ double JuceOplvstiAudioProcessor::getTailLengthSeconds() const
 
 int JuceOplvstiAudioProcessor::getNumPrograms()
 {
-    return programs.size();
+    return (int)programs.size();
 }
 
 int JuceOplvstiAudioProcessor::getCurrentProgram()
