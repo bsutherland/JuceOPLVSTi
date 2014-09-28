@@ -18,6 +18,11 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 
 	// Initialize parameters
 
+	const String emulators[] = {"DOSBox", "ZDoom"};
+	params.push_back(new EnumFloatParameter("Emulator",
+		StringArray(emulators, sizeof(emulators)/sizeof(String)))
+	);
+
 	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine", "Alternating Sine", "Camel Sine", "Square", "Logarithmic Sawtooth"};
 	params.push_back(new EnumFloatParameter("Carrier Wave",
 		StringArray(waveforms, sizeof(waveforms)/sizeof(String)))
@@ -133,6 +138,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
 {
 	// these ones from the Syndicate in-game music
     const float i_params_0[] = {
+		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
         0.142857f, 0.412698f,  // attenuation
@@ -150,6 +156,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Mercenary Bass"] = std::vector<float>(v_i_params_0);
 
     const float i_params_19189[] = {
+		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
         0.000000f, 0.285714f,  // attenuation
@@ -167,6 +174,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Patrol Bass"] = std::vector<float>(v_i_params_19189);
 
     const float i_params_38377[] = {
+		0.0f,					// emulator
         0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
         0.000000f, 0.460317f,  // attenuation
@@ -184,6 +192,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Subdue Bass"] = std::vector<float>(v_i_params_38377);
 
     const float i_params_38392[] = {
+		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
         0.000000f, 0.000000f,  // attenuation
@@ -201,6 +210,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Dark Future Sweep"] = std::vector<float>(v_i_params_38392);
 
     const float i_params_39687[] = {
+		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.066667f, 0.333333f,  // frq multipliers
         0.000000f, 0.301587f,  // attenuation
@@ -218,6 +228,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Sinister Bass"] = std::vector<float>(v_i_params_39687);
 
     const float i_params_76784[] = {
+		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.066667f, 0.133333f,  // frq multipliers
         0.000000f, 0.428571f,  // attenuation
@@ -235,6 +246,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Buzcut Bass"] = std::vector<float>(v_i_params_76784);
 
     const float i_params_97283[] = {
+		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.133333f, 0.400000f,  // frq multipliers
         0.000000f, 0.365079f,  // attenuation
@@ -253,6 +265,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
 
 	// The start of the Dune 2 introduction
     const float i_params_3136[] = {
+		0.0f,					// emulator
         0.000000f, 0.330000f,  // waveforms
         0.133333f, 0.133333f,  // frq multipliers
         0.000000f, 0.333333f,  // attenuation
@@ -270,6 +283,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Westwood Chime"] = std::vector<float>(v_i_params_3136);
 
     const float i_params_7254[] = {
+		0.0f,					// emulator
         0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.066667f,  // frq multipliers
         0.253968f, 0.476190f,  // attenuation
@@ -287,6 +301,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Desert Pipe"] = std::vector<float>(v_i_params_7254);
 
     const float i_params_20108[] = {
+		0.0f,					// emulator
         0.000000f, 0.000000f,  // waveforms
         0.400000f, 0.066667f,  // frq multipliers
         0.238095f, 0.000000f,  // attenuation
@@ -304,6 +319,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Y2180 Strings"] = std::vector<float>(v_i_params_20108);
 
     const float i_params_27550[] = {
+		0.0f,					// emulator
         0.500000f, 0.000000f,  // waveforms
         0.000000f, 0.066667f,  // frq multipliers
         0.238095f, 0.793651f,  // attenuation
@@ -321,6 +337,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Emperor Chord"] = std::vector<float>(v_i_params_27550);
 
     const float i_params_harpsi[] = {
+		0.0f,					// emulator
         0.330000f, 0.160000f,  // waveforms
         0.066667f, 0.200000f,  // frq multipliers
         0.142857f, 0.260000f,  // attenuation
@@ -338,6 +355,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Harpsi"] = std::vector<float>(v_i_params_harpsi);
 
     const float i_params_tromba[] = {
+		0.0f,					// emulator
         0.000000f, 0.160000f,  // waveforms
         0.066667f, 0.000000f,  // frq multipliers
         0.142857f, 0.220000f,  // attenuation
@@ -355,6 +373,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
     programs["Tromba"] = std::vector<float>(v_i_params_tromba);
 
     const float i_params_bassdrum[] = {
+		0.0f,					// emulator
         0.000000f, 0.500000f,  // waveforms
         0.000000f, 0.000000f,  // frq multipliers
         0.000000f, 0.090000f,  // attenuation
@@ -477,6 +496,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		Opl->TremoloDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.startsWith("Vibrato Depth")) {
 		Opl->VibratoDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	} else if (name.startsWith("Emulator")) {
+		Opl->SetEmulator((Emulator)((EnumFloatParameter*)p)->getParameterIndex());
 	}
 }
 

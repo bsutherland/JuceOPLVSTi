@@ -25,7 +25,7 @@ class Hiopl {
 		static const int CHANNELS = 9;
 		static const int OSCILLATORS = 2;
 		Hiopl(int buflen, Emulator emulator=ZDOOM);
-		void Hiopl::SetEmulator(Emulator emulator);
+		void SetEmulator(Emulator emulator);
 
 		void Generate(int length, short* buffer);
 		void Generate(int length, float* buffer);
@@ -68,6 +68,7 @@ class Hiopl {
 		int _GetOffset(int ch, int osc);
 		int _GetOffset(int ch);
 		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
+		void _ClearRegisters();
 		std::map<int, int> _op1offset;
 		std::map<int, int> _op2offset;
 };

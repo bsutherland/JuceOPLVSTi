@@ -6,10 +6,9 @@
 // A wrapper around the DOSBox and ZDoom OPL emulators.
 
 Hiopl::Hiopl(int buflen, Emulator emulator) {
+	Buf32 = new Bit32s[buflen*2];
 	adlib = new DBOPL::Handler();
 	zdoom = JavaOPLCreate(false);
-
-	this->SetEmulator(emulator);
 
 	_op1offset[1] = 0x0;
 	_op1offset[2] = 0x1;
@@ -31,6 +30,11 @@ Hiopl::Hiopl(int buflen, Emulator emulator) {
 	_op2offset[8] = 0x14;
 	_op2offset[9] = 0x15;
 
+	SetEmulator(emulator);
+	_ClearRegisters();
+}
+
+void Hiopl::_ClearRegisters() {
 	for (int i = 0; i < 256; i++) {
 		_WriteReg(i, 0);
 	}
@@ -61,11 +65,11 @@ void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
 	if (mask > 0) {
 		value = (regCache[reg] & (~mask)) | (value & mask);
 	}
-	if (DOSBOX == emulator) {
+	//if (DOSBOX == emulator) {
 		adlib->WriteReg(reg, value);
-	} else if (ZDOOM == emulator) {
+	//} else if (ZDOOM == emulator) {
 		zdoom->WriteReg(reg, value);
-	}
+	//}
 	regCache[reg] = value;
 }
 

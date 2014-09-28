@@ -809,16 +809,16 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     groupComponent5->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent5->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
-    addAndMakeVisible (feedbackSlider2 = new Slider ("feedback slider"));
-    feedbackSlider2->setRange (0, 1, 1);
-    feedbackSlider2->setSliderStyle (Slider::LinearHorizontal);
-    feedbackSlider2->setTextBoxStyle (Slider::NoTextBox, true, 44, 20);
-    feedbackSlider2->setColour (Slider::thumbColourId, Colour (0xff00af00));
-    feedbackSlider2->setColour (Slider::trackColourId, Colour (0x7f007f00));
-    feedbackSlider2->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
-    feedbackSlider2->setColour (Slider::textBoxBackgroundColourId, Colours::black);
-    feedbackSlider2->setColour (Slider::textBoxHighlightColourId, Colour (0xff00af00));
-    feedbackSlider2->addListener (this);
+    addAndMakeVisible (emulatorSlider = new Slider ("emulator slider"));
+    emulatorSlider->setRange (0, 1, 1);
+    emulatorSlider->setSliderStyle (Slider::LinearHorizontal);
+    emulatorSlider->setTextBoxStyle (Slider::NoTextBox, true, 44, 20);
+    emulatorSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
+    emulatorSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
+    emulatorSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
+    emulatorSlider->setColour (Slider::textBoxBackgroundColourId, Colours::black);
+    emulatorSlider->setColour (Slider::textBoxHighlightColourId, Colour (0xff00af00));
+    emulatorSlider->addListener (this);
 
     addAndMakeVisible (emulatorLabel = new Label ("emulator label",
                                                   TRANS("DOSBox")));
@@ -1057,7 +1057,7 @@ PluginGui::~PluginGui()
     keyscaleAttenuationComboBox = nullptr;
     groupComponent4 = nullptr;
     groupComponent5 = nullptr;
-    feedbackSlider2 = nullptr;
+    emulatorSlider = nullptr;
     emulatorLabel = nullptr;
     emulatorLabel2 = nullptr;
 
@@ -1157,9 +1157,9 @@ void PluginGui::resized()
     keyscaleAttenuationComboBox->setBounds (264, 144, 72, 24);
     groupComponent4->setBounds (16, 856, 408, 64);
     groupComponent5->setBounds (16, 8, 408, 48);
-    feedbackSlider2->setBounds (184, 24, 72, 24);
-    emulatorLabel->setBounds (104, 24, 72, 24);
-    emulatorLabel2->setBounds (264, 24, 72, 24);
+    emulatorSlider->setBounds (200, 24, 40, 24);
+    emulatorLabel->setBounds (120, 24, 72, 24);
+    emulatorLabel2->setBounds (248, 24, 72, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(32+44*i+4, 880+4, 16, 16);
@@ -1311,10 +1311,11 @@ void PluginGui::sliderValueChanged (Slider* sliderThatWasMoved)
 		processor->setIntParameter("Modulator Feedback", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_feedbackSlider]
     }
-    else if (sliderThatWasMoved == feedbackSlider2)
+    else if (sliderThatWasMoved == emulatorSlider)
     {
-        //[UserSliderCode_feedbackSlider2] -- add your slider handling code here..
-        //[/UserSliderCode_feedbackSlider2]
+        //[UserSliderCode_emulatorSlider] -- add your slider handling code here..
+		processor->setEnumParameter("Emulator", sliderThatWasMoved->getValue() < 0.5 ? 0 : 1);
+        //[/UserSliderCode_emulatorSlider]
     }
 
     //[UsersliderValueChanged_Post]
@@ -1919,19 +1920,19 @@ BEGIN_JUCER_METADATA
   <GROUPCOMPONENT name="new group" id="7abc643f4d6a2dbf" memberName="groupComponent5"
                   virtualName="" explicitFocusOrder="0" pos="16 8 408 48" outlinecol="ff007f00"
                   textcol="ff007f00" title="Emulator" textpos="33"/>
-  <SLIDER name="feedback slider" id="88ec3755c4760ed9" memberName="feedbackSlider2"
-          virtualName="" explicitFocusOrder="0" pos="184 24 72 24" thumbcol="ff00af00"
+  <SLIDER name="emulator slider" id="88ec3755c4760ed9" memberName="emulatorSlider"
+          virtualName="" explicitFocusOrder="0" pos="200 24 40 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="1" int="1" style="LinearHorizontal"
           textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="44"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="emulator label" id="22c2c30d0f337081" memberName="emulatorLabel"
-         virtualName="" explicitFocusOrder="0" pos="104 24 72 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="120 24 72 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="DOSBox" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="34"/>
   <LABEL name="emulator label" id="4f8869b5724c0195" memberName="emulatorLabel2"
-         virtualName="" explicitFocusOrder="0" pos="264 24 72 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="248 24 72 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="ZDoom" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
