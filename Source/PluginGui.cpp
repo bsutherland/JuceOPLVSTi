@@ -966,7 +966,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	}
     //[/UserPreSize]
 
-    setSize (440, 950);
+    setSize (440, 934);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -1157,8 +1157,8 @@ void PluginGui::resized()
     keyscaleAttenuationComboBox->setBounds (264, 144, 72, 24);
     groupComponent4->setBounds (16, 856, 408, 64);
     groupComponent5->setBounds (16, 8, 408, 48);
-    emulatorSlider->setBounds (200, 24, 40, 24);
-    emulatorLabel->setBounds (120, 24, 72, 24);
+    emulatorSlider->setBounds (208, 24, 32, 24);
+    emulatorLabel->setBounds (128, 24, 72, 24);
     emulatorLabel2->setBounds (248, 24, 72, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
@@ -1532,7 +1532,7 @@ BEGIN_JUCER_METADATA
                  parentClasses="public AudioProcessorEditor, public FileDragAndDropTarget, public DragAndDropContainer, public Timer"
                  constructorParams="JuceOplvstiAudioProcessor* ownerFilter" variableInitialisers=" AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="440" initialHeight="950">
+                 fixedSize="0" initialWidth="440" initialHeight="934">
   <BACKGROUND backgroundColour="ff000000"/>
   <GROUPCOMPONENT name="new group" id="d2c7c07bf2d78c30" memberName="groupComponent"
                   virtualName="" explicitFocusOrder="0" pos="16 64 408 336" outlinecol="ff007f00"
@@ -1921,13 +1921,13 @@ BEGIN_JUCER_METADATA
                   virtualName="" explicitFocusOrder="0" pos="16 8 408 48" outlinecol="ff007f00"
                   textcol="ff007f00" title="Emulator" textpos="33"/>
   <SLIDER name="emulator slider" id="88ec3755c4760ed9" memberName="emulatorSlider"
-          virtualName="" explicitFocusOrder="0" pos="200 24 40 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="208 24 32 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="1" int="1" style="LinearHorizontal"
           textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="44"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="emulator label" id="22c2c30d0f337081" memberName="emulatorLabel"
-         virtualName="" explicitFocusOrder="0" pos="120 24 72 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="128 24 72 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="DOSBox" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="34"/>

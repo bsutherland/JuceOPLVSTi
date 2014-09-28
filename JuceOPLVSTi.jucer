@@ -75,8 +75,10 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="JuceOPLVSTi"/>
-        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="2" targetName="JuceOPLVSTi"/>
+        <CONFIGURATION name="Release - 64-bit" winWarningLevel="4" generateManifest="1"
+                       winArchitecture="x64" isDebug="0" optimisation="3" targetName="JuceOPLVSTi"/>
+        <CONFIGURATION name="Release - 32-bit" winWarningLevel="4" generateManifest="1"
+                       winArchitecture="32-bit" optimisation="3"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="JuceLibraryCode/modules"/>
