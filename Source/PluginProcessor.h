@@ -17,8 +17,6 @@
 
 
 //==============================================================================
-/**
-*/
 class JuceOplvstiAudioProcessor  : public AudioProcessor
 {
 public:
@@ -27,6 +25,10 @@ public:
 	void initPrograms();
 	void applyPitchBend();
     ~JuceOplvstiAudioProcessor();
+
+	bool isRecording();
+	void startRecording(File *outputFile);
+	void stopRecording();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock);
@@ -96,6 +98,7 @@ private:
 	std::deque<int> available_channels;		// most recently freed at end
 	std::deque<int> used_channels;			// most recently used at end
 	float currentScaledBend;
+	File *recordingFile;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)

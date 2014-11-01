@@ -56,6 +56,7 @@ public:
     void fileDragExit (const StringArray& files);
     void filesDropped (const StringArray& files, int x, int y);
 	void timerCallback();
+	void setRecordButtonState(bool recording);
     //[/UserMethods]
 
     void paint (Graphics& g);
@@ -90,6 +91,7 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	static const uint32 COLOUR_MID = 0xff007f00;
+	static const uint32 COLOUR_RECORDING = 0xffff0000;
 	JuceOplvstiAudioProcessor* processor;
 	std::array<ScopedPointer<ImageButton>, Hiopl::CHANNELS> channels;
     //[/UserVariables]
@@ -175,6 +177,7 @@ private:
     ScopedPointer<Slider> emulatorSlider;
     ScopedPointer<Label> emulatorLabel;
     ScopedPointer<Label> emulatorLabel2;
+    ScopedPointer<ToggleButton> recordButton;
 
 
     //==============================================================================

@@ -1,7 +1,7 @@
 #include "Hiopl.h"
 
 #include <assert.h>
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 
 // A wrapper around the DOSBox and ZDoom OPL emulators.
 
@@ -50,7 +50,7 @@ void Hiopl::Generate(int length, float* buffer) {
 		adlib->Generate(length, buf32);
 		for (int i = 0; i < length; i++) {
 			// The magic divisor is tuned to match to ZDoom output amplitude.
-			buffer[i] = (float)(buf32[i])/4100.0f;
+			buffer[i] = (float)(buf32[i])/8200.0f;
 		}
 		delete buf32;
 	} else if (ZDOOM == emulator) {

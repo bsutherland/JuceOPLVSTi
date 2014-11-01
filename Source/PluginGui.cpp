@@ -26,6 +26,9 @@
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 void PluginGui::updateFromParameters()
 {
+	emulatorSlider->setValue(processor->getEnumParameter("Emulator"), juce::NotificationType::dontSendNotification);
+	setRecordButtonState(processor->isRecording());
+
 	sineImageButton->setToggleState(false, false);
 	halfsineImageButton->setToggleState(false, false);
 	abssineImageButton->setToggleState(false, false);
@@ -838,6 +841,11 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     emulatorLabel2->setColour (TextEditor::textColourId, Colours::black);
     emulatorLabel2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
+    addAndMakeVisible (recordButton = new ToggleButton ("record button"));
+    recordButton->setButtonText (TRANS("Record to DRO"));
+    recordButton->addListener (this);
+    recordButton->setColour (ToggleButton::textColourId, Colour (0xff007f00));
+
 
     //[UserPreSize]
 	frequencyComboBox->setColour (ComboBox::textColourId, Colour (COLOUR_MID));
@@ -941,6 +949,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	logsawImageButton2->setClickingTogglesState(true);
 	logsawImageButton2->setRepaintsOnMouseActivity(false);
 
+	recordButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	tremoloButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	vibratoButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	keyscaleEnvButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
@@ -1060,6 +1069,7 @@ PluginGui::~PluginGui()
     emulatorSlider = nullptr;
     emulatorLabel = nullptr;
     emulatorLabel2 = nullptr;
+    recordButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1157,9 +1167,10 @@ void PluginGui::resized()
     keyscaleAttenuationComboBox->setBounds (264, 144, 72, 24);
     groupComponent4->setBounds (16, 856, 408, 64);
     groupComponent5->setBounds (16, 8, 408, 48);
-    emulatorSlider->setBounds (208, 24, 32, 24);
-    emulatorLabel->setBounds (128, 24, 72, 24);
-    emulatorLabel2->setBounds (248, 24, 72, 24);
+    emulatorSlider->setBounds (112, 24, 32, 24);
+    emulatorLabel->setBounds (32, 24, 72, 24);
+    emulatorLabel2->setBounds (152, 24, 72, 24);
+    recordButton->setBounds (272, 24, 128, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(32+44*i+4, 880+4, 16, 16);
@@ -1322,12 +1333,24 @@ void PluginGui::sliderValueChanged (Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
+void PluginGui::setRecordButtonState(bool recording) {
+	if (recording) {
+		recordButton->setColour(TextButton::buttonColourId, Colour(COLOUR_RECORDING));
+		recordButton->setButtonText("Recording..");
+		recordButton->setColour(ToggleButton::textColourId, Colour(COLOUR_RECORDING));
+	} else {
+		recordButton->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
+		recordButton->setButtonText("Record to DRO");
+		recordButton->setColour(ToggleButton::textColourId, Colour(COLOUR_MID));
+	}
+}
+
 void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == sineImageButton)
+	if (buttonThatWasClicked == sineImageButton)
     {
         //[UserButtonCode_sineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 0);
@@ -1470,6 +1493,33 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
         //[UserButtonCode_logsawImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 7);
         //[/UserButtonCode_logsawImageButton2]
+    }
+    else if (buttonThatWasClicked == recordButton)
+    {
+        //[UserButtonCode_recordButton] -- add your button handler code here..
+		recordButton->setToggleState(false, false);
+		if (!processor->isRecording()) {
+			WildcardFileFilter wildcardFilter ("*.dro", String::empty, "DRO files");
+			FileBrowserComponent browser (FileBrowserComponent::saveMode,
+									  File::nonexistent,
+									  &wildcardFilter,
+									  nullptr);
+			FileChooserDialogBox dialogBox ("Record to",
+										"Specify DRO output file",
+										browser,
+										true,
+										Colours::darkgreen);
+			if (dialogBox.show())
+			{
+				File selectedFile = browser.getSelectedFile(0);
+				processor->startRecording(&selectedFile);
+				setRecordButtonState(true);
+			}
+		} else {
+			setRecordButtonState(false);
+			processor->stopRecording();
+		}
+        //[/UserButtonCode_recordButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -1921,21 +1971,25 @@ BEGIN_JUCER_METADATA
                   virtualName="" explicitFocusOrder="0" pos="16 8 408 48" outlinecol="ff007f00"
                   textcol="ff007f00" title="Emulator" textpos="33"/>
   <SLIDER name="emulator slider" id="88ec3755c4760ed9" memberName="emulatorSlider"
-          virtualName="" explicitFocusOrder="0" pos="208 24 32 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="112 24 32 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="1" int="1" style="LinearHorizontal"
           textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="44"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="emulator label" id="22c2c30d0f337081" memberName="emulatorLabel"
-         virtualName="" explicitFocusOrder="0" pos="128 24 72 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="32 24 72 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="DOSBox" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="34"/>
   <LABEL name="emulator label" id="4f8869b5724c0195" memberName="emulatorLabel2"
-         virtualName="" explicitFocusOrder="0" pos="248 24 72 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="152 24 72 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="ZDoom" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
+  <TOGGLEBUTTON name="record button" id="880010ee79039cbe" memberName="recordButton"
+                virtualName="" explicitFocusOrder="0" pos="272 24 128 24" txtcol="ff007f00"
+                buttonText="Record to DRO" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

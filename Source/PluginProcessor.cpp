@@ -16,6 +16,8 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
 
+	recordingFile = NULL;
+
 	// Initialize parameters
 
 	const String waveforms[] = {"Sine", "Half Sine", "Abs Sine", "Quarter Sine", "Alternating Sine", "Camel Sine", "Square", "Logarithmic Sawtooth"};
@@ -132,6 +134,18 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 
 	for (int i = 1; i <= Hiopl::CHANNELS; ++i)
 		available_channels.push_back(i);
+}
+
+bool JuceOplvstiAudioProcessor::isRecording() {
+	return NULL != recordingFile;
+}
+
+void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {
+	recordingFile = outputFile;
+}
+
+void JuceOplvstiAudioProcessor::stopRecording() {
+	recordingFile = NULL;
 }
 
 void JuceOplvstiAudioProcessor::initPrograms()
