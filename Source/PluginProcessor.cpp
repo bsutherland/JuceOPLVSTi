@@ -142,9 +142,11 @@ bool JuceOplvstiAudioProcessor::isRecording() {
 
 void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {
 	recordingFile = outputFile;
+	Opl->StartCapture(outputFile->getFullPathName().toUTF8());
 }
 
 void JuceOplvstiAudioProcessor::stopRecording() {
+	Opl->StopCapture();
 	recordingFile = NULL;
 }
 

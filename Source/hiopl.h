@@ -57,6 +57,10 @@ class Hiopl {
 		void SetFrequency(int ch, float frqHz, bool keyOn=false);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
 		void _ClearRegBits(Bit32u reg, Bit8u mask);
+
+		void StartCapture(const char* filepath);
+		void StopCapture();
+
 		~Hiopl();
 	private:
 		Emulator emulator;
@@ -68,6 +72,15 @@ class Hiopl {
 		int _GetOffset(int ch);
 		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
 		void _ClearRegisters();
+		void _CaptureDelay(Bit16u delayMs);
+		void _CaptureRegWriteWithDelay(Bit32u reg, Bit8u value);
+		void _CaptureRegWrite(Bit32u reg, Bit8u value);
+		void _CaptureOpl3Enable();
 		std::map<int, int> _op1offset;
 		std::map<int, int> _op2offset;
+
+		FILE* captureHandle;
+		Bit64s captureStart;
+		Bit64s lastWrite;
+		Bit32u captureLengthBytes;
 };
