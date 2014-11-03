@@ -5,9 +5,15 @@
 
 // A wrapper around the DOSBox and ZDoom OPL emulators.
 
+// Used by the first recording instance to claim master status
+Hiopl* Hiopl::master = NULL;
+
+bool Hiopl::IsAnInstanceRecording() {
+	return NULL != Hiopl::master;
+}
+
 Hiopl::Hiopl(int buflen, Emulator emulator) {
-	captureHandle = NULL;
-	StopCapture();
+	InitCaptureVariables();
 
 	adlib = new DBOPL::Handler();
 	zdoom = JavaOPLCreate(false);
@@ -244,56 +250,53 @@ static Bit8u dro_opl3_enable[]={
 };
 
 void Hiopl::StartCapture(const char* filepath) {
-	if (NULL != captureHandle) {
-		StopCapture();
-	} else {
-		lastWrite = -1;
-		captureLengthBytes = 0;
-		captureStart = Time::currentTimeMillis();
-		captureHandle = fopen(filepath, "wb");
-		fwrite(dro_header, 1, sizeof(dro_header), captureHandle);
-		for (int i = 0; i <= 0xff; i++) {
-			_CaptureRegWrite(i, 0);
-		}
-		//_CaptureRegWrite(0x1, 0x20);
-		/*
-		for (int ch = 1; ch <= CHANNELS; ch++) {
-			int offset1 = this->_GetOffset(ch, 1);
-			int offset2 = this->_GetOffset(ch, 2);
-			int offset0 = this->_GetOffset(ch);
-			_CaptureRegWrite(0x20 + offset1, regCache[0x20 + offset1]);
-			_CaptureRegWrite(0x20 + offset2, regCache[0x20 + offset2]);
-			_CaptureRegWrite(0x40 + offset1, regCache[0x40 + offset1]);
-			_CaptureRegWrite(0x40 + offset2, regCache[0x40 + offset2]);
-			_CaptureRegWrite(0x60 + offset1, regCache[0x60 + offset1]);
-			_CaptureRegWrite(0x60 + offset2, regCache[0x60 + offset2]);
-			_CaptureRegWrite(0x80 + offset1, regCache[0x80 + offset1]);
-			_CaptureRegWrite(0x80 + offset2, regCache[0x80 + offset2]);
-			_CaptureRegWrite(0xe0 + offset1, regCache[0xe0 + offset1]);
-			_CaptureRegWrite(0xe0 + offset2, regCache[0xe0 + offset2]);
-			_CaptureRegWrite(0xc0 + offset0, regCache[0xc0 + offset0]);
-		}
-		*/
-		_CaptureOpl3Enable();
-		for (Bit8u i = 0x20; i <= 0x35; i++) {
-			_CaptureRegWrite(i, regCache[i]);
-		}
-		for (Bit8u i = 0x40; i <= 0x55; i++) {
-			_CaptureRegWrite(i, regCache[i]);
-		}
-		for (Bit8u i = 0x60; i <= 0x75; i++) {
-			_CaptureRegWrite(i, regCache[i]);
-		}
-		for (Bit8u i = 0x80; i <= 0x95; i++) {
-			_CaptureRegWrite(i, regCache[i]);
-		}
-		_CaptureRegWrite(0xbd, regCache[0xbd]);
-		for (Bit8u i = 0xc0; i <= 0xc8; i++) {
-			_CaptureRegWrite(i, regCache[i] | 0x30);	// enable L + R channels
-		}
-		for (Bit8u i = 0xe0; i <= 0xf5; i++) {
-			_CaptureRegWrite(i, regCache[i]);
-		}
+	Hiopl::master = this;
+	lastWrite = -1;
+	captureLengthBytes = 0;
+	captureStart = Time::currentTimeMillis();
+	captureHandle = fopen(filepath, "wb");
+	fwrite(dro_header, 1, sizeof(dro_header), captureHandle);
+	for (int i = 0; i <= 0xff; i++) {
+		_CaptureRegWrite(i, 0);
+	}
+	//_CaptureRegWrite(0x1, 0x20);
+	/*
+	for (int ch = 1; ch <= CHANNELS; ch++) {
+		int offset1 = this->_GetOffset(ch, 1);
+		int offset2 = this->_GetOffset(ch, 2);
+		int offset0 = this->_GetOffset(ch);
+		_CaptureRegWrite(0x20 + offset1, regCache[0x20 + offset1]);
+		_CaptureRegWrite(0x20 + offset2, regCache[0x20 + offset2]);
+		_CaptureRegWrite(0x40 + offset1, regCache[0x40 + offset1]);
+		_CaptureRegWrite(0x40 + offset2, regCache[0x40 + offset2]);
+		_CaptureRegWrite(0x60 + offset1, regCache[0x60 + offset1]);
+		_CaptureRegWrite(0x60 + offset2, regCache[0x60 + offset2]);
+		_CaptureRegWrite(0x80 + offset1, regCache[0x80 + offset1]);
+		_CaptureRegWrite(0x80 + offset2, regCache[0x80 + offset2]);
+		_CaptureRegWrite(0xe0 + offset1, regCache[0xe0 + offset1]);
+		_CaptureRegWrite(0xe0 + offset2, regCache[0xe0 + offset2]);
+		_CaptureRegWrite(0xc0 + offset0, regCache[0xc0 + offset0]);
+	}
+	*/
+	_CaptureOpl3Enable();
+	for (Bit8u i = 0x20; i <= 0x35; i++) {
+		_CaptureRegWrite(i, regCache[i]);
+	}
+	for (Bit8u i = 0x40; i <= 0x55; i++) {
+		_CaptureRegWrite(i, regCache[i]);
+	}
+	for (Bit8u i = 0x60; i <= 0x75; i++) {
+		_CaptureRegWrite(i, regCache[i]);
+	}
+	for (Bit8u i = 0x80; i <= 0x95; i++) {
+		_CaptureRegWrite(i, regCache[i]);
+	}
+	_CaptureRegWrite(0xbd, regCache[0xbd]);
+	for (Bit8u i = 0xc0; i <= 0xc8; i++) {
+		_CaptureRegWrite(i, regCache[i] | 0x30);	// enable L + R channels
+	}
+	for (Bit8u i = 0xe0; i <= 0xf5; i++) {
+		_CaptureRegWrite(i, regCache[i]);
 	}
 }
 
@@ -304,9 +307,18 @@ INLINE void host_writed(Bit8u *off, Bit32u val) {
 	off[3]=(Bit8u)(val >> 24);
 };
 
+void Hiopl::InitCaptureVariables() {
+	captureHandle = NULL;
+	captureLengthBytes = 0;
+	lastWrite = -1;
+	captureStart = -1;
+}
+
 void Hiopl::StopCapture() {
 	if (NULL != captureHandle) {
-		Bit32u lengthMilliseconds = (Bit32u)(3000 + Time::currentTimeMillis() - captureStart);
+		Bit16u finalDelay = (Bit16u)(Time::currentTimeMillis() - lastWrite);
+		_CaptureDelay(finalDelay);
+		Bit32u lengthMilliseconds = (Bit32u)(finalDelay + Time::currentTimeMillis() - captureStart);
 		host_writed(&dro_header[0x0c], lengthMilliseconds);
 		host_writed(&dro_header[0x10], captureLengthBytes);
 		//if (opl.raw.opl3 && opl.raw.dualopl2) host_writed(&dro_header[0x14],0x1);
@@ -317,10 +329,7 @@ void Hiopl::StopCapture() {
 		fwrite(dro_header, 1, sizeof(dro_header), captureHandle);
 		fclose(captureHandle);
 	}
-	captureHandle = NULL;
-	captureLengthBytes = 0;
-	lastWrite = -1;
-	captureStart = -1;
+	InitCaptureVariables();
 }
 
 void Hiopl::_CaptureDelay(Bit16u delayMs) {

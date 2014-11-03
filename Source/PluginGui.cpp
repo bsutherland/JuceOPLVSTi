@@ -27,7 +27,7 @@
 void PluginGui::updateFromParameters()
 {
 	emulatorSlider->setValue(processor->getEnumParameter("Emulator"), juce::NotificationType::dontSendNotification);
-	setRecordButtonState(processor->isRecording());
+	setRecordButtonState(processor->isThisInstanceRecording());
 
 	sineImageButton->setToggleState(false, false);
 	halfsineImageButton->setToggleState(false, false);
@@ -1498,7 +1498,7 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_recordButton] -- add your button handler code here..
 		recordButton->setToggleState(false, false);
-		if (!processor->isRecording()) {
+		if (!processor->isAnyInstanceRecording()) {
 			WildcardFileFilter wildcardFilter ("*.dro", String::empty, "DRO files");
 			FileBrowserComponent browser (FileBrowserComponent::saveMode,
 									  File::nonexistent,

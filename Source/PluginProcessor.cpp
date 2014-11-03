@@ -136,8 +136,12 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		available_channels.push_back(i);
 }
 
-bool JuceOplvstiAudioProcessor::isRecording() {
+bool JuceOplvstiAudioProcessor::isThisInstanceRecording() {
 	return NULL != recordingFile;
+}
+
+bool JuceOplvstiAudioProcessor::isAnyInstanceRecording() {
+	return Opl->IsAnInstanceRecording();
 }
 
 void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {

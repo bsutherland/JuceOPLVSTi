@@ -26,7 +26,8 @@ public:
 	void applyPitchBend();
     ~JuceOplvstiAudioProcessor();
 
-	bool isRecording();
+	bool isThisInstanceRecording();
+	bool isAnyInstanceRecording();
 	void startRecording(File *outputFile);
 	void stopRecording();
 

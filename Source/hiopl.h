@@ -58,6 +58,8 @@ class Hiopl {
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
 		void _ClearRegBits(Bit32u reg, Bit8u mask);
 
+		void InitCaptureVariables();
+		bool IsAnInstanceRecording();
 		void StartCapture(const char* filepath);
 		void StopCapture();
 
@@ -79,6 +81,7 @@ class Hiopl {
 		std::map<int, int> _op1offset;
 		std::map<int, int> _op2offset;
 
+		static Hiopl* master;
 		FILE* captureHandle;
 		Bit64s captureStart;
 		Bit64s lastWrite;
