@@ -3,7 +3,7 @@
 <JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.10.1"
               bundleIdentifier="com.plainweave.JuceOPLVSTi" buildVST="1" buildAU="1"
               pluginName="JuceOPLVSTi" pluginDesc="JuceOPLVSTi" pluginManufacturer="Plainweave Software"
-              pluginManufacturerCode="Manu" pluginCode="Plug" pluginChannelConfigs="{0, 1}"
+              pluginManufacturerCode="Pwve" pluginCode="JOPL" pluginChannelConfigs="{0, 1}"
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
