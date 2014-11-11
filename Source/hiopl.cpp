@@ -6,10 +6,15 @@
 // A wrapper around the DOSBox and ZDoom OPL emulators.
 
 // Used by the first recording instance to claim master status
+// TODO: develop the logic for recording data from other (non-master) plugins
 Hiopl* Hiopl::master = NULL;
 
 bool Hiopl::IsAnInstanceRecording() {
 	return NULL != Hiopl::master;
+}
+
+bool Hiopl::IsAnotherInstanceRecording() {
+	return this->IsAnInstanceRecording() && this != Hiopl::master;
 }
 
 Hiopl::Hiopl(int buflen, Emulator emulator) {

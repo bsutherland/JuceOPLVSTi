@@ -60,6 +60,7 @@ class Hiopl {
 
 		void InitCaptureVariables();
 		bool IsAnInstanceRecording();
+		bool IsAnotherInstanceRecording();
 		void StartCapture(const char* filepath);
 		void StopCapture();
 
