@@ -177,6 +177,19 @@ void Hiopl::SetModulatorFeedback(int ch, int level) {
 	_WriteReg(0xc0+offset, (Bit8u)level, 0x0e);
 }
 
+void Hiopl::SetPercussionMode(bool enable) {
+	_WriteReg(0xbd, enable ? 0x20 : 0x0, 0x20);
+}
+
+void Hiopl::HitPercussion(Drum drum) {
+	Bit8u mask = (Bit8u)drum;
+	_WriteReg(0xbd, mask, mask);
+}
+
+void Hiopl::ReleasePercussion() {
+	_WriteReg(0xbd, 0x0, 0x1f);
+}
+
 void Hiopl::KeyOn(int ch, float frqHz) {
 	Hiopl::SetFrequency(ch, frqHz, true);
 }

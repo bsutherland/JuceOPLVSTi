@@ -1,35 +1,22 @@
-# OPL2 VST plugin #
+# OPL VST plugin #
 
-This VST instrument emulates the OPL2 sound chip.
+This VST instrument provides an emulated OPL sound chip. It provides all features of the OPL2, and some features of the OPL3.
 
 See here for Windows binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi/
 
-## What's an OPL2? ##
+## What's an OPL? ##
 
-The OPL2 is a digital sound synthesis chip developed by Yamaha in the mid 1980s. Among other products, it was used in sound cards for PC, including the Adlib card, and later the Sound Blaster Pro, which had two OPL2 chips for stereo output.
+The OPL is a digital sound synthesis chip developed by Yamaha in the mid 1980s. Among other products, it was used in sound cards for PC, including the Adlib card.
 
-At a technical level: the chip can produce 9 channels of sound, each channel having 2 oscillators. Each pair of oscillators is usually combined via phase modulation (basically frequency modulation). Each oscillator can produce one of four variations of a sine wave (sine, half sine, absolute sine and quarter sine), and has an ADSR envelope controlling its amplitude. The unusual waveforms give it a characteristic sound.
-
-The chip is programmed through an 8-bit write-only register interface in a 256 byte address space.
+At a technical level: the emulator has channels comprised of 2 oscillators each. Each pair of oscillators is usually combined via phase modulation (basically frequency modulation). Each oscillator can produce one of eight waveforms (sine, half sine, absolute sine, quarter sine, alternating sine, camel sine, square, logarithmic sawtooth), and has an ADSR envelope controlling its amplitude. The unusual waveforms give it a characteristic sound.
 
 ## Caveats and Limitations ##
 
-Before I wrote this, I didn't know much about VST or the OPL at a technical level. This is the first VST plugin I've written.
-
-Some limitations:
-
-- Sample rate is locked at 44.1 kHz
-- I'm a bit unsure as to whether the keyscale attenuation values are correct. I had two documents with conflicting information on that.
-- There may be some subtle "out by one" type issues lingering around.
-- I haven't added support for the built-in percussion. It's very poorly documented in the data sheet and seems like a lot of people never used it anyway.
-
-In hindsight I would have implemented things a bit differently, but it all basically works.
-
-Juce takes care of some of the tedious bits, but I was hoping it would take care of some more of the repetitive details, like converting to and from int/enum/float etc into the normalized floating point values used by VST. If it doesn't exist already, I think that I'd definitely write another layer of abstraction on top of Juce next time.
+Before I wrote this, I didn't know much about VST or the OPL at a technical level. This is the first VST plugin I've written. The sample rate is locked at 44.1 kHz. In hindsight I would have implemented things a bit differently, but it all basically works, and is now reasonably well tested.
 
 ## How do I use it? ##
 
-Each instance of the plugin emulates an entire OPL2 chip, but polyphony is implemented by using a channel per note, with parameter changes applied to all channels. With this plugin, essentially you are just working with two operators.
+Each instance of the plugin emulates an entire OPL chip, but polyphony is implemented by using a channel per note. Parameter changes applied to all channels. With this plugin, essentially you are just working with two operators.
 
 Some documentation which may be useful:
 
@@ -37,6 +24,16 @@ Some documentation which may be useful:
 - [Original Yamaha datasheet](http://www.alldatasheet.com/datasheet-pdf/pdf/84281/YAMAHA/YM3812.html)
 - [AdLib programming guide](http://www.shipbrook.net/jeff/sb.html) Dates back to 1991!
 - [Another programming guide](http://www.ugcs.caltech.edu/~john/computer/opledit/tech/opl3.txt) This one is for the OPL3, but most of the information still applies.
+
+### Percussion
+
+Percussion mode is now supported! This mode is not very well documented, even in the original Yamaha documentation. It works with the DOSBox emulator, but doesn't seem to work too well in the ZDoom emulator. Here are some tips on using it based on experimentation and looking at the DOSBox source code.
+
+- Bass drum: Uses both operators. Essentially just doubles output amplitude?
+- Snare: Uses carrier settings. Abs-sine waveform recommended.
+- Tom: Uses modulator settings. Sine waveform recommended.
+- Cymbal: Uses carrier settings. Half-sine recommended.
+- Hi-hat: Uses modulator settings. Half-sine recommended.
 
 ## How did you create the instrument programs? ##
 
@@ -46,11 +43,11 @@ I hacked together a Python script which parses the raw output, identifying uniqu
 
 ## How did you do this? ##
 
-The emulation (ie, the hard part!) is taken straight from the excellent DOSBox emulator. The current DOSBox OPL emulator was rewritten a couple of years ago to use only integer math. The previous DOSBox OPL emulator, using floating point math, was derived from the MAME OPL emulator, which in turn was derived from ADLIBEMU, a library by Ken Silverman (who wrote the engine used in Duke Nukem 3D). I also used a function from libgamemusic by Adam Nielsen for converting frequencies from Hertz into the "FNUM" values used by the OPL2.
+The emulation (ie, the hard part!) is taken straight from the excellent DOSBox and ZDoom projects. I also used a function from libgamemusic by Adam Nielsen for converting frequencies from Hertz into the "FNUM" values used by the OPL.
 
 The VST was written using Juce, a cross-platform C++ library inspired by the Java JDK. Among other things, Juce provides a GUI for generating boilerplate for audio plugins.
 
-The code I wrote is basically conversion glue between the DOSBox OPL emulator, the VST interface, and human friendly values.
+The code I wrote is essentially a device driver for the emulated OPL, implementing the VST interface, and providing a UI.
 
 ## Building ##
 
@@ -60,10 +57,10 @@ So far I've only built under Windows. Thanks to Juce, it should be possible to b
 
 1. Download Juce (http://www.juce.com/)
 2. Download the VST SDK (http://www.steinberg.net/en/company/developer.html)
-3. Build and run "The Introjucer"
+3. Run "The Introjucer" executable included in Juce.
 4. Open JuceOPLVSTi.jucer
    - Make any changes to the GUI layout and components here (PluginEditor.cpp).
    - Save PluginEditor.cpp if modified
-5. Hit "Save Project and Open in Visual Studio". I used Visual Studio Express 2012.
-6. (For Windows XP compatibility) In the project's properties, set platform toolset to v110_xp (Configuration Properties > General).
+5. Hit "Save Project and Open in Visual Studio". I use Visual Studio Express 2013.
+6. (For Windows XP compatibility) In the project's properties, set platform toolset to Windows XP (Configuration Properties > General).
 7. Build!

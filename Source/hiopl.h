@@ -19,6 +19,11 @@ enum Emulator
 	DOSBOX=0, ZDOOM=1
 };
 
+enum Drum
+{
+	BDRUM=0x10, SNARE=0x8, TOM=0x4, CYMBAL=0x2, HIHAT=0x1
+};
+
 
 class Hiopl {
 	public:
@@ -26,6 +31,9 @@ class Hiopl {
 		static const int OSCILLATORS = 2;
 		Hiopl(int buflen, Emulator emulator=ZDOOM);
 		void SetEmulator(Emulator emulator);
+		void SetPercussionMode(bool enable);
+		void HitPercussion(Drum drum);
+		void ReleasePercussion();
 
 		void Generate(int length, short* buffer);
 		void Generate(int length, float* buffer);

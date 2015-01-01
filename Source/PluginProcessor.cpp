@@ -116,6 +116,11 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		StringArray(emulators, sizeof(emulators)/sizeof(String)))
 	);
 
+	const String percussion[] = { "Off", "Bass drum", "Snare", "Tom", "Cymbal", "Hi-hat" };
+	params.push_back(new EnumFloatParameter("Percussion Mode",
+		StringArray(percussion, sizeof(percussion) / sizeof(String)))
+	);
+
 	for(unsigned int i = 0; i < params.size(); i++) {
 		paramIdxByName[params[i]->getName()] = i;
 	}
@@ -171,6 +176,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.5f, 0.3f, 0.1f, 0.6f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_0 (i_params_0, i_params_0 + sizeof(i_params_0) / sizeof(float));
     programs["Mercenary Bass"] = std::vector<float>(v_i_params_0);
@@ -189,6 +195,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.5f, 0.2f, 0.3f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_19189 (i_params_19189, i_params_19189 + sizeof(i_params_19189) / sizeof(float));
     programs["Patrol Bass"] = std::vector<float>(v_i_params_19189);
@@ -207,6 +214,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.1f, 0.9f, 1.0f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_38377 (i_params_38377, i_params_38377 + sizeof(i_params_38377) / sizeof(float));
     programs["Subdue Bass"] = std::vector<float>(v_i_params_38377);
@@ -225,6 +233,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.9f, 0.1f, 0.1f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_38392 (i_params_38392, i_params_38392 + sizeof(i_params_38392) / sizeof(float));
     programs["Dark Future Sweep"] = std::vector<float>(v_i_params_38392);
@@ -243,6 +252,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.7f, 0.0f, 0.4f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_39687 (i_params_39687, i_params_39687 + sizeof(i_params_39687) / sizeof(float));
     programs["Sinister Bass"] = std::vector<float>(v_i_params_39687);
@@ -261,6 +271,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.4f, 0.5f, 0.3f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_76784 (i_params_76784, i_params_76784 + sizeof(i_params_76784) / sizeof(float));
     programs["Buzcut Bass"] = std::vector<float>(v_i_params_76784);
@@ -279,6 +290,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.6f, 0.7f, 0.1f, 0.1f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_97283 (i_params_97283, i_params_97283 + sizeof(i_params_97283) / sizeof(float));
     programs["Death Toll Bell"] = std::vector<float>(v_i_params_97283);
@@ -298,6 +310,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.0f, 0.4f, 0.2f, 0.3f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_3136 (i_params_3136, i_params_3136 + sizeof(i_params_3136) / sizeof(float));
     programs["Westwood Chime"] = std::vector<float>(v_i_params_3136);
@@ -316,6 +329,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.2f, 0.1f, 0.1f, 0.0f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_7254 (i_params_7254, i_params_7254 + sizeof(i_params_7254) / sizeof(float));
     programs["Desert Pipe"] = std::vector<float>(v_i_params_7254);
@@ -334,6 +348,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.1f, 0.1f, 0.1f, 0.1f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_20108 (i_params_20108, i_params_20108 + sizeof(i_params_20108) / sizeof(float));
     programs["Y2180 Strings"] = std::vector<float>(v_i_params_20108);
@@ -352,6 +367,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.9f, 0.1f, 0.0f, 1.0f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_27550 (i_params_27550, i_params_27550 + sizeof(i_params_27550) / sizeof(float));
     programs["Emperor Chord"] = std::vector<float>(v_i_params_27550);
@@ -370,6 +386,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.85f, 0.3f, 0.1f, 0.6f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_harpsi (i_params_harpsi, i_params_harpsi + sizeof(i_params_harpsi) / sizeof(float));
     programs["Harpsi"] = std::vector<float>(v_i_params_harpsi);
@@ -388,6 +405,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         0.45f, 0.45f, 0.1f, 0.6f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_tromba (i_params_tromba, i_params_tromba + sizeof(i_params_tromba) / sizeof(float));
     programs["Tromba"] = std::vector<float>(v_i_params_tromba);
@@ -406,6 +424,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
         1.00f, 0.75f, 0.5f, 0.5f,  // adsr
 		0.0f, 0.0f,				 // velocity sensitivity
 		0.0f,					// emulator
+		0.0f,					// percussion mode
     };
     std::vector<float> v_i_params_bassdrum (i_params_bassdrum, i_params_bassdrum + sizeof(i_params_bassdrum) / sizeof(float));
     programs["bassdrum"] = std::vector<float>(v_i_params_bassdrum);
@@ -475,6 +494,7 @@ int JuceOplvstiAudioProcessor::getEnumParameter (String name)
 	return p->getParameterIndex();
 }
 
+// Parameters which apply directly to the OPL
 void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 {
 	FloatParameter* p = params[index];
@@ -518,6 +538,8 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 		Opl->VibratoDepth(((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	} else if (name.startsWith("Emulator")) {
 		Opl->SetEmulator((Emulator)((EnumFloatParameter*)p)->getParameterIndex());
+	} else if (name.startsWith("Percussion")) {
+		Opl->SetPercussionMode(((EnumFloatParameter*)p)->getParameterIndex() > 0);
 	}
 }
 
@@ -532,6 +554,7 @@ void JuceOplvstiAudioProcessor::loadInstrumentFromFile(String filename)
 	updateGuiIfPresent();
 }
 
+// Used to configure parameters from .SBI instrument file
 void JuceOplvstiAudioProcessor::setParametersByRegister(int register_base, int op, uint8 value)
 {
 	const String operators[] = {"Modulator", "Carrier"};
@@ -561,7 +584,6 @@ void JuceOplvstiAudioProcessor::setParametersByRegister(int register_base, int o
 		setEnumParameter("Algorithm", value & 0x1);
 		break;
 	case 0xE0:
-		printf("Setting wave to %d", value & 0x7);
 		setEnumParameter(operators[op] + " Wave", value & 0x7);
 		break;
 	default:
@@ -688,6 +710,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 
 	MidiMessage midi_message;
 	int sample_number;
+	int perc = getEnumParameter("Percussion Mode");
 	while (midi_buffer_iterator.getNextEvent(midi_message,sample_number)) {
 		if (midi_message.isNoteOn()) {
 			//note on at sample_number samples after 
@@ -696,21 +719,28 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			float noteHz = (float)MidiMessage::getMidiNoteInHertz(n);
 			int ch;
 
-			if (!available_channels.empty())
-			{
-				ch = available_channels.front();
-				available_channels.pop_front();
-			}
-			else
-			{
-				ch = used_channels.back(); // steal earliest/longest running active channel if out of free channels
-				used_channels.pop_back();
-				Opl->KeyOff(ch);
-			}
+			if (perc > 0) {
+				static const Drum drumIndex[] = { BDRUM, SNARE, TOM, CYMBAL, HIHAT };
+				for (int i = 1; i <= Hiopl::CHANNELS; i++) {
+					Opl->SetFrequency(i, noteHz, false);
+				}
+				Opl->HitPercussion(drumIndex[perc - 1]);
+			} else {
+				if (!available_channels.empty())
+				{
+					ch = available_channels.front();
+					available_channels.pop_front();
+				}
+				else
+				{
+					ch = used_channels.back(); // steal earliest/longest running active channel if out of free channels
+					used_channels.pop_back();
+					Opl->KeyOff(ch);
+				}
 
-			used_channels.push_front(ch);
+				used_channels.push_front(ch);
 
-			switch (getEnumParameter("Carrier Velocity Sensitivity")) {
+				switch (getEnumParameter("Carrier Velocity Sensitivity")) {
 				case 0:
 					Opl->SetAttenuation(ch, 2, getEnumParameter("Carrier Attenuation"));
 					break;
@@ -720,8 +750,8 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 				case 2:
 					Opl->SetAttenuation(ch, 2, 32 - (midi_message.getVelocity() / 4));
 					break;
-			}
-			switch (getEnumParameter("Modulator Velocity Sensitivity")) {
+				}
+				switch (getEnumParameter("Modulator Velocity Sensitivity")) {
 				case 0:
 					Opl->SetAttenuation(ch, 1, getEnumParameter("Modulator Attenuation"));
 					break;
@@ -731,32 +761,39 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 				case 2:
 					Opl->SetAttenuation(ch, 1, 63 - (midi_message.getVelocity() / 2));
 					break;
+				}
+				Opl->KeyOn(ch, noteHz);
+				active_notes[ch] = n;
+				applyPitchBend();
 			}
-			Opl->KeyOn(ch, noteHz);
-			active_notes[ch] = n;
-			applyPitchBend();
+
 		}
 		else if (midi_message.isNoteOff()) {
-			int n = midi_message.getNoteNumber();
-			int ch = 1;
-			while (ch <= Hiopl::CHANNELS && n != active_notes[ch]) {
-				ch += 1;
+			if (perc > 0) {
+				Opl->ReleasePercussion();
 			}
-			if (ch <= Hiopl::CHANNELS)
-			{
-				for (auto i = used_channels.begin(); i != used_channels.end(); ++i)
-				{
-					if (*i == ch)
-					{
-						used_channels.erase(i);
-						available_channels.push_back(ch);
-
-						break;
-					}
+			else {
+				int n = midi_message.getNoteNumber();
+				int ch = 1;
+				while (ch <= Hiopl::CHANNELS && n != active_notes[ch]) {
+					ch += 1;
 				}
+				if (ch <= Hiopl::CHANNELS)
+				{
+					for (auto i = used_channels.begin(); i != used_channels.end(); ++i)
+					{
+						if (*i == ch)
+						{
+							used_channels.erase(i);
+							available_channels.push_back(ch);
 
-				Opl->KeyOff(ch);
-				active_notes[ch]=NO_NOTE;
+							break;
+						}
+					}
+
+					Opl->KeyOff(ch);
+					active_notes[ch] = NO_NOTE;
+				}
 			}
 		}
 		else if (midi_message.isPitchWheel()) {
@@ -833,7 +870,7 @@ void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeI
 				i_program = program;
 		}
 
-		for (int i=0; i<getNumParameters(); ++i)
+		for (int i=0; i < getNumParameters(); ++i)
 		{
 			var param = v[stringToIdentifier(getParameterName(i))];
 

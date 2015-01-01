@@ -179,6 +179,8 @@ private:
     ScopedPointer<Label> emulatorLabel;
     ScopedPointer<Label> emulatorLabel2;
     ScopedPointer<ToggleButton> recordButton;
+    ScopedPointer<ComboBox> percussionComboBox;
+    ScopedPointer<Label> percussionLabel;
 
 
     //==============================================================================

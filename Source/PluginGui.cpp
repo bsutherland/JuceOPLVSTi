@@ -105,6 +105,8 @@ void PluginGui::updateFromParameters()
 
 	algorithmComboBox->setSelectedItemIndex(processor->getEnumParameter("Algorithm"), true);
 
+	percussionComboBox->setSelectedItemIndex(processor->getEnumParameter("Percussion Mode"), true);
+
 	tooltipWindow.setColour(tooltipWindow.backgroundColourId, Colour(0x0));
 	tooltipWindow.setColour(tooltipWindow.textColourId, Colour(COLOUR_MID));
 }
@@ -601,7 +603,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     addAndMakeVisible (dbLabel5 = new Label ("db label",
                                              TRANS("dB")));
     dbLabel5->setFont (Font (15.00f, Font::plain));
-    dbLabel5->setJustificationType (Justification::centred);
+    dbLabel5->setJustificationType (Justification::centredLeft);
     dbLabel5->setEditable (false, false, false);
     dbLabel5->setColour (Label::textColourId, Colour (0xff007f00));
     dbLabel5->setColour (Label::outlineColourId, Colour (0x00000000));
@@ -633,7 +635,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
                                              TRANS("cents\n")));
     dbLabel6->setTooltip (TRANS("A unit of pitch; 100 cents per semitone"));
     dbLabel6->setFont (Font (15.00f, Font::plain));
-    dbLabel6->setJustificationType (Justification::centred);
+    dbLabel6->setJustificationType (Justification::centredLeft);
     dbLabel6->setEditable (false, false, false);
     dbLabel6->setColour (Label::textColourId, Colour (0xff007f00));
     dbLabel6->setColour (Label::outlineColourId, Colour (0x00000000));
@@ -873,6 +875,29 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
     recordButton->addListener (this);
     recordButton->setColour (ToggleButton::textColourId, Colour (0xff007f00));
 
+    addAndMakeVisible (percussionComboBox = new ComboBox ("percussion combo box"));
+    percussionComboBox->setEditableText (false);
+    percussionComboBox->setJustificationType (Justification::centredLeft);
+    percussionComboBox->setTextWhenNothingSelected (String::empty);
+    percussionComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    percussionComboBox->addItem (TRANS("Off"), 1);
+    percussionComboBox->addItem (TRANS("Bass drum"), 2);
+    percussionComboBox->addItem (TRANS("Snare"), 3);
+    percussionComboBox->addItem (TRANS("Tom"), 4);
+    percussionComboBox->addItem (TRANS("Cymbal"), 5);
+    percussionComboBox->addItem (TRANS("Hi-hat"), 6);
+    percussionComboBox->addListener (this);
+
+    addAndMakeVisible (percussionLabel = new Label ("percussion label",
+                                                    TRANS("Percussion mode")));
+    percussionLabel->setTooltip (TRANS("Enable percussion instruments instead of oscillators"));
+    percussionLabel->setFont (Font (15.00f, Font::plain));
+    percussionLabel->setJustificationType (Justification::centredLeft);
+    percussionLabel->setEditable (false, false, false);
+    percussionLabel->setColour (Label::textColourId, Colour (0xff007f00));
+    percussionLabel->setColour (TextEditor::textColourId, Colours::black);
+    percussionLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
 	frequencyComboBox->setColour (ComboBox::textColourId, Colour (COLOUR_MID));
@@ -942,6 +967,12 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	keyscaleAttenuationComboBox2->setColour (ComboBox::buttonColourId, Colours::black);
 	keyscaleAttenuationComboBox2->setColour (ComboBox::backgroundColourId, Colours::black);
 
+	percussionComboBox->setColour(ComboBox::textColourId, Colour(COLOUR_MID));
+	percussionComboBox->setColour(ComboBox::outlineColourId, Colour(COLOUR_MID));
+	percussionComboBox->setColour(ComboBox::arrowColourId, Colour(COLOUR_MID));
+	percussionComboBox->setColour(ComboBox::buttonColourId, Colours::black);
+	percussionComboBox->setColour(ComboBox::backgroundColourId, Colours::black);
+
 	sineImageButton->setClickingTogglesState(true);
 	sineImageButton->setRepaintsOnMouseActivity(false);
 	abssineImageButton->setClickingTogglesState(true);
@@ -1002,7 +1033,7 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	}
     //[/UserPreSize]
 
-    setSize (860, 516);
+    setSize (860, 550);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -1097,6 +1128,8 @@ PluginGui::~PluginGui()
     emulatorLabel = nullptr;
     emulatorLabel2 = nullptr;
     recordButton = nullptr;
+    percussionComboBox = nullptr;
+    percussionLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1169,13 +1202,13 @@ void PluginGui::resized()
     sustainButton2->setBounds (464, 384, 96, 24);
     keyscaleEnvButton2->setBounds (552, 384, 184, 24);
     frequencyLabel4->setBounds (672, 184, 152, 24);
-    groupComponent3->setBounds (16, 432, 832, 64);
-    tremoloSlider->setBounds (344, 456, 112, 24);
-    frequencyLabel5->setBounds (224, 456, 152, 24);
-    dbLabel5->setBounds (456, 448, 40, 40);
-    vibratoSlider->setBounds (672, 456, 112, 24);
-    frequencyLabel6->setBounds (560, 456, 152, 24);
-    dbLabel6->setBounds (784, 448, 47, 40);
+    groupComponent3->setBounds (16, 432, 832, 96);
+    tremoloSlider->setBounds (632, 456, 112, 24);
+    frequencyLabel5->setBounds (472, 456, 152, 24);
+    dbLabel5->setBounds (752, 448, 40, 40);
+    vibratoSlider->setBounds (632, 488, 112, 24);
+    frequencyLabel6->setBounds (472, 488, 152, 24);
+    dbLabel6->setBounds (752, 480, 47, 40);
     feedbackSlider->setBounds (112, 232, 136, 24);
     frequencyLabel7->setBounds (32, 232, 80, 24);
     velocityComboBox->setBounds (336, 232, 72, 24);
@@ -1201,6 +1234,8 @@ void PluginGui::resized()
     emulatorLabel->setBounds (112, 32, 72, 24);
     emulatorLabel2->setBounds (248, 32, 72, 24);
     recordButton->setBounds (40, 456, 128, 24);
+    percussionComboBox->setBounds (256, 488, 112, 24);
+    percussionLabel->setBounds (40, 488, 163, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(456+44*i+4, 36, 16, 16);
@@ -1263,6 +1298,13 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 		int id = comboBoxThatHasChanged->getSelectedId() - 1;
 		processor->setEnumParameter("Modulator Keyscale Level", id);
         //[/UserComboBoxCode_keyscaleAttenuationComboBox]
+    }
+    else if (comboBoxThatHasChanged == percussionComboBox)
+    {
+        //[UserComboBoxCode_percussionComboBox] -- add your combo box handling code here..
+		int id = comboBoxThatHasChanged->getSelectedId() - 1;
+		processor->setEnumParameter("Percussion Mode", id);
+        //[/UserComboBoxCode_percussionComboBox]
     }
 
     //[UsercomboBoxChanged_Post]
@@ -1600,7 +1642,7 @@ BEGIN_JUCER_METADATA
                  parentClasses="public AudioProcessorEditor, public FileDragAndDropTarget, public DragAndDropContainer, public Timer"
                  constructorParams="JuceOplvstiAudioProcessor* ownerFilter" variableInitialisers=" AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="860" initialHeight="516">
+                 fixedSize="0" initialWidth="860" initialHeight="550">
   <BACKGROUND backgroundColour="ff000000"/>
   <GROUPCOMPONENT name="new group" id="d2c7c07bf2d78c30" memberName="groupComponent"
                   virtualName="" explicitFocusOrder="0" pos="16 80 408 344" outlinecol="ff007f00"
@@ -1850,41 +1892,41 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <GROUPCOMPONENT name="new group" id="7392f7d1c8cf6e74" memberName="groupComponent3"
-                  virtualName="" explicitFocusOrder="0" pos="16 432 832 64" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="16 432 832 96" outlinecol="ff007f00"
                   textcol="ff007f00" title="Common" textpos="33"/>
   <SLIDER name="tremolo slider" id="ab64abee7ac8874b" memberName="tremoloSlider"
-          virtualName="" explicitFocusOrder="0" pos="344 456 112 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="632 456 112 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="1" max="4.7999999999999998"
           int="3.7999999999999998" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="44" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="frequency label" id="134ce8f87da62b88" memberName="frequencyLabel5"
-         virtualName="" explicitFocusOrder="0" pos="224 456 152 24" tooltip="OPL global tremolo depth"
+         virtualName="" explicitFocusOrder="0" pos="472 456 152 24" tooltip="OPL global tremolo depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Tremolo Depth&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="db label" id="720df8e7c502dd91" memberName="dbLabel5" virtualName=""
-         explicitFocusOrder="0" pos="456 448 40 40" textCol="ff007f00"
+         explicitFocusOrder="0" pos="752 448 40 40" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="vibrato slider" id="b45a1f20f22cf5ca" memberName="vibratoSlider"
-          virtualName="" explicitFocusOrder="0" pos="672 456 112 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="632 488 112 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="7" max="14" int="7" style="LinearHorizontal"
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="44"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="frequency label" id="1412b9d14e37bcbe" memberName="frequencyLabel6"
-         virtualName="" explicitFocusOrder="0" pos="560 456 152 24" tooltip="OPL global vibrato depth"
+         virtualName="" explicitFocusOrder="0" pos="472 488 152 24" tooltip="OPL global vibrato depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Vibrato Depth"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="db label" id="e13e0aff8b974a36" memberName="dbLabel6" virtualName=""
-         explicitFocusOrder="0" pos="784 448 47 40" tooltip="A unit of pitch; 100 cents per semitone"
+         explicitFocusOrder="0" pos="752 480 47 40" tooltip="A unit of pitch; 100 cents per semitone"
          textCol="ff007f00" outlineCol="0" edTextCol="ff000000" edBkgCol="0"
          labelText="cents&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         bold="0" italic="0" justification="33"/>
   <SLIDER name="feedback slider" id="f9d22e12f5e417e4" memberName="feedbackSlider"
           virtualName="" explicitFocusOrder="0" pos="112 232 136 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
@@ -2009,6 +2051,15 @@ BEGIN_JUCER_METADATA
                 virtualName="" explicitFocusOrder="0" pos="40 456 128 24" tooltip="Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"
                 txtcol="ff007f00" buttonText="Record to DRO" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
+  <COMBOBOX name="percussion combo box" id="75a838b61782e17b" memberName="percussionComboBox"
+            virtualName="" explicitFocusOrder="0" pos="256 488 112 24" editable="0"
+            layout="33" items="Off&#10;Bass drum&#10;Snare&#10;Tom&#10;Cymbal&#10;Hi-hat"
+            textWhenNonSelected="" textWhenNoItems="(no choices)"/>
+  <LABEL name="percussion label" id="a3400e2e5e8e7900" memberName="percussionLabel"
+         virtualName="" explicitFocusOrder="0" pos="40 488 163 24" tooltip="Enable percussion instruments instead of oscillators"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Percussion mode"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
