@@ -94,6 +94,7 @@ private:
 	static const uint32 COLOUR_RECORDING = 0xffff0000;
 	JuceOplvstiAudioProcessor* processor;
 	std::array<ScopedPointer<ImageButton>, Hiopl::CHANNELS> channels;
+	TooltipWindow tooltipWindow;
     //[/UserVariables]
 
     //==============================================================================
