@@ -35,6 +35,10 @@ Percussion mode is now supported! This mode is not very well documented, even in
 - Cymbal: Uses carrier settings. Half-sine recommended.
 - Hi-hat: Uses modulator settings. Half-sine recommended.
 
+Also, a link to some much more detailed notes on percussion mode based on experimentation with real hardware!
+
+http://midibox.org/forums/topic/18625-opl3-percussion-mode-map/
+
 ## How did you create the instrument programs? ##
 
 To figure out the parameters used by the original games, I just added a printf to the DOSBox OPL emulator, compiled DOSBox, ran the games, and captured their output as raw register writes with timestamps.

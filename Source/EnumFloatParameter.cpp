@@ -14,7 +14,7 @@ EnumFloatParameter::~EnumFloatParameter(void)
 
 int EnumFloatParameter::getParameterIndex(void)
 {
-	int i = (int)(this->value * values.size());
+	int i = (int)(this->value * values.size() + 0.5f);
 	if (i >= values.size())
 		i = values.size() - 1;
 	return i;

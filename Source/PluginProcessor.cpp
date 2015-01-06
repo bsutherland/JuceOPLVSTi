@@ -6,6 +6,11 @@
 
 const char *JuceOplvstiAudioProcessor::PROGRAM_INDEX = "Program Index";
 
+static DROMultiplexer* plexer = NULL;
+void regWriteCallback(Bit32u reg, Bit8u val) {
+	if (NULL != plexer) plexer->_CaptureRegWriteWithDelay(reg, val);
+}
+
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	: i_program(-1)
@@ -15,6 +20,8 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	Opl = new Hiopl(44100);	// 1 second at 44100
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
+	dro = new DROMultiplexer();
+	plexer = dro;
 
 	recordingFile = NULL;
 
@@ -146,16 +153,17 @@ bool JuceOplvstiAudioProcessor::isThisInstanceRecording() {
 }
 
 bool JuceOplvstiAudioProcessor::isAnyInstanceRecording() {
-	return Opl->IsAnInstanceRecording();
+	return dro->IsAnInstanceRecording();
 }
 
 void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {
 	recordingFile = outputFile;
-	Opl->StartCapture(outputFile->getFullPathName().toUTF8());
+	dro->StartCapture(outputFile->getFullPathName().toUTF8(), Opl);
+	Opl->regWriteCallback = &regWriteCallback;
 }
 
 void JuceOplvstiAudioProcessor::stopRecording() {
-	Opl->StopCapture();
+	dro->StopCapture();
 	recordingFile = NULL;
 }
 
@@ -446,6 +454,8 @@ JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 {
 	for (unsigned int i=0; i < params.size(); ++i)
 		delete params[i];
+	//delete Opl;
+	//delete dro;
 }
 
 //==============================================================================
@@ -703,6 +713,8 @@ void JuceOplvstiAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
+static const Drum DRUM_INDEX[] = { BDRUM, SNARE, TOM, CYMBAL, HIHAT };
+
 void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
 	buffer.clear(0, 0, buffer.getNumSamples());
@@ -719,12 +731,11 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			float noteHz = (float)MidiMessage::getMidiNoteInHertz(n);
 			int ch;
 
-			if (perc > 0) {
-				static const Drum drumIndex[] = { BDRUM, SNARE, TOM, CYMBAL, HIHAT };
+			if (perc > 0) {				
 				for (int i = 1; i <= Hiopl::CHANNELS; i++) {
 					Opl->SetFrequency(i, noteHz, false);
 				}
-				Opl->HitPercussion(drumIndex[perc - 1]);
+				Opl->HitPercussion(DRUM_INDEX[perc - 1]);
 			} else {
 				if (!available_channels.empty())
 				{
@@ -766,7 +777,6 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 				active_notes[ch] = n;
 				applyPitchBend();
 			}
-
 		}
 		else if (midi_message.isNoteOff()) {
 			if (perc > 0) {

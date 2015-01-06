@@ -13,6 +13,7 @@
 #include <deque>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "hiopl.h"
+#include "DROMultiplexer.h"
 #include "FloatParameter.h"
 
 
@@ -87,6 +88,7 @@ public:
 
 private:
 	Hiopl *Opl;
+	DROMultiplexer *dro;
 	std::vector<FloatParameter*> params;
 	std::map<String, int> paramIdxByName;
 	std::map<String, std::vector<float>> programs;

@@ -11,6 +11,11 @@
               buildVST3="0" buildRTAS="0" buildAAX="0" includeBinaryInAppConfig="1">
   <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
+      <FILE id="o0sULY" name="DROMultiplexer.cpp" compile="1" resource="0"
+            file="Source/DROMultiplexer.cpp"/>
+      <FILE id="cULQN7" name="DROMultiplexer.h" compile="0" resource="0"
+            file="Source/DROMultiplexer.h"/>
+      <FILE id="KRj0DZ" name="tests.cpp" compile="1" resource="0" file="Source/tests.cpp"/>
       <FILE id="hjHmNq" name="zdopl.cpp" compile="1" resource="0" file="Source/zdopl.cpp"/>
       <FILE id="TQyCKv" name="zdopl.h" compile="0" resource="0" file="Source/zdopl.h"/>
       <FILE id="LVSdHL" name="InstrumentLoader.h" compile="0" resource="0"
@@ -69,7 +74,8 @@
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
   <EXPORTFORMATS>
-    <VS2013 targetFolder="Builds/VisualStudio2013" vstFolder="C:\code\audio\vstsdk2.4">
+    <VS2013 targetFolder="Builds/VisualStudio2013" vstFolder="C:\code\audio\vstsdk2.4"
+            externalLibraries="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="JuceOPLVSTi"/>

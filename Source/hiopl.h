@@ -1,3 +1,4 @@
+#pragma once
 #include <map>
 
 #include "adlib.h"
@@ -24,12 +25,15 @@ enum Drum
 	BDRUM=0x10, SNARE=0x8, TOM=0x4, CYMBAL=0x2, HIHAT=0x1
 };
 
+typedef void(*RegWriteCallback_t)(Bit32u reg, Bit8u val);
+
 
 class Hiopl {
 	public:
+		RegWriteCallback_t regWriteCallback = NULL;
 		static const int CHANNELS = 9;
 		static const int OSCILLATORS = 2;
-		Hiopl(int buflen, Emulator emulator=ZDOOM);
+		Hiopl(int buflen, Emulator emulator = ZDOOM);
 		void SetEmulator(Emulator emulator);
 		void SetPercussionMode(bool enable);
 		void HitPercussion(Drum drum);
@@ -65,12 +69,8 @@ class Hiopl {
 		void SetFrequency(int ch, float frqHz, bool keyOn=false);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
 		void _ClearRegBits(Bit32u reg, Bit8u mask);
-
-		void InitCaptureVariables();
-		bool IsAnInstanceRecording();
-		bool IsAnotherInstanceRecording();
-		void StartCapture(const char* filepath);
-		void StopCapture();
+		// Read the last value written to the specified register address (cached)
+		Bit8u _ReadReg(Bit32u reg);
 
 		~Hiopl();
 	private:
@@ -83,16 +83,8 @@ class Hiopl {
 		int _GetOffset(int ch);
 		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
 		void _ClearRegisters();
-		void _CaptureDelay(Bit16u delayMs);
-		void _CaptureRegWriteWithDelay(Bit32u reg, Bit8u value);
-		void _CaptureRegWrite(Bit32u reg, Bit8u value);
-		void _CaptureOpl3Enable();
+
 		std::map<int, int> _op1offset;
 		std::map<int, int> _op2offset;
 
-		static Hiopl* master;
-		FILE* captureHandle;
-		Bit64s captureStart;
-		Bit64s lastWrite;
-		Bit32u captureLengthBytes;
 };
