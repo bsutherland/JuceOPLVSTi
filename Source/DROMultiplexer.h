@@ -1,9 +1,12 @@
 #pragma once
+#include <map>
 #include "hiopl.h"
 
 class DROMultiplexer
 {
 public:
+	static const int MELODIC_CHANNELS = 15;
+
 	DROMultiplexer();
 	~DROMultiplexer();
 
@@ -16,18 +19,34 @@ public:
 	bool IsAnotherInstanceRecording();
 	void StartCapture(const char* filepath, Hiopl* opl);
 	void StopCapture();
+	static DROMultiplexer* GetMaster();
 
-//private:
+private:
 	void _CaptureDelay(Bit16u delayMs);
 	void _CaptureRegWriteWithDelay(Bit32u reg, Bit8u value);
 	void _CaptureRegWrite(Bit32u reg, Bit8u value);
 	void _CaptureOpl3Enable();
-
+	int _FindFreeChannel();
 	static DROMultiplexer* master;
+
 	FILE* captureHandle;
 	Bit64s captureStart;
 	Bit64s lastWrite;
 	Bit32u captureLengthBytes;
 
+	typedef struct oplch {
+		Hiopl* opl;
+		int ch;
+		bool operator<(const oplch &o) const {
+			return opl < o.opl ||
+				(opl == o.opl && ch < o.ch);
+		};
+		bool operator==(const oplch &o) const {
+			return opl == o.opl && ch == o.ch;
+		};
+	} OplCh_t;
+
+	OplCh_t channels[MELODIC_CHANNELS];
+	std::map<OplCh_t, int> channelMap;
 };
 

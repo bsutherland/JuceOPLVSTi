@@ -6,11 +6,6 @@
 
 const char *JuceOplvstiAudioProcessor::PROGRAM_INDEX = "Program Index";
 
-static DROMultiplexer* plexer = NULL;
-void regWriteCallback(Bit32u reg, Bit8u val) {
-	if (NULL != plexer) plexer->_CaptureRegWriteWithDelay(reg, val);
-}
-
 //==============================================================================
 JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	: i_program(-1)
@@ -21,7 +16,6 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
 	dro = new DROMultiplexer();
-	plexer = dro;
 
 	recordingFile = NULL;
 
@@ -159,7 +153,6 @@ bool JuceOplvstiAudioProcessor::isAnyInstanceRecording() {
 void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {
 	recordingFile = outputFile;
 	dro->StartCapture(outputFile->getFullPathName().toUTF8(), Opl);
-	Opl->regWriteCallback = &regWriteCallback;
 }
 
 void JuceOplvstiAudioProcessor::stopRecording() {
@@ -776,6 +769,9 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 				Opl->KeyOn(ch, noteHz);
 				active_notes[ch] = n;
 				applyPitchBend();
+				if (isAnyInstanceRecording()) {
+					dro->GetMaster()->TwoOpMelodicNoteOn(Opl, ch);
+				}
 			}
 		}
 		else if (midi_message.isNoteOff()) {
@@ -803,6 +799,9 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 
 					Opl->KeyOff(ch);
 					active_notes[ch] = NO_NOTE;
+				}
+				if (isAnyInstanceRecording()) {
+					dro->GetMaster()->TwoOpMelodicNoteOff(Opl, ch);
 				}
 			}
 		}

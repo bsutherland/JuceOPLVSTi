@@ -25,12 +25,8 @@ enum Drum
 	BDRUM=0x10, SNARE=0x8, TOM=0x4, CYMBAL=0x2, HIHAT=0x1
 };
 
-typedef void(*RegWriteCallback_t)(Bit32u reg, Bit8u val);
-
-
 class Hiopl {
 	public:
-		RegWriteCallback_t regWriteCallback = NULL;
 		static const int CHANNELS = 9;
 		static const int OSCILLATORS = 2;
 		Hiopl(int buflen, Emulator emulator = ZDOOM);
@@ -62,10 +58,16 @@ class Hiopl {
 		void SetEnvelopeDecay(int ch, int osc, int t);
 		void SetEnvelopeSustain(int ch, int osc, int level);
 		void SetEnvelopeRelease(int ch, int osc, int t);
-		
+		// Get register address offset for operator settings for the specified channel and operator.
+		int _GetOffset(int ch, int osc);
+		// Get register address offset for channel-wide register settings for the specified channel.
+		int _GetOffset(int ch);
+
 		void SetModulatorFeedback(int ch, int level);
 		void KeyOn(int ch, float frqHz);
 		void KeyOff(int ch);
+		// Return false if no note is active on the channel (ie release is complete)
+		bool IsActive(int ch);
 		void SetFrequency(int ch, float frqHz, bool keyOn=false);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
 		void _ClearRegBits(Bit32u reg, Bit8u mask);
@@ -75,12 +77,10 @@ class Hiopl {
 		~Hiopl();
 	private:
 		Emulator emulator;
-		Adlib::Handler *adlib;
+		DBOPL::Handler *adlib;
 		OPLEmul *zdoom;
 		Bit8u regCache[256];
 		bool _CheckParams(int ch, int osc);
-		int _GetOffset(int ch, int osc);
-		int _GetOffset(int ch);
 		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
 		void _ClearRegisters();
 

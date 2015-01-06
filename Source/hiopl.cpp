@@ -76,8 +76,6 @@ void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
 		zdoom->WriteReg(reg, value);
 	//}
 	regCache[reg] = value;
-	//_CaptureRegWriteWithDelay(reg, value);
-	if (NULL != regWriteCallback) regWriteCallback(reg, value);
 }
 
 Bit8u Hiopl::_ReadReg(Bit32u reg) {
@@ -172,7 +170,6 @@ void Hiopl::SetModulatorFeedback(int ch, int level) {
 
 void Hiopl::SetPercussionMode(bool enable) {
 	_WriteReg(0xbd, enable ? 0x20 : 0x0, 0x20);
-	// TODO: handle capture mode.. channels reduced from 18 -> 15
 }
 
 void Hiopl::HitPercussion(Drum drum) {
@@ -193,14 +190,15 @@ void Hiopl::KeyOff(int ch) {
 	_ClearRegBits(0xb0+offset, 0x20);
 }
 
-//void Hiopl::EnvelopeOffCallback(int ch) {
-//
-//}
+bool Hiopl::IsActive(int ch) {
+	// check carrier envelope state
+	return DBOPL::Operator::State::OFF != adlib->chip.chan[ch - 1].op[1].state;
+}
 
 void Hiopl::SetFrequency(int ch, float frqHz, bool keyOn) {
 	unsigned int fnum, block;
 	int offset = this->_GetOffset(ch);
-	// ZDoom emulator seems to be tuned down by two semitones for some reason.
+	// ZDoom emulator seems to be tuned down by two semitones for some reason. Sample rate difference?
 	if (ZDOOM == emulator) {
 		frqHz *= 1.122461363636364f;
 	}
