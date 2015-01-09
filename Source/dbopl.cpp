@@ -529,9 +529,6 @@ void Operator::WriteE0( const Chip* chip, Bit8u val ) {
 INLINE void Operator::SetState( Bit8u s ) {
 	state = s;
 	volHandler = VolumeHandlerTable[ s ];
-	if (OFF == s) {
-		// TODO: callback
-	}
 }
 
 INLINE bool Operator::Silent() const {

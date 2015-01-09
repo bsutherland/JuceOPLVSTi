@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "hiopl.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 
 class DROMultiplexer
 {
@@ -17,7 +18,7 @@ public:
 	void InitCaptureVariables();
 	bool IsAnInstanceRecording();
 	bool IsAnotherInstanceRecording();
-	void StartCapture(const char* filepath, Hiopl* opl);
+	bool StartCapture(const char* filepath, Hiopl* opl);
 	void StopCapture();
 	static DROMultiplexer* GetMaster();
 
@@ -26,13 +27,15 @@ private:
 	void _CaptureRegWriteWithDelay(Bit32u reg, Bit8u value);
 	void _CaptureRegWrite(Bit32u reg, Bit8u value);
 	void _CaptureOpl3Enable();
-	int _FindFreeChannel();
+	int _FindFreeChannel(Hiopl* opl, int inCh);
+	void _DebugOut(char* str);
 	static DROMultiplexer* master;
 
 	FILE* captureHandle;
 	Bit64s captureStart;
 	Bit64s lastWrite;
 	Bit32u captureLengthBytes;
+	static CriticalSection lock;
 
 	typedef struct oplch {
 		Hiopl* opl;

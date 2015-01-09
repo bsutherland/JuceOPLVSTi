@@ -190,6 +190,17 @@ void Hiopl::KeyOff(int ch) {
 	_ClearRegBits(0xb0+offset, 0x20);
 }
 
+static const char STATE[] = {
+	'-',
+	'R',
+	'S',
+	'D',
+	'A',
+};
+char Hiopl::GetState(int ch) {
+	return STATE[adlib->chip.chan[ch - 1].op[1].state];
+}
+
 bool Hiopl::IsActive(int ch) {
 	// check carrier envelope state
 	return DBOPL::Operator::State::OFF != adlib->chip.chan[ch - 1].op[1].state;

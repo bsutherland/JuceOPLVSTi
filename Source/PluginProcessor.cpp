@@ -152,7 +152,9 @@ bool JuceOplvstiAudioProcessor::isAnyInstanceRecording() {
 
 void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {
 	recordingFile = outputFile;
-	dro->StartCapture(outputFile->getFullPathName().toUTF8(), Opl);
+	if (!dro->StartCapture(outputFile->getFullPathName().toUTF8(), Opl)) {
+		juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::InfoIcon, "Could not open specified file for writing!", "OK");
+	}
 }
 
 void JuceOplvstiAudioProcessor::stopRecording() {
@@ -447,8 +449,8 @@ JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 {
 	for (unsigned int i=0; i < params.size(); ++i)
 		delete params[i];
-	//delete Opl;
-	//delete dro;
+	delete Opl;
+	delete dro;
 }
 
 //==============================================================================
