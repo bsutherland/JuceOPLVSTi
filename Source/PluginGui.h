@@ -93,7 +93,7 @@ private:
 	static const uint32 COLOUR_MID = 0xff007f00;
 	static const uint32 COLOUR_RECORDING = 0xffff0000;
 	JuceOplvstiAudioProcessor* processor;
-	std::array<ScopedPointer<ImageButton>, Hiopl::CHANNELS> channels;
+	std::array<ScopedPointer<Label>, Hiopl::CHANNELS> channels;
 	TooltipWindow tooltipWindow;
     //[/UserVariables]
 

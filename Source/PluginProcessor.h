@@ -59,6 +59,7 @@ public:
 	void setParametersByRegister(int register_base, int op, uint8 value);
 
 	int isChannelActive(int idx) const;
+	const char* getChannelEnvelopeStage(int idx) const;
 
 	void updateGuiIfPresent();
 

@@ -28,7 +28,7 @@ private:
 	void _CaptureRegWrite(Bit32u reg, Bit8u value);
 	void _CaptureOpl3Enable();
 	int _FindFreeChannel(Hiopl* opl, int inCh);
-	void _DebugOut(char* str);
+	void _DebugOut(const char* str);
 	static DROMultiplexer* master;
 
 	FILE* captureHandle;

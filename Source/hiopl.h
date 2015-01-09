@@ -68,7 +68,8 @@ class Hiopl {
 		void KeyOff(int ch);
 		// Return false if no note is active on the channel (ie release is complete)
 		bool IsActive(int ch);
-		char GetState(int ch);
+		// Return a single character string representing the stage of the envelope for the carrier operator for the channel
+		const char* GetState(int ch) const;
 		void SetFrequency(int ch, float frqHz, bool keyOn=false);
 		void _WriteReg(Bit32u reg, Bit8u value, Bit8u mask=0x0);
 		void _ClearRegBits(Bit32u reg, Bit8u mask);

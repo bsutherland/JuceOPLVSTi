@@ -909,6 +909,13 @@ int JuceOplvstiAudioProcessor::isChannelActive(int idx) const
 	return active_notes[idx] != NO_NOTE;
 }
 
+// @param idx 1-based channel index
+const char* JuceOplvstiAudioProcessor::getChannelEnvelopeStage(int idx) const
+{
+	return Opl->GetState(idx);
+}
+
+
 //==============================================================================
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()

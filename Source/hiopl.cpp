@@ -11,6 +11,8 @@ Hiopl::Hiopl(int buflen, Emulator emulator) {
 	adlib = new DBOPL::Handler();
 	zdoom = JavaOPLCreate(false);
 
+	// channels reordered to match
+	// 'in-memory' order in DOSBox emulator
 	_op1offset[1] = 0x0;
 	_op1offset[2] = 0x1;
 	_op1offset[3] = 0x2;
@@ -190,14 +192,14 @@ void Hiopl::KeyOff(int ch) {
 	_ClearRegBits(0xb0+offset, 0x20);
 }
 
-static const char STATE[] = {
-	'-',
-	'R',
-	'S',
-	'D',
-	'A',
+static const char* STATE[] = {
+	"-",
+	"R",
+	"S",
+	"D",
+	"A",
 };
-char Hiopl::GetState(int ch) {
+const char* Hiopl::GetState(int ch) const {	
 	return STATE[adlib->chip.chan[ch - 1].op[1].state];
 }
 
@@ -270,18 +272,22 @@ int Hiopl::_GetOffset(int ch, int osc) {
 	return (1 == osc) ? _op1offset[ch] : _op2offset[ch];
 }
 
+// re-ordered to match in-memory ordering of DOSBox emulator
+static int OFFSET_MAP[] = {
+	-1,
+	0,
+	3,//1,
+	1,//2,
+	4,//3,
+	2,//4,
+	5,
+	6,
+	7,
+	8,
+	9,
+};
 int Hiopl::_GetOffset(int ch) {
 	assert(_CheckParams(ch));
-	return ch - 1;
+	return OFFSET_MAP[ch];
 }
 
-/*
-2. Two-operator Melodic and Percussion Mode
-
-ÚÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-³ Channel    ³ 0  1  2  3  4  5  BD SD TT CY HH  9  10 11 12 13 14 15 16 17 ³
-ÃÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
-³ Operator 1 ³ 0  1  2  6  7  8  12 16 14 17 13  18 19 20 24 25 26 30 31 32 ³
-³ Operator 2 ³ 3  4  5  9  10 11 15              21 22 23 27 28 29 33 34 35 ³
-ÀÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
-*/

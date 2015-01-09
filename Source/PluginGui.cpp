@@ -1017,18 +1017,13 @@ PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
 	keyscaleEnvButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 	sustainButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 
+	Font fw(Font::getDefaultMonospacedFontName(), 14, Font::bold);
 	for (unsigned int i = 0; i < channels.size(); ++i)
 	{
-		ImageButton *channel = new ImageButton("new button");
-
+		Label *channel = new Label("chan label", TRANS("-"));
+		channel->setColour(Label::textColourId, Colour(COLOUR_MID));
+		channel->setJustificationType(Justification::centred);
 		addAndMakeVisible(channel);
-		channel->addListener(this);
-
-		channel->setImages(false, true, true,
-			ImageCache::getFromMemory(channeloff_png, channeloff_pngSize), 1.000f, Colour(0x00000000),
-			Image(), 1.000f, Colour(0x00000000),
-			ImageCache::getFromMemory(channelon_png, channelon_pngSize), 1.000f, Colour(0x00000000));
-
 		channels[i] = channel;
 	}
     //[/UserPreSize]
@@ -1238,7 +1233,7 @@ void PluginGui::resized()
     percussionLabel->setBounds (40, 488, 163, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
-		channels[i]->setBounds(456+44*i+4, 36, 16, 16);
+		channels[i]->setBounds(456+44*i+4, 36, 20, 20);
     //[/UserResized]
 }
 
@@ -1623,8 +1618,10 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 
 	void PluginGui::timerCallback()
 	{
-		for (int i = 0; i < Hiopl::CHANNELS; ++i)
-			channels[i]->setState(processor->isChannelActive(i+1) ? Button::buttonDown : Button::buttonNormal);
+		for (int i = 0; i < Hiopl::CHANNELS; ++i) {
+			channels[i]->setText(processor->getChannelEnvelopeStage(i + 1), NotificationType::dontSendNotification);
+		}
+			//channels[i]->setState(processor->isChannelActive(i+1) ? Button::buttonDown : Button::buttonNormal);
 	}
 //[/MiscUserCode]
 

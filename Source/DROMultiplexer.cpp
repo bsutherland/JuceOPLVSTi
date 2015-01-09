@@ -74,10 +74,7 @@ INLINE void host_writed(Bit8u *off, Bit32u val) {
 HANDLE conout;
 DROMultiplexer::DROMultiplexer()
 {
-	for (int i = 0; i < MELODIC_CHANNELS; i++) {
-		channels[i].opl = NULL;
-		channels[i].ch = -1;
-	}
+	InitCaptureVariables();
 #ifdef _DEBUG
 	AllocConsole();
 	conout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -97,20 +94,17 @@ DROMultiplexer* DROMultiplexer::GetMaster() {
 
 void DROMultiplexer::TwoOpMelodicNoteOn(Hiopl* opl, int inCh) {
 	const ScopedLock sl(lock);
-
-	for (int i = 1; i <= Hiopl::CHANNELS; i++) {
-		char s[2];
-		s[0] = opl->GetState(i);
-		s[1] = '\0';
-		_DebugOut(s);
-	}
-	_DebugOut(" ");
 	
 	// find a free channel and mark it as used
 	char addr[16];
 	int outCh = _FindFreeChannel(opl, inCh);
 	_DebugOut(" <- ");
 	_DebugOut(itoa((int)opl, addr, 16));
+	_DebugOut(" ");
+	for (int i = 0; i < MELODIC_CHANNELS; i++) {
+		Hiopl* tmpOpl = channels[i].opl;
+		_DebugOut(NULL == tmpOpl ? "-" : tmpOpl->GetState(channels[i].ch));
+	}
 	_DebugOut("\n");
 
 	// read all instrument settings and write them all to the file
@@ -160,13 +154,16 @@ void DROMultiplexer::TwoOpMelodicNoteOff(Hiopl* opl, int ch) {
 	key.ch = ch;
 
 	int outCh = channelMap[key];
+	char n[8];
+	_DebugOut(itoa(outCh, n, 16));
+	_DebugOut(" note off\n");
 	// note-off
 	Bit32u inAddr = 0xb0 + chOff;
 	Bit32u outAddr = 0xb0 + CHANNEL_OFFSETS[outCh];
 	_CaptureRegWriteWithDelay(outAddr, opl->_ReadReg(inAddr));
 }
 
-void DROMultiplexer::_DebugOut(char* str) {
+void DROMultiplexer::_DebugOut(const char* str) {
 #ifdef _DEBUG
 	DWORD count;
 	count = strlen(str);
@@ -182,7 +179,7 @@ int DROMultiplexer::_FindFreeChannel(Hiopl* opl, int inCh) {
 			channels[i].ch = inCh;
 			channelMap[channels[i]] = i;
 			char n[8];
-			_DebugOut(itoa(i, n, 10));
+			_DebugOut(itoa(i, n, 16));
 			return i;
 		}
 		i += 1;
@@ -201,7 +198,11 @@ void DROMultiplexer::InitCaptureVariables() {
 	captureLengthBytes = 0;
 	lastWrite = -1;
 	captureStart = -1;
-	//	channelMap.clear();
+	channelMap.clear();
+	for (int i = 0; i < MELODIC_CHANNELS; i++) {
+		channels[i].opl = NULL;
+		channels[i].ch = -1;
+	}
 }
 
 bool DROMultiplexer::StartCapture(const char* filepath, Hiopl *opl) {
