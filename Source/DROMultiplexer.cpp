@@ -64,6 +64,21 @@ static Bit32u CHANNEL_OFFSETS[15]= {
 	0x108,
 };
 
+// bass drum uses two operators.
+// others use either modulator or carrier.
+static Bit32u PERCUSSION_OPERATORS[5][2] = {
+	{ 0x10, 0x13 },  // bd
+	{ 0x00, 0x14 },  // sd
+	{ 0x12, 0x00 },  // tt
+	{ 0x00, 0x15},   // cy
+	{ 0x11, 0x00 },  // hh
+};
+
+static Bit32u PERCUSSION_CHANNELS[5] = {
+	7, 7, 8, 8, 9
+	// or 7, 8, 8, 9, 9?
+};
+
 INLINE void host_writed(Bit8u *off, Bit32u val) {
 	off[0] = (Bit8u)(val);
 	off[1] = (Bit8u)(val >> 8);
@@ -92,21 +107,48 @@ DROMultiplexer* DROMultiplexer::GetMaster() {
 	return DROMultiplexer::master;
 }
 
-void DROMultiplexer::TwoOpMelodicNoteOn(Hiopl* opl, int inCh) {
-	const ScopedLock sl(lock);
-	
-	// find a free channel and mark it as used
-	char addr[16];
-	int outCh = _FindFreeChannel(opl, inCh);
-	_DebugOut(" <- ");
-	_DebugOut(itoa((int)opl, addr, 16));
-	_DebugOut(" ");
-	for (int i = 0; i < MELODIC_CHANNELS; i++) {
-		Hiopl* tmpOpl = channels[i].opl;
-		_DebugOut(NULL == tmpOpl ? "-" : tmpOpl->GetState(channels[i].ch));
-	}
-	_DebugOut("\n");
+void DROMultiplexer::_CopyOplPercussionSettings(Hiopl* opl, int pIdx) {
+	// input channel 1 is as good as any..
+	int op1Off = opl->_GetOffset(1, 1);
+	int op2Off = opl->_GetOffset(1, 2);
+	Bit32u inAddr;
+	Bit32u outAddr;
 
+	Bit32u* outOff = PERCUSSION_OPERATORS[pIdx];
+	// waveform select
+	int base = 0xe0;
+	if (outOff[0]) {
+		inAddr = base + op1Off;
+		outAddr = base + outOff[0];
+		_CaptureRegWriteWithDelay(outAddr, opl->_ReadReg(inAddr));
+	}
+	if (outOff[1]) {
+		inAddr = base + op2Off;
+		outAddr = base + outOff[1];
+		_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+	}
+	// other operator settings
+	for (base = 0x20; base <= 0x80; base += 0x20) {
+		if (outOff[0]) {
+			inAddr = base + op1Off;
+			outAddr = base + outOff[0];
+			_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+		}
+		if (outOff[1]) {
+			inAddr = base + op2Off;
+			outAddr = base + outOff[1];
+			_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+		}
+	}
+
+	// channel wide settings
+	int chInOff = opl->_GetOffset(1);
+	inAddr = 0xc0 + chInOff;
+	outAddr = 0xc0 + PERCUSSION_CHANNELS[pIdx];
+	_CaptureRegWrite(outAddr, 0x30 | opl->_ReadReg(inAddr));
+}
+
+void DROMultiplexer::_CopyOplChannelSettings(Hiopl* opl, int inCh, int outCh) {
 	// read all instrument settings and write them all to the file
 	int op1Off = opl->_GetOffset(inCh, 1);
 	int op2Off = opl->_GetOffset(inCh, 2);
@@ -135,14 +177,36 @@ void DROMultiplexer::TwoOpMelodicNoteOn(Hiopl* opl, int inCh) {
 	inAddr = 0xc0 + chInOff;
 	outAddr = 0xc0 + CHANNEL_OFFSETS[outCh];
 	_CaptureRegWrite(outAddr, 0x30 | opl->_ReadReg(inAddr));
+}
+
+void DROMultiplexer::TwoOpMelodicNoteOn(Hiopl* opl, int inCh) {
+	const ScopedLock sl(lock);
+	
+	// find a free channel and mark it as used
+	char addr[16];
+	int outCh = _FindFreeChannel(opl, inCh);
+	_DebugOut(" <- ");
+	_DebugOut(itoa((int)opl, addr, 16));
+	_DebugOut(" ");
+	for (int i = 0; i < MELODIC_CHANNELS; i++) {
+		Hiopl* tmpOpl = channels[i].opl;
+		_DebugOut(NULL == tmpOpl ? "-" : tmpOpl->GetState(channels[i].ch));
+	}
+	//_DebugOut("\n");
+	_CopyOplChannelSettings(opl, inCh, outCh);
+
 	// note frequency
-	inAddr = 0xa0 + chInOff;
-	outAddr = 0xa0 + CHANNEL_OFFSETS[outCh];
+	int chInOff = opl->_GetOffset(inCh);
+	int inAddr = 0xa0 + chInOff;
+	int outAddr = 0xa0 + CHANNEL_OFFSETS[outCh];
 	_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+	_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
 	// note-on
 	inAddr = 0xb0 + chInOff;
 	outAddr = 0xb0 + CHANNEL_OFFSETS[outCh];
 	_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+	_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
+	_DebugOut("\n");
 }
 
 void DROMultiplexer::TwoOpMelodicNoteOff(Hiopl* opl, int ch) {
@@ -188,9 +252,17 @@ int DROMultiplexer::_FindFreeChannel(Hiopl* opl, int inCh) {
 	return 0;
 }
 
-void DROMultiplexer::PercussionHit(Hiopl* opl) {
+void DROMultiplexer::PercussionChange(Hiopl* opl, int pIdx) {
 	const ScopedLock sl(lock);
-
+	_CopyOplPercussionSettings(opl, pIdx);
+	Bit8u val = opl->_ReadReg(0xbd);
+	Bit8u masked = 0x1f & val;
+	if (0 == masked) {	// note-off
+		// TODO: clear the correct bit only
+		_CaptureRegWriteWithDelay(0xbd, val & 0xe0);
+	} else {			// note-on
+		_CaptureRegWriteWithDelay(0xbd, OxBD | masked);
+	}
 }
 
 void DROMultiplexer::InitCaptureVariables() {
@@ -203,6 +275,7 @@ void DROMultiplexer::InitCaptureVariables() {
 		channels[i].opl = NULL;
 		channels[i].ch = -1;
 	}
+	OxBD = 0x0;
 }
 
 bool DROMultiplexer::StartCapture(const char* filepath, Hiopl *opl) {
@@ -230,6 +303,7 @@ bool DROMultiplexer::StartCapture(const char* filepath, Hiopl *opl) {
 			_CaptureRegWrite(i, opl->_ReadReg(i));
 		}
 		_CaptureRegWrite(0xbd, opl->_ReadReg(0xbd));
+		OxBD = opl->_ReadReg(0xbd);
 		for (Bit8u i = 0xc0; i <= 0xc8; i++) {
 			_CaptureRegWrite(i, opl->_ReadReg(i) | 0x30);	// enable L + R channels
 		}
@@ -279,6 +353,9 @@ void DROMultiplexer::_CaptureRegWrite(Bit32u reg, Bit8u value) {
 	regAndVal[1] = value;
 	fwrite(regAndVal, 1, 2, captureHandle);
 	captureLengthBytes += 2;
+	if (0xbd == reg) {
+		OxBD = value;
+	}
 }
 
 void DROMultiplexer::_CaptureRegWriteWithDelay(Bit32u reg, Bit8u value) {

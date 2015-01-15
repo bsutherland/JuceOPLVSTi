@@ -13,7 +13,7 @@ public:
 
 	void TwoOpMelodicNoteOn(Hiopl* opl, int ch);
 	void TwoOpMelodicNoteOff(Hiopl* opl, int ch);
-	void PercussionHit(Hiopl* opl);
+	void PercussionChange(Hiopl* opl, int perc);
 
 	void InitCaptureVariables();
 	bool IsAnInstanceRecording();
@@ -28,8 +28,11 @@ private:
 	void _CaptureRegWrite(Bit32u reg, Bit8u value);
 	void _CaptureOpl3Enable();
 	int _FindFreeChannel(Hiopl* opl, int inCh);
+	void _CopyOplChannelSettings(Hiopl* opl, int inCh, int outCh);
+	void _CopyOplPercussionSettings(Hiopl* opl, int pIdx);
 	void _DebugOut(const char* str);
 	static DROMultiplexer* master;
+	Bit8u OxBD;	// cached value of percussion register
 
 	FILE* captureHandle;
 	Bit64s captureStart;
