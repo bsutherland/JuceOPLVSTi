@@ -732,7 +732,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 				}
 				Opl->HitPercussion(DRUM_INDEX[perc - 1]);
 				if (isAnyInstanceRecording()) {
-					dro->GetMaster()->PercussionChange(Opl, perc);
+					dro->GetMaster()->PercussionChange(Opl, perc - 1);
 				}
 			} else {
 				if (!available_channels.empty())
@@ -783,7 +783,7 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			if (perc > 0) {
 				Opl->ReleasePercussion();
 				if (isAnyInstanceRecording()) {
-					dro->GetMaster()->PercussionChange(Opl, perc-1);
+					dro->GetMaster()->PercussionChange(Opl, perc - 1);
 				}
 			}
 			else {

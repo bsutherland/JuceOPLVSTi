@@ -67,7 +67,7 @@ static Bit32u CHANNEL_OFFSETS[15]= {
 // bass drum uses two operators.
 // others use either modulator or carrier.
 static Bit32u PERCUSSION_OPERATORS[5][2] = {
-	{ 0x10, 0x13 },  // bd
+	{ 0x13, 0x10 },  // bd
 	{ 0x00, 0x14 },  // sd
 	{ 0x12, 0x00 },  // tt
 	{ 0x00, 0x15},   // cy
@@ -145,7 +145,7 @@ void DROMultiplexer::_CopyOplPercussionSettings(Hiopl* opl, int pIdx) {
 	int chInOff = opl->_GetOffset(1);
 	inAddr = 0xc0 + chInOff;
 	outAddr = 0xc0 + PERCUSSION_CHANNELS[pIdx];
-	_CaptureRegWrite(outAddr, 0x30 | opl->_ReadReg(inAddr));
+	_CaptureRegWrite(outAddr, 0x30 | opl->_ReadReg(inAddr));	// make sure L+R channels always enabled
 }
 
 void DROMultiplexer::_CopyOplChannelSettings(Hiopl* opl, int inCh, int outCh) {
@@ -256,12 +256,11 @@ void DROMultiplexer::PercussionChange(Hiopl* opl, int pIdx) {
 	const ScopedLock sl(lock);
 	_CopyOplPercussionSettings(opl, pIdx);
 	Bit8u val = opl->_ReadReg(0xbd);
-	Bit8u masked = 0x1f & val;
-	if (0 == masked) {	// note-off
-		// TODO: clear the correct bit only
-		_CaptureRegWriteWithDelay(0xbd, val & 0xe0);
-	} else {			// note-on
-		_CaptureRegWriteWithDelay(0xbd, OxBD | masked);
+	Bit8u maskOut = 1 << abs(4 - pIdx);
+	if (0 == (val & maskOut)) {	// note-off
+		_CaptureRegWriteWithDelay(0xbd, 0xBD & (0xe0 | ~maskOut));
+	} else {					// note-on
+		_CaptureRegWriteWithDelay(0xbd, OxBD | maskOut);
 	}
 }
 
@@ -275,7 +274,7 @@ void DROMultiplexer::InitCaptureVariables() {
 		channels[i].opl = NULL;
 		channels[i].ch = -1;
 	}
-	OxBD = 0x0;
+	OxBD = 0x20;	// percussion mode should always be enabled
 }
 
 bool DROMultiplexer::StartCapture(const char* filepath, Hiopl *opl) {
@@ -302,8 +301,7 @@ bool DROMultiplexer::StartCapture(const char* filepath, Hiopl *opl) {
 		for (Bit8u i = 0x80; i <= 0x95; i++) {
 			_CaptureRegWrite(i, opl->_ReadReg(i));
 		}
-		_CaptureRegWrite(0xbd, opl->_ReadReg(0xbd));
-		OxBD = opl->_ReadReg(0xbd);
+		_CaptureRegWrite(0xbd, OxBD | (opl->_ReadReg(0xbd) & 0xc0));	// enable percmode, copy tremolo and vibrato depth only
 		for (Bit8u i = 0xc0; i <= 0xc8; i++) {
 			_CaptureRegWrite(i, opl->_ReadReg(i) | 0x30);	// enable L + R channels
 		}
