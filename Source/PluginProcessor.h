@@ -45,7 +45,7 @@ public:
     //==============================================================================
     const String getName() const;
 
-    static const int JuceOplvstiAudioProcessor::MAX_INSTRUMENT_FILE_SIZE_BYTES = 1024;
+    static const int MAX_INSTRUMENT_FILE_SIZE_BYTES = 1024;
 	
 	int getNumParameters();
 

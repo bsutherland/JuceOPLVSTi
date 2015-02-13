@@ -46,9 +46,15 @@
 #include <math.h>
 #include <string.h>
 #include <limits>
+#include <cstdlib>    /// Jeff-Russ added to get rand() and RAND_MAX 
 
-typedef unsigned __int8			BYTE;
-#define M_PI	3.141592654
+
+/*typedef unsigned __int8 BYTE;*/ /// Jeff changed to char and put in config.h
+
+#ifndef M_PI    /// Jeff-Russ added condition to silence xcode warning
+    #define M_PI	3.141592654
+#endif
+
 #include "config.h"
 #include "zdopl.h"
 

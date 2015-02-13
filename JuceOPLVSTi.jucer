@@ -1,22 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.11.1"
-              bundleIdentifier="com.plainweave.JuceOPLVSTi" buildVST="1" buildAU="1"
-              pluginName="JuceOPLVSTi" pluginDesc="JuceOPLVSTi" pluginManufacturer="Plainweave Software"
+<JUCERPROJECT id="wUKQiT" name="JuceOPL" projectType="audioplug" version="0.11.1"
+              bundleIdentifier="com.plainweave.JuceOPL" buildVST="1" buildAU="0"
+              pluginName="JuceOPL" pluginDesc="JuceOPL 64-bit" pluginManufacturer="Plainweave Software"
               pluginManufacturerCode="Pwve" pluginCode="JOPL" pluginChannelConfigs="{0, 1}"
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
-              pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
+              pluginAUExportPrefix="JuceOPL-AU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0"
               buildVST3="0" buildRTAS="0" buildAAX="0" includeBinaryInAppConfig="1">
-  <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
+  <MAINGROUP id="TOefyq" name="JuceOPL">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
-      <FILE id="o0sULY" name="DROMultiplexer.cpp" compile="1" resource="0"
-            file="Source/DROMultiplexer.cpp"/>
-      <FILE id="cULQN7" name="DROMultiplexer.h" compile="0" resource="0"
-            file="Source/DROMultiplexer.h"/>
+      <FILE id="V4Xg2N" name="JuceOPL_README.txt" compile="0" resource="1"
+            file="JuceOPL_README.txt"/>
+      <GROUP id="{0A7415DD-1C4B-6ECE-F8C8-1830F22F3693}" name="added">
+        <FILE id="b9ci03" name="itoa.h" compile="0" resource="0" file="Source/itoa.h"/>
+        <FILE id="zqVgdd" name="windows.h" compile="0" resource="0" file="Source/windows.h"/>
+      </GROUP>
+      <GROUP id="{5B100E11-BFF8-326B-F805-37178229BDAA}" name="introjucer">
+        <FILE id="SyIvF1" name="PluginGui.cpp" compile="1" resource="0" file="Source/PluginGui.cpp"/>
+        <FILE id="Phxzxb" name="PluginProcessor.cpp" compile="1" resource="0"
+              file="Source/PluginProcessor.cpp"/>
+        <FILE id="IvGocs" name="PluginProcessor.h" compile="0" resource="0"
+              file="Source/PluginProcessor.h"/>
+        <FILE id="a2DQGI" name="PluginGui.h" compile="0" resource="0" file="Source/PluginGui.h"/>
+      </GROUP>
+      <GROUP id="{04EB9715-F5C8-AD8A-9B89-2832B524778C}" name="modified">
+        <FILE id="o0sULY" name="DROMultiplexer.cpp" compile="1" resource="0"
+              file="Source/DROMultiplexer.cpp"/>
+        <FILE id="cULQN7" name="DROMultiplexer.h" compile="0" resource="0"
+              file="Source/DROMultiplexer.h"/>
+        <FILE id="c6G4EF" name="config.h" compile="0" resource="0" file="Source/config.h"/>
+        <FILE id="hjHmNq" name="zdopl.cpp" compile="1" resource="0" file="Source/zdopl.cpp"/>
+      </GROUP>
+      <GROUP id="{6B1E4F6E-4D95-CAB5-DAD3-E894F5CA0730}" name="DOSBox">
+        <FILE id="BZFxoj" name="adlib.h" compile="0" resource="0" file="Source/adlib.h"/>
+        <FILE id="TnpE3r" name="dbopl.cpp" compile="1" resource="0" file="Source/dbopl.cpp"/>
+        <FILE id="r3zBZz" name="dbopl.h" compile="0" resource="0" file="Source/dbopl.h"/>
+        <FILE id="pXX3j1" name="dosbox.h" compile="0" resource="0" file="Source/dosbox.h"/>
+        <FILE id="TLHYVa" name="hardware.h" compile="0" resource="0" file="Source/hardware.h"/>
+        <FILE id="mZbr8b" name="inout.h" compile="0" resource="0" file="Source/inout.h"/>
+        <FILE id="ZBjR5F" name="logging.h" compile="0" resource="0" file="Source/logging.h"/>
+        <FILE id="KCyK6B" name="opl.h" compile="0" resource="0" file="Source/opl.h"/>
+        <FILE id="t6cmDm" name="pic.h" compile="0" resource="0" file="Source/pic.h"/>
+        <FILE id="ep2XEF" name="setup.h" compile="0" resource="0" file="Source/setup.h"/>
+        <FILE id="aR7Eu7" name="mixer.h" compile="0" resource="0" file="Source/mixer.h"/>
+      </GROUP>
       <FILE id="KRj0DZ" name="tests.cpp" compile="1" resource="0" file="Source/tests.cpp"/>
-      <FILE id="hjHmNq" name="zdopl.cpp" compile="1" resource="0" file="Source/zdopl.cpp"/>
       <FILE id="TQyCKv" name="zdopl.h" compile="0" resource="0" file="Source/zdopl.h"/>
       <FILE id="LVSdHL" name="InstrumentLoader.h" compile="0" resource="0"
             file="Source/InstrumentLoader.h"/>
@@ -34,26 +64,8 @@
             file="Source/FloatParameter.cpp"/>
       <FILE id="RwbIyF" name="FloatParameter.h" compile="0" resource="0"
             file="Source/FloatParameter.h"/>
-      <FILE id="SyIvF1" name="PluginGui.cpp" compile="1" resource="0" file="Source/PluginGui.cpp"/>
-      <FILE id="a2DQGI" name="PluginGui.h" compile="0" resource="0" file="Source/PluginGui.h"/>
-      <FILE id="BZFxoj" name="adlib.h" compile="0" resource="0" file="Source/adlib.h"/>
-      <FILE id="c6G4EF" name="config.h" compile="0" resource="0" file="Source/config.h"/>
-      <FILE id="TnpE3r" name="dbopl.cpp" compile="1" resource="0" file="Source/dbopl.cpp"/>
-      <FILE id="r3zBZz" name="dbopl.h" compile="0" resource="0" file="Source/dbopl.h"/>
-      <FILE id="pXX3j1" name="dosbox.h" compile="0" resource="0" file="Source/dosbox.h"/>
-      <FILE id="TLHYVa" name="hardware.h" compile="0" resource="0" file="Source/hardware.h"/>
       <FILE id="fZWteg" name="hiopl.cpp" compile="1" resource="0" file="Source/hiopl.cpp"/>
       <FILE id="OiMwKI" name="hiopl.h" compile="0" resource="0" file="Source/hiopl.h"/>
-      <FILE id="mZbr8b" name="inout.h" compile="0" resource="0" file="Source/inout.h"/>
-      <FILE id="ZBjR5F" name="logging.h" compile="0" resource="0" file="Source/logging.h"/>
-      <FILE id="aR7Eu7" name="mixer.h" compile="0" resource="0" file="Source/mixer.h"/>
-      <FILE id="KCyK6B" name="opl.h" compile="0" resource="0" file="Source/opl.h"/>
-      <FILE id="t6cmDm" name="pic.h" compile="0" resource="0" file="Source/pic.h"/>
-      <FILE id="Phxzxb" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
-      <FILE id="IvGocs" name="PluginProcessor.h" compile="0" resource="0"
-            file="Source/PluginProcessor.h"/>
-      <FILE id="ep2XEF" name="setup.h" compile="0" resource="0" file="Source/setup.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
@@ -101,5 +113,29 @@
         <MODULEPATH id="juce_video" path="../Juce/modules"/>
       </MODULEPATHS>
     </VS2013>
+    <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="~/SDKs/vstsdk2.4" postbuildCommand="&#13;&#10;# This script takes the build product and copies it to the AU, VST, VST3, RTAS and AAX folders, depending on &#13;&#10;# which plugin types you've built&#13;&#10;&#13;&#10;original=$CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME&#13;&#10;&#13;&#10;# this looks inside the binary to detect which platforms are needed.. &#13;&#10;copyAU=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'AudioUnit' | wc -l&#96;&#13;&#10;copyVST=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'VSTPlugin' | wc -l&#96;&#13;&#10;copyVST3=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'GetPluginFactory' | wc -l&#96;&#13;&#10;copyRTAS=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'CProcess' | wc -l&#96;&#13;&#10;copyAAX=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'ACFStartup' | wc -l&#96;&#13;&#10;&#13;&#10;if [ $copyAU -gt 0 ]; then&#13;&#10;  echo &quot;Copying to AudioUnit folder...&quot;&#13;&#10;  AU=~/Library/Audio/Plug-Ins/Components/$PRODUCT_NAME.component&#13;&#10;  if [ -d &quot;$AU&quot; ]; then &#13;&#10;    rm -r &quot;$AU&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$AU&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$AU/Contents/PkgInfo&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$AU/Contents/$INFOPLIST_FILE&quot;&#13;&#10;&#13;&#10;  # Fix info.plist for AUs built with Xcode 3&#13;&#10;  if [ -f &quot;$DEVELOPER_DIR/Library/Developer/CoreAudio/AudioUnits/AUPublic/AUBase/AUPlugInDispatch.cpp&quot; ]; then&#13;&#10;    echo&#13;&#10;  else&#13;&#10;    echo &quot;Removing AudioComponents entry from Info.plist because this is not a new-format AU&quot;&#13;&#10;    /usr/libexec/PlistBuddy -c &quot;Delete AudioComponents&quot; &quot;$AU/Contents/Info.plist&quot;&#13;&#10;  fi&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyVST -gt 0 ]; then&#13;&#10;  echo &quot;Copying to VST folder...&quot;&#13;&#10;  VST=~/Library/Audio/Plug-Ins/VST/$PRODUCT_NAME.vst&#13;&#10;  if [ -d &quot;$VST&quot; ]; then &#13;&#10;    rm -r &quot;$VST&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$VST&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST/Contents/PkgInfo&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST/Contents/$INFOPLIST_FILE&quot;&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyVST3 -gt 0 ]; then&#13;&#10;  echo &quot;Copying to VST3 folder...&quot;&#13;&#10;  VST3=~/Library/Audio/Plug-Ins/VST3/$PRODUCT_NAME.vst3&#13;&#10;  if [ -d &quot;$VST3&quot; ]; then &#13;&#10;    rm -r &quot;$VST3&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$VST3&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST3/Contents/PkgInfo&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST3/Contents/$INFOPLIST_FILE&quot;&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyRTAS -gt 0 ]; then&#13;&#10;  echo &quot;Copying to RTAS folder...&quot;&#13;&#10;  RTAS=/Library/Application\ Support/Digidesign/Plug-Ins/$PRODUCT_NAME.dpm&#13;&#10;  if [ -d &quot;$RTAS&quot; ]; then&#13;&#10;    rm -r &quot;$RTAS&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$RTAS&quot;&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyAAX -gt 0 ]; then&#13;&#10;  echo &quot;Copying to AAX folder...&quot;&#13;&#10;&#13;&#10;  if [ -d &quot;/Applications/ProTools_3PDev/Plug-Ins&quot; ]; then&#13;&#10;    AAX1=&quot;/Applications/ProTools_3PDev/Plug-Ins/$PRODUCT_NAME.aaxplugin&quot;&#13;&#10;&#13;&#10;    if [ -d &quot;$AAX1&quot; ]; then&#13;&#10;      rm -r &quot;$AAX1&quot;&#13;&#10;    fi&#13;&#10;&#13;&#10;    cp -R -H &quot;$original&quot; &quot;$AAX1&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  if [ -d &quot;/Library/Application Support/Avid/Audio/Plug-Ins&quot; ]; then&#13;&#10;    AAX2=&quot;/Library/Application Support/Avid/Audio/Plug-Ins/$PRODUCT_NAME.aaxplugin&quot;&#13;&#10;&#13;&#10;    if [ -d &quot;$AAX2&quot; ]; then&#13;&#10;      rm -r &quot;$AAX2&quot;&#13;&#10;    fi&#13;&#10;&#13;&#10;    cp -R -H &quot;$original&quot; &quot;$AAX2&quot;&#13;&#10;  fi&#13;&#10;fi&#13;&#10;">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="1" optimisation="1" targetName="JuceOPL"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="64BitIntel"
+                       isDebug="0" optimisation="2" targetName="JuceOPL" cppLibType="libc++"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="../../juce"/>
+        <MODULEPATH id="juce_opengl" path="../../juce"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
+        <MODULEPATH id="juce_graphics" path="../../juce"/>
+        <MODULEPATH id="juce_events" path="../../juce"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce"/>
+        <MODULEPATH id="juce_core" path="../../juce"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../juce"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
   </EXPORTFORMATS>
 </JUCERPROJECT>
