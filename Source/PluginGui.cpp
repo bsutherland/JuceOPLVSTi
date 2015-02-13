@@ -28,47 +28,57 @@ void PluginGui::updateFromParameters()
 {
 	emulatorSlider->setValue(processor->getEnumParameter("Emulator"), juce::NotificationType::dontSendNotification);
 	setRecordButtonState(processor->isThisInstanceRecording());
-
-	sineImageButton->setToggleState(false, false);
-	halfsineImageButton->setToggleState(false, false);
-	abssineImageButton->setToggleState(false, false);
-	quartersineImageButton->setToggleState(false, false);
-	alternatingsineImageButton->setToggleState(false, false);
-	camelsineImageButton->setToggleState(false, false);
-	squareImageButton->setToggleState(false, false);
-	logsawImageButton->setToggleState(false, false);
+    
+/// setToggleState(bool, bool) is deprecated.
+/// Jeff-Russ replaced the second arg of "false" with dontSendNotification:
+    
+	sineImageButton->setToggleState(false, dontSendNotification);
+	halfsineImageButton->setToggleState(false, dontSendNotification);
+	abssineImageButton->setToggleState(false, dontSendNotification);
+	quartersineImageButton->setToggleState(false, dontSendNotification);
+	alternatingsineImageButton->setToggleState(false, dontSendNotification);
+	camelsineImageButton->setToggleState(false, dontSendNotification);
+	squareImageButton->setToggleState(false, dontSendNotification);
+	logsawImageButton->setToggleState(false, dontSendNotification);
 	switch(processor->getEnumParameter("Modulator Wave")) {
-		case 0: sineImageButton->setToggleState(true, false); break;
-		case 1: halfsineImageButton->setToggleState(true, false); break;
-		case 2: abssineImageButton->setToggleState(true, false); break;
-		case 3: quartersineImageButton->setToggleState(true, false); break;
-		case 4: alternatingsineImageButton->setToggleState(true, false); break;
-		case 5: camelsineImageButton->setToggleState(true, false); break;
-		case 6: squareImageButton->setToggleState(true, false); break;
-		case 7: logsawImageButton->setToggleState(true, false); break;
+		case 0: sineImageButton->setToggleState(true, dontSendNotification); break;
+		case 1: halfsineImageButton->setToggleState(true, dontSendNotification); break;
+		case 2: abssineImageButton->setToggleState(true, dontSendNotification); break;
+		case 3: quartersineImageButton->setToggleState(true, dontSendNotification); break;
+		case 4: alternatingsineImageButton->setToggleState(true, dontSendNotification); break;
+		case 5: camelsineImageButton->setToggleState(true, dontSendNotification); break;
+		case 6: squareImageButton->setToggleState(true, dontSendNotification); break;
+		case 7: logsawImageButton->setToggleState(true, dontSendNotification); break;
 
 	}
-	sineImageButton2->setToggleState(false, false);
-	halfsineImageButton2->setToggleState(false, false);
-	abssineImageButton2->setToggleState(false, false);
-	quartersineImageButton2->setToggleState(false, false);
-	alternatingsineImageButton2->setToggleState(false, false);
-	camelsineImageButton2->setToggleState(false, false);
-	squareImageButton2->setToggleState(false, false);
-	logsawImageButton2->setToggleState(false, false);
+	sineImageButton2->setToggleState(false, dontSendNotification);
+	halfsineImageButton2->setToggleState(false, dontSendNotification);
+	abssineImageButton2->setToggleState(false, dontSendNotification);
+	quartersineImageButton2->setToggleState(false, dontSendNotification);
+	alternatingsineImageButton2->setToggleState(false, dontSendNotification);
+	camelsineImageButton2->setToggleState(false, dontSendNotification);
+	squareImageButton2->setToggleState(false, dontSendNotification);
+	logsawImageButton2->setToggleState(false, dontSendNotification);
 	switch(processor->getEnumParameter("Carrier Wave")) {
-		case 0: sineImageButton2->setToggleState(true, false); break;
-		case 1: halfsineImageButton2->setToggleState(true, false); break;
-		case 2: abssineImageButton2->setToggleState(true, false); break;
-		case 3: quartersineImageButton2->setToggleState(true, false); break;
-		case 4: alternatingsineImageButton2->setToggleState(true, false); break;
-		case 5: camelsineImageButton2->setToggleState(true, false); break;
-		case 6: squareImageButton2->setToggleState(true, false); break;
-		case 7: logsawImageButton2->setToggleState(true, false); break;
+		case 0: sineImageButton2->setToggleState(true, dontSendNotification); break;
+		case 1: halfsineImageButton2->setToggleState(true, dontSendNotification); break;
+		case 2: abssineImageButton2->setToggleState(true, dontSendNotification); break;
+		case 3: quartersineImageButton2->setToggleState(true, dontSendNotification); break;
+		case 4: alternatingsineImageButton2->setToggleState(true, dontSendNotification); break;
+		case 5: camelsineImageButton2->setToggleState(true, dontSendNotification); break;
+		case 6: squareImageButton2->setToggleState(true, dontSendNotification); break;
+		case 7: logsawImageButton2->setToggleState(true, dontSendNotification); break;
 	}
-
-	frequencyComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Frequency Multiplier"), true);
-	frequencyComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Frequency Multiplier"), true);
+    
+/// setSelectedItemIndex(bool, bool) is deprecated.
+/// Jeff-Russ replaced the second arg of "true" with "sendNotificationAsync":
+    
+	frequencyComboBox->setSelectedItemIndex (
+                processor->getEnumParameter("Modulator Frequency Multiplier"),
+                                            sendNotificationAsync);
+	frequencyComboBox2->setSelectedItemIndex (
+                processor->getEnumParameter("Carrier Frequency Multiplier"),
+                                              sendNotificationAsync);
 
 	attenuationSlider->setValue(processor->getEnumParameter("Modulator Attenuation") * -0.75, juce::NotificationType::dontSendNotification);
 	attenuationSlider2->setValue(processor->getEnumParameter("Carrier Attenuation") * -0.75, juce::NotificationType::dontSendNotification);
@@ -81,31 +91,45 @@ void PluginGui::updateFromParameters()
 	dSlider2->setValue(processor->getIntParameter("Carrier Decay"), juce::NotificationType::dontSendNotification);
 	sSlider2->setValue(processor->getIntParameter("Carrier Sustain Level"), juce::NotificationType::dontSendNotification);
 	rSlider2->setValue(processor->getIntParameter("Carrier Release"), juce::NotificationType::dontSendNotification);
+   
+/// Jeff-Russ replaced the second arg of "true" with "sendNotificationAsync":
 
-	keyscaleAttenuationComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Keyscale Level"), true);
-	keyscaleAttenuationComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Keyscale Level"), true);
+	keyscaleAttenuationComboBox->setSelectedItemIndex (
+                        processor->getEnumParameter("Modulator Keyscale Level"),
+                                                       sendNotificationAsync);
+	keyscaleAttenuationComboBox2->setSelectedItemIndex (
+                        processor->getEnumParameter("Carrier Keyscale Level"),
+                                                        sendNotificationAsync);
 
 
-	if (processor->getEnumParameter("Modulator Tremolo")) tremoloButton->setToggleState(true, false);
-	if (processor->getEnumParameter("Modulator Vibrato")) vibratoButton->setToggleState(true, false);
-	if (processor->getEnumParameter("Modulator Sustain")) sustainButton->setToggleState(true, false);
-	if (processor->getEnumParameter("Modulator Keyscale Rate")) keyscaleEnvButton->setToggleState(true, false);
+	if (processor->getEnumParameter("Modulator Tremolo")) tremoloButton->setToggleState(true, dontSendNotification);
+	if (processor->getEnumParameter("Modulator Vibrato")) vibratoButton->setToggleState(true, dontSendNotification);
+	if (processor->getEnumParameter("Modulator Sustain")) sustainButton->setToggleState(true, dontSendNotification);
+	if (processor->getEnumParameter("Modulator Keyscale Rate")) keyscaleEnvButton->setToggleState(true, dontSendNotification);
 
-	if (processor->getEnumParameter("Carrier Tremolo")) tremoloButton2->setToggleState(true, false);
-	if (processor->getEnumParameter("Carrier Vibrato")) vibratoButton2->setToggleState(true, false);
-	if (processor->getEnumParameter("Carrier Sustain")) sustainButton2->setToggleState(true, false);
-	if (processor->getEnumParameter("Carrier Keyscale Rate")) keyscaleEnvButton2->setToggleState(true, false);
+	if (processor->getEnumParameter("Carrier Tremolo")) tremoloButton2->setToggleState(true, dontSendNotification);
+	if (processor->getEnumParameter("Carrier Vibrato")) vibratoButton2->setToggleState(true, dontSendNotification);
+	if (processor->getEnumParameter("Carrier Sustain")) sustainButton2->setToggleState(true, dontSendNotification);
+	if (processor->getEnumParameter("Carrier Keyscale Rate")) keyscaleEnvButton2->setToggleState(true, dontSendNotification);
 
 	vibratoSlider->setValue(processor->getEnumParameter("Vibrato Depth") * 7.0 + 7.0, juce::NotificationType::dontSendNotification);
 	tremoloSlider->setValue(processor->getEnumParameter("Tremolo Depth") * 3.8 + 1.0, juce::NotificationType::dontSendNotification);
 	feedbackSlider->setValue(processor->getIntParameter("Modulator Feedback"), juce::NotificationType::dontSendNotification);
 
-	velocityComboBox->setSelectedItemIndex(processor->getEnumParameter("Modulator Velocity Sensitivity"), true);
-	velocityComboBox2->setSelectedItemIndex(processor->getEnumParameter("Carrier Velocity Sensitivity"), true);
+/// Jeff-Russ replaced the second arg of "true" with "sendNotificationAsync":
 
-	algorithmComboBox->setSelectedItemIndex(processor->getEnumParameter("Algorithm"), true);
-
-	percussionComboBox->setSelectedItemIndex(processor->getEnumParameter("Percussion Mode"), true);
+	velocityComboBox->setSelectedItemIndex (
+                    processor->getEnumParameter("Modulator Velocity Sensitivity"),
+                                            sendNotificationAsync);
+	velocityComboBox2->setSelectedItemIndex (
+                    processor->getEnumParameter("Carrier Velocity Sensitivity"),
+                                             sendNotificationAsync);
+	algorithmComboBox->setSelectedItemIndex (
+                    processor->getEnumParameter("Algorithm"),
+                                             sendNotificationAsync);
+	percussionComboBox->setSelectedItemIndex (
+                    processor->getEnumParameter("Percussion Mode"),
+                                              sendNotificationAsync);
 
 	tooltipWindow.setColour(tooltipWindow.backgroundColourId, Colour(0x0));
 	tooltipWindow.setColour(tooltipWindow.textColourId, Colour(COLOUR_MID));
@@ -1552,7 +1576,7 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == recordButton)
     {
         //[UserButtonCode_recordButton] -- add your button handler code here..
-		recordButton->setToggleState(false, false);
+		recordButton->setToggleState(false, dontSendNotification);
 		if (!processor->isAnyInstanceRecording()) {
 			WildcardFileFilter wildcardFilter ("*.dro", String::empty, "DRO files");
 			FileBrowserComponent browser (FileBrowserComponent::saveMode,
@@ -1894,8 +1918,8 @@ BEGIN_JUCER_METADATA
   <SLIDER name="tremolo slider" id="ab64abee7ac8874b" memberName="tremoloSlider"
           virtualName="" explicitFocusOrder="0" pos="632 456 112 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="1" max="4.7999999999999998"
-          int="3.7999999999999998" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textboxhighlight="ff00af00" min="1" max="4.7999999999999998224"
+          int="3.7999999999999998224" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="44" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="frequency label" id="134ce8f87da62b88" memberName="frequencyLabel5"
          virtualName="" explicitFocusOrder="0" pos="472 456 152 24" tooltip="OPL global tremolo depth"

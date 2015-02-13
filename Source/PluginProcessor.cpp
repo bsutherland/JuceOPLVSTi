@@ -820,7 +820,8 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			applyPitchBend();
 		}
 	}
-	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));
+/// Jeff-Russ: getSampleData(int) is deprecated. use getWritePointer(int)
+	Opl->Generate(buffer.getNumSamples(), buffer.getWritePointer(0));
 }
 
 //==============================================================================

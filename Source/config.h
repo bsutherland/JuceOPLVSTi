@@ -75,24 +75,30 @@ typedef   uint16_t      Bit16u;
 typedef   int16_t       Bit16s;
 typedef   uint32_t 		Bit32u;
 typedef   int32_t       Bit32s;
-typedef   int64_t       Bit64u;
-typedef   uint64_t      Bit64s;
+typedef   uint64_t      Bit64u;
+typedef   int64_t       Bit64s;
 typedef   Bit32u        Bitu;
 typedef   Bit32s        Bits;
 
 
 /// Jeff-Russ PUT PLATFORM SPECIFIC STUFF HERE:
+#ifndef _WIN32                      /// __forceinline likely not needed 
+    #define __forceinline inline    /// outside of windows.
+#endif
+
 #ifdef _WIN32 // covers both 32 and 64-bit
     #define INLINE __forceinline
-#elif __APPLE__
-    #include "TargetConditionals.h"
-    #define INLINE inline /// apple has no forceinline
-#elif __linux
-    #define INLINE inline
-#elif __unix
-    #define INLINE inline
-#elif __posix
-    #define INLINE inline
-#else
-    #error Unsupported Operating System
-#endif
+#endif 
+
+//#elif __APPLE__
+//    #include "TargetConditionals.h"
+//    #define INLINE inline /// apple has no forceinline
+//#elif __linux
+//    #define INLINE inline
+//#elif __unix
+//    #define INLINE inline
+//#elif __posix
+//    #define INLINE inline
+//#else
+//    #error Unsupported Operating System
+//#endif

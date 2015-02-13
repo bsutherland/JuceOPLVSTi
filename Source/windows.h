@@ -31,7 +31,7 @@ typedef int16_t WCHAR;
 
 // HANDLE - A handle to an object.
 //          This type is declared in WinDef.h as follows:
-typedef PVOID HANDLE;
+typedef /*PVOID*/ DWORD HANDLE;
 
 DWORD STD_INPUT_HANDLE = -10;
 DWORD STD_OUTPUT_HANDLE = -11;
