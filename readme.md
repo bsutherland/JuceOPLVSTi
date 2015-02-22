@@ -2,11 +2,11 @@
 
 This VST instrument provides an emulated OPL sound chip. It provides all features of the OPL2, and some features of the OPL3.
 
-See here for Windows binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi/
+See here for binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi/
 
 ## What's an OPL? ##
 
-The OPL is a digital sound synthesis chip developed by Yamaha in the mid 1980s. Among other products, it was used in sound cards for PC, including the Adlib card.
+The OPL is a digital sound synthesis chip developed by Yamaha in the mid 1980s. Among other products, it was used in sound cards for PC, including the Ad Lib card and early Sound Blaster series.
 
 At a technical level: the emulator has channels comprised of 2 oscillators each. Each pair of oscillators is usually combined via phase modulation (basically frequency modulation). Each oscillator can produce one of eight waveforms (sine, half sine, absolute sine, quarter sine, alternating sine, camel sine, square, logarithmic sawtooth), and has an ADSR envelope controlling its amplitude. The unusual waveforms give it a characteristic sound.
 
@@ -20,6 +20,7 @@ Each instance of the plugin emulates an entire OPL chip, but polyphony is implem
 
 Some documentation which may be useful:
 
+- [Introduction to FM Synthesis](https://www.youtube.com/watch?v=ziFv00PegJg) (not specific to the OPL, but a great primer)
 - [OPL2 on Wikipedia](http://en.wikipedia.org/wiki/Yamaha_YM3812)
 - [Original Yamaha datasheet](http://www.alldatasheet.com/datasheet-pdf/pdf/84281/YAMAHA/YM3812.html)
 - [AdLib programming guide](http://www.shipbrook.net/jeff/sb.html) Dates back to 1991!
@@ -35,9 +36,9 @@ Percussion mode is now supported! This mode is not very well documented, even in
 - Cymbal: Uses carrier settings. Half-sine recommended.
 - Hi-hat: Uses modulator settings. Half-sine recommended.
 
-Also, a link to some much more detailed notes on percussion mode based on experimentation with real hardware!
+Also, some [much more detailed notes](http://midibox.org/forums/topic/18625-opl3-percussion-mode-map/) on percussion mode based on experimentation with real hardware!
 
-http://midibox.org/forums/topic/18625-opl3-percussion-mode-map/
+
 
 ## How did you create the instrument programs? ##
 
@@ -55,7 +56,7 @@ The code I wrote is essentially a device driver for the emulated OPL, implementi
 
 ## Building ##
 
-So far I've only built under Windows. Thanks to Juce, it should be possible to build under OSX and Linux too. **Volunteers to build OSX/Linux releases would be appreciated** (XCode required for OSX).
+So far I've only built under Windows. Thanks to the hard work of others, OSX and Linux builds should be coming very soon!
 
 ### Windows Build Instructions ###
 

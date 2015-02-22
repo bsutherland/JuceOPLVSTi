@@ -66,7 +66,7 @@ static Bit32u CHANNEL_OFFSETS[15]= {
 
 // bass drum uses two operators.
 // others use either modulator or carrier.
-static Bit32u PERCUSSION_OPERATORS[5][2] = {
+static Bit32u PERCUSSION_OFFSETS[5][2] = {
 	{ 0x13, 0x10 },  // bd
 	{ 0x00, 0x14 },  // sd
 	{ 0x12, 0x00 },  // tt
@@ -114,7 +114,7 @@ void DROMultiplexer::_CopyOplPercussionSettings(Hiopl* opl, int pIdx) {
 	Bit32u inAddr;
 	Bit32u outAddr;
 
-	Bit32u* outOff = PERCUSSION_OPERATORS[pIdx];
+	Bit32u* outOff = PERCUSSION_OFFSETS[pIdx];
 	// waveform select
 	int base = 0xe0;
 	if (outOff[0]) {
@@ -181,32 +181,35 @@ void DROMultiplexer::_CopyOplChannelSettings(Hiopl* opl, int inCh, int outCh) {
 
 void DROMultiplexer::TwoOpMelodicNoteOn(Hiopl* opl, int inCh) {
 	const ScopedLock sl(lock);
-	
+
 	// find a free channel and mark it as used
 	char addr[16];
 	int outCh = _FindFreeChannel(opl, inCh);
-	_DebugOut(" <- ");
-	_DebugOut(itoa((int)opl, addr, 16));
-	_DebugOut(" ");
-	for (int i = 0; i < MELODIC_CHANNELS; i++) {
-		Hiopl* tmpOpl = channels[i].opl;
-		_DebugOut(NULL == tmpOpl ? "-" : tmpOpl->GetState(channels[i].ch));
-	}
-	//_DebugOut("\n");
-	_CopyOplChannelSettings(opl, inCh, outCh);
+	if (outCh >= 0) {
+		_DebugOut(" <- ");
+		_DebugOut(itoa((int)opl, addr, 16));
+		_DebugOut(" ");
+		for (int i = 0; i < MELODIC_CHANNELS; i++) {
+			Hiopl* tmpOpl = channels[i].opl;
+			_DebugOut(NULL == tmpOpl ? "-" : tmpOpl->GetState(channels[i].ch));
+		}
+		//_DebugOut("\n");
+		_CopyOplChannelSettings(opl, inCh, outCh);
 
-	// note frequency
-	int chInOff = opl->_GetOffset(inCh);
-	int inAddr = 0xa0 + chInOff;
-	int outAddr = 0xa0 + CHANNEL_OFFSETS[outCh];
-	_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
-	_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
-	// note-on
-	inAddr = 0xb0 + chInOff;
-	outAddr = 0xb0 + CHANNEL_OFFSETS[outCh];
-	_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
-	_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
-	_DebugOut("\n");
+		// note frequency
+		int chInOff = opl->_GetOffset(inCh);
+		int inAddr = 0xa0 + chInOff;
+		int outAddr = 0xa0 + CHANNEL_OFFSETS[outCh];
+		_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+		_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
+		// note-on
+		inAddr = 0xb0 + chInOff;
+		outAddr = 0xb0 + CHANNEL_OFFSETS[outCh];
+		_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+		_DebugOut(" ");
+		_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
+		_DebugOut("\n");
+	}
 }
 
 void DROMultiplexer::TwoOpMelodicNoteOff(Hiopl* opl, int ch) {
@@ -248,8 +251,21 @@ int DROMultiplexer::_FindFreeChannel(Hiopl* opl, int inCh) {
 		}
 		i += 1;
 	}
+	// fall back to a released channel for same opl instance
+	i = 0;
+	while (i < MELODIC_CHANNELS) {
+		if (opl == channels[i].opl && 'R' == opl->GetState(channels[i].ch)[0]) {
+			channels[i].opl = opl;
+			channels[i].ch = inCh;
+			channelMap[channels[i]] = i;
+			char n[8];
+			_DebugOut(itoa(i, n, 16));
+			return i;
+		}
+		i += 1;
+	}
 	_DebugOut("Could not find free channel!");
-	return 0;
+	return -1;
 }
 
 void DROMultiplexer::PercussionChange(Hiopl* opl, int pIdx) {
@@ -260,6 +276,17 @@ void DROMultiplexer::PercussionChange(Hiopl* opl, int pIdx) {
 	if (0 == (val & maskOut)) {	// note-off
 		_CaptureRegWriteWithDelay(0xbd, 0xBD & (0xe0 | ~maskOut));
 	} else {					// note-on
+		char addr[16];
+		// note frequency
+		for (int i = 0; i < i; i++) {
+			Bit32u outOff = PERCUSSION_OFFSETS[pIdx][i];
+			if (0x0 != outOff) {
+				int inAddr = 0xa0 + opl->_GetOffset(1);		// any channel is fine, they should have all been written
+				int outAddr = 0xa0 + outOff;
+				_CaptureRegWrite(outAddr, opl->_ReadReg(inAddr));
+				_DebugOut(itoa(opl->_ReadReg(inAddr), addr, 16));
+			}
+		}
 		_CaptureRegWriteWithDelay(0xbd, OxBD | maskOut);
 	}
 }
