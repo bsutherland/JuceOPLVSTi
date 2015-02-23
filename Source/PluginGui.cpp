@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.0
+  Created with Introjucer version: 3.1.1
 
   ------------------------------------------------------------------------------
 
@@ -28,10 +28,10 @@ void PluginGui::updateFromParameters()
 {
 	emulatorSlider->setValue(processor->getEnumParameter("Emulator"), juce::NotificationType::dontSendNotification);
 	setRecordButtonState(processor->isThisInstanceRecording());
-    
+
 /// setToggleState(bool, bool) is deprecated.
 /// Jeff-Russ replaced the second arg of "false" with dontSendNotification:
-    
+
 	sineImageButton->setToggleState(false, dontSendNotification);
 	halfsineImageButton->setToggleState(false, dontSendNotification);
 	abssineImageButton->setToggleState(false, dontSendNotification);
@@ -69,10 +69,10 @@ void PluginGui::updateFromParameters()
 		case 6: squareImageButton2->setToggleState(true, dontSendNotification); break;
 		case 7: logsawImageButton2->setToggleState(true, dontSendNotification); break;
 	}
-    
+
 /// setSelectedItemIndex(bool, bool) is deprecated.
 /// Jeff-Russ replaced the second arg of "true" with "sendNotificationAsync":
-    
+
 	frequencyComboBox->setSelectedItemIndex (
                 processor->getEnumParameter("Modulator Frequency Multiplier"),
                                             sendNotificationAsync);
@@ -91,7 +91,7 @@ void PluginGui::updateFromParameters()
 	dSlider2->setValue(processor->getIntParameter("Carrier Decay"), juce::NotificationType::dontSendNotification);
 	sSlider2->setValue(processor->getIntParameter("Carrier Sustain Level"), juce::NotificationType::dontSendNotification);
 	rSlider2->setValue(processor->getIntParameter("Carrier Release"), juce::NotificationType::dontSendNotification);
-   
+
 /// Jeff-Russ replaced the second arg of "true" with "sendNotificationAsync":
 
 	keyscaleAttenuationComboBox->setSelectedItemIndex (
