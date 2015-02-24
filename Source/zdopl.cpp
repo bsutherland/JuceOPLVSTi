@@ -49,9 +49,7 @@
 #include <cstdlib>    /// Jeff-Russ added to get rand() and RAND_MAX 
 
 
-/*typedef unsigned __int8 BYTE;*/ /// Jeff changed to char and put in config.h
-
-#ifndef M_PI    /// Jeff-Russ added condition to silence xcode warning
+#ifndef M_PI    /// Jeff-Russ added 
     #define M_PI	3.141592654
 #endif
 
@@ -857,7 +855,7 @@ void OPL3::initChannels() {
 void OPL3::update_1_NTS1_6() {
 	int _1_nts1_6 = registers[OPL3DataStruct::_1_NTS1_6_Offset];
     // Note Selection. This register is used in Channel.updateOperators() implementations,
-    // to calculate the channel´s Key Scale Number.
+    // to calculate the channel4s Key Scale Number.
     // The value of the actual envelope rate follows the value of
     // OPL3.nts,Operator.keyScaleNumber and Operator.ksr
     nts = (_1_nts1_6 & 0x40) >> 6;
@@ -1014,7 +1012,7 @@ void Channel::update_2_KON1_BLOCK3_FNUMH2(OPL3 *OPL3) {
 	int _2_kon1_block3_fnumh2 = OPL3->registers[channelBaseAddress+ChannelData::_2_KON1_BLOCK3_FNUMH2_Offset];
 	
 	// Frequency Number (hi-register) and Block. These two registers, together with fnuml, 
-	// sets the Channel´s base frequency;
+	// sets the Channel4s base frequency;
 	block = (_2_kon1_block3_fnumh2 & 0x1C) >> 2;
 	fnumh = _2_kon1_block3_fnumh2 & 0x03;        
 	updateOperators(OPL3);
@@ -1471,7 +1469,7 @@ double EnvelopeGenerator::getEnvelope(OPL3 *OPL3, int egt, int am) {
 	switch(stage) {
 		case ATTACK:
 			// Since the attack is exponential, it will never reach 0 dB, so
-			// we´ll work with the next to maximum in the envelope resolution.
+			// we4ll work with the next to maximum in the envelope resolution.
 			if(envelope<-envelopeResolution && xAttackIncrement != -EnvelopeGeneratorData::MUGEN) {
 				// The attack is exponential.
 #if 0

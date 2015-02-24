@@ -7,7 +7,7 @@ public:
 	SbiLoader(void);
 	virtual ~SbiLoader(void);
 
-	void loadInstrumentData(int n, const unsigned char* data, JuceOplvstiAudioProcessor *proc);
+	void loadInstrumentData(int n, const unsigned char* data, AdlibBlasterAudioProcessor *proc);
 	String getExtension();
 };
 

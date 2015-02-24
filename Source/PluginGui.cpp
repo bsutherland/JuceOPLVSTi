@@ -150,7 +150,7 @@ void PluginGui::setRecordButtonState(bool recording) {
 //[/MiscUserDefs]
 
 //==============================================================================
-PluginGui::PluginGui (JuceOplvstiAudioProcessor* ownerFilter)
+PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     : AudioProcessorEditor (ownerFilter)
 {
     addAndMakeVisible (groupComponent = new GroupComponent ("new group",
@@ -1661,7 +1661,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="PluginGui" componentName=""
                  parentClasses="public AudioProcessorEditor, public FileDragAndDropTarget, public DragAndDropContainer, public Timer"
-                 constructorParams="JuceOplvstiAudioProcessor* ownerFilter" variableInitialisers=" AudioProcessorEditor (ownerFilter)"
+                 constructorParams="AdlibBlasterAudioProcessor* ownerFilter" variableInitialisers=" AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="860" initialHeight="550">
   <BACKGROUND backgroundColour="ff000000"/>

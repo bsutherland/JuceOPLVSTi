@@ -5,7 +5,7 @@ SbiLoader::SbiLoader(void)
 {
 }
 
-void SbiLoader::loadInstrumentData(int n, const unsigned char* data, JuceOplvstiAudioProcessor *proc)
+void SbiLoader::loadInstrumentData(int n, const unsigned char* data, AdlibBlasterAudioProcessor *proc)
 {
 	if (0 == strncmp("SBI", (const char*)data, 3)) {
 		data += 36;
