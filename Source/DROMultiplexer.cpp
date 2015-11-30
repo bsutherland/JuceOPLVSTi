@@ -1,7 +1,17 @@
 #include "DROMultiplexer.h"
-
 #include "JuceHeader.h"
-#include <Windows.h>
+
+/// Jeff-Russ added guard against windows.h include if not windows:
+#ifdef _WIN32 // covers both 32 and 64-bit
+    #include <Windows.h>
+#else
+    #include "windows.h"
+#endif
+
+/// Jeff-Russ added to replace mising itoa for xcode:
+#if __APPLE__
+    #include "itoa.h"
+#endif
 
 // Used by the first recording instance to claim master status
 DROMultiplexer* DROMultiplexer::master = NULL;
@@ -185,10 +195,11 @@ void DROMultiplexer::TwoOpMelodicNoteOn(Hiopl* opl, int inCh) {
 	// find a free channel and mark it as used
 	char addr[16];
 	int outCh = _FindFreeChannel(opl, inCh);
+
 	if (outCh >= 0) {
-		_DebugOut(" <- ");
-		_DebugOut(itoa((int)opl, addr, 16));
-		_DebugOut(" ");
+		//_DebugOut(" <- ");
+		//_DebugOut(itoa((int)opl, addr, 16));
+		//_DebugOut(" ");
 		for (int i = 0; i < MELODIC_CHANNELS; i++) {
 			Hiopl* tmpOpl = channels[i].opl;
 			_DebugOut(NULL == tmpOpl ? "-" : tmpOpl->GetState(channels[i].ch));

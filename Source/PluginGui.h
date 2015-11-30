@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.0
+  Created with Introjucer version: 3.1.1
 
   ------------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ class PluginGui  : public AudioProcessorEditor,
 {
 public:
     //==============================================================================
-    PluginGui (JuceOplvstiAudioProcessor* ownerFilter);
+    PluginGui (AdlibBlasterAudioProcessor* ownerFilter);
     ~PluginGui();
 
     //==============================================================================
@@ -92,7 +92,7 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	static const uint32 COLOUR_MID = 0xff007f00;
 	static const uint32 COLOUR_RECORDING = 0xffff0000;
-	JuceOplvstiAudioProcessor* processor;
+	AdlibBlasterAudioProcessor* processor;
 	std::array<ScopedPointer<Label>, Hiopl::CHANNELS> channels;
 	TooltipWindow tooltipWindow;
     //[/UserVariables]
