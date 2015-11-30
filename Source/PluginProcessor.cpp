@@ -4,10 +4,10 @@
 #include "IntFloatParameter.h"
 #include "SbiLoader.h"
 
-const char *JuceOplvstiAudioProcessor::PROGRAM_INDEX = "Program Index";
+const char *AdlibBlasterAudioProcessor::PROGRAM_INDEX = "Program Index";
 
 //==============================================================================
-JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
+AdlibBlasterAudioProcessor::AdlibBlasterAudioProcessor()
 	: i_program(-1)
 {
 	// Initalize OPL
@@ -142,27 +142,27 @@ JuceOplvstiAudioProcessor::JuceOplvstiAudioProcessor()
 		available_channels.push_back(i);
 }
 
-bool JuceOplvstiAudioProcessor::isThisInstanceRecording() {
+bool AdlibBlasterAudioProcessor::isThisInstanceRecording() {
 	return NULL != recordingFile;
 }
 
-bool JuceOplvstiAudioProcessor::isAnyInstanceRecording() {
+bool AdlibBlasterAudioProcessor::isAnyInstanceRecording() {
 	return dro->IsAnInstanceRecording();
 }
 
-void JuceOplvstiAudioProcessor::startRecording(File *outputFile) {
+void AdlibBlasterAudioProcessor::startRecording(File *outputFile) {
 	recordingFile = outputFile;
 	if (!dro->StartCapture(outputFile->getFullPathName().toUTF8(), Opl)) {
 		juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::InfoIcon, "Could not open specified file for writing!", "OK");
 	}
 }
 
-void JuceOplvstiAudioProcessor::stopRecording() {
+void AdlibBlasterAudioProcessor::stopRecording() {
 	dro->StopCapture();
 	recordingFile = NULL;
 }
 
-void JuceOplvstiAudioProcessor::initPrograms()
+void AdlibBlasterAudioProcessor::initPrograms()
 {
 	// these ones from the Syndicate in-game music
     const float i_params_0[] = {
@@ -434,7 +434,7 @@ void JuceOplvstiAudioProcessor::initPrograms()
 
 }
 
-void JuceOplvstiAudioProcessor::applyPitchBend()
+void AdlibBlasterAudioProcessor::applyPitchBend()
 {   // apply the currently configured pitch bend to all active notes.
 	for (int i = 1; i <= Hiopl::CHANNELS; i++) {
 		if (NO_NOTE != active_notes[i]) {
@@ -445,7 +445,7 @@ void JuceOplvstiAudioProcessor::applyPitchBend()
 	}
 }
 
-JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
+AdlibBlasterAudioProcessor::~AdlibBlasterAudioProcessor()
 {
 	for (unsigned int i=0; i < params.size(); ++i)
 		delete params[i];
@@ -454,22 +454,22 @@ JuceOplvstiAudioProcessor::~JuceOplvstiAudioProcessor()
 }
 
 //==============================================================================
-const String JuceOplvstiAudioProcessor::getName() const
+const String AdlibBlasterAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-int JuceOplvstiAudioProcessor::getNumParameters()
+int AdlibBlasterAudioProcessor::getNumParameters()
 {
 	return (int)params.size();
 }
 
-float JuceOplvstiAudioProcessor::getParameter (int index)
+float AdlibBlasterAudioProcessor::getParameter (int index)
 {
     return params[index]->getParameter();
 }
 
-void JuceOplvstiAudioProcessor::setIntParameter (String name, int value)
+void AdlibBlasterAudioProcessor::setIntParameter (String name, int value)
 {
 	int i = paramIdxByName[name];
 	IntFloatParameter* p = (IntFloatParameter*)params[i];
@@ -477,7 +477,7 @@ void JuceOplvstiAudioProcessor::setIntParameter (String name, int value)
 	setParameter(i, p->getParameter());
 }
 
-void JuceOplvstiAudioProcessor::setEnumParameter (String name, int index)
+void AdlibBlasterAudioProcessor::setEnumParameter (String name, int index)
 {
 	int i = paramIdxByName[name];
 	EnumFloatParameter* p = (EnumFloatParameter*)params[i];
@@ -485,14 +485,14 @@ void JuceOplvstiAudioProcessor::setEnumParameter (String name, int index)
 	setParameter(i, p->getParameter());
 }
 
-int JuceOplvstiAudioProcessor::getIntParameter (String name)
+int AdlibBlasterAudioProcessor::getIntParameter (String name)
 {
 	int i = paramIdxByName[name];
 	IntFloatParameter* p = (IntFloatParameter*)params[i];
 	return p->getParameterValue();
 }
 
-int JuceOplvstiAudioProcessor::getEnumParameter (String name)
+int AdlibBlasterAudioProcessor::getEnumParameter (String name)
 {
 	int i = paramIdxByName[name];
 	EnumFloatParameter* p = (EnumFloatParameter*)params[i];
@@ -500,7 +500,7 @@ int JuceOplvstiAudioProcessor::getEnumParameter (String name)
 }
 
 // Parameters which apply directly to the OPL
-void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
+void AdlibBlasterAudioProcessor::setParameter (int index, float newValue)
 {
 	FloatParameter* p = params[index];
 	p->setParameter(newValue);
@@ -548,7 +548,7 @@ void JuceOplvstiAudioProcessor::setParameter (int index, float newValue)
 	}
 }
 
-void JuceOplvstiAudioProcessor::loadInstrumentFromFile(String filename)
+void AdlibBlasterAudioProcessor::loadInstrumentFromFile(String filename)
 {
 	FILE* f = fopen(filename.toUTF8(), "rb");
 	unsigned char buf[MAX_INSTRUMENT_FILE_SIZE_BYTES];
@@ -560,7 +560,7 @@ void JuceOplvstiAudioProcessor::loadInstrumentFromFile(String filename)
 }
 
 // Used to configure parameters from .SBI instrument file
-void JuceOplvstiAudioProcessor::setParametersByRegister(int register_base, int op, uint8 value)
+void AdlibBlasterAudioProcessor::setParametersByRegister(int register_base, int op, uint8 value)
 {
 	const String operators[] = {"Modulator", "Carrier"};
 	register_base &= 0xF0;
@@ -596,37 +596,37 @@ void JuceOplvstiAudioProcessor::setParametersByRegister(int register_base, int o
 	}
 }
 
-const String JuceOplvstiAudioProcessor::getParameterName (int index)
+const String AdlibBlasterAudioProcessor::getParameterName (int index)
 {
 	return params[index]->getName();
 }
 
-const String JuceOplvstiAudioProcessor::getParameterText (int index)
+const String AdlibBlasterAudioProcessor::getParameterText (int index)
 {
     return params[index]->getParameterText();
 }
 
-const String JuceOplvstiAudioProcessor::getInputChannelName (int channelIndex) const
+const String AdlibBlasterAudioProcessor::getInputChannelName (int channelIndex) const
 {
     return String (channelIndex + 1);
 }
 
-const String JuceOplvstiAudioProcessor::getOutputChannelName (int channelIndex) const
+const String AdlibBlasterAudioProcessor::getOutputChannelName (int channelIndex) const
 {
     return String (channelIndex + 1);
 }
 
-bool JuceOplvstiAudioProcessor::isInputChannelStereoPair (int index) const
+bool AdlibBlasterAudioProcessor::isInputChannelStereoPair (int index) const
 {
     return false;
 }
 
-bool JuceOplvstiAudioProcessor::isOutputChannelStereoPair (int index) const
+bool AdlibBlasterAudioProcessor::isOutputChannelStereoPair (int index) const
 {
-    return false;
+    return true; //// Jeff-Russ changed to true for AU version. for vsti make it false
 }
 
-bool JuceOplvstiAudioProcessor::acceptsMidi() const
+bool AdlibBlasterAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -635,7 +635,7 @@ bool JuceOplvstiAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool JuceOplvstiAudioProcessor::producesMidi() const
+bool AdlibBlasterAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -644,27 +644,27 @@ bool JuceOplvstiAudioProcessor::producesMidi() const
    #endif
 }
 
-bool JuceOplvstiAudioProcessor::silenceInProducesSilenceOut() const
+bool AdlibBlasterAudioProcessor::silenceInProducesSilenceOut() const
 {
     return false;
 }
 
-double JuceOplvstiAudioProcessor::getTailLengthSeconds() const
+double AdlibBlasterAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int JuceOplvstiAudioProcessor::getNumPrograms()
+int AdlibBlasterAudioProcessor::getNumPrograms()
 {
     return (int)programs.size();
 }
 
-int JuceOplvstiAudioProcessor::getCurrentProgram()
+int AdlibBlasterAudioProcessor::getCurrentProgram()
 {
     return i_program;
 }
 
-void JuceOplvstiAudioProcessor::updateGuiIfPresent()
+void AdlibBlasterAudioProcessor::updateGuiIfPresent()
 {
 	PluginGui* gui = (PluginGui*)getActiveEditor();
 	if (gui) {
@@ -672,7 +672,7 @@ void JuceOplvstiAudioProcessor::updateGuiIfPresent()
 	}
 }
 
-void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
+void AdlibBlasterAudioProcessor::setCurrentProgram (int index)
 {
 	if (i_program==index)
 		return;
@@ -685,24 +685,24 @@ void JuceOplvstiAudioProcessor::setCurrentProgram (int index)
 	updateGuiIfPresent();
 }
 
-const String JuceOplvstiAudioProcessor::getProgramName (int index)
+const String AdlibBlasterAudioProcessor::getProgramName (int index)
 {
     return program_order[index];
 }
 
-void JuceOplvstiAudioProcessor::changeProgramName (int index, const String& newName)
+void AdlibBlasterAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
-void JuceOplvstiAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void AdlibBlasterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 	//Opl->SetSampleRate((int)sampleRate);
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 }
 
-void JuceOplvstiAudioProcessor::releaseResources()
+void AdlibBlasterAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
@@ -710,7 +710,7 @@ void JuceOplvstiAudioProcessor::releaseResources()
 
 static const Drum DRUM_INDEX[] = { BDRUM, SNARE, TOM, CYMBAL, HIHAT };
 
-void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+void AdlibBlasterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
 	buffer.clear(0, 0, buffer.getNumSamples());
 	MidiBuffer::Iterator midi_buffer_iterator(midiMessages);
@@ -820,16 +820,22 @@ void JuceOplvstiAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuf
 			applyPitchBend();
 		}
 	}
-	Opl->Generate(buffer.getNumSamples(), buffer.getSampleData(0));
+/// Jeff-Russ: getSampleData(int) is deprecated. use getWritePointer(int)
+	Opl->Generate(buffer.getNumSamples(), buffer.getWritePointer(0));
+    
+/// Jeff-Russ added loop to copy left channel to right channel. uncomment when building to {0,2} AU
+//    const float* LChanRead  = buffer.getReadPointer(0, 0);
+//    float* RChanWrite = buffer.getWritePointer(1, 0);
+//    for (int i = 0; i < buffer.getNumSamples(); i++) { RChanWrite[i] = LChanRead[i]; }
 }
 
 //==============================================================================
-bool JuceOplvstiAudioProcessor::hasEditor() const
+bool AdlibBlasterAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* JuceOplvstiAudioProcessor::createEditor()
+AudioProcessorEditor* AdlibBlasterAudioProcessor::createEditor()
 {
 	PluginGui* gui = new PluginGui(this);
 	gui->updateFromParameters();
@@ -847,7 +853,7 @@ Identifier stringToIdentifier(const String &s)
 	return s.replaceCharacters(" ", "_");
 }
 
-void JuceOplvstiAudioProcessor::getStateInformation(MemoryBlock& destData)
+void AdlibBlasterAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
 	ReferenceCountedObjectPtr<DynamicObject> v(new DynamicObject);
 
@@ -865,7 +871,7 @@ void JuceOplvstiAudioProcessor::getStateInformation(MemoryBlock& destData)
 	destData.copyFrom(s.getCharPointer(), 0, destData.getSize());
 }
 
-void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void AdlibBlasterAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
 	if (sizeInBytes < 1)
 		return;
@@ -910,13 +916,13 @@ void JuceOplvstiAudioProcessor::setStateInformation (const void* data, int sizeI
 
 // @param idx 1-based channel index
 // @note since this is just reading off pod, "safe" to access without a mutex by other threads such as GUI
-int JuceOplvstiAudioProcessor::isChannelActive(int idx) const
+int AdlibBlasterAudioProcessor::isChannelActive(int idx) const
 {
 	return active_notes[idx] != NO_NOTE;
 }
 
 // @param idx 1-based channel index
-const char* JuceOplvstiAudioProcessor::getChannelEnvelopeStage(int idx) const
+const char* AdlibBlasterAudioProcessor::getChannelEnvelopeStage(int idx) const
 {
 	return Opl->GetState(idx);
 }
@@ -926,5 +932,5 @@ const char* JuceOplvstiAudioProcessor::getChannelEnvelopeStage(int idx) const
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new JuceOplvstiAudioProcessor();
+    return new AdlibBlasterAudioProcessor();
 }

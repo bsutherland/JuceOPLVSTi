@@ -18,14 +18,14 @@
 
 
 //==============================================================================
-class JuceOplvstiAudioProcessor  : public AudioProcessor
+class AdlibBlasterAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    JuceOplvstiAudioProcessor();
+    AdlibBlasterAudioProcessor();
 	void initPrograms();
 	void applyPitchBend();
-    ~JuceOplvstiAudioProcessor();
+    ~AdlibBlasterAudioProcessor();
 
 	bool isThisInstanceRecording();
 	bool isAnyInstanceRecording();
@@ -45,7 +45,7 @@ public:
     //==============================================================================
     const String getName() const;
 
-    static const int JuceOplvstiAudioProcessor::MAX_INSTRUMENT_FILE_SIZE_BYTES = 1024;
+    static const int MAX_INSTRUMENT_FILE_SIZE_BYTES = 1024;
 	
 	int getNumParameters();
 
@@ -105,6 +105,6 @@ private:
 	File *recordingFile;
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JuceOplvstiAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdlibBlasterAudioProcessor)
 };
 #endif  // PLUGINPROCESSOR_H_INCLUDED

@@ -63,20 +63,42 @@
 #pragma warning(disable : 4996) 
 #endif
 
-#ifndef WIN32
-typedef long long __int64;
+/// Jeff-Russ modified to be uniform across C++ implementations:
+// The internal types:
+#include <stdint.h>
+typedef unsigned char	BYTE;
+typedef   int64_t       __int64;
+typedef   double        Real64;
+typedef   unsigned char Bit8u;
+typedef   signed char   Bit8s;
+typedef   uint16_t      Bit16u;
+typedef   int16_t       Bit16s;
+typedef   uint32_t 		Bit32u;
+typedef   int32_t       Bit32s;
+typedef   uint64_t      Bit64u;
+typedef   int64_t       Bit64s;
+typedef   Bit32u        Bitu;
+typedef   Bit32s        Bits;
+
+
+/// Jeff-Russ PUT PLATFORM SPECIFIC STUFF HERE:
+#ifndef _WIN32                      /// __forceinline likely not needed 
+    #define __forceinline inline    /// outside of windows.
 #endif
 
-typedef         double		Real64;
-/* The internal types */
-typedef  unsigned char		Bit8u;
-typedef    signed char		Bit8s;
-typedef unsigned short		Bit16u;
-typedef   signed short		Bit16s;
-typedef  unsigned long		Bit32u;
-typedef    signed long		Bit32s;
-typedef unsigned __int64	Bit64u;
-typedef   signed __int64	Bit64s;
-typedef unsigned int		Bitu;
-typedef signed int			Bits;
+#ifdef _WIN32 // covers both 32 and 64-bit
+    #define INLINE __forceinline
+#endif 
 
+//#elif __APPLE__
+//    #include "TargetConditionals.h"
+//    #define INLINE inline /// apple has no forceinline
+//#elif __linux
+//    #define INLINE inline
+//#elif __unix
+//    #define INLINE inline
+//#elif __posix
+//    #define INLINE inline
+//#else
+//    #error Unsupported Operating System
+//#endif
