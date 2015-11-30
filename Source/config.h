@@ -63,22 +63,40 @@
 #pragma warning(disable : 4996) 
 #endif
 
-/// Jeff-Russ modified to be uniform across C++ implementations:
-// The internal types:
-#include <stdint.h>
-typedef unsigned char	BYTE;
-typedef   int64_t       __int64;
-typedef   double        Real64;
-typedef   unsigned char Bit8u;
-typedef   signed char   Bit8s;
-typedef   uint16_t      Bit16u;
-typedef   int16_t       Bit16s;
-typedef   uint32_t 		Bit32u;
-typedef   int32_t       Bit32s;
-typedef   uint64_t      Bit64u;
-typedef   int64_t       Bit64s;
-typedef   Bit32u        Bitu;
-typedef   Bit32s        Bits;
+#ifdef _WIN32
+	typedef         double		Real64;
+	/* The internal types */
+	typedef  unsigned char      BYTE;
+	typedef  unsigned char		Bit8u;
+	typedef    signed char		Bit8s;
+	typedef unsigned short		Bit16u;
+	typedef   signed short		Bit16s;
+	typedef  unsigned long		Bit32u;
+	typedef    signed long		Bit32s;
+	typedef unsigned __int64	Bit64u;
+	typedef   signed __int64	Bit64s;
+	typedef unsigned int		Bitu;
+	typedef signed int			Bits;
+#endif
+
+#if __APPLE__
+	/// Jeff-Russ modified to be uniform across C++ implementations:
+	// The internal types:
+	#include <stdint.h>
+	typedef unsigned char	BYTE;
+	typedef   int64_t       __int64;
+	typedef   double        Real64;
+	typedef   unsigned char Bit8u;
+	typedef   signed char   Bit8s;
+	typedef   uint16_t      Bit16u;
+	typedef   int16_t       Bit16s;
+	typedef   uint32_t 		Bit32u;
+	typedef   int32_t       Bit32s;
+	typedef   uint64_t      Bit64u;
+	typedef   int64_t       Bit64s;
+	typedef   Bit32u        Bitu;
+	typedef   Bit32s        Bits;
+#endif
 
 
 /// Jeff-Russ PUT PLATFORM SPECIFIC STUFF HERE:
