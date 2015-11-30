@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.1
+  Created with Introjucer version: 3.1.0
 
   ------------------------------------------------------------------------------
 
@@ -895,7 +895,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (recordButton = new ToggleButton ("record button"));
     recordButton->setTooltip (TRANS("Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"));
-    recordButton->setButtonText (TRANS("Record to DRO"));
+    recordButton->setButtonText (TRANS("Record to DRO (not working yet)"));
     recordButton->addListener (this);
     recordButton->setColour (ToggleButton::textColourId, Colour (0xff007f00));
 
@@ -921,6 +921,12 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     percussionLabel->setColour (Label::textColourId, Colour (0xff007f00));
     percussionLabel->setColour (TextEditor::textColourId, Colours::black);
     percussionLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (exportButton = new TextButton ("export button"));
+    exportButton->setButtonText (TRANS("Export .SBI instrument"));
+    exportButton->addListener (this);
+    exportButton->setColour (TextButton::buttonColourId, Colour (0xff007f00));
+    exportButton->setColour (TextButton::buttonOnColourId, Colours::lime);
 
 
     //[UserPreSize]
@@ -1149,6 +1155,7 @@ PluginGui::~PluginGui()
     recordButton = nullptr;
     percussionComboBox = nullptr;
     percussionLabel = nullptr;
+    exportButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1252,9 +1259,10 @@ void PluginGui::resized()
     emulatorSlider->setBounds (200, 32, 40, 24);
     emulatorLabel->setBounds (112, 32, 72, 24);
     emulatorLabel2->setBounds (248, 32, 72, 24);
-    recordButton->setBounds (40, 456, 128, 24);
+    recordButton->setBounds (24, 560, 296, 24);
     percussionComboBox->setBounds (256, 488, 112, 24);
     percussionLabel->setBounds (40, 488, 163, 24);
+    exportButton->setBounds (40, 456, 168, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(456+44*i+4, 36, 20, 20);
@@ -1576,29 +1584,27 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == recordButton)
     {
         //[UserButtonCode_recordButton] -- add your button handler code here..
-		recordButton->setToggleState(false, dontSendNotification);
-		if (!processor->isAnyInstanceRecording()) {
-			WildcardFileFilter wildcardFilter ("*.dro", String::empty, "DRO files");
-			FileBrowserComponent browser (FileBrowserComponent::saveMode,
-									  File::nonexistent,
-									  &wildcardFilter,
-									  nullptr);
-			FileChooserDialogBox dialogBox ("Record to",
-										"Specify DRO output file",
-										browser,
-										true,
-										Colours::darkgreen);
-			if (dialogBox.show())
-			{
-				File selectedFile = browser.getSelectedFile(0);
-				processor->startRecording(&selectedFile);
-				setRecordButtonState(true);
-			}
-		} else {
-			setRecordButtonState(false);
-			processor->stopRecording();
-		}
         //[/UserButtonCode_recordButton]
+    }
+    else if (buttonThatWasClicked == exportButton)
+    {
+        //[UserButtonCode_exportButton] -- add your button handler code here..
+		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
+		FileBrowserComponent browser(FileBrowserComponent::saveMode,
+			File::nonexistent,
+			&wildcardFilter,
+			nullptr);
+		FileChooserDialogBox dialogBox("Export to",
+			"Specify SBI output file",
+			browser,
+			true,
+			Colours::darkgreen);
+		if (dialogBox.show())
+		{
+			File selectedFile = browser.getSelectedFile(0);
+			processor->saveInstrumentToFile(selectedFile.getFullPathName());
+		}
+        //[/UserButtonCode_exportButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -1918,8 +1924,8 @@ BEGIN_JUCER_METADATA
   <SLIDER name="tremolo slider" id="ab64abee7ac8874b" memberName="tremoloSlider"
           virtualName="" explicitFocusOrder="0" pos="632 456 112 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="1" max="4.7999999999999998224"
-          int="3.7999999999999998224" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textboxhighlight="ff00af00" min="1" max="4.7999999999999998"
+          int="3.7999999999999998" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="44" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="frequency label" id="134ce8f87da62b88" memberName="frequencyLabel5"
          virtualName="" explicitFocusOrder="0" pos="472 456 152 24" tooltip="OPL global tremolo depth"
@@ -2069,9 +2075,9 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="record button" id="880010ee79039cbe" memberName="recordButton"
-                virtualName="" explicitFocusOrder="0" pos="40 456 128 24" tooltip="Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"
-                txtcol="ff007f00" buttonText="Record to DRO" connectedEdges="0"
-                needsCallback="1" radioGroupId="0" state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="24 560 296 24" tooltip="Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"
+                txtcol="ff007f00" buttonText="Record to DRO (not working yet)"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <COMBOBOX name="percussion combo box" id="75a838b61782e17b" memberName="percussionComboBox"
             virtualName="" explicitFocusOrder="0" pos="256 488 112 24" editable="0"
             layout="33" items="Off&#10;Bass drum&#10;Snare&#10;Tom&#10;Cymbal&#10;Hi-hat"
@@ -2081,6 +2087,10 @@ BEGIN_JUCER_METADATA
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Percussion mode"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+  <TEXTBUTTON name="export button" id="88c84ed1e2b284d3" memberName="exportButton"
+              virtualName="" explicitFocusOrder="0" pos="40 456 168 24" bgColOff="ff007f00"
+              bgColOn="ff00ff00" buttonText="Export .SBI instrument" connectedEdges="0"
+              needsCallback="1" radioGroupId="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

@@ -3,6 +3,7 @@
 #include "EnumFloatParameter.h"
 #include "IntFloatParameter.h"
 #include "SbiLoader.h"
+#include "SbiWriter.h"
 
 const char *AdlibBlasterAudioProcessor::PROGRAM_INDEX = "Program Index";
 
@@ -556,7 +557,27 @@ void AdlibBlasterAudioProcessor::loadInstrumentFromFile(String filename)
 	fclose(f);
 	SbiLoader* loader = new SbiLoader();
 	loader->loadInstrumentData(n, buf, this);
+	delete loader;
 	updateGuiIfPresent();
+}
+
+void AdlibBlasterAudioProcessor::saveInstrumentToFile(String filename)
+{
+	// http://www.shikadi.net/moddingwiki/SBI_Format
+	const Bit32u sbi_registers[] = {
+		0x20, 0x23, 0x40, 0x43, 0x60, 0x63, 0x80, 0x83, 0xe0, 0xe3, 0xc0
+	};
+	FILE* f = fopen(filename.toUTF8(), "wb");
+	if (f) {
+		fwrite("SBI\x1d", 1, 4, f);
+		fwrite("JuceOPLVSTi instrument         \0", 1, 32, f);
+		for (int i = 0; i < 11; i++) {
+			Bit8u regVal = Opl->_ReadReg(sbi_registers[i]);
+			fwrite(&regVal, 1, 1, f);
+		}
+		fwrite("     ", 1, 5, f);
+		fclose(f);
+	}
 }
 
 // Used to configure parameters from .SBI instrument file
