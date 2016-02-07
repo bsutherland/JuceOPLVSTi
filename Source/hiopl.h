@@ -4,6 +4,13 @@
 #include "adlib.h"
 #include "dbopl.h"
 #include "zdopl.h"
+// Integer buffer used by DOSBox OPL emulator, later converted to floating point.
+
+// Number of 32-bit samples to use. ~1 MB per buffer. Probably excessive, but should be safe.
+// In future, consider using samplesPerBlock value in AdlibBlasterAudioProcessor::prepareToPlay
+#define INTERMEDIATE_BUF_SAMPLES		100000
+// Number of static buffers to use. Again probably excessive, but let's be safe.
+#define INTERMEDIATE_BUF_N				4
 
 enum Waveform
 {
@@ -29,7 +36,7 @@ class Hiopl {
 	public:
 		static const int CHANNELS = 9;
 		static const int OSCILLATORS = 2;
-		Hiopl(int buflen, Emulator emulator = ZDOOM);
+		Hiopl(Emulator emulator = DOSBOX);
 		void SetEmulator(Emulator emulator);
 		void SetPercussionMode(bool enable);
 		void HitPercussion(Drum drum);
@@ -82,6 +89,8 @@ class Hiopl {
 		DBOPL::Handler *adlib;
 		OPLEmul *zdoom;
 		Bit8u regCache[256];
+		int intermediateBufIdx;
+		Bit32s intermediateBuf[INTERMEDIATE_BUF_N][INTERMEDIATE_BUF_SAMPLES];
 		bool _CheckParams(int ch, int osc);
 		void _milliHertzToFnum(unsigned int milliHertz, unsigned int *fnum, unsigned int *block, unsigned int conversionFactor=49716);
 		void _ClearRegisters();

@@ -3,7 +3,6 @@
 #include "EnumFloatParameter.h"
 #include "IntFloatParameter.h"
 #include "SbiLoader.h"
-#include "SbiWriter.h"
 
 const char *AdlibBlasterAudioProcessor::PROGRAM_INDEX = "Program Index";
 
@@ -13,7 +12,7 @@ AdlibBlasterAudioProcessor::AdlibBlasterAudioProcessor()
 {
 	// Initalize OPL
 	velocity = false;
-	Opl = new Hiopl(44100);	// 1 second at 44100
+	Opl = new Hiopl();
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
 	dro = new DROMultiplexer();

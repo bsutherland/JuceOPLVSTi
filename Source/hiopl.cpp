@@ -5,11 +5,11 @@
 
 // A wrapper around the DOSBox and ZDoom OPL emulators.
 
-Hiopl::Hiopl(int buflen, Emulator emulator) {
+Hiopl::Hiopl(Emulator emulator) {
 	//InitCaptureVariables();
 
 	adlib = new DBOPL::Handler();
-	zdoom = JavaOPLCreate(false);
+	//zdoom = JavaOPLCreate(false);
 
 	// channels reordered to match
 	// 'in-memory' order in DOSBox emulator
@@ -48,19 +48,21 @@ void Hiopl::SetEmulator(Emulator emulator) {
 }
 
 void Hiopl::Generate(int length, float* buffer) {
-	// This would be better done using Juce's built in audio format conversion.
-	if (DOSBOX == emulator) {
-		Bit32s* buf32 = new Bit32s[length];
-		adlib->Generate(length, buf32);
-		for (int i = 0; i < length; i++) {
-			// The magic divisor is tuned to match to ZDoom output amplitude.
-			buffer[i] = (float)(buf32[i])/8200.0f;
-		}
-		delete buf32;
-	} else if (ZDOOM == emulator) {
-		// ZDoom hacked to write mono samples
-		zdoom->Update(buffer, length);
+	intermediateBufIdx = (intermediateBufIdx + 1) % INTERMEDIATE_BUF_N;
+	Bit32s *iBuf = intermediateBuf[intermediateBufIdx];
+	adlib->Generate(length, iBuf);
+	for (int i = 0; i < length; i++) {
+		// Magic divisor taken from ZDoom wrapper for DOSBox emulator, line 892
+		// https://github.com/rheit/zdoom/blob/master/src/oplsynth/dosbox/opl.cpp
+		const float y = (float)(iBuf[i]) / 10240.0f;
+		// http://stackoverflow.com/questions/427477/fastest-way-to-clamp-a-real-fixed-floating-point-value
+		const float z = y < -1.0f ? -1.0f : y;
+		buffer[i] = z > 1.0f ? 1.0f : z;
 	}
+	//} else if (ZDOOM == emulator) {
+		// ZDoom hacked to write mono samples
+	//	zdoom->Update(buffer, length);
+	//}
 }
 
 void Hiopl::SetSampleRate(int hz) {
@@ -75,7 +77,7 @@ void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {
 	//if (DOSBOX == emulator) {
 		adlib->WriteReg(reg, value);
 	//} else if (ZDOOM == emulator) {
-		zdoom->WriteReg(reg, value);
+	//	zdoom->WriteReg(reg, value);
 	//}
 	regCache[reg] = value;
 }
@@ -212,9 +214,9 @@ void Hiopl::SetFrequency(int ch, float frqHz, bool keyOn) {
 	unsigned int fnum, block;
 	int offset = this->_GetOffset(ch);
 	// ZDoom emulator seems to be tuned down by two semitones for some reason. Sample rate difference?
-	if (ZDOOM == emulator) {
-		frqHz *= 1.122461363636364f;
-	}
+	//if (ZDOOM == emulator) {
+	//	frqHz *= 1.122461363636364f;
+	//}
 	_milliHertzToFnum((unsigned int)(frqHz * 1000.0), &fnum, &block);
 	_WriteReg(0xa0+offset, fnum % 0x100);
 	uint8 trig = (regCache[0xb0+offset] & 0x20) | (keyOn ? 0x20 : 0x00);

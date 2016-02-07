@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.0
+  Created with Introjucer version: 4.1.0
 
   ------------------------------------------------------------------------------
 
   The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
-  Copyright 2004-13 by Raw Material Software Ltd.
+  Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
 */
@@ -153,6 +153,9 @@ void PluginGui::setRecordButtonState(bool recording) {
 PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     : AudioProcessorEditor (ownerFilter)
 {
+    //[Constructor_pre] You can add your own custom stuff here..
+    //[/Constructor_pre]
+
     addAndMakeVisible (groupComponent = new GroupComponent ("new group",
                                                             TRANS("Modulator")));
     groupComponent->setTextLabelPosition (Justification::centredLeft);
@@ -162,7 +165,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyComboBox = new ComboBox ("frequency combo box"));
     frequencyComboBox->setEditableText (false);
     frequencyComboBox->setJustificationType (Justification::centredLeft);
-    frequencyComboBox->setTextWhenNothingSelected (String::empty);
+    frequencyComboBox->setTextWhenNothingSelected (String());
     frequencyComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     frequencyComboBox->addListener (this);
 
@@ -391,7 +394,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyComboBox2 = new ComboBox ("frequency combo box"));
     frequencyComboBox2->setEditableText (false);
     frequencyComboBox2->setJustificationType (Justification::centredLeft);
-    frequencyComboBox2->setTextWhenNothingSelected (String::empty);
+    frequencyComboBox2->setTextWhenNothingSelected (String());
     frequencyComboBox2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     frequencyComboBox2->addListener (this);
 
@@ -690,7 +693,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (velocityComboBox = new ComboBox ("velocity combo box"));
     velocityComboBox->setEditableText (false);
     velocityComboBox->setJustificationType (Justification::centredLeft);
-    velocityComboBox->setTextWhenNothingSelected (String::empty);
+    velocityComboBox->setTextWhenNothingSelected (String());
     velocityComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     velocityComboBox->addItem (TRANS("Off"), 1);
     velocityComboBox->addItem (TRANS("Light"), 2);
@@ -710,7 +713,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (velocityComboBox2 = new ComboBox ("velocity combo box"));
     velocityComboBox2->setEditableText (false);
     velocityComboBox2->setJustificationType (Justification::centredLeft);
-    velocityComboBox2->setTextWhenNothingSelected (String::empty);
+    velocityComboBox2->setTextWhenNothingSelected (String());
     velocityComboBox2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     velocityComboBox2->addItem (TRANS("Off"), 1);
     velocityComboBox2->addItem (TRANS("Light"), 2);
@@ -802,7 +805,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (algorithmComboBox = new ComboBox ("algorithm combo box"));
     algorithmComboBox->setEditableText (false);
     algorithmComboBox->setJustificationType (Justification::centredLeft);
-    algorithmComboBox->setTextWhenNothingSelected (String::empty);
+    algorithmComboBox->setTextWhenNothingSelected (String());
     algorithmComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     algorithmComboBox->addItem (TRANS("FM"), 1);
     algorithmComboBox->addItem (TRANS("Additive"), 2);
@@ -831,7 +834,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (keyscaleAttenuationComboBox2 = new ComboBox ("keyscale combo box"));
     keyscaleAttenuationComboBox2->setEditableText (false);
     keyscaleAttenuationComboBox2->setJustificationType (Justification::centredLeft);
-    keyscaleAttenuationComboBox2->setTextWhenNothingSelected (String::empty);
+    keyscaleAttenuationComboBox2->setTextWhenNothingSelected (String());
     keyscaleAttenuationComboBox2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     keyscaleAttenuationComboBox2->addItem (TRANS("-0.0"), 1);
     keyscaleAttenuationComboBox2->addItem (TRANS("-3.0"), 2);
@@ -842,7 +845,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (keyscaleAttenuationComboBox = new ComboBox ("keyscale combo box"));
     keyscaleAttenuationComboBox->setEditableText (false);
     keyscaleAttenuationComboBox->setJustificationType (Justification::centredLeft);
-    keyscaleAttenuationComboBox->setTextWhenNothingSelected (String::empty);
+    keyscaleAttenuationComboBox->setTextWhenNothingSelected (String());
     keyscaleAttenuationComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     keyscaleAttenuationComboBox->addItem (TRANS("-0.0"), 1);
     keyscaleAttenuationComboBox->addItem (TRANS("-3.0"), 2);
@@ -857,7 +860,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     groupComponent4->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     addAndMakeVisible (groupComponent5 = new GroupComponent ("new group",
-                                                             TRANS("Emulator")));
+                                                             TRANS("Emulator (currently locked)")));
     groupComponent5->setTextLabelPosition (Justification::centredLeft);
     groupComponent5->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent5->setColour (GroupComponent::textColourId, Colour (0xff007f00));
@@ -902,7 +905,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (percussionComboBox = new ComboBox ("percussion combo box"));
     percussionComboBox->setEditableText (false);
     percussionComboBox->setJustificationType (Justification::centredLeft);
-    percussionComboBox->setTextWhenNothingSelected (String::empty);
+    percussionComboBox->setTextWhenNothingSelected (String());
     percussionComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     percussionComboBox->addItem (TRANS("Off"), 1);
     percussionComboBox->addItem (TRANS("Bass drum"), 2);
@@ -1254,18 +1257,18 @@ void PluginGui::resized()
     dbLabel4->setBounds (760, 156, 72, 16);
     keyscaleAttenuationComboBox2->setBounds (688, 152, 72, 24);
     keyscaleAttenuationComboBox->setBounds (264, 152, 72, 24);
-    groupComponent4->setBounds (440, 8, 408, 64);
-    groupComponent5->setBounds (16, 8, 408, 64);
-    emulatorSlider->setBounds (200, 32, 40, 24);
-    emulatorLabel->setBounds (112, 32, 72, 24);
-    emulatorLabel2->setBounds (248, 32, 72, 24);
+    groupComponent4->setBounds (16, 8, 832, 64);
+    groupComponent5->setBounds (24, 624, 408, 64);
+    emulatorSlider->setBounds (208, 648, 40, 24);
+    emulatorLabel->setBounds (120, 648, 72, 24);
+    emulatorLabel2->setBounds (256, 648, 72, 24);
     recordButton->setBounds (24, 560, 296, 24);
     percussionComboBox->setBounds (256, 488, 112, 24);
     percussionLabel->setBounds (40, 488, 163, 24);
     exportButton->setBounds (40, 456, 168, 24);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
-		channels[i]->setBounds(456+44*i+4, 36, 20, 20);
+		channels[i]->setBounds(68+88*i, 36, 20, 20);
     //[/UserResized]
 }
 
@@ -1424,7 +1427,6 @@ void PluginGui::sliderValueChanged (Slider* sliderThatWasMoved)
     else if (sliderThatWasMoved == emulatorSlider)
     {
         //[UserSliderCode_emulatorSlider] -- add your slider handling code here..
-		processor->setEnumParameter("Emulator", sliderThatWasMoved->getValue() < 0.5 ? 0 : 1);
         //[/UserSliderCode_emulatorSlider]
     }
 
@@ -2053,24 +2055,24 @@ BEGIN_JUCER_METADATA
             layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <GROUPCOMPONENT name="new group" id="52f9803abb342980" memberName="groupComponent4"
-                  virtualName="" explicitFocusOrder="0" pos="440 8 408 64" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="16 8 832 64" outlinecol="ff007f00"
                   textcol="ff007f00" title="Channels" textpos="33"/>
   <GROUPCOMPONENT name="new group" id="7abc643f4d6a2dbf" memberName="groupComponent5"
-                  virtualName="" explicitFocusOrder="0" pos="16 8 408 64" outlinecol="ff007f00"
-                  textcol="ff007f00" title="Emulator" textpos="33"/>
+                  virtualName="" explicitFocusOrder="0" pos="24 624 408 64" outlinecol="ff007f00"
+                  textcol="ff007f00" title="Emulator (currently locked)" textpos="33"/>
   <SLIDER name="emulator slider" id="88ec3755c4760ed9" memberName="emulatorSlider"
-          virtualName="" explicitFocusOrder="0" pos="200 32 40 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="208 648 40 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="1" int="1" style="LinearHorizontal"
           textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="44"
           textBoxHeight="20" skewFactor="1"/>
   <LABEL name="emulator label" id="22c2c30d0f337081" memberName="emulatorLabel"
-         virtualName="" explicitFocusOrder="0" pos="112 32 72 24" tooltip="Use the OPL emulator from the DOSBox project"
+         virtualName="" explicitFocusOrder="0" pos="120 648 72 24" tooltip="Use the OPL emulator from the DOSBox project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="DOSBox"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
   <LABEL name="emulator label" id="4f8869b5724c0195" memberName="emulatorLabel2"
-         virtualName="" explicitFocusOrder="0" pos="248 32 72 24" tooltip="Use the OPL emulator from the ZDoom project"
+         virtualName="" explicitFocusOrder="0" pos="256 648 72 24" tooltip="Use the OPL emulator from the ZDoom project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="ZDoom"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
