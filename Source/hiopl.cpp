@@ -67,6 +67,10 @@ void Hiopl::Generate(int length, float* buffer) {
 
 void Hiopl::SetSampleRate(int hz) {
 	adlib->Init(hz);
+	EnableWaveformControl();
+	for (int i = 0; i < OPL_N_REG; i++) {
+		adlib->WriteReg(i, regCache[i]);
+	}
 }
 
 void Hiopl::_WriteReg(Bit32u reg, Bit8u value, Bit8u mask) {

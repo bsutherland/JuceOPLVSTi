@@ -27,11 +27,6 @@ public:
 	void applyPitchBend();
     ~AdlibBlasterAudioProcessor();
 
-	bool isThisInstanceRecording();
-	bool isAnyInstanceRecording();
-	void startRecording(File *outputFile);
-	void stopRecording();
-
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock);
     void releaseResources();
@@ -90,7 +85,6 @@ public:
 
 private:
 	Hiopl *Opl;
-	DROMultiplexer *dro;
 	std::vector<FloatParameter*> params;
 	std::map<String, int> paramIdxByName;
 	std::map<String, std::vector<float>> programs;
@@ -103,7 +97,6 @@ private:
 	std::deque<int> available_channels;		// most recently freed at end
 	std::deque<int> used_channels;			// most recently used at end
 	float currentScaledBend;
-	File *recordingFile;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdlibBlasterAudioProcessor)

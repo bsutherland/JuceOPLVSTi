@@ -27,7 +27,6 @@
 void PluginGui::updateFromParameters()
 {
 	emulatorSlider->setValue(processor->getEnumParameter("Emulator"), juce::NotificationType::dontSendNotification);
-	setRecordButtonState(processor->isThisInstanceRecording());
 
 /// setToggleState(bool, bool) is deprecated.
 /// Jeff-Russ replaced the second arg of "false" with dontSendNotification:

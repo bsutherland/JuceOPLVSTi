@@ -12,6 +12,8 @@
 // Number of static buffers to use. Again probably excessive, but let's be safe.
 #define INTERMEDIATE_BUF_N				4
 
+#define OPL_N_REG 256
+
 enum Waveform
 {
 	SIN = 0, HALF_SIN = 1, ABS_SIN = 2, QUART_SIN = 3
@@ -88,7 +90,7 @@ class Hiopl {
 		Emulator emulator;
 		DBOPL::Handler *adlib;
 		OPLEmul *zdoom;
-		Bit8u regCache[256];
+		Bit8u regCache[OPL_N_REG];
 		int intermediateBufIdx;
 		Bit32s intermediateBuf[INTERMEDIATE_BUF_N][INTERMEDIATE_BUF_SAMPLES];
 		bool _CheckParams(int ch, int osc);

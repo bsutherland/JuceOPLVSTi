@@ -15,9 +15,6 @@ AdlibBlasterAudioProcessor::AdlibBlasterAudioProcessor()
 	Opl = new Hiopl();
 	Opl->SetSampleRate(44100);
 	Opl->EnableWaveformControl();
-	dro = new DROMultiplexer();
-
-	recordingFile = NULL;
 
 	// Initialize parameters
 
@@ -140,26 +137,6 @@ AdlibBlasterAudioProcessor::AdlibBlasterAudioProcessor()
 
 	for (int i = 1; i <= Hiopl::CHANNELS; ++i)
 		available_channels.push_back(i);
-}
-
-bool AdlibBlasterAudioProcessor::isThisInstanceRecording() {
-	return NULL != recordingFile;
-}
-
-bool AdlibBlasterAudioProcessor::isAnyInstanceRecording() {
-	return dro->IsAnInstanceRecording();
-}
-
-void AdlibBlasterAudioProcessor::startRecording(File *outputFile) {
-	recordingFile = outputFile;
-	if (!dro->StartCapture(outputFile->getFullPathName().toUTF8(), Opl)) {
-		juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::InfoIcon, "Could not open specified file for writing!", "OK");
-	}
-}
-
-void AdlibBlasterAudioProcessor::stopRecording() {
-	dro->StopCapture();
-	recordingFile = NULL;
 }
 
 void AdlibBlasterAudioProcessor::initPrograms()
@@ -450,7 +427,6 @@ AdlibBlasterAudioProcessor::~AdlibBlasterAudioProcessor()
 	for (unsigned int i=0; i < params.size(); ++i)
 		delete params[i];
 	delete Opl;
-	delete dro;
 }
 
 //==============================================================================
@@ -717,7 +693,8 @@ void AdlibBlasterAudioProcessor::changeProgramName (int index, const String& new
 //==============================================================================
 void AdlibBlasterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	//Opl->SetSampleRate((int)sampleRate);
+	Opl->SetSampleRate((int)sampleRate);
+	Opl->EnableWaveformControl();
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 }
@@ -751,9 +728,6 @@ void AdlibBlasterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 					Opl->SetFrequency(i, noteHz, false);
 				}
 				Opl->HitPercussion(DRUM_INDEX[perc - 1]);
-				if (isAnyInstanceRecording()) {
-					dro->GetMaster()->PercussionChange(Opl, perc - 1);
-				}
 			} else {
 				if (!available_channels.empty())
 				{
@@ -794,17 +768,11 @@ void AdlibBlasterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 				Opl->KeyOn(ch, noteHz);
 				active_notes[ch] = n;
 				applyPitchBend();
-				if (isAnyInstanceRecording()) {
-					dro->GetMaster()->TwoOpMelodicNoteOn(Opl, ch);
-				}
 			}
 		}
 		else if (midi_message.isNoteOff()) {
 			if (perc > 0) {
 				Opl->ReleasePercussion();
-				if (isAnyInstanceRecording()) {
-					dro->GetMaster()->PercussionChange(Opl, perc - 1);
-				}
 			}
 			else {
 				int n = midi_message.getNoteNumber();
@@ -827,9 +795,6 @@ void AdlibBlasterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 
 					Opl->KeyOff(ch);
 					active_notes[ch] = NO_NOTE;
-				}
-				if (isAnyInstanceRecording()) {
-					dro->GetMaster()->TwoOpMelodicNoteOff(Opl, ch);
 				}
 			}
 		}
