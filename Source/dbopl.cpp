@@ -1212,9 +1212,7 @@ void Chip::GenerateBlock3( Bitu total, Bit32s* output  ) {
 }
 
 void Chip::Setup( Bit32u rate ) {
-	double original = OPLRATE;
-//	double original = rate;
-	double scale = original / (double)rate;
+	double scale = OPLRATE / (double)rate;
 
 	//Noise counter is run at the same precision as general waves
 	noiseAdd = (Bit32u)( 0.5 + scale * ( 1 << LFO_SH ) );

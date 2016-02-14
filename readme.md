@@ -81,11 +81,12 @@ So far I've only built under Windows. Thanks to the hard work of Jeff Russ, ther
 ### Windows Build Instructions ###
 
 1. Download Juce (http://www.juce.com/)
-2. Download the VST SDK (http://www.steinberg.net/en/company/developer.html)
+2. Download the VST SDK (http://www.steinberg.net/en/company/developers.html)
 3. Run "The Projucer" executable included in Juce.
 4. Open JuceOPLVSTi.jucer
    - Make any changes to the GUI layout and components here (PluginEditor.cpp).
    - Save PluginEditor.cpp if modified
-5. Hit "Save Project and Open in Visual Studio". I use Visual Studio Express 2013.
-6. (For Windows XP compatibility) In the project's properties, set platform toolset to Windows XP (Configuration Properties > General).
-7. Build!
+5. Hit "Save Project and Open in Visual Studio". I use Visual Studio Express 2015.
+6. Select the build: "Release - 64-bit" and set platform to x64.
+7. (Optional, for Windows XP compatibility) In the project's properties, set platform toolset to Windows XP (Configuration Properties > General).
+8. Build!
