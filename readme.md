@@ -48,6 +48,15 @@ SBI files are an instrument file format developed by Creative Labs back in the d
 
 I've collected a bunch of presets in this repository. I've also added support for saving SBI files. Please contribute!
 
+It's possible to extract SBI instruments from games using [DOSBox 0.7.2](https://sourceforge.net/projects/dosbox/files/dosbox/0.72/) and [DRO2MIDI](https://github.com/Malvineous/dro2midi) by Malvineous.
+
+1. Run the game in DOSBox.
+2. Start capturing OPL output with ctrl+alt+F7. Output will be recorded to a .dro file.
+3. Run DRO2MIDI:
+  `dro2midi -s input_capture.dro output_midi.mid`
+
+Note data will be extracted to .mid, instruments will be extracted to .sbi files.
+
 ### Percussion ###
 
 Percussion mode is now supported! This mode is not very well documented, even in the original Yamaha documentation. Here are some tips on using it based on experimentation and looking at the DOSBox source code.
