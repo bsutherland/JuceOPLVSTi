@@ -90,3 +90,18 @@ So far I've only built under Windows. Thanks to the hard work of Jeff Russ, ther
 6. Select the build: "Release - 64-bit" and set platform to x64.
 7. (Optional, for Windows XP compatibility) In the project's properties, set platform toolset to Windows XP (Configuration Properties > General).
 8. Build!
+
+
+### Linux Build Instructions ###
+
+Thanks to Dave Phillips. See original instructions here: https://www.linuxmusicians.com/viewtopic.php?f=19&t=15485
+
+1. Download Juce (http://www.juce.com)
+2. Download the VST SDK (http://www.steinberg.net/en/company/developers.html)
+3. Open JuceOPLVSTi.jucer in the Introjucer application.
+   - Right click on the JuceOPLVSTi label in the file tree.
+   - Select "Create Linux Makefile Target".
+   - Open the juce_audio_basics module. Set paths and/or update all other Juce modules as required.
+   - Click on the Linux Makefile label and set the location of the VST SDK.
+4. Make. Output at Builds/LinuxMakefile/build/JuceOPLVSTi.so
+

@@ -9,7 +9,7 @@
 #endif
 
 /// Jeff-Russ added to replace mising itoa for xcode:
-#if __APPLE__
+#if __APPLE__ || __linux__
     #include "itoa.h"
 #endif
 

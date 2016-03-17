@@ -79,7 +79,7 @@
 	typedef signed int			Bits;
 #endif
 
-#if __APPLE__
+#if __APPLE__ || __linux__
 	/// Jeff-Russ modified to be uniform across C++ implementations:
 	// The internal types:
 	#include <stdint.h>
