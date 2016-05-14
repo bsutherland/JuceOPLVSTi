@@ -50,7 +50,15 @@ void Hiopl::SetEmulator(Emulator emulator) {
 void Hiopl::Generate(int length, float* buffer) {
 	intermediateBufIdx = (intermediateBufIdx + 1) % INTERMEDIATE_BUF_N;
 	Bit32s *iBuf = intermediateBuf[intermediateBufIdx];
-	adlib->Generate(length, iBuf);
+	int fullCalls = length / 512; // the emulator is limited to 512 bytes per call
+	int c = 0;
+	for (; c < fullCalls; c++) {
+		adlib->Generate(512, iBuf + (c * 512));
+	}
+	// final (or only) call
+	if (length % 512 > 0) {
+		adlib->Generate(length % 512, iBuf + (c * 512));
+	}
 	for (int i = 0; i < length; i++) {
 		// Magic divisor taken from ZDoom wrapper for DOSBox emulator, line 892
 		// https://github.com/rheit/zdoom/blob/master/src/oplsynth/dosbox/opl.cpp

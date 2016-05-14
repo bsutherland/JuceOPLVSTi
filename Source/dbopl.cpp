@@ -1498,6 +1498,8 @@ void Handler::WriteReg( Bit32u addr, Bit8u val ) {
 }
 
 void Handler::Generate( Bitu samples, Bit32s* buffer ) {
+	// Not sure why this is here, possibly limited length of LUT etc?
+	// Limiting calls to 512 bytes at a time in HiOPL.
 	if ( GCC_UNLIKELY(samples > 512) )
 		samples = 512;
 	if ( !chip.opl3Active ) {
