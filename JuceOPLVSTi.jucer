@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.13.1"
+<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.13.2"
               bundleIdentifier="com.plainweave.JuceOPLVSTi" buildVST="1" buildAU="1"
               pluginName="JuceOPLVSTi" pluginDesc="JuceOPLVSTi" pluginManufacturer="Plainweave Software"
               pluginManufacturerCode="Pwve" pluginCode="JOPL" pluginChannelConfigs="{0, 1}"
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.1"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.3"
               buildVST3="0" buildRTAS="0" buildAAX="0" includeBinaryInAppConfig="1"
               pluginIsMidiEffectPlugin="0" companyWebsite="https://bsutherland.github.io/JuceOPLVSTi/"
               buildAUv3="0">
@@ -110,6 +110,9 @@
                        isDebug="1" optimisation="1" targetName="JuceOPLVSTi"/>
         <CONFIGURATION name="Release - 64-bit" winWarningLevel="4" generateManifest="1"
                        winArchitecture="x64" isDebug="0" optimisation="3" targetName="JuceOPLVSTi"
+                       warningsAreErrors="1" headerPath=""/>
+        <CONFIGURATION name="Release - 32-bit" winWarningLevel="4" generateManifest="1"
+                       winArchitecture="32-bit" isDebug="0" optimisation="3" targetName="JuceOPLVSTi"
                        warningsAreErrors="1" headerPath=""/>
       </CONFIGURATIONS>
       <MODULEPATHS>

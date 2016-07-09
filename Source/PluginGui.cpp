@@ -1,17 +1,17 @@
 /*
   ==============================================================================
 
-  This is an automatically generated GUI class created by the Introjucer!
+  This is an automatically generated GUI class created by the Projucer!
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 4.1.0
+  Created with Projucer version: 4.2.3
 
   ------------------------------------------------------------------------------
 
-  The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
+  The Projucer is part of the JUCE library - "Jules' Utility Class Extensions"
   Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
@@ -930,6 +930,21 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     exportButton->setColour (TextButton::buttonColourId, Colour (0xff007f00));
     exportButton->setColour (TextButton::buttonOnColourId, Colours::lime);
 
+    addAndMakeVisible (loadButton = new TextButton ("load button"));
+    loadButton->setButtonText (TRANS("Load .SBI instrument"));
+    loadButton->addListener (this);
+    loadButton->setColour (TextButton::buttonColourId, Colour (0xff007f00));
+    loadButton->setColour (TextButton::buttonOnColourId, Colours::lime);
+
+    addAndMakeVisible (versionLabel = new Label ("version label",
+                                                 String()));
+    versionLabel->setFont (Font (12.00f, Font::plain));
+    versionLabel->setJustificationType (Justification::centredRight);
+    versionLabel->setEditable (false, false, false);
+    versionLabel->setColour (Label::textColourId, Colour (0xff007f00));
+    versionLabel->setColour (TextEditor::textColourId, Colours::black);
+    versionLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
 	frequencyComboBox->setColour (ComboBox::textColourId, Colour (COLOUR_MID));
@@ -1058,6 +1073,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 		addAndMakeVisible(channel);
 		channels[i] = channel;
 	}
+	versionLabel->setText(String(ProjectInfo::versionString), NotificationType::dontSendNotification);
     //[/UserPreSize]
 
     setSize (860, 550);
@@ -1158,6 +1174,8 @@ PluginGui::~PluginGui()
     percussionComboBox = nullptr;
     percussionLabel = nullptr;
     exportButton = nullptr;
+    loadButton = nullptr;
+    versionLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1265,6 +1283,8 @@ void PluginGui::resized()
     percussionComboBox->setBounds (256, 488, 112, 24);
     percussionLabel->setBounds (40, 488, 163, 24);
     exportButton->setBounds (40, 456, 168, 24);
+    loadButton->setBounds (232, 456, 168, 24);
+    versionLabel->setBounds (640, 528, 198, 16);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(68+88*i, 36, 20, 20);
@@ -1591,8 +1611,8 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_exportButton] -- add your button handler code here..
 		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
-		FileBrowserComponent browser(FileBrowserComponent::saveMode,
-			File::nonexistent,
+		FileBrowserComponent browser(FileBrowserComponent::saveMode + FileBrowserComponent::canSelectFiles,
+			instrumentSaveDirectory,
 			&wildcardFilter,
 			nullptr);
 		FileChooserDialogBox dialogBox("Export to",
@@ -1603,9 +1623,31 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 		if (dialogBox.show())
 		{
 			File selectedFile = browser.getSelectedFile(0);
+			instrumentSaveDirectory = browser.getRoot();
 			processor->saveInstrumentToFile(selectedFile.getFullPathName());
 		}
         //[/UserButtonCode_exportButton]
+    }
+    else if (buttonThatWasClicked == loadButton)
+    {
+        //[UserButtonCode_loadButton] -- add your button handler code here..
+		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
+		FileBrowserComponent browser(FileBrowserComponent::openMode + FileBrowserComponent::canSelectFiles,
+			instrumentLoadDirectory,
+			&wildcardFilter,
+			nullptr);
+		FileChooserDialogBox dialogBox("Load",
+			"Select SBI instrument file",
+			browser,
+			false,
+			Colours::darkgreen);
+		if (dialogBox.show())
+		{
+			File selectedFile = browser.getSelectedFile(0);
+			instrumentLoadDirectory = browser.getRoot();
+			processor->loadInstrumentFromFile(selectedFile.getFullPathName());
+		}
+        //[/UserButtonCode_loadButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -1659,9 +1701,9 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 
 //==============================================================================
 #if 0
-/*  -- Introjucer information section --
+/*  -- Projucer information section --
 
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
+    This is where the Projucer stores the metadata that describe this GUI layout, so
     make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
@@ -1688,7 +1730,7 @@ BEGIN_JUCER_METADATA
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1"/>
+          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="a label" id="9dd0b13f00b4de42" memberName="aLabel" virtualName=""
          explicitFocusOrder="0" pos="40 352 48 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
@@ -1699,7 +1741,7 @@ BEGIN_JUCER_METADATA
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1"/>
+          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="a7f17b098b85f10b" memberName="dLabel" virtualName=""
          explicitFocusOrder="0" pos="104 352 48 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
@@ -1710,7 +1752,7 @@ BEGIN_JUCER_METADATA
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1"/>
+          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="6467455c7573fefa" memberName="dLabel2" virtualName=""
          explicitFocusOrder="0" pos="168 352 48 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
@@ -1721,7 +1763,7 @@ BEGIN_JUCER_METADATA
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1"/>
+          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="r label" id="ef30d2907e867666" memberName="rLabel" virtualName=""
          explicitFocusOrder="0" pos="232 352 48 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
@@ -1732,7 +1774,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="64"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="643f88854c82ca3e" memberName="attenuationLabel"
          virtualName="" explicitFocusOrder="0" pos="312 384 96 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
@@ -1814,7 +1856,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="a label" id="9ec6412cc79720bc" memberName="aLabel2" virtualName=""
          explicitFocusOrder="0" pos="464 352 48 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
@@ -1825,7 +1867,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="10231adaf9e23e14" memberName="dLabel3" virtualName=""
          explicitFocusOrder="0" pos="528 352 48 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
@@ -1836,7 +1878,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="5b881f2381defac" memberName="dLabel4" virtualName=""
          explicitFocusOrder="0" pos="592 352 48 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
@@ -1847,7 +1889,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="r label" id="ca2834438bee82a9" memberName="rLabel2" virtualName=""
          explicitFocusOrder="0" pos="656 352 48 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
@@ -1858,7 +1900,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="64"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="958314f88253f461" memberName="attenuationLabel2"
          virtualName="" explicitFocusOrder="0" pos="736 384 96 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
@@ -1925,9 +1967,10 @@ BEGIN_JUCER_METADATA
   <SLIDER name="tremolo slider" id="ab64abee7ac8874b" memberName="tremoloSlider"
           virtualName="" explicitFocusOrder="0" pos="632 456 112 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="1" max="4.7999999999999998"
-          int="3.7999999999999998" style="LinearHorizontal" textBoxPos="TextBoxLeft"
-          textBoxEditable="1" textBoxWidth="44" textBoxHeight="20" skewFactor="1"/>
+          textboxhighlight="ff00af00" min="1" max="4.7999999999999998224"
+          int="3.7999999999999998224" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="44" textBoxHeight="20" skewFactor="1"
+          needsCallback="1"/>
   <LABEL name="frequency label" id="134ce8f87da62b88" memberName="frequencyLabel5"
          virtualName="" explicitFocusOrder="0" pos="472 456 152 24" tooltip="OPL global tremolo depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Tremolo Depth&#10;"
@@ -1943,7 +1986,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="7" max="14" int="7" style="LinearHorizontal"
           textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="44"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="frequency label" id="1412b9d14e37bcbe" memberName="frequencyLabel6"
          virtualName="" explicitFocusOrder="0" pos="472 488 152 24" tooltip="OPL global vibrato depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Vibrato Depth"
@@ -1960,7 +2003,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="7" int="1" style="LinearHorizontal"
           textBoxPos="TextBoxRight" textBoxEditable="1" textBoxWidth="44"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="frequency label" id="880eaf14af62578a" memberName="frequencyLabel7"
          virtualName="" explicitFocusOrder="0" pos="32 232 80 24" tooltip="Extent to which modulator output is fed back into itself"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Feedback"
@@ -2064,7 +2107,7 @@ BEGIN_JUCER_METADATA
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="1" int="1" style="LinearHorizontal"
           textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="44"
-          textBoxHeight="20" skewFactor="1"/>
+          textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="emulator label" id="22c2c30d0f337081" memberName="emulatorLabel"
          virtualName="" explicitFocusOrder="0" pos="120 648 72 24" tooltip="Use the OPL emulator from the DOSBox project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="DOSBox"
@@ -2092,6 +2135,15 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="40 456 168 24" bgColOff="ff007f00"
               bgColOn="ff00ff00" buttonText="Export .SBI instrument" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
+  <TEXTBUTTON name="load button" id="a42176161523f448" memberName="loadButton"
+              virtualName="" explicitFocusOrder="0" pos="232 456 168 24" bgColOff="ff007f00"
+              bgColOn="ff00ff00" buttonText="Load .SBI instrument" connectedEdges="0"
+              needsCallback="1" radioGroupId="0"/>
+  <LABEL name="version label" id="cd68ca110847cc18" memberName="versionLabel"
+         virtualName="" explicitFocusOrder="0" pos="640 528 198 16" textCol="ff007f00"
+         edTextCol="ff000000" edBkgCol="0" labelText="" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="12" bold="0" italic="0" justification="34"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

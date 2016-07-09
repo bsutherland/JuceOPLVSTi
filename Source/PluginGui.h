@@ -1,17 +1,17 @@
 /*
   ==============================================================================
 
-  This is an automatically generated GUI class created by the Introjucer!
+  This is an automatically generated GUI class created by the Projucer!
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 4.1.0
+  Created with Projucer version: 4.2.3
 
   ------------------------------------------------------------------------------
 
-  The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
+  The Projucer is part of the JUCE library - "Jules' Utility Class Extensions"
   Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
@@ -59,11 +59,11 @@ public:
 	void setRecordButtonState(bool recording);
     //[/UserMethods]
 
-    void paint (Graphics& g);
-    void resized();
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void buttonClicked (Button* buttonThatWasClicked);
+    void paint (Graphics& g) override;
+    void resized() override;
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
+    void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
 
     // Binary resources:
     static const char* full_sine_png;
@@ -95,6 +95,8 @@ private:
 	AdlibBlasterAudioProcessor* processor;
 	std::array<ScopedPointer<Label>, Hiopl::CHANNELS> channels;
 	TooltipWindow tooltipWindow;
+	File instrumentLoadDirectory = File::nonexistent;
+	File instrumentSaveDirectory = File::nonexistent;
     //[/UserVariables]
 
     //==============================================================================
@@ -182,6 +184,8 @@ private:
     ScopedPointer<ComboBox> percussionComboBox;
     ScopedPointer<Label> percussionLabel;
     ScopedPointer<TextButton> exportButton;
+    ScopedPointer<TextButton> loadButton;
+    ScopedPointer<Label> versionLabel;
 
 
     //==============================================================================
