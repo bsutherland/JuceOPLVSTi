@@ -1,19 +1,8 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
-
 html {
-    color: #222;
+    color: #eee;
+    background-color: #000;
     font-size: 1em;
     line-height: 1.4;
-}
-
-::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
-
-::selection {
-    background: #b3d4fc;
-    text-shadow: none;
 }
 
 hr {
@@ -51,13 +40,8 @@ textarea {
     padding: 0.2em 0;
 }
 
-
-/* ===== Initializr Styles ==================================================
-   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
-   ========================================================================== */
-
 body {
-    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    font: 16px/26px 'PT Sans', Helvetica, Helvetica Neue, Arial sans-serif;
 }
 
 .wrapper {
@@ -66,7 +50,7 @@ body {
 }
 
 /* ===================
-    ALL: Orange Theme
+    ALL: Theme
    =================== */
 
 .header-container {
@@ -155,17 +139,32 @@ nav a:hover {
    ========================================================================== */
 
 
+h1, h2, h3 {
+    color: #A8A8A8;
+}
 
+.title {
+    color: #007F00;
+}
 
+.contribute-icon-circle {
+    background-color: #040;
+    border-radius: 50%;
+    width: 170px;
+    height: 170px;
+}
 
-
-
-
-
-
-
-
-
+.contribute-icon {
+    width:60%;
+    height:60%;
+    padding:20%;
+    margin:auto;
+    fill:#FFFFFF;
+    fill-opacity:1;
+    stroke:rgba(96, 96, 96, 1);
+    stroke-width:0px;
+    vector-effect:non-scaling-stroke;
+}
 
 
 /* ==========================================================================
