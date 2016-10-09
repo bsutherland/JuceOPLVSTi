@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=980">
+
+<title>JuceOPLVSTi</title>
+
+<meta http-equiv="etag" content="8ce91f54c45bdeeeca1f314d0d6c87d1">
+<meta property="og:title" content="JuceOPLVSTi">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://bsutherland.github.io/JuceOPLVSTi">
+<meta property="og:site_name" content="JuceOPLVSTi">
+
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<link rel="stylesheet" href="juceoplvsti_files/juceoplvsti.css">
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45526852-1', 'bsutherland.github.io');
+  ga('send', 'pageview');
+</script>
+
+</head>
+<body>
+        <div id="SITE_CONTAINER"><div class="noop" data-reactid=".0"><div data-reactid=".0.0"><style type="text/css" data-reactid=".0.0.$theme_fonts">.font_0 {font: normal normal bold 375%/1.4em 'PT Sans',sans-serif ;color:#CFCFCF;}
+.font_1 {font: normal normal normal 16px/1.4em 'PT Sans',sans-serif ;color:#CFCFCF;}
+.font_2 {font: normal normal normal 40px/1.4em 'PT Sans',sans-serif ;color:#CFCFCF;}
+
+.font_6 {font: normal normal normal 17px/1.4em 'PT Sans',sans-serif ;color:#A8A8A8;}
+.font_7 {font: normal normal normal 15px/1.4em 'PT Sans',sans-serif ;color:#A8A8A8;}
+.font_8 {font: normal normal normal 14px/1.4em 'PT Sans',sans-serif ;color:#A8A8A8;}
+
+</style><style type="text/css" data-reactid=".0.0.$theme_colors">.color_0 {color: #FFFFFF;}
+.backcolor_0 {background-color: #FFFFFF;}
+.color_1 {color: #FFFFFF;}
+.backcolor_1 {background-color: #FFFFFF;}
+.color_2 {color: #000000;}
+.backcolor_2 {background-color: #000000;}
+.color_3 {color: #ED1C24;}
+.backcolor_3 {background-color: #ED1C24;}
+.color_4 {color: #0088CB;}
+.backcolor_4 {background-color: #0088CB;}
+.color_5 {color: #FFCB05;}
+.backcolor_5 {background-color: #FFCB05;}
+.color_6 {color: #727272;}
+.backcolor_6 {background-color: #727272;}
+.color_7 {color: #B0B0B0;}
+.backcolor_7 {background-color: #B0B0B0;}
+.color_8 {color: #FFFFFF;}
+.backcolor_8 {background-color: #FFFFFF;}
+.color_9 {color: #727272;}
+.backcolor_9 {background-color: #727272;}
+.color_10 {color: #B0B0B0;}
+.backcolor_10 {background-color: #B0B0B0;}
+.color_11 {color: #FFFFFF;}
+.backcolor_11 {background-color: #FFFFFF;}
+.color_12 {color: #F2F2F2;}
+.backcolor_12 {background-color: #F2F2F2;}
+.color_13 {color: #CFCFCF;}
+.backcolor_13 {background-color: #CFCFCF;}
+.color_14 {color: #A8A8A8;}
+.backcolor_14 {background-color: #A8A8A8;}
+.color_15 {color: #606060;}
+.backcolor_15 {background-color: #606060;}
+.color_16 {color: #A7DFA7;}
+.backcolor_16 {background-color: #A7DFA7;}
+.color_17 {color: #7FBF7F;}
+.backcolor_17 {background-color: #7FBF7F;}
+.color_18 {color: #509F50;}
+.backcolor_18 {background-color: #509F50;}
+.color_19 {color: #007F00;}
+.backcolor_19 {background-color: #007F00;}
+.color_20 {color: #004000;}
+.backcolor_20 {background-color: #004000;}
+.color_21 {color: #F0ADA0;}
+.backcolor_21 {background-color: #F0ADA0;}
+.color_22 {color: #E28371;}
+.backcolor_22 {background-color: #E28371;}
+.color_23 {color: #D32300;}
+.backcolor_23 {background-color: #D32300;}
+.color_24 {color: #8D1700;}
+.backcolor_24 {background-color: #8D1700;}
+.color_25 {color: #460B00;}
+.backcolor_25 {background-color: #460B00;}
+.color_26 {color: #D3E9AA;}
+.backcolor_26 {background-color: #D3E9AA;}
+.color_27 {color: #B6D47E;}
+.backcolor_27 {background-color: #B6D47E;}
+.color_28 {color: #89BF24;}
+.backcolor_28 {background-color: #89BF24;}
+.color_29 {color: #5B7F18;}
+.backcolor_29 {background-color: #5B7F18;}
+.color_30 {color: #2D3F0C;}
+.backcolor_30 {background-color: #2D3F0C;}
+.color_31 {color: #FFEFAA;}
+.backcolor_31 {background-color: #FFEFAA;}
+.color_32 {color: #FFE77F;}
+.backcolor_32 {background-color: #FFE77F;}
+.color_33 {color: #FFD000;}
+.backcolor_33 {background-color: #FFD000;}
+.color_34 {color: #A98A00;}
+.backcolor_34 {background-color: #A98A00;}
+.color_35 {color: #544500;}
+.backcolor_35 {background-color: #544500;}
+</style><style type="text/css" data-reactid=".0.0.$s0">.s0screenWidthBackground {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s0[data-state~="mobileView"] {position:absolute !important;}
+.s0[data-state~="fixedPosition"] {position:fixed !important;left:auto !important;z-index:50;}
+.s0[data-state~="fixedPosition"].s0_footer {top:auto;bottom:0;}
+.s0bg {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s0inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s0centeredContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$s1">.s1 {word-wrap:break-word;}
+.s1_override-left * {text-align:left !important;}
+.s1_override-right * {text-align:right !important;}
+.s1_override-center * {text-align:center !important;}
+.s1_override-justify * {text-align:justify !important;}
+.s1 li {font-style:inherit;font-weight:inherit;line-height:inherit;letter-spacing:normal;}
+.s1 ol,.s1 ul {padding-left:1.3em;padding-right:0;margin-left:0.5em;margin-right:0;line-height:normal;letter-spacing:normal;}
+.s1 ol[class~="wix-list"],.s1 ul[class~="wix-list"] {padding-left:0;padding-right:0;}
+.s1 ol[class~="wix-list"] li,.s1 ul[class~="wix-list"] li {margin-left:1.3em;margin-right:0;}
+.s1 ol[class~="wix-list"][dir="rtl"],.s1 ul[class~="wix-list"][dir="rtl"] {padding-left:0;padding-right:0;}
+.s1 ol[class~="wix-list"][dir="rtl"] li,.s1 ul[class~="wix-list"][dir="rtl"] li {margin-left:0;margin-right:1.3em;}
+.s1 ul {list-style-type:disc;}
+.s1 ol {list-style-type:decimal;}
+.s1 ul ul,.s1 ol ul {list-style-type:circle;}
+.s1 ul ul ul,.s1 ol ul ul {list-style-type:square;}
+.s1 ul ol ul,.s1 ol ol ul {list-style-type:square;}
+.s1 ul[dir="rtl"],.s1 ol[dir="rtl"] {padding-left:0;padding-right:1.3em;margin-left:0;margin-right:0.5em;}
+.s1 ul[dir="rtl"] ul,.s1 ul[dir="rtl"] ol,.s1 ol[dir="rtl"] ul,.s1 ol[dir="rtl"] ol {padding-left:0;padding-right:1.3em;margin-left:0;margin-right:0.5em;}
+.s1 p {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 h1 {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 h2 {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 h3 {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 h4 {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 h5 {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 h6 {margin:0;line-height:normal;letter-spacing:normal;}
+.s1 a {color:inherit;}</style><style type="text/css" data-reactid=".0.0.$s2">.s2screenWidthBackground {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s2[data-state~="mobileView"] {position:absolute !important;}
+.s2[data-state~="fixedPosition"] {position:fixed !important;left:auto !important;z-index:50;}
+.s2[data-state~="fixedPosition"].s2_footer {top:auto;bottom:0;}
+.s2bg {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s2inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s2centeredContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$s3">.s3screenWidthBackground {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s3[data-state~="mobileView"] {position:absolute !important;}
+.s3[data-state~="fixedPosition"] {position:fixed !important;left:auto !important;z-index:50;}
+.s3[data-state~="fixedPosition"].s3_footer {top:auto;bottom:0;}
+.s3bg {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s3inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s3centeredContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$s4">.s4 {height:100px;width:100px;}
+.s4overlay {position:absolute;top:0;right:0;bottom:0;left:0;background-color:rgba(0, 0, 0, 0.664);}
+.s4inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$s5">.s5bg {position:absolute;top:0;right:0;bottom:0;left:0;}
+.s5[data-state~="mobileView"] .s5bg {left:10px;right:10px;}
+.s5inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$s6">.s6_zoomedin {cursor:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/cursor_zoom_out.png), url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/cursor_zoom_out.cur), auto;overflow:hidden;display:block;}
+.s6_zoomedout {cursor:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/cursor_zoom_in.png), url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/cursor_zoom_in.cur), auto;}
+.s6link {display:block;overflow:hidden;}
+.s6img {overflow:hidden;}
+.s6imgimage {position:static;box-shadow:#000 0 0 0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style><style type="text/css" data-reactid=".0.0.$s7">.s7bg {border:0px solid rgba(96, 96, 96, 1);background-color:rgba(0, 64, 0, 1);}
+.s7inlineContent,.s7bg {position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;}</style><style type="text/css" data-reactid=".0.0.$s11">.s11 {visibility:hidden;}</style><style type="text/css" data-reactid=".0.0.$s12">.s12[data-state~="shouldUseFlex"] .s12link,.s12[data-state~="shouldUseFlex"] .s12labelwrapper {text-align:initial;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-align:center;-webkit-align-items:center;align-items:center;}
+.s12[data-state~="shouldUseFlex"][data-state~="center"] .s12link,.s12[data-state~="shouldUseFlex"][data-state~="center"] .s12labelwrapper {-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;}
+.s12[data-state~="shouldUseFlex"][data-state~="left"] .s12link,.s12[data-state~="shouldUseFlex"][data-state~="left"] .s12labelwrapper {-webkit-box-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;}
+.s12[data-state~="shouldUseFlex"][data-state~="right"] .s12link,.s12[data-state~="shouldUseFlex"][data-state~="right"] .s12labelwrapper {-webkit-box-pack:end;-webkit-justify-content:flex-end;justify-content:flex-end;}
+.s12link {border-radius:0;  position:absolute;top:0;right:0;bottom:0;left:0;transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;  }
+.s12label {font:normal normal normal 15px/1.4em 'PT Sans',sans-serif ;  transition: color 0.4s ease 0s;  color:#FFFFFF;display:inline-block;margin:calc(-1 * 0px) 0px 0;position:relative;white-space:nowrap;}
+.s12[data-state~="shouldUseFlex"] .s12label {margin:0;}
+.s12[data-disabled="false"] .s12link {background-color:rgba(114, 114, 114, 1);border:solid rgba(168, 168, 168, 1) 0px;cursor:pointer !important;}
+.s12[data-disabled="false"]:active[data-state~="mobile"] .s12link,.s12[data-disabled="false"]:hover[data-state~="desktop"] .s12link {background-color:rgba(242, 242, 242, 1);border-color:rgba(242, 242, 242, 1);}
+.s12[data-disabled="false"]:active[data-state~="mobile"] .s12label,.s12[data-disabled="false"]:hover[data-state~="desktop"] .s12label {color:#000000;}
+.s12[data-disabled="true"] .s12link {background-color:rgba(204, 204, 204, 1);border-color:rgba(204, 204, 204, 1);}
+.s12[data-disabled="true"] .s12label {color:#FFFFFF;}
+</style><style type="text/css" data-reactid=".0.0.$s13">.s13inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$s14">.s14 {pointer-events:none;}
+.s14_ie10 {max-width:0;max-height:0;}
+.s14inlineContent {pointer-events:all;}</style><style type="text/css" data-reactid=".0.0.$wixAds">.wixAdsmobileAd {width:100%;height:30px;position:relative;display:block;text-align:center;background-image:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/wixads/BG91x1.jpg);background-repeat:repeat;background-size:100% 30px;z-index:999;}
+.wixAdsdesktopWADBottom {position:fixed;z-index:999;width:100%;bottom:0;max-height:10vh;}
+.wixAdsdesktopWADBottomContent {width:100%;height:40px;text-align:center;background-color:#404040;border-radius:6px 6px 0 0;pointer-events:all;cursor:pointer;}
+.wixAdsdesktopWADBottomContent:hover {background-color:#222;}
+.wixAds[data-state~="facebook"] .wixAdsdesktopWADBottomContent {width:500px;margin:0 auto;}
+.wixAdsdesktopWADTop {position:fixed;z-index:999;height:26px;top:0;right:50px;overflow:hidden;background-color:#404040;border-radius:0 0 6px 6px;pointer-events:all;cursor:pointer;-webkit-transition:all .3s ease-in-out;transition:all .3s ease-in-out;}
+.wixAdsdesktopWADTop:hover {height:97px;background-color:rgba(50, 50, 50, 0.8);}
+.wixAdsdesktopWADTop:hover .wixAdsdesktopWADTopLabel {background-color:#222;}
+.wixAdsdesktopWADTopLabel {padding:6px;font-size:13px;line-height:1.3em;color:#FFF;width:100%;font-size:13px;color:#FFF;font-weight:bold;line-height:18px;text-align:justify;padding:5px 10px;}
+.wixAds[data-state~="desktop"] .wixAdsmobileAd {display:none;}
+.wixAds[data-state~="mobile"] .wixAdsdesktopWADTop {display:none;}
+.wixAds[data-state~="mobile"] .wixAdsdesktopWADBottom {display:none;}
+.wixAdsdesktopWADTopLabel .wixAds_smallMusa {display:inline-block;text-indent:-9999px;width:16px;height:16px;margin-right:5px;background-image:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/wixads/wf_label_static.png);background-repeat:no-repeat;background-position:0% 0%;}
+.wixAdsdesktopWADTopLabel .wixAds_smallLogo {display:inline-block;text-indent:-9999px;width:29px;height:16px;background-image:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/wixads/wf_label_static.png);background-repeat:no-repeat;background-position:-16px top;}
+.wixAdsdesktopWADTopContent {font-size:13px;line-height:1.3em;color:#ffffff;font-weight:bold;line-height:18px;text-align:justify;padding:5px 10px;width:100%;}
+.wixAdsdesktopWADBottomContent .wixAds_faceBanner {background-color:rgba(64, 64, 64, 1);width:500px;height:100%;margin:0 auto;border-radius:6px 6px 0 0;  padding:5px 0 0 0;}
+.wixAdsdesktopWADBottomContent .wixAds_faceBanner div {display:inline-block;height:30px;}
+.wixAdsdesktopWADBottomContent .wixAds_faceBanner .wixAds_txt {color:#fff;font-weight:bold;font-size:15px;text-align:justify;margin:-2px 10px 0 19px;}
+.wixAdsdesktopWADBottomContent .wixAds_faceBanner .wixAds_logoDot {position:static;margin:0 3px;}
+.wixAdsdesktopWADBottomContent .wixAds_faceBanner .wixAds_emphasis {font-weight:bold;position:relative;top:-6px;}
+.wixAdsdesktopWADTopContent .wixAds_spacer {line-height:26px;}
+.wixAdsdesktopWADTopContent .wixAds_emphasis {color:#ffcc00;}
+.wixAdsdesktopWADTopContent .wixAds_cap {font-size:16px;line-height:1.3em;text-transform:uppercase;}
+.wixAdsdesktopWADTopContent .wixAds_face {display:block;line-height:18px;text-align:justify;padding:0 20px;width:120px;}
+.wixAdsdesktopWADBottomContent .wixAds_adFootBox {height:40px;width:100%;text-align:center;}
+.wixAdsdesktopWADBottomContent .wixAds_siteBanner {background-color:rgba(64, 64, 64, 1);border-radius:6px 6px 0 0;  width:100%;height:100%;text-align:center;}
+.wixAdsdesktopWADBottomContent:hover .wixAds_siteBanner {background-color:#222;}
+.wixAdsdesktopWADBottomContent .wixAds_siteBanner .wixAds_wrapper {padding:5px 0;}
+.wixAdsdesktopWADBottomContent .wixAds_siteBanner .wixAds_wrapper div {display:inline-block;height:30px;}
+.wixAdsdesktopWADBottomContent .wixAds_bigMusa {text-indent:-9999px;width:36px;background-image:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/wixads/wf_label_static.png);background-repeat:no-repeat;background-position:left bottom;position:relative;top:-19px;}
+.wixAdsdesktopWADBottomContent.wixAds_nativeAndroid .wixAds_bigMusa {overflow:hidden;}
+.wixAdsdesktopWADBottomContent .wixAds_logoDot {text-indent:-9999px;width:39px;height:15px;position:relative;top:-4px;margin:0 5px;background-image:url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/wixads/wf_label_static.png);background-repeat:no-repeat;background-position:right -17px;}
+.wixAdsdesktopWADBottomContent .wixAds_emphasis {color:#ffcc00;font-size:16px;text-transform:uppercase;}
+.wixAdsdesktopWADBottomContent .wixAds_txt {color:#fff;font-weight:bold;font-size:15px;}
+.wixAdsdesktopWADBottomContent .wixAds_siteBanner .wixAds_txt {line-height:47px;}@media (orientation: landscape){.wixAdsmobileAd {display:none;}}
+@media (orientation: landscape){.wixAds_wixAds[data-state~="mobile"] {display:none;}}</style><style type="text/css" data-reactid=".0.0.$mobileAppBanner">.mobileAppBannercontainer {position:relative;overflow:hidden;z-index:99;height:70px;background-color:#f2f2f2;border-bottom:1px solid #d7d7d7;}
+.mobileAppBannercontainer > div {float:left;margin-left:10px;}
+.mobileAppBannerclose > a {color:#777777;line-height:70px;font-family:''PT Sans'', Helvetica, sans-serif, Arial;font-size:14px;}
+.mobileAppBannericonbody {width:40px;height:40px;margin-top:15px;border-radius:10px;display:inline-block;  background-size:cover;background-position:center;background-repeat:no-repeat;}
+.mobileAppBannercontainer[data-device~="android"] .mobileAppBannericonbody {border-radius:3px;}
+.mobileAppBannertext {color:#0d0d0d;line-height:20px;margin-top:15px;}
+.mobileAppBannerappname {font-family:'PT Sans', "Helvetica Neue", Helvetica, sans-serif, Arial;font-size:13px;font-weight:600;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:175px;}
+.mobileAppBannertagline {font-family:'PT Sans', "HelveticaNeue-Light", "Helvetica Neue Light", Helvetica, sans-serif-light, Arial;font-size:13px;font-weight:normal;}
+.mobileAppBannergetlink {color:#3798eb;line-height:normal;font-family:'PT Sans', "HelveticaNeue-Medium", Helvetica, sans-serif, Arial;font-weight:600;font-size:13px;}
+.mobileAppBannercontainer[data-device~="apple"] .mobileAppBannergetlink {font-weight:500;}
+.mobileAppBannerbaselinehack {height:14px;line-height:0px;display:inline-block;}
+.mobileAppBannerget {border:1px solid #3798eb;border-radius:3px;padding:3px 10px;display:inline-block;}@media all and (max-width: 400px) and (min-width: 0px){.mobileAppBannerget {position:absolute;top:22.5px;right:10px;float:none !important;}}
+@media all and (min-width: 401px){.mobileAppBannerget {margin-top:22.5px;margin-left:30px !important;}}</style><style type="text/css" data-reactid=".0.0.$deadComp">.deadComp {background:transparent;}</style><style type="text/css" data-reactid=".0.0.$siteBackground">.siteBackground {width:100%;position:absolute;}
+.siteBackgroundbgBeforeTransition {position:absolute;top:0;}
+.siteBackgroundbgAfterTransition {position:absolute;top:0;}</style><style type="text/css" data-reactid=".0.0.$loginDialog">.loginDialog {position:fixed;width:100%;height:100%;z-index:99;font-family:'PT Sans', Arial, sans-serif;font-size:1em;color:#9C9C9C;}
+.loginDialogblockingLayer {background-color:rgba(85, 85, 85, 0.75);position:fixed;top:0;right:0;bottom:0;left:0;visibility:visible;zoom:1;overflow:auto;}
+.loginDialogdialog {background-color:rgba(170, 170, 170, 0.7);width:455px;position:fixed;padding:20px;}
+.loginDialog_wrapper {background-color:rgba(255, 255, 255, 1);padding:45px 40px 0 40px;}
+.loginDialogxButton {position:absolute;top:-14px;right:-14px;cursor:pointer;background:transparent url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/viewer_login_sprite.png) no-repeat right top;height:30px;width:30px;}
+.loginDialogxButton:hover {background-position:right -80px;}
+.loginDialogheader {padding-bottom:25px;line-height:30px;}
+.loginDialogfavIcon {float:left;margin:7px 7px 0 0;width:16px;height:16px;}
+.loginDialogtitle {font-size:20px;font-weight:bold;color:#555555;}
+.loginDialog[data-state~="mobile"] {position:absolute;width:100%;height:100%;z-index:99;font-family:'PT Sans', Arial, sans-serif;font-size:1em;color:#9C9C9C;top:0;}
+.loginDialog[data-state~="mobile"] .loginDialogheader {padding-bottom:10px;line-height:30px;}
+.loginDialog[data-state~="mobile"] .loginDialogfavIcon {display:none;}
+.loginDialog[data-state~="mobile"] .loginDialogtitle {font-size:14px;}
+.loginDialog[data-state~="mobile"] .loginDialogdialog {width:260px;padding:10px;position:absolute;}
+.loginDialog[data-state~="mobile"] .loginDialog_footer {margin-top:0;padding-bottom:10px;}
+.loginDialog[data-state~="mobile"] .loginDialogcancel {font-size:14px;line-height:30px;}
+.loginDialog[data-state~="mobile"] .loginDialog_wrapper {padding:14px 12px 0 12px;}
+.loginDialog[data-state~="mobile"] .loginDialogsubmitButton {height:30px;width:100px;font-size:14px;}
+.loginDialog_forgot {text-align:left;font-size:12px;}
+.loginDialog_forgot a {color:#0198ff;border-bottom:1px solid #0198ff;}
+.loginDialog_forgot a:hover {color:#0044ff;border-bottom:1px solid #0044ff;}
+.loginDialog_error {font-size:12px;color:#d74401;text-align:right;}
+.loginDialog_footer {width:100%;margin-top:27px;padding-bottom:40px;}
+.loginDialogcancel {color:#9C9C9C;font-size:18px;text-decoration:underline;line-height:36px;}
+.loginDialogcancel:hover {color:#9c3c3c;}
+.loginDialogpasswordInput label {font-size:14px;}
+.loginDialogpasswordInput label[data-type="password"] {font-size:14px;line-height:30px;height:30px;}
+.loginDialogsubmitButton {float:right;cursor:pointer;border:solid 2px #0064a8;height:36px;width:143px;background:transparent url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/viewer_login_sprite.png) repeat-x right -252px;color:#ffffff;font-size:24px;font-weight:bold;box-shadow:0 1px 3px rgba(0, 0, 0, 0.5);}
+.loginDialogsubmitButton:hover {background-position:right -352px;border-color:#004286;}
+.loginDialog[data-state="normal"] .loginDialogerror {display:none;}
+.loginDialog[data-state="error"] .loginDialogerror {display:block;font-size:12px;color:#d74401;text-align:right;}
+.loginDialog[data-state="error"] .loginDialogpasswordInput {border-color:#d74401;}
+.loginDialogpasswordInput {font-size:1em;}
+.loginDialogpasswordInput label {float:none;font-size:17px;line-height:25px;color:#585858;}
+.loginDialogpasswordInput[data-state~="mobile"] label {float:none;font-size:14px;line-height:20px;color:#585858;}
+.loginDialogpasswordInputinput {padding:0 15px;width:100%;height:42px;font-size:19px;line-height:42px;color:#0198ff;margin:0 -3px;background:transparent url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/viewer_login_sprite.png) repeat-x right -170px;border:solid 1px #a1a1a1;box-sizing:border-box;}
+.loginDialogpasswordInput[data-state~="mobile"] .loginDialogpasswordInputinput {padding:0 15px;width:100%;height:30px;font-size:14px;line-height:30px;color:#0198ff;margin:0 -3px;background:transparent url(https://static.parastorage.com/services/skins/2.1229.56/images/wysiwyg/core/themes/base/viewer_login_sprite.png) repeat-x right -170px;border:solid 1px #a1a1a1;box-sizing:border-box;}
+.loginDialogpasswordInputinput[data-type="password"] {font-size:38px;}
+.loginDialogpasswordInput[data-state~="mobile"] .loginDialogpasswordInputinput[data-type="password"] {font-size:14px;}
+.loginDialogpasswordInputerrorMessage {display:block;font-size:12px;color:#d74401;text-align:right;height:15px;}
+.loginDialogpasswordInput:not([data-state~="invalid"]) .loginDialogpasswordInputerrorMessage {visibility:hidden;}
+.loginDialogpasswordInput[data-state~="invalid"] .loginDialogpasswordInputerrorMessage {visibility:visible;}
+.loginDialogpasswordInput[data-state~="invalid"] input {border-color:#d74401;}
+.loginDialogpasswordInput[data-state~="invalid"] .loginDialogpasswordInputinput {border-color:red;}</style><style type="text/css" data-reactid=".0.0.$strc1">.strc1inlineContent {position:absolute;top:0;right:0;bottom:0;left:0;}</style><style type="text/css" data-reactid=".0.0.$testStyle">.testStyles {position:absolute; display: none; z-index: 2}</style><div class="testStyles" data-reactid=".0.0.l"></div><style type="text/css" data-reactid=".0.0.$uploadedFonts"></style><div style="overflow:hidden;visibility:hidden;max-height:0;max-width:0;position:absolute;" data-reactid=".0.0.$fontsLoader"><style data-reactid=".0.0.$fontsLoader.0">.font-ruler-content::after {content:"@#$%%^&*~IAO"}</style></div></div>
+
+<div id="SITE_BACKGROUND" class="siteBackground" style="position: absolute; top: 0px; height: 3162px; width: 1903px;" data-reactid=".0.$SITE_BACKGROUND"><div id="SITE_BACKGROUND_previous_" class="siteBackgroundprevious" data-reactid=".0.$SITE_BACKGROUND.$noPrev"><div id="SITE_BACKGROUND_previousImage_" class="siteBackgroundpreviousImage" data-reactid=".0.$SITE_BACKGROUND.$noPrev.0"></div><div id="SITE_BACKGROUNDpreviousVideo" class="siteBackgroundpreviousVideo" data-reactid=".0.$SITE_BACKGROUND.$noPrev.1"></div><div id="SITE_BACKGROUND_previousOverlay_" class="siteBackgroundpreviousOverlay" data-reactid=".0.$SITE_BACKGROUND.$noPrev.2"></div></div><div id="SITE_BACKGROUND_current_c1dmp" style="top:0;height:100%;width:100%;background-color:rgba(0, 0, 0, 1);display:;position:fixed;" class="siteBackgroundcurrent" data-reactid=".0.$SITE_BACKGROUND.$c1dmp"><div id="SITE_BACKGROUND_currentImage_c1dmp" style="position: absolute; top: 0px; height: 100%; width: 100%;" data-type="bgimage" class="siteBackgroundcurrentImage" data-reactid=".0.$SITE_BACKGROUND.$c1dmp.$background_currentImage_fixed" data-image-css="{&quot;backgroundSize&quot;:&quot;&quot;,&quot;backgroundPosition&quot;:&quot;&quot;,&quot;backgroundRepeat&quot;:&quot;&quot;}"></div><div id="SITE_BACKGROUNDcurrentVideo" class="siteBackgroundcurrentVideo" data-reactid=".0.$SITE_BACKGROUND.$c1dmp.1" style="position: relative; min-width: 0px; min-height: 0px; top: 0px; left: 0px;"></div><div id="SITE_BACKGROUND_currentOverlay_c1dmp" style="position:absolute;top:0;width:100%;height:100%;background-attachment:fixed;" class="siteBackgroundcurrentOverlay" data-reactid=".0.$SITE_BACKGROUND.$c1dmp.2"></div></div></div><div class="SITE_ROOT" id="SITE_ROOT" style="width:980px;padding-bottom:40px;" data-reactid=".0.$SITE_ROOT"><div id="masterPage" style="width: 980px; position: static; top: 0px; height: 3162px;" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot"><div style="width: 980px; position: absolute; top: 0px; height: 117px; left: 0px;" class="s0" data-state=" " id="SITE_HEADER" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_HEADER"><div id="SITE_HEADERscreenWidthBackground" class="s0screenWidthBackground" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_HEADER.0" style="width: 1903px; left: -462px;"></div><div id="SITE_HEADERcenteredContent" class="s0centeredContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_HEADER.1"><div id="SITE_HEADERbg" class="s0bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_HEADER.1.0"></div><div id="SITE_HEADERinlineContent" class="s0inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_HEADER.1.1"><div style="left: 290px; width: 401px; position: absolute; top: 52px;" class="s1" id="WRchTxt3-ceb" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_HEADER.1.1.$WRchTxt3-ceb"><h1 class="font_0" style="text-align:center"><span class="color_19">JuceOPLVSTi</span></h1>
+</div></div></div></div><div style="width: 980px; position: absolute; left: 0px; height: 82px; bottom: auto; top: 3080px;" class="s2_footer s2" data-state=" " id="SITE_FOOTER" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_FOOTER"><div id="SITE_FOOTERscreenWidthBackground" class="s2screenWidthBackground" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_FOOTER.0" style="width: 1903px; left: -462px;"></div><div id="SITE_FOOTERcenteredContent" class="s2centeredContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_FOOTER.1"><div id="SITE_FOOTERbg" class="s2bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_FOOTER.1.0"></div><div id="SITE_FOOTERinlineContent" class="s2inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$SITE_FOOTER.1.1"></div></div></div><div style="width: 980px; position: absolute; top: 117px; height: 2962px; left: 0px;" class="s3" data-state="" id="PAGES_CONTAINER" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER"><div id="PAGES_CONTAINERscreenWidthBackground" class="s3screenWidthBackground" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.0" style="width: 1903px; left: -462px;"></div><div id="PAGES_CONTAINERcenteredContent" class="s3centeredContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1"><div id="PAGES_CONTAINERbg" class="s3bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.0"></div><div id="PAGES_CONTAINERinlineContent" class="s3inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1"><div style="left: 0px; width: 980px; position: absolute; top: 0px; height: 2962px;" class="s4" id="SITE_PAGES" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES"><div style="left: 0px; width: 980px; position: absolute; top: 0px; height: 2962px;" class="s5" id="c1dmp" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp"><div id="c1dmpbg" class="s5bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.0"></div><div id="c1dmpinlineContent" class="s5inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1"><div style="position: absolute; top: 817px; width: 981px; height: 628px;" data-exact-height="627.1967213114754" data-content-padding-horizontal="0" data-content-padding-vertical="0" title="juceoplvsti-0-13-2.png" class="s6" id="WPht1-o28" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WPht1-o28"><div style="width: 981px; height: 628px;" id="WPht1-o28link" class="s6link" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WPht1-o28.0"><div style="position: relative; width: 981px; height: 628px;" id="WPht1-o28img" class="s6img" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WPht1-o28.0.0"><div class="s6imgpreloader" id="WPht1-o28imgpreloader" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WPht1-o28.0.0.0"></div><img id="WPht1-o28imgimage" alt="" src="./juceoplvsti_files/screenshot_0-13-2.png" style="width: 981px; height: 628px; object-fit: contain;" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WPht1-o28.0.0.$image"></div></div></div><div style="left: 48px; width: 170px; position: absolute; top: 1587px; height: 170px;" class="s7" id="Cntnr3-ywx" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr3-ywx"><div id="Cntnr3-ywxbg" class="s7bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr3-ywx.0"></div><div id="Cntnr3-ywxinlineContent" class="s7inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr3-ywx.1"><div style="left: 37px; width: 97px; position: absolute; top: 35px; height: 100px;" class="style-iu0mq7tx" id="SvgShp0-16r8" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr3-ywx.1.$SvgShp0-16r8"><style type="text/css">.style-iu0mq7tx svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:rgba(96, 96, 96, 1);stroke-width:0px;}
+.style-iu0mq7tx svg * {vector-effect:non-scaling-stroke;}</style><a href="https://github.com/bsutherland/JuceOPLVSTi/issues/12" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/issues/12" data-type="external"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -3.4000000953674316 122.80000305175781 163.09999084472656" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px;">
+    <g>
+        <path d="M88.2 44.7c-10 0-14.3 5.8-23.5 5.8 0 0-.2-4.7-1.6-11.3 3.6 1 10.5 1.7 20-3.2 12.2-6.4 3-27.8 13-33 4.1-2.1-11-6.4-27.6 2.3-7.5 3.9-9.6 11.9-9.8 19.4-3.2-7.6-8-15.3-15.3-20.4 0 0-3.4-3.1-6.4-.2-3.4 3.4-.1 6.8-.1 6.8 8.3 8.3 21.6 19.5 23.1 39.8-6.6 0-9.8-7-23.7-7C23 43.5 0 53.2 0 83.5c0 53.3 32.5 76.2 44.9 76.2 10.7 0 10.9-3.4 19-3.4 8 0 5.5 3.4 18.7 3.4 18.4 0 40.2-37.7 40.2-72.5-.1-34.8-22.2-42.5-34.6-42.5zM26 67.2c-13 7.6-13.9 20-13.8 24.6 0 1.1-.9 1.2-1.2.1-1.4-4.7-3.2-18.3 10.8-31.5 4.3-3.7 9.9 3.7 4.2 6.8zm8.8-5.3c-2.8 0-5.1-2.3-5.1-5.1s2.3-5.1 5.1-5.1 5.1 2.3 5.1 5.1-2.3 5.1-5.1 5.1z"></path>
+    </g>
+</svg>
+</a></div></div></div><div style="left: 405px; width: 170px; position: absolute; top: 1636px; height: 170px;" class="s7" id="Cntnr4-2u1" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr4-2u1"><div id="Cntnr4-2u1bg" class="s7bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr4-2u1.0"></div><div id="Cntnr4-2u1inlineContent" class="s7inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr4-2u1.1"><div style="left: 37px; width: 97px; position: absolute; top: 35px; height: 100px;" class="style-iu0mjrc3" id="SvgShp1-wam" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr4-2u1.1.$SvgShp1-wam"><style type="text/css">.style-iu0mjrc3 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:rgba(96, 96, 96, 1);stroke-width:0px;}
+.style-iu0mjrc3 svg * {vector-effect:non-scaling-stroke;}</style><a href="https://github.com/bsutherland/JuceOPLVSTi/issues/new?title=contribute_sbi_presets_here" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/issues/new?title=contribute_sbi_presets_here" data-type="external"><svg xmlns="http://www.w3.org/2000/svg" viewBox="22.5 22.5 154.99998474121094 154.80001831054688" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px;">
+    <g>
+        <path d="M100 116.6c-9.2 0-16.6-7.5-16.6-16.6s7.5-16.6 16.6-16.6c9.2 0 16.6 7.5 16.6 16.6s-7.4 16.6-16.6 16.6zm0-21.7c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1z"></path>
+        <path d="M108 34v14.6c8.2 1.3 15.7 4.4 22.2 9.1L141 46.9l11.3 11.3-10.7 10.7c5 6.7 8.4 14.5 9.7 23.1H166v16h-14.6c-1.3 8.2-4.4 15.7-9.1 22.2l10 10-11.3 11.3-9.9-9.9c-6.7 5-14.5 8.4-23.1 9.7V166H92v-14.6c-8.6-1.3-16.5-4.8-23.1-9.7l-9.9 9.9-11.3-11.3 10-10c-4.6-6.5-7.8-14-9.1-22.2H34V92h14.6c1.3-8.6 4.7-16.5 9.7-23.1L47.7 58.2 59 46.9l10.8 10.8c6.5-4.6 14-7.8 22.2-9.1V34h16m0-11.5H92c-6.4 0-11.5 5.2-11.5 11.5v5.5c-3 1-6 2.2-8.9 3.6l-4.5-4.5c-2.2-2.2-5.1-3.4-8.2-3.4-3.1 0-6 1.2-8.2 3.4L39.5 50c-4.5 4.5-4.5 11.8 0 16.3l4.2 4.2c-1.7 3.2-3.1 6.5-4.2 9.9H34c-6.4 0-11.5 5.2-11.5 11.5v16c0 6.4 5.2 11.5 11.5 11.5h5.5c1 3 2.2 6 3.6 8.9l-3.6 3.6c-4.5 4.5-4.5 11.8 0 16.3l11.3 11.3c2.3 2.3 5.2 3.4 8.2 3.4 3 0 5.9-1.1 8.2-3.4l3.4-3.4c3.2 1.7 6.5 3.1 9.9 4.2v5.5c0 6.4 5.2 11.5 11.5 11.5h16c6.4 0 11.5-5.2 11.5-11.5v-5.5c3.4-1.1 6.7-2.5 9.9-4.2l3.4 3.4c2.3 2.3 5.2 3.4 8.2 3.4 3 0 5.9-1.1 8.2-3.4l11.3-11.3c2.2-2.2 3.4-5.1 3.4-8.2 0-3.1-1.2-6-3.4-8.2l-3.6-3.6c1.4-2.9 2.6-5.8 3.6-8.9h5.5c6.4 0 11.5-5.2 11.5-11.5V92c0-6.4-5.2-11.5-11.5-11.5h-5.5c-1.1-3.4-2.5-6.7-4.2-9.9l4.2-4.2c4.5-4.5 4.5-11.8 0-16.3l-11.3-11.3c-2.2-2.2-5.1-3.4-8.2-3.4-3.1 0-6 1.2-8.2 3.4l-4.5 4.5c-2.9-1.4-5.8-2.6-8.9-3.6V34c.1-6.3-5-11.5-11.4-11.5z"></path>
+    </g>
+</svg>
+</a></div></div></div><div style="left: 762px; width: 170px; position: absolute; top: 1587px; height: 170px;" class="s7" id="Cntnr5-odu" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr5-odu"><div id="Cntnr5-odubg" class="s7bg" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr5-odu.0"></div><div id="Cntnr5-oduinlineContent" class="s7inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr5-odu.1"><div style="left: 37px; width: 97px; position: absolute; top: 35px; height: 100px;" class="style-iu0mpbtd" id="SvgShp2-q4q" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$Cntnr5-odu.1.$SvgShp2-q4q"><style type="text/css">.style-iu0mpbtd svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:rgba(96, 96, 96, 1);stroke-width:0px;}
+.style-iu0mpbtd svg * {vector-effect:non-scaling-stroke;}</style><a href="https://github.com/bsutherland/JuceOPLVSTi/issues" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/issues" data-type="external"><svg xmlns="http://www.w3.org/2000/svg" viewBox="11.300000190734863 12.299999237060547 22.400001525878906 93.89999389648438" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px;">
+    <g>
+        <path d="M27.3 85.2V32.1c3-1.8 6.4-5.6 6.4-10 0-4.1-2.1-7.6-5.4-9.5v9.8L23 25.5l-5.4-3.2.1-10c-3.4 1.9-6 5.6-6 9.8 0 4.3 1.8 8 5.8 9.8v53.3c-4 1.8-6.2 5.6-6.2 9.9 0 6.1 4.9 11.1 11.1 11.1s11.2-5 11.2-11.1c-.2-4.4-3.3-8.1-6.3-9.9zM25.8 101H19l-3.4-6 3.4-6h6.8l3.4 6-3.4 6z"></path>
+    </g>
+</svg>
+</a></div></div></div><div style="left: 0px; position: absolute; top: 480px; height: 21px; width: 0px;" class="s11" id="nchr0-mqa" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$nchr0-mqa"></div><div style="left: 0px; position: absolute; top: 2082px; height: 21px; width: 0px;" class="s11" id="nchr1-w27" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$nchr1-w27"></div><div style="left: 0px; position: absolute; top: 1488px; height: 20px; width: 0px;" class="s11" id="nchr3-1e8f" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$nchr3-1e8f"></div><div id="StBttn1-u30" data-align="center" data-disabled="false" data-margin="0" data-should-use-flex="true" style="left: 390px; position: absolute; top: 775px; height: 37px; min-height: 21px; width: 200px;" class="s12" data-state="desktop shouldUseFlex center" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn1-u30" data-prev-text="Contribute" data-prev-min-width="66" data-prev-width="200"><a href="#contribute" target="_self" data-keep-roots="true" data-anchor="c1h4j" id="StBttn1-u30link" class="g-transparent-a s12link" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn1-u30.0"><span id="StBttn1-u30label" class="s12label" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn1-u30.0.0">Contribute</span></a></div><div id="StBttn2-fzp" data-align="center" data-disabled="false" data-margin="0" data-should-use-flex="true" style="left: 390px; position: absolute; top: 2026px; height: 37px; min-height: 21px; width: 200px;" class="s12" data-state="desktop shouldUseFlex center" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn2-fzp" data-prev-text="Get your name in lights!" data-prev-min-width="152" data-prev-width="200"><a href="#credits" target="_self" data-keep-roots="true" data-anchor="c1pl4" id="StBttn2-fzplink" class="g-transparent-a s12link" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn2-fzp.0"><span id="StBttn2-fzplabel" class="s12label" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn2-fzp.0.0">Get your name in lights!</span></a></div><div id="StBttn3-858" data-align="center" data-disabled="false" data-margin="0" data-should-use-flex="true" style="left: 390px; position: absolute; top: 2925px; height: 37px; min-height: 21px; width: 200px;" class="s12" data-state="desktop shouldUseFlex center" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn3-858" data-prev-text="Back to Top" data-prev-min-width="74" data-prev-width="200"><a href="#top" target="_self" data-keep-roots="true" data-anchor="SCROLL_TO_TOP" id="StBttn3-858link" class="g-transparent-a s12link" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn3-858.0"><span id="StBttn3-858label" class="s12label" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$StBttn3-858.0.0">Back to Top</span></a></div>
+
+<a name="contribute"></a>
+<div style="left: 265px; width: 450px; position: absolute; top: 1502px;" class="s1" id="WRchTxt7-12ve" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WRchTxt7-12ve"><h2 class="font_2" style="text-align:center"><span class="color_14">Contribute</span></h2>
+
+<!--
+<p class="font_8" style="text-align: center;"><span class="color_11">via the <span style="text-decoration:underline;"><a href="https://github.com/bsutherland/JuceOPLVSTi" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi" data-type="external">GitHub</a></span> page</span></p>-->
+</div>
+
+<a name="credits"></a>
+<div style="left: 0px; width: 980px; position: absolute; top: 2099px;" class="s1" id="WRchTxtd-12oh" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WRchTxtd-12oh"><h2 class="font_2" style="text-align:center"><span class="color_14">Credits,&nbsp;thanks, demos, links</span></h2>
+</div><div style="width: 980px; position: absolute; top: 0px; height: 393px; left: 0px;" class="s13" id="comp-ilc0xskw" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw"><div style="position: absolute; top: 0px; width: calc((100vw - 17px) - 0px); height: 100%; pointer-events: none; bottom: 0px; left: calc(490px - (((100vw - 17px) - 0px) / 2)); right: calc(490px + (((100vw - 17px) - 0px) / 2)); overflow: hidden; clip: rect(0px 1903px 393px 0px);" class="s13balata" id="comp-ilc0xskwbalata" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.0"><div style="width:100%;height:100%;top:;bottom:;left:;right:;position:absolute;" class="bgColor" id="comp-ilc0xskwbalatabgcolor" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.0.$comp-ilc0xskwbalatabgcolor"><div style="width:100%;height:100%;position:absolute;background-color:transparent;" id="comp-ilc0xskwbalatabgcoloroverlay" class="bgColoroverlay" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.0.$comp-ilc0xskwbalatabgcolor.0"></div></div><div id="comp-ilc0xskwbalatamedia" style="position: absolute; pointer-events: none; top: 0px; width: 1903px; left: 0px; height: 393px;" data-effect="none" data-fitting="fill" data-align="center" class="balataMedia" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.0.$media_preview"></div></div><div id="comp-ilc0xskwinlineContent" class="s13inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1"><div style="position: absolute; left: calc((((((100vw - 17px) - 0px) * 0.5) + ((980px - ((100vw - 17px) - 0px)) / 2)) + 0px) + -490px); width: 980px; top: 0px; height: 393px;" class="s13" id="mediaiu0km14q1" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1"><div style="position: absolute; top: 0px; width: calc((((100vw - 17px) - 0px) * 1) + 1px); height: 100%; pointer-events: none; left: calc((((((100vw - 17px) - 0px) * 1) - 980px) * -0.5) - 1px); bottom: 0px; overflow: hidden; clip: rect(0px 1904px 393px 0px);" class="s13balata" id="mediaiu0km14q1balata" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0"><div style="width:100%;height:100%;top:;bottom:;left:;right:;position:absolute;" class="bgColor" id="mediaiu0km14q1balatabgcolor" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0.$mediaiu0km14q1balatabgcolor"><div style="width:100%;height:100%;position:absolute;background-color:rgba(0, 0, 0, 1);" id="mediaiu0km14q1balatabgcoloroverlay" class="bgColoroverlay" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0.$mediaiu0km14q1balatabgcolor.0"></div></div><div id="mediaiu0km14q1balatamedia" style="position: absolute; pointer-events: none; top: 0px; width: 1904px; left: 0px; height: 393px;" data-effect="none" data-fitting="fill" data-align="top" class="balataMedia" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0.$media_preview"><div style="position: absolute; opacity: 0.25; width: 1904px; height: 393px;" id="mediaiu0km14q1balataimage" data-type="image" class="bgImage" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0.$media_preview.$img_undefined"><div class="bgImagepreloader" id="mediaiu0km14q1balataimagepreloader" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0.$media_preview.$img_undefined.0"></div><img id="mediaiu0km14q1balataimageimage" alt="" src="./juceoplvsti_files/strip-background.png" data-type="image" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.0.$media_preview.$img_undefined.$image" style="width: 1904px; height: 393px; object-fit: cover;"></div></div></div><div style="position:absolute;width:980px;top:0;bottom:0;left:calc((100% - 980px) * 0.5);" id="mediaiu0km14q1inlineContent" class="s13inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.1"><div style="left: 180px; width: 616px; position: absolute; top: 77px;" class="s1" id="WRchTxt4-139i" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.1.$WRchTxt4-139i"><h2 class="font_2" style="text-align:center"><span class="color_14">FM synthesizer VST</span></h2>
+<p class="font_8" style="text-align:center"><span class="color_11">Yamaha OPL chip sounds wrapped in a VST. Create classic DOS game sounds in modern DAWs. As heard in late 80s / early 90s PC sound cards. DOSBox OPL emulation under the hood.</span></p>
+</div>
+
+
+<div id="StBttn0-1qm" data-align="center" data-disabled="false" data-margin="0" data-should-use-flex="true" style="left: 386px; position: absolute; top: 213px; height: 37px; min-height: 21px; width: 200px;" class="s12" data-state="desktop shouldUseFlex center" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.1.$StBttn0-1qm" data-prev-text="Get it now" data-prev-min-width="64" data-prev-width="200"><a href="#get_it_now" target="_self" data-keep-roots="true" data-anchor="c1b8n" id="StBttn0-1qmlink" class="g-transparent-a s12link" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.1.$StBttn0-1qm.0"><span id="StBttn0-1qmlabel" class="s12label" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-ilc0xskw.1.$mediaiu0km14q1/=1$mediaiu0km14q1.1.$StBttn0-1qm.0.0">Get it now</span></a></div></div></div></div></div><div style="left: 181px; width: 619px; position: absolute; top: 605px;" class="s1" id="WRchTxt6-ti1" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WRchTxt6-ti1">
+
+<p class="font_8" style="text-align:center"><span class="color_11"><span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi/releases/download/0.13.2/JuceOPLVSTi_0-13-2.zip" target="_self" data-content="https://github.com/bsutherland/JuceOPLVSTi/releases/download/0.13.2/JuceOPLVSTi_0-13-2.zip" data-type="external">Windows VST</a></span> (.zip, 32 and 64-bit binaries, SBI instruments)</span></p>
+
+<p class="font_8" style="text-align:center"><span class="color_11"><span class="wixGuard">​</span></span></p>
+
+<p class="font_8" style="text-align:center"><span class="color_11"><span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi/releases/download/0.13.2/AdlibBlaster.VSTi.zip" target="_self" data-content="https://github.com/bsutherland/JuceOPLVSTi/releases/download/0.13.2/AdlibBlaster.VSTi.zip" data-type="external">OSX VST</a></span> (build courtesy of Jeff Russ, instruments not included)</span></p>
+
+<p class="font_8" style="text-align:center"><span class="color_11"><span class="wixGuard">​</span></span></p>
+
+<p class="font_8" style="text-align:center"><a href="https://www.linuxmusicians.com/viewtopic.php?t=15485" target="_blank" data-content="https://www.linuxmusicians.com/viewtopic.php?t=15485" data-type="external"><span class="color_11"><span style="text-decoration:underline;">Linux build instructions</span></span></a></p>
+
+<p class="font_8" style="text-align:center"><span class="color_11"><span class="wixGuard">​</span></span></p>
+
+<p class="font_8" style="text-align:center"><span class="color_11"><span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi" target="_self" data-content="https://github.com/bsutherland/JuceOPLVSTi" data-type="external">Source code</a></span> hosted on GitHub</span></p>
+</div>
+
+<a name="get_it_now"></a>
+<div style="left: 180px; width: 619px; position: absolute; top: 496px;" class="s1" id="WRchTxt5-ai6" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$WRchTxt5-ai6"><h2 class="font_2" style="text-align: center;">Latest release - 0.13.2</h2>
+</div><div style="position: absolute; width: 979px; height: 184px; top: 1802px; left: 1px;" class="s14" id="comp-iu0mt3k5" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-iu0mt3k5"><div id="comp-iu0mt3k5inlineContent" class="s14inlineContent" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-iu0mt3k5.0"><div style="width: 265px; position: absolute; left: 0px; top: 0px;" class="s1" id="WRchTxt8-bjr" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-iu0mt3k5.0.$WRchTxt8-bjr"><h6 class="font_6" style="text-align:center">Builds</h6>
+
+<p class="font_8" style="text-align:center">&nbsp;</p>
+
+<p class="font_8" style="text-align:center"><span class="color_11">I only have access to a Windows machine. The code <span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi/issues/12" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/issues/12" data-type="external">builds on OSX</a></span> (XCode) and <span style="text-decoration:underline;"><a href="https://www.linuxmusicians.com/viewtopic.php?t=15485" target="_blank" data-content="https://www.linuxmusicians.com/viewtopic.php?t=15485" data-type="external">Linux </a></span>thanks to the magic of Juce. Give back by building when new versions are released.</span></p>
+</div><div style="width: 265px; position: absolute; left: 357px; top: 31px;" class="s1" id="WRchTxtb-q33" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-iu0mt3k5.0.$WRchTxtb-q33"><h6 class="font_6" style="text-align:center">Presets</h6>
+
+<p class="font_8" style="text-align:center">&nbsp;</p>
+
+<p class="font_8" style="text-align:center"><span class="color_11">Make it more fun for everyone.&nbsp;I've collected hundreds of .SBI presets from various sources, including user contributions. Rip from your favourite&nbsp;DOS games or export&nbsp;from the plugin itself with one click. No excuses!</span></p>
+</div><div style="width: 265px; position: absolute; left: 714px; top: 0px;" class="s1" id="WRchTxtc-s8a" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-iu0mt3k5.0.$WRchTxtc-s8a"><h6 class="font_6" style="text-align:center">Bug fixes and reports</h6>
+
+<p class="font_8" style="text-align:center">&nbsp;</p>
+
+<p class="font_8" style="text-align:center"><span style="color:#FFFFFF;">I'm doing my best to keep on top of serious issues, but there a lot of combinations of operating system and software. Any and all help is greatly appreciated.</span></p>
+</div></div></div><div style="left: 114px; width: 751px; position: absolute; top: 2229px;" class="s1" id="comp-iu0n4g1h" data-reactid=".0.$SITE_ROOT.$desktop_siteRoot.$PAGES_CONTAINER.1.1.$SITE_PAGES.$c1dmp.1.$comp-iu0n4g1h"><p class="font_7" style="line-height:1.2em"><span class="color_11">In no particular order. If you think your name belongs here, please let me know!</span></p>
+
+<p class="font_7" style="line-height:1.2em"><span class="color_11"><span class="wixGuard">​</span>​</span></p>
+
+<ul class="font_7">
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://www.advsys.net/ken/" target="_blank" data-content="http://www.advsys.net/ken/" data-type="external">Ken Silverman</a></span>, who wrote the original OPL emulation code back in 1998!</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">The <span style="text-decoration:underline"><a href="http://www.dosbox.com/" target="_blank" data-content="http://www.dosbox.com/" data-type="external">DOSBox</a></span> team, for their amazing work.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://jeff-russ.github.io/AdlibBlaster/" target="_blank" data-content="http://jeff-russ.github.io/AdlibBlaster/" data-type="external">Jeff Russ</a></span>, for his time and effort to get it building&nbsp;under OSX, and for building multiple releases.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi/commits?author=trylle" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/commits?author=trylle" data-type="external">Trylle</a></span>, who kindly stopped by to fix some issues and add features.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">Litaniast, who <span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi/issues/36" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/issues/36" data-type="external">contributed a bunch of SBI presets</a></span> (now included in release).</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">Jeremy Penner, who <span style="text-decoration:underline"><a href="https://github.com/bsutherland/JuceOPLVSTi/issues/34" target="_blank" data-content="https://github.com/bsutherland/JuceOPLVSTi/issues/34" data-type="external">figured out the cause</a></span> of a long standing bug.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">Julian Storer, creator of the excellent <span style="text-decoration:underline"><a href="https://www.juce.com/" target="_blank" data-content="https://www.juce.com/" data-type="external">Juce C++ framework</a></span> which helps makes this possible.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">The folks at&nbsp;<span style="text-decoration:underline"><a href="http://www.shikadi.net/Main_Page" target="_blank" data-content="http://www.shikadi.net/Main_Page" data-type="external">shikadi.net</a></span>, who maintain a great wiki on reverse engineering DOS games. Includes details of the SBI format, and useful utilities for extracting instruments and music.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://www.oplx.com/" target="_blank" data-content="http://www.oplx.com/" data-type="external">OPLX</a></span>, including OPL programming documentation and a bunch of old-school DOS utilities.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://bobbyprincemusic.blogspot.jp/2013/12/dosbox-vst.html" target="_blank" data-content="http://bobbyprincemusic.blogspot.jp/2013/12/dosbox-vst.html" data-type="external">Bobby Prince</a></span>, composer of the original Doom soundtrack.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://bedroomproducersblog.com/2015/10/28/juceoplvsti-vst/" target="_blank" data-content="http://bedroomproducersblog.com/2015/10/28/juceoplvsti-vst/" data-type="external">Bedroom Producer's Blog</a></span>. We're in the top 50 free VST list.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://www.producerspot.com/best-free-vst-synthesizers-plugins-released-in-2015" target="_blank" data-content="http://www.producerspot.com/best-free-vst-synthesizers-plugins-released-in-2015" data-type="external">Producer Spot</a></span>. Top 10 free synth plugins for 2015.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://icon.jp/archives/11222" target="_blank" data-content="http://icon.jp/archives/11222" data-type="external">Icon</a></span>. Nice review (in Japanese) by this&nbsp;music/art/tech culture site.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="http://blog.landr.com/10-free-vst-plugins-will-give-better-bass/" target="_blank" data-content="http://blog.landr.com/10-free-vst-plugins-will-give-better-bass/" data-type="external">Scott Lander</a></span>. Top 10 free plugins for better bass, apparently.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11"><span style="text-decoration:underline"><a href="https://www.youtube.com/watch?v=w6Lu0C_vZwQ" target="_blank" data-content="https://www.youtube.com/watch?v=w6Lu0C_vZwQ" data-type="external">Dune 2 soundtrack</a></span> recreated in FL Studio by Mihai, who contributed the presets as SBI files.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">A <span style="text-decoration:underline"><a href="https://www.youtube.com/watch?v=yU0CWQ66Z28" target="_blank" data-content="https://www.youtube.com/watch?v=yU0CWQ66Z28" data-type="external">short demo</a></span> of some classic FM sounds, showing how settings affect the sound.</span></p>
+	</li>
+	<li>
+	<p class="font_7" style="line-height:1.2em"><span class="color_11">Some nifty original <span style="text-decoration:underline"><a href="https://dl.dropboxusercontent.com/u/28087823/LD34%20LandsOfLore/media/dungeon.m4a" target="_blank" data-content="https://dl.dropboxusercontent.com/u/28087823/LD34%20LandsOfLore/media/dungeon.m4a" data-type="external">dungeon music</a></span> created for a <span style="text-decoration:underline"><a href="http://ludumdare.com/compo/2015/12/16/dungeon-crawler-making-of/" target="_blank" data-content="http://ludumdare.com/compo/2015/12/16/dungeon-crawler-making-of/" data-type="external">game</a></span>&nbsp;by&nbsp;Christina Antoinette Neofotistou.</span></p>
+	</li>
+</ul>
+</div></div></div></div></div></div></div></div></div><noscript data-reactid=".0.5"></noscript><div data-reactid=".0.$siteAspectsContainer"></div><noscript data-reactid=".0.7"></noscript></div></div>
+
+</body></html>
