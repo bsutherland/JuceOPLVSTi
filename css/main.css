@@ -1,5 +1,5 @@
 html {
-    color: #eee;
+    color: #ccc;
     background-color: #000;
     font-size: 1em;
     line-height: 1.4;
@@ -54,12 +54,12 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #040;
+    border-bottom: 20px solid #000;
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #040;
+    border-top: 20px solid #000;
 }
 
 .header-container,
@@ -95,6 +95,7 @@ nav a {
     background: #040;
 }
 
+nav a:link,
 nav a:hover,
 nav a:visited {
     color: white;
@@ -140,19 +141,19 @@ nav a:hover {
 
 
 h1, h2, h3 {
-    color: #A8A8A8;
+    color: #eee;
 }
 
 .title {
-    color: #007F00;
+    color: #080;
 }
 
 a:link {
-    color: #007f00;
+    color: #0a0;
 }
 
 a:visited {
-    color: #040;
+    color: #060;
 }
 
 section {
@@ -178,6 +179,10 @@ section {
     height: 170px;
     margin-left: 40px;
 }
+.contribute-icon-circle:hover {
+    background-color: #080;
+}
+
 
 #contribute p {
     margin-left: 20px;
@@ -239,17 +244,6 @@ section {
 }
 
 @media only screen and (min-width: 768px) {
-
-/* ====================
-    WIDE: CSS3 Effects
-   ==================== */
-
-    .header-container,
-    .main aside {
-        -webkit-box-shadow: 0 5px 10px #aaa;
-           -moz-box-shadow: 0 5px 10px #aaa;
-                box-shadow: 0 5px 10px #aaa;
-    }
 
 /* ============
     WIDE: Menu
