@@ -7,7 +7,7 @@
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.3"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.4"
               buildVST3="0" buildRTAS="0" buildAAX="0" includeBinaryInAppConfig="1"
               pluginIsMidiEffectPlugin="0" companyWebsite="https://bsutherland.github.io/JuceOPLVSTi/"
               buildAUv3="0">
@@ -87,20 +87,20 @@
                        winArchitecture="32-bit" isDebug="0" optimisation="3" targetName="JuceOPLVSTi"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_audio_basics" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_core" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_events" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_graphics" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_opengl" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_video" path="../Juce-grapefruit/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\Juce-grapefruit\JUCE\modules"/>
       </MODULEPATHS>
     </VS2013>
     <VS2015 targetFolder="Builds/VisualStudio2015" vstFolder="C:\code\audio\VST3 SDK"
@@ -109,27 +109,27 @@
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="JuceOPLVSTi"/>
         <CONFIGURATION name="Release - 64-bit" winWarningLevel="4" generateManifest="1"
-                       winArchitecture="x64" isDebug="0" optimisation="3" targetName="JuceOPLVSTi"
+                       winArchitecture="x64" isDebug="0" optimisation="3" targetName="JuceOPLVSTi x64"
                        warningsAreErrors="1" headerPath=""/>
         <CONFIGURATION name="Release - 32-bit" winWarningLevel="4" generateManifest="1"
                        winArchitecture="32-bit" isDebug="0" optimisation="3" targetName="JuceOPLVSTi"
                        warningsAreErrors="1" headerPath=""/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_opengl" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_graphics" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_events" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_core" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../Juce-grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../Juce-grapefruit/modules"/>
+        <MODULEPATH id="juce_video" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\Juce-grapefruit\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\Juce-grapefruit\JUCE\modules"/>
       </MODULEPATHS>
     </VS2015>
   </EXPORTFORMATS>
