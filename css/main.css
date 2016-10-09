@@ -54,18 +54,18 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #e44d26;
+    border-bottom: 20px solid #040;
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 20px solid #040;
 }
 
 .header-container,
 .footer-container,
 .main aside {
-    background: #f16529;
+    background: #000;
 }
 
 .title {
@@ -85,14 +85,14 @@ nav ul {
 nav a {
     display: block;
     margin-bottom: 10px;
-    padding: 15px 0;
+    padding: 15px 0px;
 
     text-align: center;
     text-decoration: none;
     font-weight: bold;
 
     color: white;
-    background: #e44d26;
+    background: #040;
 }
 
 nav a:hover,
@@ -135,7 +135,7 @@ nav a:hover {
 }
 
 /* ==========================================================================
-   Author's custom styles
+   Custom styles
    ========================================================================== */
 
 
@@ -147,11 +147,41 @@ h1, h2, h3 {
     color: #007F00;
 }
 
+a:link {
+    color: #007f00;
+}
+
+a:visited {
+    color: #040;
+}
+
+section {
+    padding-top: 5em;
+    clear: left;
+}
+
+#contribute a:link {
+    text-decoration: none;
+}
+
+.contribute-item {
+    width: 250px;
+    text-align: center;
+    float: left;
+    padding-top: 2.5em;
+}
+
 .contribute-icon-circle {
     background-color: #040;
     border-radius: 50%;
     width: 170px;
     height: 170px;
+    margin-left: 40px;
+}
+
+#contribute p {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .contribute-icon {
@@ -165,6 +195,8 @@ h1, h2, h3 {
     stroke-width:0px;
     vector-effect:non-scaling-stroke;
 }
+
+
 
 
 /* ==========================================================================
@@ -238,13 +270,9 @@ h1, h2, h3 {
 
     .main article {
         float: left;
-        width: 57%;
+        width: 80%;
     }
 
-    .main aside {
-        float: right;
-        width: 28%;
-    }
 }
 
 @media only screen and (min-width: 1140px) {
