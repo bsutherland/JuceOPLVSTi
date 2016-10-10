@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 4.2.3
+  Created with Projucer version: 4.2.4
 
   ------------------------------------------------------------------------------
 
@@ -86,6 +86,26 @@ public:
     static const int channeloff_pngSize;
     static const char* channelon_png;
     static const int channelon_pngSize;
+    static const char* toggle_off_sq_png;
+    static const int toggle_off_sq_pngSize;
+    static const char* toggle_on_sq_png;
+    static const int toggle_on_sq_pngSize;
+    static const char* line_border_horiz_png;
+    static const int line_border_horiz_pngSize;
+    static const char* line_border_vert_png;
+    static const int line_border_vert_pngSize;
+    static const char* algo_switch_off_png;
+    static const int algo_switch_off_pngSize;
+    static const char* algo_switch_on_png;
+    static const int algo_switch_on_pngSize;
+    static const char* algo_switch_on2_png;
+    static const int algo_switch_on2_pngSize;
+    static const char* algo_switch_on3_png;
+    static const int algo_switch_on3_pngSize;
+    static const char* twoopAm_png;
+    static const int twoopAm_pngSize;
+    static const char* twoopFm_png;
+    static const int twoopFm_pngSize;
 
 
 private:
@@ -123,7 +143,6 @@ private:
     ScopedPointer<ToggleButton> vibratoButton;
     ScopedPointer<ToggleButton> sustainButton;
     ScopedPointer<ToggleButton> keyscaleEnvButton;
-    ScopedPointer<Label> frequencyLabel2;
     ScopedPointer<Label> dbLabel2;
     ScopedPointer<GroupComponent> groupComponent2;
     ScopedPointer<ComboBox> frequencyComboBox2;
@@ -159,7 +178,6 @@ private:
     ScopedPointer<Slider> feedbackSlider;
     ScopedPointer<Label> frequencyLabel7;
     ScopedPointer<ComboBox> velocityComboBox;
-    ScopedPointer<Label> attenuationLabel3;
     ScopedPointer<ComboBox> velocityComboBox2;
     ScopedPointer<Label> attenuationLabel4;
     ScopedPointer<ImageButton> alternatingsineImageButton;
@@ -186,6 +204,73 @@ private:
     ScopedPointer<TextButton> exportButton;
     ScopedPointer<TextButton> loadButton;
     ScopedPointer<Label> versionLabel;
+    ScopedPointer<ImageButton> ToggleButtonOffExample;
+    ScopedPointer<ImageButton> ToggleButtonOnExample;
+    ScopedPointer<Label> label;
+    ScopedPointer<Label> label2;
+    ScopedPointer<ImageButton> LineBorderButton1C;
+    ScopedPointer<ImageButton> LineBorderButton1A;
+    ScopedPointer<ImageButton> LineBorderButton1B;
+    ScopedPointer<Label> label3;
+    ScopedPointer<ImageButton> LineBorderButton3A;
+    ScopedPointer<ImageButton> LineBorderButton3B;
+    ScopedPointer<ImageButton> LineBorderButton3B2;
+    ScopedPointer<ImageButton> LineBorderButton1C2;
+    ScopedPointer<ImageButton> LineBorderButton1A2;
+    ScopedPointer<ImageButton> LineBorderButton1B2;
+    ScopedPointer<ImageButton> LineBorderButton1C3;
+    ScopedPointer<ImageButton> LineBorderButton1B3;
+    ScopedPointer<ImageButton> algoSwitchButtonOffEx1;
+    ScopedPointer<ImageButton> algoSwitchButtonOffEx2;
+    ScopedPointer<ImageButton> algoSwitchButtonOnEx1;
+    ScopedPointer<ImageButton> algoSwitchButtonOnEx2;
+    ScopedPointer<Label> label4;
+    ScopedPointer<Label> label5;
+    ScopedPointer<Label> label6;
+    ScopedPointer<Label> label7;
+    ScopedPointer<Label> label8;
+    ScopedPointer<ImageButton> algoSwitchButtonOn2Ex1;
+    ScopedPointer<ImageButton> algoSwitchButtonOn2Ex2;
+    ScopedPointer<Label> label9;
+    ScopedPointer<Label> label10;
+    ScopedPointer<ImageButton> algoSwitchButtonOn3Ex1;
+    ScopedPointer<ImageButton> algoSwitchButtonOn3Ex2;
+    ScopedPointer<Label> label11;
+    ScopedPointer<Label> label12;
+    ScopedPointer<ImageButton> TwoOpAMButton;
+    ScopedPointer<ImageButton> TwoOpFMButton;
+    ScopedPointer<Label> label13;
+    ScopedPointer<Label> label14;
+    ScopedPointer<Label> label15;
+    ScopedPointer<Label> label16;
+    ScopedPointer<Label> label17;
+    ScopedPointer<GroupComponent> groupComponent6;
+    ScopedPointer<ImageButton> algoSwitchButtonOnEx3;
+    ScopedPointer<Label> label18;
+    ScopedPointer<ImageButton> algoSwitchButtonOffEx3;
+    ScopedPointer<Label> label19;
+    ScopedPointer<ImageButton> TwoOpAMButton2;
+    ScopedPointer<Label> label20;
+    ScopedPointer<Label> label21;
+    ScopedPointer<Label> label22;
+    ScopedPointer<ImageButton> algoSwitchButtonOffEx4;
+    ScopedPointer<Label> label23;
+    ScopedPointer<ImageButton> algoSwitchButtonOn3Ex3;
+    ScopedPointer<Label> label24;
+    ScopedPointer<ImageButton> TwoOpFMButton2;
+    ScopedPointer<Label> label25;
+    ScopedPointer<Label> label26;
+    ScopedPointer<GroupComponent> groupComponent7;
+    ScopedPointer<ImageButton> algoSwitchButtonOffEx5;
+    ScopedPointer<Label> label27;
+    ScopedPointer<ImageButton> algoSwitchButtonOn3Ex4;
+    ScopedPointer<Label> label28;
+    ScopedPointer<GroupComponent> groupComponent8;
+    ScopedPointer<Label> frequencyLabel9;
+    ScopedPointer<Label> label29;
+    ScopedPointer<Label> label30;
+    ScopedPointer<Label> frequencyLabel10;
+    ScopedPointer<Label> attenuationLabel5;
 
 
     //==============================================================================

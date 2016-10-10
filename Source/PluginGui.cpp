@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 4.2.3
+  Created with Projucer version: 4.2.4
 
   ------------------------------------------------------------------------------
 
@@ -18,6 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
+#include "OPLLookAndFeel.h"
 //[/Headers]
 
 #include "PluginGui.h"
@@ -169,7 +170,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     frequencyComboBox->addListener (this);
 
     addAndMakeVisible (frequencyLabel = new Label ("frequency label",
-                                                   TRANS("Frequency")));
+                                                   TRANS("Base Frequency")));
     frequencyLabel->setTooltip (TRANS("Multiplier applied to base note frequency"));
     frequencyLabel->setFont (Font (15.00f, Font::plain));
     frequencyLabel->setJustificationType (Justification::centredLeft);
@@ -182,7 +183,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     aSlider->setTooltip (TRANS("Envelope attack rate"));
     aSlider->setRange (0, 15, 1);
     aSlider->setSliderStyle (Slider::LinearVertical);
-    aSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 40, 20);
+    aSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 30, 20);
     aSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     aSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     aSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -204,7 +205,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     dSlider->setTooltip (TRANS("Envelope decay rate"));
     dSlider->setRange (0, 15, 1);
     dSlider->setSliderStyle (Slider::LinearVertical);
-    dSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 40, 20);
+    dSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 30, 20);
     dSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     dSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     dSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -226,7 +227,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     sSlider->setTooltip (TRANS("Envelope sustain level"));
     sSlider->setRange (0, 15, 1);
     sSlider->setSliderStyle (Slider::LinearVertical);
-    sSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 40, 20);
+    sSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 30, 20);
     sSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     sSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     sSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -248,7 +249,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     rSlider->setTooltip (TRANS("Envelope release rate"));
     rSlider->setRange (0, 15, 1);
     rSlider->setSliderStyle (Slider::LinearVertical);
-    rSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 40, 20);
+    rSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 30, 20);
     rSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     rSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     rSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -268,8 +269,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (attenuationSlider = new Slider ("attenuation slider"));
     attenuationSlider->setRange (-47.25, 0, 0.75);
-    attenuationSlider->setSliderStyle (Slider::LinearVertical);
-    attenuationSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 64, 20);
+    attenuationSlider->setSliderStyle (Slider::LinearHorizontal);
+    attenuationSlider->setTextBoxStyle (Slider::TextBoxRight, false, 64, 20);
     attenuationSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     attenuationSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     attenuationSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -343,11 +344,13 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     waveLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (tremoloButton = new ToggleButton ("tremolo button"));
+    tremoloButton->setTooltip (TRANS("Modulate amplitude at 3.7 Hz"));
     tremoloButton->setButtonText (TRANS("Tremolo"));
     tremoloButton->addListener (this);
     tremoloButton->setColour (ToggleButton::textColourId, Colour (0xff007f00));
 
     addAndMakeVisible (vibratoButton = new ToggleButton ("vibrato button"));
+    vibratoButton->setTooltip (TRANS("Modulate frequency at 6.1 Hz"));
     vibratoButton->setButtonText (TRANS("Vibrato"));
     vibratoButton->addListener (this);
     vibratoButton->setColour (ToggleButton::textColourId, Colour (0xff007f00));
@@ -360,19 +363,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (keyscaleEnvButton = new ToggleButton ("keyscale env button"));
     keyscaleEnvButton->setTooltip (TRANS("Speed up envelope rate with note frequency"));
-    keyscaleEnvButton->setButtonText (TRANS("Keyscale Envelope Rate"));
+    keyscaleEnvButton->setButtonText (TRANS("Keyscale Env. Rate"));
     keyscaleEnvButton->addListener (this);
     keyscaleEnvButton->setColour (ToggleButton::textColourId, Colour (0xff007f00));
-
-    addAndMakeVisible (frequencyLabel2 = new Label ("frequency label",
-                                                    TRANS("Keyscale Attenuation")));
-    frequencyLabel2->setTooltip (TRANS("Attenuate amplitude with note frequency"));
-    frequencyLabel2->setFont (Font (15.00f, Font::plain));
-    frequencyLabel2->setJustificationType (Justification::centred);
-    frequencyLabel2->setEditable (false, false, false);
-    frequencyLabel2->setColour (Label::textColourId, Colour (0xff007f00));
-    frequencyLabel2->setColour (TextEditor::textColourId, Colours::black);
-    frequencyLabel2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (dbLabel2 = new Label ("db label",
                                              TRANS("dB/8ve\n")));
@@ -398,7 +391,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     frequencyComboBox2->addListener (this);
 
     addAndMakeVisible (frequencyLabel3 = new Label ("frequency label",
-                                                    TRANS("Frequency")));
+                                                    TRANS("Base Frequency")));
     frequencyLabel3->setTooltip (TRANS("Multiplier applied to base note frequency"));
     frequencyLabel3->setFont (Font (15.00f, Font::plain));
     frequencyLabel3->setJustificationType (Justification::centredLeft);
@@ -493,8 +486,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (attenuationSlider2 = new Slider ("attenuation slider"));
     attenuationSlider2->setRange (-47.25, 0, 0.75);
-    attenuationSlider2->setSliderStyle (Slider::LinearVertical);
-    attenuationSlider2->setTextBoxStyle (Slider::TextBoxBelow, false, 64, 20);
+    attenuationSlider2->setSliderStyle (Slider::LinearHorizontal);
+    attenuationSlider2->setTextBoxStyle (Slider::TextBoxRight, false, 64, 20);
     attenuationSlider2->setColour (Slider::thumbColourId, Colour (0xff00af00));
     attenuationSlider2->setColour (Slider::trackColourId, Colour (0x7f007f00));
     attenuationSlider2->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -568,11 +561,13 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     waveLabel2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (tremoloButton2 = new ToggleButton ("tremolo button"));
+    tremoloButton2->setTooltip (TRANS("Modulate amplitude at 3.7 Hz"));
     tremoloButton2->setButtonText (TRANS("Tremolo"));
     tremoloButton2->addListener (this);
     tremoloButton2->setColour (ToggleButton::textColourId, Colour (0xff007f00));
 
     addAndMakeVisible (vibratoButton2 = new ToggleButton ("vibrato button"));
+    vibratoButton2->setTooltip (TRANS("Modulate frequency at 6.1 Hz"));
     vibratoButton2->setButtonText (TRANS("Vibrato"));
     vibratoButton2->addListener (this);
     vibratoButton2->setColour (ToggleButton::textColourId, Colour (0xff007f00));
@@ -585,13 +580,13 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (keyscaleEnvButton2 = new ToggleButton ("keyscale env button"));
     keyscaleEnvButton2->setTooltip (TRANS("Speed up envelope rate with note frequency"));
-    keyscaleEnvButton2->setButtonText (TRANS("Keyscale Envelope Rate"));
+    keyscaleEnvButton2->setButtonText (TRANS("Keyscale Env. Rate"));
     keyscaleEnvButton2->addListener (this);
     keyscaleEnvButton2->setColour (ToggleButton::textColourId, Colour (0xff007f00));
 
     addAndMakeVisible (frequencyLabel4 = new Label ("frequency label",
-                                                    TRANS("Keyscale Attenuation")));
-    frequencyLabel4->setTooltip (TRANS("Attenuate amplitude with note frequency"));
+                                                    TRANS("Keyscale Attenuation (db/8ve)")));
+    frequencyLabel4->setTooltip (TRANS("Attenuate amplitude with note frequency in db/8ve"));
     frequencyLabel4->setFont (Font (15.00f, Font::plain));
     frequencyLabel4->setJustificationType (Justification::centred);
     frequencyLabel4->setEditable (false, false, false);
@@ -608,7 +603,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (tremoloSlider = new Slider ("tremolo slider"));
     tremoloSlider->setRange (1, 4.8, 3.8);
     tremoloSlider->setSliderStyle (Slider::LinearHorizontal);
-    tremoloSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 44, 20);
+    tremoloSlider->setTextBoxStyle (Slider::TextBoxRight, false, 32, 20);
     tremoloSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     tremoloSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     tremoloSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -639,7 +634,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (vibratoSlider = new Slider ("vibrato slider"));
     vibratoSlider->setRange (7, 14, 7);
     vibratoSlider->setSliderStyle (Slider::LinearHorizontal);
-    vibratoSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 44, 20);
+    vibratoSlider->setTextBoxStyle (Slider::TextBoxRight, false, 32, 20);
     vibratoSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     vibratoSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     vibratoSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -670,8 +665,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (feedbackSlider = new Slider ("feedback slider"));
     feedbackSlider->setRange (0, 7, 1);
-    feedbackSlider->setSliderStyle (Slider::LinearHorizontal);
-    feedbackSlider->setTextBoxStyle (Slider::TextBoxRight, false, 44, 20);
+    feedbackSlider->setSliderStyle (Slider::LinearVertical);
+    feedbackSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 30, 20);
     feedbackSlider->setColour (Slider::thumbColourId, Colour (0xff00af00));
     feedbackSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     feedbackSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -680,10 +675,10 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     feedbackSlider->addListener (this);
 
     addAndMakeVisible (frequencyLabel7 = new Label ("frequency label",
-                                                    TRANS("Feedback")));
+                                                    TRANS("F")));
     frequencyLabel7->setTooltip (TRANS("Extent to which modulator output is fed back into itself"));
     frequencyLabel7->setFont (Font (15.00f, Font::plain));
-    frequencyLabel7->setJustificationType (Justification::centredLeft);
+    frequencyLabel7->setJustificationType (Justification::centred);
     frequencyLabel7->setEditable (false, false, false);
     frequencyLabel7->setColour (Label::textColourId, Colour (0xff007f00));
     frequencyLabel7->setColour (TextEditor::textColourId, Colours::black);
@@ -699,16 +694,6 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     velocityComboBox->addItem (TRANS("Heavy"), 3);
     velocityComboBox->addListener (this);
 
-    addAndMakeVisible (attenuationLabel3 = new Label ("attenuation label",
-                                                      TRANS("Velocity")));
-    attenuationLabel3->setTooltip (TRANS("Set or disable velocity senstivity"));
-    attenuationLabel3->setFont (Font (15.00f, Font::plain));
-    attenuationLabel3->setJustificationType (Justification::centredLeft);
-    attenuationLabel3->setEditable (false, false, false);
-    attenuationLabel3->setColour (Label::textColourId, Colour (0xff007f00));
-    attenuationLabel3->setColour (TextEditor::textColourId, Colours::black);
-    attenuationLabel3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
     addAndMakeVisible (velocityComboBox2 = new ComboBox ("velocity combo box"));
     velocityComboBox2->setEditableText (false);
     velocityComboBox2->setJustificationType (Justification::centredLeft);
@@ -720,10 +705,10 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     velocityComboBox2->addListener (this);
 
     addAndMakeVisible (attenuationLabel4 = new Label ("attenuation label",
-                                                      TRANS("Velocity")));
+                                                      TRANS("Velocity Sensitivity")));
     attenuationLabel4->setTooltip (TRANS("Set or disable velocity senstivity"));
     attenuationLabel4->setFont (Font (15.00f, Font::plain));
-    attenuationLabel4->setJustificationType (Justification::centredLeft);
+    attenuationLabel4->setJustificationType (Justification::centred);
     attenuationLabel4->setEditable (false, false, false);
     attenuationLabel4->setColour (Label::textColourId, Colour (0xff007f00));
     attenuationLabel4->setColour (TextEditor::textColourId, Colours::black);
@@ -814,7 +799,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                                     TRANS("Algorithm")));
     frequencyLabel8->setTooltip (TRANS("In additive mode, carrier and modulator output are simply summed rather than modulated"));
     frequencyLabel8->setFont (Font (15.00f, Font::plain));
-    frequencyLabel8->setJustificationType (Justification::centredLeft);
+    frequencyLabel8->setJustificationType (Justification::centred);
     frequencyLabel8->setEditable (false, false, false);
     frequencyLabel8->setColour (Label::textColourId, Colour (0xff007f00));
     frequencyLabel8->setColour (TextEditor::textColourId, Colours::black);
@@ -915,10 +900,10 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     percussionComboBox->addListener (this);
 
     addAndMakeVisible (percussionLabel = new Label ("percussion label",
-                                                    TRANS("Percussion mode")));
+                                                    TRANS("Percussion Mode")));
     percussionLabel->setTooltip (TRANS("Enable percussion instruments instead of oscillators"));
     percussionLabel->setFont (Font (15.00f, Font::plain));
-    percussionLabel->setJustificationType (Justification::centredLeft);
+    percussionLabel->setJustificationType (Justification::centred);
     percussionLabel->setEditable (false, false, false);
     percussionLabel->setColour (Label::textColourId, Colour (0xff007f00));
     percussionLabel->setColour (TextEditor::textColourId, Colours::black);
@@ -926,12 +911,14 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (exportButton = new TextButton ("export button"));
     exportButton->setButtonText (TRANS("Export .SBI instrument"));
+    exportButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight);
     exportButton->addListener (this);
     exportButton->setColour (TextButton::buttonColourId, Colour (0xff007f00));
     exportButton->setColour (TextButton::buttonOnColourId, Colours::lime);
 
     addAndMakeVisible (loadButton = new TextButton ("load button"));
     loadButton->setButtonText (TRANS("Load .SBI instrument"));
+    loadButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight);
     loadButton->addListener (this);
     loadButton->setColour (TextButton::buttonColourId, Colour (0xff007f00));
     loadButton->setColour (TextButton::buttonOnColourId, Colours::lime);
@@ -945,8 +932,551 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     versionLabel->setColour (TextEditor::textColourId, Colours::black);
     versionLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
+    addAndMakeVisible (ToggleButtonOffExample = new ImageButton ("Toggle Button Off Example"));
+    ToggleButtonOffExample->setButtonText (TRANS("new button"));
+    ToggleButtonOffExample->addListener (this);
+
+    ToggleButtonOffExample->setImages (false, true, true,
+                                       ImageCache::getFromMemory (toggle_off_sq_png, toggle_off_sq_pngSize), 1.000f, Colour (0x00000000),
+                                       Image(), 1.000f, Colour (0x00000000),
+                                       Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (ToggleButtonOnExample = new ImageButton ("Toggle Button On Example"));
+    ToggleButtonOnExample->setButtonText (TRANS("new button"));
+    ToggleButtonOnExample->addListener (this);
+
+    ToggleButtonOnExample->setImages (false, true, true,
+                                      ImageCache::getFromMemory (toggle_on_sq_png, toggle_on_sq_pngSize), 1.000f, Colour (0x00000000),
+                                      Image(), 1.000f, Colour (0x00000000),
+                                      Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label = new Label ("new label",
+                                          TRANS("Toggle buttons")));
+    label->setFont (Font (15.00f, Font::plain));
+    label->setJustificationType (Justification::centred);
+    label->setEditable (false, false, false);
+    label->setColour (Label::textColourId, Colours::green);
+    label->setColour (TextEditor::textColourId, Colours::black);
+    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label2 = new Label ("new label",
+                                           TRANS("Line borders")));
+    label2->setFont (Font (15.00f, Font::plain));
+    label2->setJustificationType (Justification::centred);
+    label2->setEditable (false, false, false);
+    label2->setColour (Label::textColourId, Colours::green);
+    label2->setColour (TextEditor::textColourId, Colours::black);
+    label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (LineBorderButton1C = new ImageButton ("Line Border 1C"));
+    LineBorderButton1C->setButtonText (TRANS("new button"));
+
+    LineBorderButton1C->setImages (false, true, false,
+                                   ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1A = new ImageButton ("Line Border 1A"));
+    LineBorderButton1A->setButtonText (TRANS("new button"));
+
+    LineBorderButton1A->setImages (false, true, false,
+                                   ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1B = new ImageButton ("Line Border 1B"));
+    LineBorderButton1B->setButtonText (TRANS("new button"));
+
+    LineBorderButton1B->setImages (false, true, false,
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (label3 = new Label ("new label",
+                                           TRANS("Temporarily removed labels to avoid making wider boxes.")));
+    label3->setFont (Font (15.00f, Font::plain));
+    label3->setJustificationType (Justification::centred);
+    label3->setEditable (false, false, false);
+    label3->setColour (Label::textColourId, Colours::green);
+    label3->setColour (TextEditor::textColourId, Colours::black);
+    label3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (LineBorderButton3A = new ImageButton ("Line Border 3A"));
+    LineBorderButton3A->setButtonText (TRANS("new button"));
+
+    LineBorderButton3A->setImages (false, true, false,
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton3B = new ImageButton ("Line Border 3B"));
+    LineBorderButton3B->setButtonText (TRANS("new button"));
+
+    LineBorderButton3B->setImages (false, true, false,
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                   ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton3B2 = new ImageButton ("Line Border 3B"));
+    LineBorderButton3B2->setButtonText (TRANS("new button"));
+
+    LineBorderButton3B2->setImages (false, true, false,
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1C2 = new ImageButton ("Line Border 1C"));
+    LineBorderButton1C2->setButtonText (TRANS("new button"));
+
+    LineBorderButton1C2->setImages (false, true, false,
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1A2 = new ImageButton ("Line Border 1A"));
+    LineBorderButton1A2->setButtonText (TRANS("new button"));
+
+    LineBorderButton1A2->setImages (false, true, false,
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1B2 = new ImageButton ("Line Border 1B"));
+    LineBorderButton1B2->setButtonText (TRANS("new button"));
+
+    LineBorderButton1B2->setImages (false, true, false,
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1C3 = new ImageButton ("Line Border 1C"));
+    LineBorderButton1C3->setButtonText (TRANS("new button"));
+
+    LineBorderButton1C3->setImages (false, true, false,
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (LineBorderButton1B3 = new ImageButton ("Line Border 1B"));
+    LineBorderButton1B3->setButtonText (TRANS("new button"));
+
+    LineBorderButton1B3->setImages (false, true, false,
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000),
+                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
+    addAndMakeVisible (algoSwitchButtonOffEx1 = new ImageButton ("Algorithm Switch Off AM"));
+    algoSwitchButtonOffEx1->setButtonText (TRANS("new button"));
+    algoSwitchButtonOffEx1->addListener (this);
+
+    algoSwitchButtonOffEx1->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (algoSwitchButtonOffEx2 = new ImageButton ("Algorithm Switch Off FM"));
+    algoSwitchButtonOffEx2->setButtonText (TRANS("new button"));
+    algoSwitchButtonOffEx2->addListener (this);
+
+    algoSwitchButtonOffEx2->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (algoSwitchButtonOnEx1 = new ImageButton ("Algorithm Switch On AM"));
+    algoSwitchButtonOnEx1->setButtonText (TRANS("new button"));
+    algoSwitchButtonOnEx1->addListener (this);
+
+    algoSwitchButtonOnEx1->setImages (false, true, true,
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000),
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000),
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (algoSwitchButtonOnEx2 = new ImageButton ("Algorithm Switch On FM"));
+    algoSwitchButtonOnEx2->setButtonText (TRANS("new button"));
+    algoSwitchButtonOnEx2->addListener (this);
+
+    algoSwitchButtonOnEx2->setImages (false, true, true,
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000),
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000),
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label4 = new Label ("new label",
+                                           TRANS("AM")));
+    label4->setFont (Font (15.00f, Font::plain));
+    label4->setJustificationType (Justification::centredLeft);
+    label4->setEditable (false, false, false);
+    label4->setColour (Label::textColourId, Colours::green);
+    label4->setColour (TextEditor::textColourId, Colours::black);
+    label4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label5 = new Label ("new label",
+                                           TRANS("FM")));
+    label5->setFont (Font (15.00f, Font::plain));
+    label5->setJustificationType (Justification::centredLeft);
+    label5->setEditable (false, false, false);
+    label5->setColour (Label::textColourId, Colours::green);
+    label5->setColour (TextEditor::textColourId, Colours::black);
+    label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label6 = new Label ("new label",
+                                           TRANS("AM")));
+    label6->setFont (Font (15.00f, Font::plain));
+    label6->setJustificationType (Justification::centredLeft);
+    label6->setEditable (false, false, false);
+    label6->setColour (Label::textColourId, Colours::black);
+    label6->setColour (TextEditor::textColourId, Colours::black);
+    label6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label7 = new Label ("new label",
+                                           TRANS("FM")));
+    label7->setFont (Font (15.00f, Font::plain));
+    label7->setJustificationType (Justification::centredLeft);
+    label7->setEditable (false, false, false);
+    label7->setColour (Label::textColourId, Colours::black);
+    label7->setColour (TextEditor::textColourId, Colours::black);
+    label7->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label8 = new Label ("new label",
+                                           TRANS("Example AM/FM switches")));
+    label8->setFont (Font (15.00f, Font::plain));
+    label8->setJustificationType (Justification::centred);
+    label8->setEditable (false, false, false);
+    label8->setColour (Label::textColourId, Colours::green);
+    label8->setColour (TextEditor::textColourId, Colours::black);
+    label8->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (algoSwitchButtonOn2Ex1 = new ImageButton ("Algorithm Switch On2 AM"));
+    algoSwitchButtonOn2Ex1->setButtonText (TRANS("new button"));
+    algoSwitchButtonOn2Ex1->addListener (this);
+
+    algoSwitchButtonOn2Ex1->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (algoSwitchButtonOn2Ex2 = new ImageButton ("Algorithm Switch On2 FM"));
+    algoSwitchButtonOn2Ex2->setButtonText (TRANS("new button"));
+    algoSwitchButtonOn2Ex2->addListener (this);
+
+    algoSwitchButtonOn2Ex2->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label9 = new Label ("new label",
+                                           TRANS("AM")));
+    label9->setFont (Font (15.00f, Font::plain));
+    label9->setJustificationType (Justification::centredLeft);
+    label9->setEditable (false, false, false);
+    label9->setColour (Label::textColourId, Colours::black);
+    label9->setColour (TextEditor::textColourId, Colours::black);
+    label9->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label10 = new Label ("new label",
+                                            TRANS("FM")));
+    label10->setFont (Font (15.00f, Font::plain));
+    label10->setJustificationType (Justification::centredLeft);
+    label10->setEditable (false, false, false);
+    label10->setColour (Label::textColourId, Colours::black);
+    label10->setColour (TextEditor::textColourId, Colours::black);
+    label10->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (algoSwitchButtonOn3Ex1 = new ImageButton ("Algorithm Switch On3 AM"));
+    algoSwitchButtonOn3Ex1->setButtonText (TRANS("new button"));
+    algoSwitchButtonOn3Ex1->addListener (this);
+
+    algoSwitchButtonOn3Ex1->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (algoSwitchButtonOn3Ex2 = new ImageButton ("Algorithm Switch On3 FM"));
+    algoSwitchButtonOn3Ex2->setButtonText (TRANS("new button"));
+    algoSwitchButtonOn3Ex2->addListener (this);
+
+    algoSwitchButtonOn3Ex2->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label11 = new Label ("new label",
+                                            TRANS("AM")));
+    label11->setFont (Font (15.00f, Font::plain));
+    label11->setJustificationType (Justification::centredLeft);
+    label11->setEditable (false, false, false);
+    label11->setColour (Label::textColourId, Colours::black);
+    label11->setColour (TextEditor::textColourId, Colours::black);
+    label11->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label12 = new Label ("new label",
+                                            TRANS("FM")));
+    label12->setFont (Font (15.00f, Font::plain));
+    label12->setJustificationType (Justification::centredLeft);
+    label12->setEditable (false, false, false);
+    label12->setColour (Label::textColourId, Colours::black);
+    label12->setColour (TextEditor::textColourId, Colours::black);
+    label12->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (TwoOpAMButton = new ImageButton ("Two OP AM Button"));
+    TwoOpAMButton->setButtonText (TRANS("new button"));
+    TwoOpAMButton->addListener (this);
+
+    TwoOpAMButton->setImages (false, true, false,
+                              ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000),
+                              ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000),
+                              ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (TwoOpFMButton = new ImageButton ("Two OP FM Button"));
+    TwoOpFMButton->setButtonText (TRANS("new button"));
+    TwoOpFMButton->addListener (this);
+
+    TwoOpFMButton->setImages (false, true, true,
+                              ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000),
+                              ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000),
+                              ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label13 = new Label ("new label",
+                                            TRANS("M")));
+    label13->setFont (Font (15.00f, Font::plain));
+    label13->setJustificationType (Justification::centred);
+    label13->setEditable (false, false, false);
+    label13->setColour (TextEditor::textColourId, Colours::black);
+    label13->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label14 = new Label ("new label",
+                                            TRANS("C")));
+    label14->setFont (Font (15.00f, Font::plain));
+    label14->setJustificationType (Justification::centred);
+    label14->setEditable (false, false, false);
+    label14->setColour (TextEditor::textColourId, Colours::black);
+    label14->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label15 = new Label ("new label",
+                                            TRANS("M")));
+    label15->setFont (Font (15.00f, Font::plain));
+    label15->setJustificationType (Justification::centred);
+    label15->setEditable (false, false, false);
+    label15->setColour (TextEditor::textColourId, Colours::black);
+    label15->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label16 = new Label ("new label",
+                                            TRANS("C")));
+    label16->setFont (Font (15.00f, Font::plain));
+    label16->setJustificationType (Justification::centred);
+    label16->setEditable (false, false, false);
+    label16->setColour (TextEditor::textColourId, Colours::black);
+    label16->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label17 = new Label ("new label",
+                                            TRANS("Example Algorithms")));
+    label17->setFont (Font (15.00f, Font::plain));
+    label17->setJustificationType (Justification::centred);
+    label17->setEditable (false, false, false);
+    label17->setColour (Label::textColourId, Colours::green);
+    label17->setColour (TextEditor::textColourId, Colours::black);
+    label17->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (groupComponent6 = new GroupComponent ("new group",
+                                                             String()));
+    groupComponent6->setColour (GroupComponent::outlineColourId, Colours::green);
+
+    addAndMakeVisible (algoSwitchButtonOnEx3 = new ImageButton ("Algorithm Switch On AM"));
+    algoSwitchButtonOnEx3->setButtonText (TRANS("new button"));
+    algoSwitchButtonOnEx3->addListener (this);
+
+    algoSwitchButtonOnEx3->setImages (false, true, true,
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000),
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000),
+                                      ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label18 = new Label ("new label",
+                                            TRANS("AM")));
+    label18->setFont (Font (15.00f, Font::plain));
+    label18->setJustificationType (Justification::centredLeft);
+    label18->setEditable (false, false, false);
+    label18->setColour (Label::textColourId, Colours::black);
+    label18->setColour (TextEditor::textColourId, Colours::black);
+    label18->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (algoSwitchButtonOffEx3 = new ImageButton ("Algorithm Switch Off FM"));
+    algoSwitchButtonOffEx3->setButtonText (TRANS("new button"));
+    algoSwitchButtonOffEx3->addListener (this);
+
+    algoSwitchButtonOffEx3->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label19 = new Label ("new label",
+                                            TRANS("FM")));
+    label19->setFont (Font (15.00f, Font::plain));
+    label19->setJustificationType (Justification::centredLeft);
+    label19->setEditable (false, false, false);
+    label19->setColour (Label::textColourId, Colours::green);
+    label19->setColour (TextEditor::textColourId, Colours::black);
+    label19->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (TwoOpAMButton2 = new ImageButton ("Two OP AM Button"));
+    TwoOpAMButton2->setButtonText (TRANS("new button"));
+    TwoOpAMButton2->addListener (this);
+
+    TwoOpAMButton2->setImages (false, true, false,
+                               ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000),
+                               ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000),
+                               ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label20 = new Label ("new label",
+                                            TRANS("M")));
+    label20->setFont (Font (15.00f, Font::plain));
+    label20->setJustificationType (Justification::centred);
+    label20->setEditable (false, false, false);
+    label20->setColour (TextEditor::textColourId, Colours::black);
+    label20->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label21 = new Label ("new label",
+                                            TRANS("C")));
+    label21->setFont (Font (15.00f, Font::plain));
+    label21->setJustificationType (Justification::centred);
+    label21->setEditable (false, false, false);
+    label21->setColour (TextEditor::textColourId, Colours::black);
+    label21->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label22 = new Label ("new label",
+                                            TRANS("Example Algo Sections w/ Diagram")));
+    label22->setFont (Font (15.00f, Font::plain));
+    label22->setJustificationType (Justification::centred);
+    label22->setEditable (false, false, false);
+    label22->setColour (Label::textColourId, Colours::green);
+    label22->setColour (TextEditor::textColourId, Colours::black);
+    label22->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (algoSwitchButtonOffEx4 = new ImageButton ("Algorithm Switch Off AM"));
+    algoSwitchButtonOffEx4->setButtonText (TRANS("new button"));
+    algoSwitchButtonOffEx4->addListener (this);
+
+    algoSwitchButtonOffEx4->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label23 = new Label ("new label",
+                                            TRANS("AM")));
+    label23->setFont (Font (15.00f, Font::plain));
+    label23->setJustificationType (Justification::centredLeft);
+    label23->setEditable (false, false, false);
+    label23->setColour (Label::textColourId, Colours::green);
+    label23->setColour (TextEditor::textColourId, Colours::black);
+    label23->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (algoSwitchButtonOn3Ex3 = new ImageButton ("Algorithm Switch On3 FM"));
+    algoSwitchButtonOn3Ex3->setButtonText (TRANS("new button"));
+    algoSwitchButtonOn3Ex3->addListener (this);
+
+    algoSwitchButtonOn3Ex3->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label24 = new Label ("new label",
+                                            TRANS("FM")));
+    label24->setFont (Font (15.00f, Font::plain));
+    label24->setJustificationType (Justification::centredLeft);
+    label24->setEditable (false, false, false);
+    label24->setColour (Label::textColourId, Colours::black);
+    label24->setColour (TextEditor::textColourId, Colours::black);
+    label24->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (TwoOpFMButton2 = new ImageButton ("Two OP FM Button"));
+    TwoOpFMButton2->setButtonText (TRANS("new button"));
+    TwoOpFMButton2->addListener (this);
+
+    TwoOpFMButton2->setImages (false, true, true,
+                               ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000),
+                               ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000),
+                               ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label25 = new Label ("new label",
+                                            TRANS("M")));
+    label25->setFont (Font (15.00f, Font::plain));
+    label25->setJustificationType (Justification::centred);
+    label25->setEditable (false, false, false);
+    label25->setColour (TextEditor::textColourId, Colours::black);
+    label25->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label26 = new Label ("new label",
+                                            TRANS("C")));
+    label26->setFont (Font (15.00f, Font::plain));
+    label26->setJustificationType (Justification::centred);
+    label26->setEditable (false, false, false);
+    label26->setColour (TextEditor::textColourId, Colours::black);
+    label26->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (groupComponent7 = new GroupComponent ("new group",
+                                                             String()));
+    groupComponent7->setColour (GroupComponent::outlineColourId, Colours::green);
+
+    addAndMakeVisible (algoSwitchButtonOffEx5 = new ImageButton ("Algorithm Switch Off AM"));
+    algoSwitchButtonOffEx5->setButtonText (TRANS("new button"));
+    algoSwitchButtonOffEx5->addListener (this);
+
+    algoSwitchButtonOffEx5->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label27 = new Label ("new label",
+                                            TRANS("AM")));
+    label27->setFont (Font (15.00f, Font::plain));
+    label27->setJustificationType (Justification::centredLeft);
+    label27->setEditable (false, false, false);
+    label27->setColour (Label::textColourId, Colours::green);
+    label27->setColour (TextEditor::textColourId, Colours::black);
+    label27->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (algoSwitchButtonOn3Ex4 = new ImageButton ("Algorithm Switch On3 FM"));
+    algoSwitchButtonOn3Ex4->setButtonText (TRANS("new button"));
+    algoSwitchButtonOn3Ex4->addListener (this);
+
+    algoSwitchButtonOn3Ex4->setImages (false, true, true,
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000),
+                                       ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (label28 = new Label ("new label",
+                                            TRANS("FM")));
+    label28->setFont (Font (15.00f, Font::plain));
+    label28->setJustificationType (Justification::centredLeft);
+    label28->setEditable (false, false, false);
+    label28->setColour (Label::textColourId, Colours::black);
+    label28->setColour (TextEditor::textColourId, Colours::black);
+    label28->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (groupComponent8 = new GroupComponent ("new group",
+                                                             String()));
+    groupComponent8->setColour (GroupComponent::outlineColourId, Colours::green);
+
+    addAndMakeVisible (frequencyLabel9 = new Label ("frequency label",
+                                                    TRANS("Algorithm")));
+    frequencyLabel9->setTooltip (TRANS("In additive mode, carrier and modulator output are simply summed rather than modulated"));
+    frequencyLabel9->setFont (Font (15.00f, Font::plain));
+    frequencyLabel9->setJustificationType (Justification::centredLeft);
+    frequencyLabel9->setEditable (false, false, false);
+    frequencyLabel9->setColour (Label::textColourId, Colour (0xff007f00));
+    frequencyLabel9->setColour (TextEditor::textColourId, Colours::black);
+    frequencyLabel9->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label29 = new Label ("new label",
+                                            TRANS("Example Algo Section w/o Diagram")));
+    label29->setFont (Font (15.00f, Font::plain));
+    label29->setJustificationType (Justification::centred);
+    label29->setEditable (false, false, false);
+    label29->setColour (Label::textColourId, Colours::green);
+    label29->setColour (TextEditor::textColourId, Colours::black);
+    label29->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (label30 = new Label ("new label",
+                                            TRANS("Off             On (Bright)          On (Dark)       On (Solid)")));
+    label30->setFont (Font (15.00f, Font::plain));
+    label30->setJustificationType (Justification::centred);
+    label30->setEditable (false, false, false);
+    label30->setColour (Label::textColourId, Colours::green);
+    label30->setColour (TextEditor::textColourId, Colours::black);
+    label30->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (frequencyLabel10 = new Label ("frequency label",
+                                                     TRANS("Keyscale Attenuation (db/8ve)")));
+    frequencyLabel10->setTooltip (TRANS("Attenuate amplitude with note frequency in db/8ve"));
+    frequencyLabel10->setFont (Font (15.00f, Font::plain));
+    frequencyLabel10->setJustificationType (Justification::centred);
+    frequencyLabel10->setEditable (false, false, false);
+    frequencyLabel10->setColour (Label::textColourId, Colour (0xff007f00));
+    frequencyLabel10->setColour (TextEditor::textColourId, Colours::black);
+    frequencyLabel10->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (attenuationLabel5 = new Label ("attenuation label",
+                                                      TRANS("Velocity Sensitivity")));
+    attenuationLabel5->setTooltip (TRANS("Set or disable velocity senstivity"));
+    attenuationLabel5->setFont (Font (15.00f, Font::plain));
+    attenuationLabel5->setJustificationType (Justification::centred);
+    attenuationLabel5->setEditable (false, false, false);
+    attenuationLabel5->setColour (Label::textColourId, Colour (0xff007f00));
+    attenuationLabel5->setColour (TextEditor::textColourId, Colours::black);
+    attenuationLabel5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
+	LookAndFeel::setDefaultLookAndFeel(new OPLLookAndFeel());
+
 	frequencyComboBox->setColour (ComboBox::textColourId, Colour (COLOUR_MID));
 	frequencyComboBox->setColour (ComboBox::outlineColourId, Colour (COLOUR_MID));
 	frequencyComboBox->setColour (ComboBox::arrowColourId, Colour (COLOUR_MID));
@@ -1076,7 +1606,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 	versionLabel->setText(String(ProjectInfo::versionString), NotificationType::dontSendNotification);
     //[/UserPreSize]
 
-    setSize (860, 550);
+    setSize (860, 520);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -1113,7 +1643,6 @@ PluginGui::~PluginGui()
     vibratoButton = nullptr;
     sustainButton = nullptr;
     keyscaleEnvButton = nullptr;
-    frequencyLabel2 = nullptr;
     dbLabel2 = nullptr;
     groupComponent2 = nullptr;
     frequencyComboBox2 = nullptr;
@@ -1149,7 +1678,6 @@ PluginGui::~PluginGui()
     feedbackSlider = nullptr;
     frequencyLabel7 = nullptr;
     velocityComboBox = nullptr;
-    attenuationLabel3 = nullptr;
     velocityComboBox2 = nullptr;
     attenuationLabel4 = nullptr;
     alternatingsineImageButton = nullptr;
@@ -1176,6 +1704,73 @@ PluginGui::~PluginGui()
     exportButton = nullptr;
     loadButton = nullptr;
     versionLabel = nullptr;
+    ToggleButtonOffExample = nullptr;
+    ToggleButtonOnExample = nullptr;
+    label = nullptr;
+    label2 = nullptr;
+    LineBorderButton1C = nullptr;
+    LineBorderButton1A = nullptr;
+    LineBorderButton1B = nullptr;
+    label3 = nullptr;
+    LineBorderButton3A = nullptr;
+    LineBorderButton3B = nullptr;
+    LineBorderButton3B2 = nullptr;
+    LineBorderButton1C2 = nullptr;
+    LineBorderButton1A2 = nullptr;
+    LineBorderButton1B2 = nullptr;
+    LineBorderButton1C3 = nullptr;
+    LineBorderButton1B3 = nullptr;
+    algoSwitchButtonOffEx1 = nullptr;
+    algoSwitchButtonOffEx2 = nullptr;
+    algoSwitchButtonOnEx1 = nullptr;
+    algoSwitchButtonOnEx2 = nullptr;
+    label4 = nullptr;
+    label5 = nullptr;
+    label6 = nullptr;
+    label7 = nullptr;
+    label8 = nullptr;
+    algoSwitchButtonOn2Ex1 = nullptr;
+    algoSwitchButtonOn2Ex2 = nullptr;
+    label9 = nullptr;
+    label10 = nullptr;
+    algoSwitchButtonOn3Ex1 = nullptr;
+    algoSwitchButtonOn3Ex2 = nullptr;
+    label11 = nullptr;
+    label12 = nullptr;
+    TwoOpAMButton = nullptr;
+    TwoOpFMButton = nullptr;
+    label13 = nullptr;
+    label14 = nullptr;
+    label15 = nullptr;
+    label16 = nullptr;
+    label17 = nullptr;
+    groupComponent6 = nullptr;
+    algoSwitchButtonOnEx3 = nullptr;
+    label18 = nullptr;
+    algoSwitchButtonOffEx3 = nullptr;
+    label19 = nullptr;
+    TwoOpAMButton2 = nullptr;
+    label20 = nullptr;
+    label21 = nullptr;
+    label22 = nullptr;
+    algoSwitchButtonOffEx4 = nullptr;
+    label23 = nullptr;
+    algoSwitchButtonOn3Ex3 = nullptr;
+    label24 = nullptr;
+    TwoOpFMButton2 = nullptr;
+    label25 = nullptr;
+    label26 = nullptr;
+    groupComponent7 = nullptr;
+    algoSwitchButtonOffEx5 = nullptr;
+    label27 = nullptr;
+    algoSwitchButtonOn3Ex4 = nullptr;
+    label28 = nullptr;
+    groupComponent8 = nullptr;
+    frequencyLabel9 = nullptr;
+    label29 = nullptr;
+    label30 = nullptr;
+    frequencyLabel10 = nullptr;
+    attenuationLabel5 = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1199,92 +1794,157 @@ void PluginGui::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    groupComponent->setBounds (16, 80, 408, 344);
-    frequencyComboBox->setBounds (128, 152, 72, 24);
-    frequencyLabel->setBounds (32, 152, 80, 24);
-    aSlider->setBounds (40, 280, 48, 72);
-    aLabel->setBounds (40, 352, 48, 24);
-    dSlider->setBounds (104, 280, 48, 72);
-    dLabel->setBounds (104, 352, 48, 24);
-    sSlider->setBounds (168, 280, 48, 72);
-    dLabel2->setBounds (168, 352, 48, 24);
-    rSlider->setBounds (232, 280, 48, 72);
-    rLabel->setBounds (232, 352, 48, 24);
-    attenuationSlider->setBounds (312, 280, 72, 96);
-    attenuationLabel->setBounds (312, 384, 96, 24);
-    dbLabel->setBounds (376, 352, 40, 24);
-    sineImageButton->setBounds (88, 112, 34, 30);
-    halfsineImageButton->setBounds (128, 112, 34, 30);
-    abssineImageButton->setBounds (168, 112, 34, 30);
-    quartersineImageButton->setBounds (208, 112, 34, 30);
-    waveLabel->setBounds (32, 112, 48, 24);
-    tremoloButton->setBounds (144, 192, 96, 24);
-    vibratoButton->setBounds (40, 192, 96, 24);
-    sustainButton->setBounds (40, 384, 96, 24);
-    keyscaleEnvButton->setBounds (128, 384, 184, 24);
-    frequencyLabel2->setBounds (248, 184, 152, 24);
-    dbLabel2->setBounds (336, 156, 72, 16);
-    groupComponent2->setBounds (440, 80, 408, 344);
-    frequencyComboBox2->setBounds (552, 152, 72, 24);
-    frequencyLabel3->setBounds (456, 152, 80, 24);
-    aSlider2->setBounds (464, 280, 48, 72);
-    aLabel2->setBounds (464, 352, 48, 24);
-    dSlider2->setBounds (528, 280, 48, 72);
-    dLabel3->setBounds (528, 352, 48, 24);
-    sSlider2->setBounds (592, 280, 48, 72);
-    dLabel4->setBounds (592, 352, 48, 24);
-    rSlider2->setBounds (656, 280, 48, 72);
-    rLabel2->setBounds (656, 352, 48, 24);
-    attenuationSlider2->setBounds (736, 280, 72, 96);
-    attenuationLabel2->setBounds (736, 384, 96, 24);
-    dbLabel3->setBounds (800, 352, 40, 24);
-    sineImageButton2->setBounds (512, 112, 34, 30);
-    halfsineImageButton2->setBounds (552, 112, 34, 30);
-    abssineImageButton2->setBounds (592, 112, 34, 30);
-    quartersineImageButton2->setBounds (632, 112, 34, 30);
-    waveLabel2->setBounds (456, 112, 48, 24);
-    tremoloButton2->setBounds (576, 192, 96, 24);
-    vibratoButton2->setBounds (464, 192, 96, 24);
-    sustainButton2->setBounds (464, 384, 96, 24);
-    keyscaleEnvButton2->setBounds (552, 384, 184, 24);
-    frequencyLabel4->setBounds (672, 184, 152, 24);
-    groupComponent3->setBounds (16, 432, 832, 96);
-    tremoloSlider->setBounds (632, 456, 112, 24);
-    frequencyLabel5->setBounds (472, 456, 152, 24);
-    dbLabel5->setBounds (752, 448, 40, 40);
-    vibratoSlider->setBounds (632, 488, 112, 24);
-    frequencyLabel6->setBounds (472, 488, 152, 24);
-    dbLabel6->setBounds (752, 480, 47, 40);
-    feedbackSlider->setBounds (112, 232, 136, 24);
-    frequencyLabel7->setBounds (32, 232, 80, 24);
-    velocityComboBox->setBounds (336, 232, 72, 24);
-    attenuationLabel3->setBounds (272, 232, 64, 24);
-    velocityComboBox2->setBounds (760, 232, 72, 24);
-    attenuationLabel4->setBounds (696, 232, 64, 24);
-    alternatingsineImageButton->setBounds (288, 112, 34, 30);
-    camelsineImageButton->setBounds (248, 112, 34, 30);
-    squareImageButton->setBounds (328, 112, 34, 30);
-    logsawImageButton->setBounds (368, 112, 34, 30);
-    alternatingsineImageButton2->setBounds (714, 113, 34, 30);
-    camelsineImageButton2->setBounds (674, 113, 34, 30);
-    squareImageButton2->setBounds (754, 113, 34, 30);
-    logsawImageButton2->setBounds (794, 113, 34, 30);
-    algorithmComboBox->setBounds (552, 232, 112, 24);
-    frequencyLabel8->setBounds (456, 232, 80, 24);
-    dbLabel4->setBounds (760, 156, 72, 16);
-    keyscaleAttenuationComboBox2->setBounds (688, 152, 72, 24);
-    keyscaleAttenuationComboBox->setBounds (264, 152, 72, 24);
+    groupComponent->setBounds (16, 80, 408, 312);
+    frequencyComboBox->setBounds (149, 165, 66, 24);
+    frequencyLabel->setBounds (32, 165, 112, 24);
+    aSlider->setBounds (30, 203, 30, 88);
+    aLabel->setBounds (30, 293, 30, 24);
+    dSlider->setBounds (70, 203, 30, 88);
+    dLabel->setBounds (70, 293, 30, 24);
+    sSlider->setBounds (110, 203, 30, 88);
+    dLabel2->setBounds (110, 293, 30, 24);
+    rSlider->setBounds (150, 203, 30, 88);
+    rLabel->setBounds (150, 293, 30, 24);
+    attenuationSlider->setBounds (130, 350, 232, 24);
+    attenuationLabel->setBounds (32, 350, 106, 24);
+    dbLabel->setBounds (362, 350, 32, 24);
+    sineImageButton->setBounds (88, 105, 34, 30);
+    halfsineImageButton->setBounds (128, 105, 34, 30);
+    abssineImageButton->setBounds (168, 105, 34, 30);
+    quartersineImageButton->setBounds (208, 105, 34, 30);
+    waveLabel->setBounds (32, 107, 48, 24);
+    tremoloButton->setBounds (323, 162, 80, 24);
+    vibratoButton->setBounds (243, 162, 72, 24);
+    sustainButton->setBounds (243, 198, 70, 24);
+    keyscaleEnvButton->setBounds (323, 186, 101, 48);
+    dbLabel2->setBounds (792, 712, 72, 16);
+    groupComponent2->setBounds (440, 80, 408, 312);
+    frequencyComboBox2->setBounds (573, 165, 66, 24);
+    frequencyLabel3->setBounds (456, 165, 112, 24);
+    aSlider2->setBounds (462, 203, 30, 88);
+    aLabel2->setBounds (462, 293, 30, 24);
+    dSlider2->setBounds (510, 203, 30, 88);
+    dLabel3->setBounds (510, 293, 30, 24);
+    sSlider2->setBounds (558, 203, 30, 88);
+    dLabel4->setBounds (558, 293, 30, 24);
+    rSlider2->setBounds (606, 203, 30, 88);
+    rLabel2->setBounds (606, 293, 30, 24);
+    attenuationSlider2->setBounds (554, 350, 232, 24);
+    attenuationLabel2->setBounds (456, 350, 106, 24);
+    dbLabel3->setBounds (782, 350, 40, 24);
+    sineImageButton2->setBounds (512, 105, 34, 30);
+    halfsineImageButton2->setBounds (552, 105, 34, 30);
+    abssineImageButton2->setBounds (592, 105, 34, 30);
+    quartersineImageButton2->setBounds (632, 105, 34, 30);
+    waveLabel2->setBounds (456, 107, 48, 24);
+    tremoloButton2->setBounds (746, 162, 80, 24);
+    vibratoButton2->setBounds (666, 162, 72, 24);
+    sustainButton2->setBounds (666, 198, 70, 24);
+    keyscaleEnvButton2->setBounds (746, 186, 102, 48);
+    frequencyLabel4->setBounds (752, 280, 88, 48);
+    groupComponent3->setBounds (16, 400, 832, 96);
+    tremoloSlider->setBounds (149, 424, 80, 24);
+    frequencyLabel5->setBounds (40, 424, 104, 24);
+    dbLabel5->setBounds (230, 416, 32, 40);
+    vibratoSlider->setBounds (149, 456, 80, 24);
+    frequencyLabel6->setBounds (40, 456, 96, 24);
+    dbLabel6->setBounds (230, 448, 48, 40);
+    feedbackSlider->setBounds (190, 203, 30, 88);
+    frequencyLabel7->setBounds (190, 293, 30, 24);
+    velocityComboBox->setBounds (244, 249, 72, 24);
+    velocityComboBox2->setBounds (672, 249, 72, 24);
+    attenuationLabel4->setBounds (664, 280, 80, 48);
+    alternatingsineImageButton->setBounds (288, 105, 34, 30);
+    camelsineImageButton->setBounds (248, 105, 34, 30);
+    squareImageButton->setBounds (328, 105, 34, 30);
+    logsawImageButton->setBounds (368, 105, 34, 30);
+    alternatingsineImageButton2->setBounds (714, 106, 34, 30);
+    camelsineImageButton2->setBounds (674, 106, 34, 30);
+    squareImageButton2->setBounds (754, 106, 34, 30);
+    logsawImageButton2->setBounds (794, 106, 34, 30);
+    algorithmComboBox->setBounds (314, 450, 112, 24);
+    frequencyLabel8->setBounds (304, 422, 136, 24);
+    dbLabel4->setBounds (792, 688, 72, 16);
+    keyscaleAttenuationComboBox2->setBounds (763, 249, 60, 24);
+    keyscaleAttenuationComboBox->setBounds (338, 249, 60, 24);
     groupComponent4->setBounds (16, 8, 832, 64);
-    groupComponent5->setBounds (24, 624, 408, 64);
-    emulatorSlider->setBounds (208, 648, 40, 24);
-    emulatorLabel->setBounds (120, 648, 72, 24);
-    emulatorLabel2->setBounds (256, 648, 72, 24);
-    recordButton->setBounds (24, 560, 296, 24);
-    percussionComboBox->setBounds (256, 488, 112, 24);
-    percussionLabel->setBounds (40, 488, 163, 24);
-    exportButton->setBounds (40, 456, 168, 24);
-    loadButton->setBounds (232, 456, 168, 24);
-    versionLabel->setBounds (640, 528, 198, 16);
+    groupComponent5->setBounds (24, 712, 408, 64);
+    emulatorSlider->setBounds (208, 736, 40, 24);
+    emulatorLabel->setBounds (120, 736, 72, 24);
+    emulatorLabel2->setBounds (256, 736, 72, 24);
+    recordButton->setBounds (32, 680, 224, 24);
+    percussionComboBox->setBounds (476, 450, 112, 24);
+    percussionLabel->setBounds (456, 422, 152, 24);
+    exportButton->setBounds (644, 455, 168, 24);
+    loadButton->setBounds (644, 422, 168, 24);
+    versionLabel->setBounds (640, 496, 198, 16);
+    ToggleButtonOffExample->setBounds (1032, 584, 12, 12);
+    ToggleButtonOnExample->setBounds (1064, 584, 12, 12);
+    label->setBounds (1000, 608, 104, 24);
+    label2->setBounds (872, 608, 104, 24);
+    LineBorderButton1C->setBounds (20, 332, 400, 6);
+    LineBorderButton1A->setBounds (20, 144, 400, 6);
+    LineBorderButton1B->setBounds (230, 148, 6, 186);
+    label3->setBounds (776, 736, 104, 56);
+    LineBorderButton3A->setBounds (288, 410, 6, 82);
+    LineBorderButton3B->setBounds (450, 410, 6, 82);
+    LineBorderButton3B2->setBounds (612, 410, 6, 82);
+    LineBorderButton1C2->setBounds (444, 332, 400, 6);
+    LineBorderButton1A2->setBounds (444, 144, 400, 6);
+    LineBorderButton1B2->setBounds (654, 148, 6, 186);
+    LineBorderButton1C3->setBounds (892, 584, 20, 6);
+    LineBorderButton1B3->setBounds (936, 576, 6, 20);
+    algoSwitchButtonOffEx1->setBounds (952, 701, 64, 24);
+    algoSwitchButtonOffEx2->setBounds (952, 727, 64, 24);
+    algoSwitchButtonOnEx1->setBounds (1040, 701, 64, 24);
+    algoSwitchButtonOnEx2->setBounds (1040, 727, 64, 24);
+    label4->setBounds (970, 701, 32, 24);
+    label5->setBounds (971, 727, 32, 24);
+    label6->setBounds (1057, 701, 32, 24);
+    label7->setBounds (1058, 727, 32, 24);
+    label8->setBounds (944, 816, 320, 24);
+    algoSwitchButtonOn2Ex1->setBounds (1128, 700, 64, 24);
+    algoSwitchButtonOn2Ex2->setBounds (1128, 727, 64, 24);
+    label9->setBounds (1145, 700, 32, 24);
+    label10->setBounds (1146, 727, 32, 24);
+    algoSwitchButtonOn3Ex1->setBounds (1216, 700, 64, 24);
+    algoSwitchButtonOn3Ex2->setBounds (1216, 727, 64, 24);
+    label11->setBounds (1233, 700, 31, 24);
+    label12->setBounds (1234, 727, 32, 24);
+    TwoOpAMButton->setBounds (1173, 484, 60, 56);
+    TwoOpFMButton->setBounds (1156, 568, 80, 26);
+    label13->setBounds (1179, 489, 24, 24);
+    label14->setBounds (1179, 518, 24, 24);
+    label15->setBounds (1166, 572, 24, 24);
+    label16->setBounds (1195, 572, 24, 24);
+    label17->setBounds (1128, 608, 136, 24);
+    groupComponent6->setBounds (933, 56, 168, 95);
+    algoSwitchButtonOnEx3->setBounds (949, 82, 64, 24);
+    label18->setBounds (966, 82, 32, 24);
+    algoSwitchButtonOffEx3->setBounds (949, 108, 64, 24);
+    label19->setBounds (968, 108, 32, 24);
+    TwoOpAMButton2->setBounds (1029, 77, 60, 56);
+    label20->setBounds (1035, 82, 24, 24);
+    label21->setBounds (1035, 111, 24, 24);
+    label22->setBounds (952, 160, 328, 40);
+    algoSwitchButtonOffEx4->setBounds (1125, 82, 64, 24);
+    label23->setBounds (1143, 82, 32, 24);
+    algoSwitchButtonOn3Ex3->setBounds (1125, 109, 64, 24);
+    label24->setBounds (1143, 109, 32, 24);
+    TwoOpFMButton2->setBounds (1196, 94, 80, 26);
+    label25->setBounds (1206, 98, 24, 24);
+    label26->setBounds (1235, 98, 24, 24);
+    groupComponent7->setBounds (1112, 56, 168, 95);
+    algoSwitchButtonOffEx5->setBounds (1037, 250, 64, 24);
+    label27->setBounds (1055, 250, 32, 24);
+    algoSwitchButtonOn3Ex4->setBounds (1103, 250, 64, 24);
+    label28->setBounds (1121, 250, 32, 24);
+    groupComponent8->setBounds (1018, 200, 168, 95);
+    frequencyLabel9->setBounds (1067, 216, 72, 24);
+    label29->setBounds (944, 304, 328, 40);
+    label30->setBounds (961, 768, 319, 24);
+    frequencyLabel10->setBounds (328, 280, 88, 48);
+    attenuationLabel5->setBounds (240, 280, 80, 48);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(68+88*i, 36, 20, 20);
@@ -1323,8 +1983,6 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == velocityComboBox2)
     {
         //[UserComboBoxCode_velocityComboBox2] -- add your combo box handling code here..
-		int id = comboBoxThatHasChanged->getSelectedId() - 1;
-		processor->setEnumParameter("Carrier Velocity Sensitivity", id);
         //[/UserComboBoxCode_velocityComboBox2]
     }
     else if (comboBoxThatHasChanged == algorithmComboBox)
@@ -1337,8 +1995,6 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox2)
     {
         //[UserComboBoxCode_keyscaleAttenuationComboBox2] -- add your combo box handling code here..
-		int id = comboBoxThatHasChanged->getSelectedId() - 1;
-		processor->setEnumParameter("Carrier Keyscale Level", id);
         //[/UserComboBoxCode_keyscaleAttenuationComboBox2]
     }
     else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox)
@@ -1649,6 +2305,106 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 		}
         //[/UserButtonCode_loadButton]
     }
+    else if (buttonThatWasClicked == ToggleButtonOffExample)
+    {
+        //[UserButtonCode_ToggleButtonOffExample] -- add your button handler code here..
+        //[/UserButtonCode_ToggleButtonOffExample]
+    }
+    else if (buttonThatWasClicked == ToggleButtonOnExample)
+    {
+        //[UserButtonCode_ToggleButtonOnExample] -- add your button handler code here..
+        //[/UserButtonCode_ToggleButtonOnExample]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx1)
+    {
+        //[UserButtonCode_algoSwitchButtonOffEx1] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOffEx1]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx2)
+    {
+        //[UserButtonCode_algoSwitchButtonOffEx2] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOffEx2]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOnEx1)
+    {
+        //[UserButtonCode_algoSwitchButtonOnEx1] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOnEx1]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOnEx2)
+    {
+        //[UserButtonCode_algoSwitchButtonOnEx2] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOnEx2]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOn2Ex1)
+    {
+        //[UserButtonCode_algoSwitchButtonOn2Ex1] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOn2Ex1]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOn2Ex2)
+    {
+        //[UserButtonCode_algoSwitchButtonOn2Ex2] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOn2Ex2]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex1)
+    {
+        //[UserButtonCode_algoSwitchButtonOn3Ex1] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOn3Ex1]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex2)
+    {
+        //[UserButtonCode_algoSwitchButtonOn3Ex2] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOn3Ex2]
+    }
+    else if (buttonThatWasClicked == TwoOpAMButton)
+    {
+        //[UserButtonCode_TwoOpAMButton] -- add your button handler code here..
+        //[/UserButtonCode_TwoOpAMButton]
+    }
+    else if (buttonThatWasClicked == TwoOpFMButton)
+    {
+        //[UserButtonCode_TwoOpFMButton] -- add your button handler code here..
+        //[/UserButtonCode_TwoOpFMButton]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOnEx3)
+    {
+        //[UserButtonCode_algoSwitchButtonOnEx3] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOnEx3]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx3)
+    {
+        //[UserButtonCode_algoSwitchButtonOffEx3] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOffEx3]
+    }
+    else if (buttonThatWasClicked == TwoOpAMButton2)
+    {
+        //[UserButtonCode_TwoOpAMButton2] -- add your button handler code here..
+        //[/UserButtonCode_TwoOpAMButton2]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx4)
+    {
+        //[UserButtonCode_algoSwitchButtonOffEx4] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOffEx4]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex3)
+    {
+        //[UserButtonCode_algoSwitchButtonOn3Ex3] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOn3Ex3]
+    }
+    else if (buttonThatWasClicked == TwoOpFMButton2)
+    {
+        //[UserButtonCode_TwoOpFMButton2] -- add your button handler code here..
+        //[/UserButtonCode_TwoOpFMButton2]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx5)
+    {
+        //[UserButtonCode_algoSwitchButtonOffEx5] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOffEx5]
+    }
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex4)
+    {
+        //[UserButtonCode_algoSwitchButtonOn3Ex4] -- add your button handler code here..
+        //[/UserButtonCode_algoSwitchButtonOn3Ex4]
+    }
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
@@ -1712,438 +2468,799 @@ BEGIN_JUCER_METADATA
                  parentClasses="public AudioProcessorEditor, public FileDragAndDropTarget, public DragAndDropContainer, public Timer"
                  constructorParams="AdlibBlasterAudioProcessor* ownerFilter" variableInitialisers=" AudioProcessorEditor (ownerFilter)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="860" initialHeight="550">
+                 fixedSize="1" initialWidth="860" initialHeight="520">
   <BACKGROUND backgroundColour="ff000000"/>
   <GROUPCOMPONENT name="new group" id="d2c7c07bf2d78c30" memberName="groupComponent"
-                  virtualName="" explicitFocusOrder="0" pos="16 80 408 344" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="16 80 408 312" outlinecol="ff007f00"
                   textcol="ff007f00" title="Modulator" textpos="33"/>
   <COMBOBOX name="frequency combo box" id="4e65faf3d9442460" memberName="frequencyComboBox"
-            virtualName="" explicitFocusOrder="0" pos="128 152 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="149 165 66 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="frequency label" id="7414532477c7f744" memberName="frequencyLabel"
-         virtualName="" explicitFocusOrder="0" pos="32 152 80 24" tooltip="Multiplier applied to base note frequency"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Frequency"
+         virtualName="" explicitFocusOrder="0" pos="32 165 112 24" tooltip="Multiplier applied to base note frequency"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Base Frequency"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="a slider" id="1b9be27726a5b3ae" memberName="aSlider" virtualName=""
-          explicitFocusOrder="0" pos="40 280 48 72" tooltip="Envelope attack rate"
+          explicitFocusOrder="0" pos="30 203 30 88" tooltip="Envelope attack rate"
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
+          textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="a label" id="9dd0b13f00b4de42" memberName="aLabel" virtualName=""
-         explicitFocusOrder="0" pos="40 352 48 24" tooltip="Attack rate"
+         explicitFocusOrder="0" pos="30 293 30 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="d slider" id="d4cc8ddf2fc9cf2b" memberName="dSlider" virtualName=""
-          explicitFocusOrder="0" pos="104 280 48 72" tooltip="Envelope decay rate"
+          explicitFocusOrder="0" pos="70 203 30 88" tooltip="Envelope decay rate"
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
+          textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="a7f17b098b85f10b" memberName="dLabel" virtualName=""
-         explicitFocusOrder="0" pos="104 352 48 24" tooltip="Decay rate"
+         explicitFocusOrder="0" pos="70 293 30 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="s slider" id="9bcadfc61e498bce" memberName="sSlider" virtualName=""
-          explicitFocusOrder="0" pos="168 280 48 72" tooltip="Envelope sustain level"
+          explicitFocusOrder="0" pos="110 203 30 88" tooltip="Envelope sustain level"
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
+          textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="6467455c7573fefa" memberName="dLabel2" virtualName=""
-         explicitFocusOrder="0" pos="168 352 48 24" tooltip="Sustain level"
+         explicitFocusOrder="0" pos="110 293 30 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="r slider" id="5616976a8c5a3f5f" memberName="rSlider" virtualName=""
-          explicitFocusOrder="0" pos="232 280 48 72" tooltip="Envelope release rate"
+          explicitFocusOrder="0" pos="150 203 30 88" tooltip="Envelope release rate"
           thumbcol="ff00af00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
-          textBoxWidth="40" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
+          textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="r label" id="ef30d2907e867666" memberName="rLabel" virtualName=""
-         explicitFocusOrder="0" pos="232 352 48 24" tooltip="Release rate"
+         explicitFocusOrder="0" pos="150 293 30 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="attenuation slider" id="dfb943cd83b3977f" memberName="attenuationSlider"
-          virtualName="" explicitFocusOrder="0" pos="312 280 72 96" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="130 350 232 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
-          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="64"
+          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearHorizontal"
+          textBoxPos="TextBoxRight" textBoxEditable="1" textBoxWidth="64"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="643f88854c82ca3e" memberName="attenuationLabel"
-         virtualName="" explicitFocusOrder="0" pos="312 384 96 24" tooltip="Final output level adjustment"
+         virtualName="" explicitFocusOrder="0" pos="32 350 106 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="db label" id="666be8c96c85c9f1" memberName="dbLabel" virtualName=""
-         explicitFocusOrder="0" pos="376 352 40 24" textCol="ff007f00"
+         explicitFocusOrder="0" pos="362 350 32 24" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="sine image button" id="5e72e0ec4fc09c1a" memberName="sineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="88 112 34 30" buttonText="Sine"
+               virtualName="" explicitFocusOrder="0" pos="88 105 34 30" buttonText="Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="full_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="half sine image button" id="bf9e0504c5e9e5d5" memberName="halfsineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="128 112 34 30" buttonText="Half Sine"
+               virtualName="" explicitFocusOrder="0" pos="128 105 34 30" buttonText="Half Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="half_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="abs sine image button" id="1b0b532ac934edae" memberName="abssineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="168 112 34 30" buttonText="Abs Sine"
+               virtualName="" explicitFocusOrder="0" pos="168 105 34 30" buttonText="Abs Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="abs_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="quarter sine image button" id="47d1bd1fd4ae011d" memberName="quartersineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="208 112 34 30" buttonText="Quarter Sine"
+               virtualName="" explicitFocusOrder="0" pos="208 105 34 30" buttonText="Quarter Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="quarter_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <LABEL name="wave label" id="d35c942584ea52a6" memberName="waveLabel"
-         virtualName="" explicitFocusOrder="0" pos="32 112 48 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="32 107 48 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="Wave" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="tremolo button" id="1e6ab9b2f1fee312" memberName="tremoloButton"
-                virtualName="" explicitFocusOrder="0" pos="144 192 96 24" txtcol="ff007f00"
-                buttonText="Tremolo" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="323 162 80 24" tooltip="Modulate amplitude at 3.7 Hz"
+                txtcol="ff007f00" buttonText="Tremolo" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="vibrato button" id="a989eb6692e3dbd8" memberName="vibratoButton"
-                virtualName="" explicitFocusOrder="0" pos="40 192 96 24" txtcol="ff007f00"
-                buttonText="Vibrato" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="243 162 72 24" tooltip="Modulate frequency at 6.1 Hz"
+                txtcol="ff007f00" buttonText="Vibrato" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="sustain button" id="e0ae2bc46ec1861c" memberName="sustainButton"
-                virtualName="" explicitFocusOrder="0" pos="40 384 96 24" tooltip="Enable or disable sustain when note is held"
+                virtualName="" explicitFocusOrder="0" pos="243 198 70 24" tooltip="Enable or disable sustain when note is held"
                 txtcol="ff007f00" buttonText="Sustain" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="keyscale env button" id="a3f62a22526b4b49" memberName="keyscaleEnvButton"
-                virtualName="" explicitFocusOrder="0" pos="128 384 184 24" tooltip="Speed up envelope rate with note frequency"
-                txtcol="ff007f00" buttonText="Keyscale Envelope Rate" connectedEdges="0"
+                virtualName="" explicitFocusOrder="0" pos="323 186 101 48" tooltip="Speed up envelope rate with note frequency"
+                txtcol="ff007f00" buttonText="Keyscale Env. Rate" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
-  <LABEL name="frequency label" id="7898903168ad06c2" memberName="frequencyLabel2"
-         virtualName="" explicitFocusOrder="0" pos="248 184 152 24" tooltip="Attenuate amplitude with note frequency"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="db label" id="b9b3cedf2b541262" memberName="dbLabel2" virtualName=""
-         explicitFocusOrder="0" pos="336 156 72 16" textCol="ff007f00"
+         explicitFocusOrder="0" pos="792 712 72 16" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB/8ve&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <GROUPCOMPONENT name="new group" id="93b9aaeb75040aed" memberName="groupComponent2"
-                  virtualName="" explicitFocusOrder="0" pos="440 80 408 344" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="440 80 408 312" outlinecol="ff007f00"
                   textcol="ff007f00" title="Carrier" textpos="33"/>
   <COMBOBOX name="frequency combo box" id="30b8c81b6bd2a17" memberName="frequencyComboBox2"
-            virtualName="" explicitFocusOrder="0" pos="552 152 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="573 165 66 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="frequency label" id="65d58d2259c13bf1" memberName="frequencyLabel3"
-         virtualName="" explicitFocusOrder="0" pos="456 152 80 24" tooltip="Multiplier applied to base note frequency"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Frequency"
+         virtualName="" explicitFocusOrder="0" pos="456 165 112 24" tooltip="Multiplier applied to base note frequency"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Base Frequency"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="a slider" id="d6d2f4556ea9394" memberName="aSlider2" virtualName=""
-          explicitFocusOrder="0" pos="464 280 48 72" thumbcol="ff00af00"
+          explicitFocusOrder="0" pos="462 203 30 88" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="a label" id="9ec6412cc79720bc" memberName="aLabel2" virtualName=""
-         explicitFocusOrder="0" pos="464 352 48 24" tooltip="Attack rate"
+         explicitFocusOrder="0" pos="462 293 30 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="d slider" id="4a1f1b6038500f67" memberName="dSlider2" virtualName=""
-          explicitFocusOrder="0" pos="528 280 48 72" thumbcol="ff00af00"
+          explicitFocusOrder="0" pos="510 203 30 88" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="10231adaf9e23e14" memberName="dLabel3" virtualName=""
-         explicitFocusOrder="0" pos="528 352 48 24" tooltip="Decay rate"
+         explicitFocusOrder="0" pos="510 293 30 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="s slider" id="2fc057248a815958" memberName="sSlider2" virtualName=""
-          explicitFocusOrder="0" pos="592 280 48 72" thumbcol="ff00af00"
+          explicitFocusOrder="0" pos="558 203 30 88" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="5b881f2381defac" memberName="dLabel4" virtualName=""
-         explicitFocusOrder="0" pos="592 352 48 24" tooltip="Sustain level"
+         explicitFocusOrder="0" pos="558 293 30 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="r slider" id="5474ad005fb58e97" memberName="rSlider2" virtualName=""
-          explicitFocusOrder="0" pos="656 280 48 72" thumbcol="ff00af00"
+          explicitFocusOrder="0" pos="606 203 30 88" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="r label" id="ca2834438bee82a9" memberName="rLabel2" virtualName=""
-         explicitFocusOrder="0" pos="656 352 48 24" tooltip="Release rate"
+         explicitFocusOrder="0" pos="606 293 30 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="attenuation slider" id="edb48da87d7535dd" memberName="attenuationSlider2"
-          virtualName="" explicitFocusOrder="0" pos="736 280 72 96" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="554 350 232 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
-          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="64"
+          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearHorizontal"
+          textBoxPos="TextBoxRight" textBoxEditable="1" textBoxWidth="64"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="958314f88253f461" memberName="attenuationLabel2"
-         virtualName="" explicitFocusOrder="0" pos="736 384 96 24" tooltip="Final output level adjustment"
+         virtualName="" explicitFocusOrder="0" pos="456 350 106 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="db label" id="7efc6195ef5e25d1" memberName="dbLabel3" virtualName=""
-         explicitFocusOrder="0" pos="800 352 40 24" textCol="ff007f00"
+         explicitFocusOrder="0" pos="782 350 40 24" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="sine image button" id="27e01d31ba835965" memberName="sineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="512 112 34 30" buttonText="Sine"
+               virtualName="" explicitFocusOrder="0" pos="512 105 34 30" buttonText="Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="full_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="half sine image button" id="6e9afdb08dd4edac" memberName="halfsineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="552 112 34 30" buttonText="Half Sine"
+               virtualName="" explicitFocusOrder="0" pos="552 105 34 30" buttonText="Half Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="half_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="abs sine image button" id="361941cfa04130c1" memberName="abssineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="592 112 34 30" buttonText="Abs Sine"
+               virtualName="" explicitFocusOrder="0" pos="592 105 34 30" buttonText="Abs Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="abs_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="quarter sine image button" id="3fa62f49fdd1a41f" memberName="quartersineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="632 112 34 30" buttonText="Quarter Sine"
+               virtualName="" explicitFocusOrder="0" pos="632 105 34 30" buttonText="Quarter Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="quarter_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <LABEL name="wave label" id="c810628f3c772781" memberName="waveLabel2"
-         virtualName="" explicitFocusOrder="0" pos="456 112 48 24" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="456 107 48 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="Wave" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="tremolo button" id="a517934e39704073" memberName="tremoloButton2"
-                virtualName="" explicitFocusOrder="0" pos="576 192 96 24" txtcol="ff007f00"
-                buttonText="Tremolo" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="746 162 80 24" tooltip="Modulate amplitude at 3.7 Hz"
+                txtcol="ff007f00" buttonText="Tremolo" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="vibrato button" id="736b965a99641077" memberName="vibratoButton2"
-                virtualName="" explicitFocusOrder="0" pos="464 192 96 24" txtcol="ff007f00"
-                buttonText="Vibrato" connectedEdges="0" needsCallback="1" radioGroupId="0"
-                state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="666 162 72 24" tooltip="Modulate frequency at 6.1 Hz"
+                txtcol="ff007f00" buttonText="Vibrato" connectedEdges="0" needsCallback="1"
+                radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="sustain button" id="a3832cb840cae1f2" memberName="sustainButton2"
-                virtualName="" explicitFocusOrder="0" pos="464 384 96 24" tooltip="Enable or disable sustain when note is held"
+                virtualName="" explicitFocusOrder="0" pos="666 198 70 24" tooltip="Enable or disable sustain when note is held"
                 txtcol="ff007f00" buttonText="Sustain" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="keyscale env button" id="4cd968dae86d143c" memberName="keyscaleEnvButton2"
-                virtualName="" explicitFocusOrder="0" pos="552 384 184 24" tooltip="Speed up envelope rate with note frequency"
-                txtcol="ff007f00" buttonText="Keyscale Envelope Rate" connectedEdges="0"
+                virtualName="" explicitFocusOrder="0" pos="746 186 102 48" tooltip="Speed up envelope rate with note frequency"
+                txtcol="ff007f00" buttonText="Keyscale Env. Rate" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="frequency label" id="a1e2dd50c2835d73" memberName="frequencyLabel4"
-         virtualName="" explicitFocusOrder="0" pos="672 184 152 24" tooltip="Attenuate amplitude with note frequency"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation"
+         virtualName="" explicitFocusOrder="0" pos="752 280 88 48" tooltip="Attenuate amplitude with note frequency in db/8ve"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation (db/8ve)"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <GROUPCOMPONENT name="new group" id="7392f7d1c8cf6e74" memberName="groupComponent3"
-                  virtualName="" explicitFocusOrder="0" pos="16 432 832 96" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="16 400 832 96" outlinecol="ff007f00"
                   textcol="ff007f00" title="Common" textpos="33"/>
   <SLIDER name="tremolo slider" id="ab64abee7ac8874b" memberName="tremoloSlider"
-          virtualName="" explicitFocusOrder="0" pos="632 456 112 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="149 424 80 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="1" max="4.7999999999999998224"
-          int="3.7999999999999998224" style="LinearHorizontal" textBoxPos="TextBoxLeft"
-          textBoxEditable="1" textBoxWidth="44" textBoxHeight="20" skewFactor="1"
+          int="3.7999999999999998224" style="LinearHorizontal" textBoxPos="TextBoxRight"
+          textBoxEditable="1" textBoxWidth="32" textBoxHeight="20" skewFactor="1"
           needsCallback="1"/>
   <LABEL name="frequency label" id="134ce8f87da62b88" memberName="frequencyLabel5"
-         virtualName="" explicitFocusOrder="0" pos="472 456 152 24" tooltip="OPL global tremolo depth"
+         virtualName="" explicitFocusOrder="0" pos="40 424 104 24" tooltip="OPL global tremolo depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Tremolo Depth&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="db label" id="720df8e7c502dd91" memberName="dbLabel5" virtualName=""
-         explicitFocusOrder="0" pos="752 448 40 40" textCol="ff007f00"
+         explicitFocusOrder="0" pos="230 416 32 40" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="vibrato slider" id="b45a1f20f22cf5ca" memberName="vibratoSlider"
-          virtualName="" explicitFocusOrder="0" pos="632 488 112 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="149 456 80 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="7" max="14" int="7" style="LinearHorizontal"
-          textBoxPos="TextBoxLeft" textBoxEditable="1" textBoxWidth="44"
+          textBoxPos="TextBoxRight" textBoxEditable="1" textBoxWidth="32"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="frequency label" id="1412b9d14e37bcbe" memberName="frequencyLabel6"
-         virtualName="" explicitFocusOrder="0" pos="472 488 152 24" tooltip="OPL global vibrato depth"
+         virtualName="" explicitFocusOrder="0" pos="40 456 96 24" tooltip="OPL global vibrato depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Vibrato Depth"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="db label" id="e13e0aff8b974a36" memberName="dbLabel6" virtualName=""
-         explicitFocusOrder="0" pos="752 480 47 40" tooltip="A unit of pitch; 100 cents per semitone"
+         explicitFocusOrder="0" pos="230 448 48 40" tooltip="A unit of pitch; 100 cents per semitone"
          textCol="ff007f00" outlineCol="0" edTextCol="ff000000" edBkgCol="0"
          labelText="cents&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <SLIDER name="feedback slider" id="f9d22e12f5e417e4" memberName="feedbackSlider"
-          virtualName="" explicitFocusOrder="0" pos="112 232 136 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="190 203 30 88" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="0" max="7" int="1" style="LinearHorizontal"
-          textBoxPos="TextBoxRight" textBoxEditable="1" textBoxWidth="44"
+          textboxhighlight="ff00af00" min="0" max="7" int="1" style="LinearVertical"
+          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="30"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="frequency label" id="880eaf14af62578a" memberName="frequencyLabel7"
-         virtualName="" explicitFocusOrder="0" pos="32 232 80 24" tooltip="Extent to which modulator output is fed back into itself"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Feedback"
+         virtualName="" explicitFocusOrder="0" pos="190 293 30 24" tooltip="Extent to which modulator output is fed back into itself"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="F"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <COMBOBOX name="velocity combo box" id="cbe10e5236447f15" memberName="velocityComboBox"
-            virtualName="" explicitFocusOrder="0" pos="336 232 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="244 249 72 24" editable="0"
             layout="33" items="Off&#10;Light&#10;Heavy" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
-  <LABEL name="attenuation label" id="c78694a1d0c5264c" memberName="attenuationLabel3"
-         virtualName="" explicitFocusOrder="0" pos="272 232 64 24" tooltip="Set or disable velocity senstivity"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <COMBOBOX name="velocity combo box" id="f5c4883d9feaa700" memberName="velocityComboBox2"
-            virtualName="" explicitFocusOrder="0" pos="760 232 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="672 249 72 24" editable="0"
             layout="33" items="Off&#10;Light&#10;Heavy" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <LABEL name="attenuation label" id="d9297cdef25630de" memberName="attenuationLabel4"
-         virtualName="" explicitFocusOrder="0" pos="696 232 64 24" tooltip="Set or disable velocity senstivity"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity"
+         virtualName="" explicitFocusOrder="0" pos="664 280 80 48" tooltip="Set or disable velocity senstivity"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity Sensitivity"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="alternating sine image button" id="2a054359a782e92d" memberName="alternatingsineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="288 112 34 30" buttonText="Alternating Sine"
+               virtualName="" explicitFocusOrder="0" pos="288 105 34 30" buttonText="Alternating Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="alternating_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="camel sine image button" id="d6f66822f7f64480" memberName="camelsineImageButton"
-               virtualName="" explicitFocusOrder="0" pos="248 112 34 30" buttonText="Camel Sine"
+               virtualName="" explicitFocusOrder="0" pos="248 105 34 30" buttonText="Camel Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="camel_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="square image button" id="85e53fb506289115" memberName="squareImageButton"
-               virtualName="" explicitFocusOrder="0" pos="328 112 34 30" buttonText="Square"
+               virtualName="" explicitFocusOrder="0" pos="328 105 34 30" buttonText="Square"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="square_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="logsaw image button" id="fca4c858138cdd7b" memberName="logsawImageButton"
-               virtualName="" explicitFocusOrder="0" pos="368 112 34 30" buttonText="Logarithmic Sawtooth"
+               virtualName="" explicitFocusOrder="0" pos="368 105 34 30" buttonText="Logarithmic Sawtooth"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
                resourceNormal="logarithmic_saw_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="alternating sine image button" id="32c5f60cc145d464" memberName="alternatingsineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="714 113 34 30" buttonText="Alternating Sine"
+               virtualName="" explicitFocusOrder="0" pos="714 106 34 30" buttonText="Alternating Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="alternating_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="camel sine image button" id="215395763c6a03f2" memberName="camelsineImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="674 113 34 30" buttonText="Camel Sine"
+               virtualName="" explicitFocusOrder="0" pos="674 106 34 30" buttonText="Camel Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="camel_sine_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="square image button" id="d85202a2e5f8b158" memberName="squareImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="754 113 34 30" buttonText="Square"
+               virtualName="" explicitFocusOrder="0" pos="754 106 34 30" buttonText="Square"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="square_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="logsaw image button" id="d713984cff8b67b5" memberName="logsawImageButton2"
-               virtualName="" explicitFocusOrder="0" pos="794 113 34 30" buttonText="Logarithmic Sawtooth"
+               virtualName="" explicitFocusOrder="0" pos="794 106 34 30" buttonText="Logarithmic Sawtooth"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
                resourceNormal="logarithmic_saw_png" opacityNormal="0.5" colourNormal="0"
                resourceOver="" opacityOver="0.5" colourOver="0" resourceDown=""
                opacityDown="1" colourDown="0"/>
   <COMBOBOX name="algorithm combo box" id="fffe0faaf234ed7" memberName="algorithmComboBox"
-            virtualName="" explicitFocusOrder="0" pos="552 232 112 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="314 450 112 24" editable="0"
             layout="33" items="FM&#10;Additive" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="frequency label" id="e60c13739cf857ba" memberName="frequencyLabel8"
-         virtualName="" explicitFocusOrder="0" pos="456 232 80 24" tooltip="In additive mode, carrier and modulator output are simply summed rather than modulated"
+         virtualName="" explicitFocusOrder="0" pos="304 422 136 24" tooltip="In additive mode, carrier and modulator output are simply summed rather than modulated"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Algorithm"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="db label" id="1f10b7e3cf477c89" memberName="dbLabel4" virtualName=""
-         explicitFocusOrder="0" pos="760 156 72 16" textCol="ff007f00"
+         explicitFocusOrder="0" pos="792 688 72 16" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB/8ve&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <COMBOBOX name="keyscale combo box" id="9b766b7b6a67cbf4" memberName="keyscaleAttenuationComboBox2"
-            virtualName="" explicitFocusOrder="0" pos="688 152 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="763 249 60 24" editable="0"
             layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <COMBOBOX name="keyscale combo box" id="7d8e1de0e1579999" memberName="keyscaleAttenuationComboBox"
-            virtualName="" explicitFocusOrder="0" pos="264 152 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="338 249 60 24" editable="0"
             layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <GROUPCOMPONENT name="new group" id="52f9803abb342980" memberName="groupComponent4"
                   virtualName="" explicitFocusOrder="0" pos="16 8 832 64" outlinecol="ff007f00"
                   textcol="ff007f00" title="Channels" textpos="33"/>
   <GROUPCOMPONENT name="new group" id="7abc643f4d6a2dbf" memberName="groupComponent5"
-                  virtualName="" explicitFocusOrder="0" pos="24 624 408 64" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="24 712 408 64" outlinecol="ff007f00"
                   textcol="ff007f00" title="Emulator (currently locked)" textpos="33"/>
   <SLIDER name="emulator slider" id="88ec3755c4760ed9" memberName="emulatorSlider"
-          virtualName="" explicitFocusOrder="0" pos="208 648 40 24" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="208 736 40 24" thumbcol="ff00af00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="1" int="1" style="LinearHorizontal"
           textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="44"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="emulator label" id="22c2c30d0f337081" memberName="emulatorLabel"
-         virtualName="" explicitFocusOrder="0" pos="120 648 72 24" tooltip="Use the OPL emulator from the DOSBox project"
+         virtualName="" explicitFocusOrder="0" pos="120 736 72 24" tooltip="Use the OPL emulator from the DOSBox project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="DOSBox"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
   <LABEL name="emulator label" id="4f8869b5724c0195" memberName="emulatorLabel2"
-         virtualName="" explicitFocusOrder="0" pos="256 648 72 24" tooltip="Use the OPL emulator from the ZDoom project"
+         virtualName="" explicitFocusOrder="0" pos="256 736 72 24" tooltip="Use the OPL emulator from the ZDoom project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="ZDoom"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="record button" id="880010ee79039cbe" memberName="recordButton"
-                virtualName="" explicitFocusOrder="0" pos="24 560 296 24" tooltip="Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"
+                virtualName="" explicitFocusOrder="0" pos="32 680 224 24" tooltip="Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"
                 txtcol="ff007f00" buttonText="Record to DRO (not working yet)"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <COMBOBOX name="percussion combo box" id="75a838b61782e17b" memberName="percussionComboBox"
-            virtualName="" explicitFocusOrder="0" pos="256 488 112 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="476 450 112 24" editable="0"
             layout="33" items="Off&#10;Bass drum&#10;Snare&#10;Tom&#10;Cymbal&#10;Hi-hat"
             textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="percussion label" id="a3400e2e5e8e7900" memberName="percussionLabel"
-         virtualName="" explicitFocusOrder="0" pos="40 488 163 24" tooltip="Enable percussion instruments instead of oscillators"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Percussion mode"
+         virtualName="" explicitFocusOrder="0" pos="456 422 152 24" tooltip="Enable percussion instruments instead of oscillators"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Percussion Mode"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <TEXTBUTTON name="export button" id="88c84ed1e2b284d3" memberName="exportButton"
-              virtualName="" explicitFocusOrder="0" pos="40 456 168 24" bgColOff="ff007f00"
-              bgColOn="ff00ff00" buttonText="Export .SBI instrument" connectedEdges="0"
+              virtualName="" explicitFocusOrder="0" pos="644 455 168 24" bgColOff="ff007f00"
+              bgColOn="ff00ff00" buttonText="Export .SBI instrument" connectedEdges="3"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="load button" id="a42176161523f448" memberName="loadButton"
-              virtualName="" explicitFocusOrder="0" pos="232 456 168 24" bgColOff="ff007f00"
-              bgColOn="ff00ff00" buttonText="Load .SBI instrument" connectedEdges="0"
+              virtualName="" explicitFocusOrder="0" pos="644 422 168 24" bgColOff="ff007f00"
+              bgColOn="ff00ff00" buttonText="Load .SBI instrument" connectedEdges="3"
               needsCallback="1" radioGroupId="0"/>
   <LABEL name="version label" id="cd68ca110847cc18" memberName="versionLabel"
-         virtualName="" explicitFocusOrder="0" pos="640 528 198 16" textCol="ff007f00"
+         virtualName="" explicitFocusOrder="0" pos="640 496 198 16" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="12" bold="0" italic="0" justification="34"/>
+  <IMAGEBUTTON name="Toggle Button Off Example" id="672bea5ea2e1fabd" memberName="ToggleButtonOffExample"
+               virtualName="" explicitFocusOrder="0" pos="1032 584 12 12" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="toggle_off_sq_png" opacityNormal="1" colourNormal="0"
+               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
+               opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Toggle Button On Example" id="1a4b1e2ee10b30aa" memberName="ToggleButtonOnExample"
+               virtualName="" explicitFocusOrder="0" pos="1064 584 12 12" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="toggle_on_sq_png" opacityNormal="1" colourNormal="0"
+               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
+               opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="d00839172c49b458" memberName="label" virtualName=""
+         explicitFocusOrder="0" pos="1000 608 104 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Toggle buttons"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="75faa73445635a7f" memberName="label2" virtualName=""
+         explicitFocusOrder="0" pos="872 608 104 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Line borders" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
+  <IMAGEBUTTON name="Line Border 1C" id="d189b7564dfbe6f4" memberName="LineBorderButton1C"
+               virtualName="" explicitFocusOrder="0" pos="20 332 400 6" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1A" id="e2102e76055ea2d2" memberName="LineBorderButton1A"
+               virtualName="" explicitFocusOrder="0" pos="20 144 400 6" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1B" id="c602d4512bd5e4ad" memberName="LineBorderButton1B"
+               virtualName="" explicitFocusOrder="0" pos="230 148 6 186" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_vert_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <LABEL name="new label" id="96790ccaf0f7ecec" memberName="label3" virtualName=""
+         explicitFocusOrder="0" pos="776 736 104 56" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Temporarily removed labels to avoid making wider boxes."
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <IMAGEBUTTON name="Line Border 3A" id="1580c8aff382b259" memberName="LineBorderButton3A"
+               virtualName="" explicitFocusOrder="0" pos="288 410 6 82" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_vert_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 3B" id="fc83124bf01494ec" memberName="LineBorderButton3B"
+               virtualName="" explicitFocusOrder="0" pos="450 410 6 82" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_vert_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 3B" id="715998c8f1483cd2" memberName="LineBorderButton3B2"
+               virtualName="" explicitFocusOrder="0" pos="612 410 6 82" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_vert_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1C" id="fb69fc397f48c0b2" memberName="LineBorderButton1C2"
+               virtualName="" explicitFocusOrder="0" pos="444 332 400 6" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1A" id="2096630c63845b7d" memberName="LineBorderButton1A2"
+               virtualName="" explicitFocusOrder="0" pos="444 144 400 6" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1B" id="84b521f64fc5ec24" memberName="LineBorderButton1B2"
+               virtualName="" explicitFocusOrder="0" pos="654 148 6 186" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_vert_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1C" id="d45929173c0e1a86" memberName="LineBorderButton1C3"
+               virtualName="" explicitFocusOrder="0" pos="892 584 20 6" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Line Border 1B" id="1755b1c2b6e4ae68" memberName="LineBorderButton1B3"
+               virtualName="" explicitFocusOrder="0" pos="936 576 6 20" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
+               resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
+               colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
+               colourOver="0" resourceDown="line_border_vert_png" opacityDown="0.60000002384185791016"
+               colourDown="0"/>
+  <IMAGEBUTTON name="Algorithm Switch Off AM" id="c840af0d765d6eb3" memberName="algoSwitchButtonOffEx1"
+               virtualName="" explicitFocusOrder="0" pos="952 701 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_off_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_off_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_off_png" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Algorithm Switch Off FM" id="aa0f44b1ed8dad85" memberName="algoSwitchButtonOffEx2"
+               virtualName="" explicitFocusOrder="0" pos="952 727 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_off_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_off_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_off_png" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Algorithm Switch On AM" id="e876ffbe79764275" memberName="algoSwitchButtonOnEx1"
+               virtualName="" explicitFocusOrder="0" pos="1040 701 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on_png" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Algorithm Switch On FM" id="b215e3921423b6e4" memberName="algoSwitchButtonOnEx2"
+               virtualName="" explicitFocusOrder="0" pos="1040 727 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="8e80bd8b126eeb36" memberName="label4" virtualName=""
+         explicitFocusOrder="0" pos="970 701 32 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="1f98e50cc47ec1a6" memberName="label5" virtualName=""
+         explicitFocusOrder="0" pos="971 727 32 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="8cfbc479cf413916" memberName="label6" virtualName=""
+         explicitFocusOrder="0" pos="1057 701 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="e231c8016dbdd4b" memberName="label7" virtualName=""
+         explicitFocusOrder="0" pos="1058 727 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="58e93cab537ef6c0" memberName="label8" virtualName=""
+         explicitFocusOrder="0" pos="944 816 320 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Example AM/FM switches"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <IMAGEBUTTON name="Algorithm Switch On2 AM" id="afdb65f653352953" memberName="algoSwitchButtonOn2Ex1"
+               virtualName="" explicitFocusOrder="0" pos="1128 700 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on2_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on2_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on2_png" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Algorithm Switch On2 FM" id="92f052947cb1a55" memberName="algoSwitchButtonOn2Ex2"
+               virtualName="" explicitFocusOrder="0" pos="1128 727 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on2_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on2_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on2_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="247e4f52e4cfd135" memberName="label9" virtualName=""
+         explicitFocusOrder="0" pos="1145 700 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="aec882448be58719" memberName="label10" virtualName=""
+         explicitFocusOrder="0" pos="1146 727 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Algorithm Switch On3 AM" id="9c9fbd61392d18d7" memberName="algoSwitchButtonOn3Ex1"
+               virtualName="" explicitFocusOrder="0" pos="1216 700 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on3_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on3_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on3_png" opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Algorithm Switch On3 FM" id="7c15f9c7da34e18d" memberName="algoSwitchButtonOn3Ex2"
+               virtualName="" explicitFocusOrder="0" pos="1216 727 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on3_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on3_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on3_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="336158e70e8469ef" memberName="label11" virtualName=""
+         explicitFocusOrder="0" pos="1233 700 31 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="281e5575b4c17d57" memberName="label12" virtualName=""
+         explicitFocusOrder="0" pos="1234 727 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Two OP AM Button" id="bc89b5f960a478ae" memberName="TwoOpAMButton"
+               virtualName="" explicitFocusOrder="0" pos="1173 484 60 56" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="0"
+               resourceNormal="twoopAm_png" opacityNormal="1" colourNormal="0"
+               resourceOver="twoopAm_png" opacityOver="1" colourOver="0" resourceDown="twoopAm_png"
+               opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="Two OP FM Button" id="5dbdd24f69156c98" memberName="TwoOpFMButton"
+               virtualName="" explicitFocusOrder="0" pos="1156 568 80 26" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="twoopFm_png" opacityNormal="1" colourNormal="0"
+               resourceOver="twoopFm_png" opacityOver="1" colourOver="0" resourceDown="twoopFm_png"
+               opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="54bf3742f6cf39a7" memberName="label13" virtualName=""
+         explicitFocusOrder="0" pos="1179 489 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="a73d54281a9f1e4b" memberName="label14" virtualName=""
+         explicitFocusOrder="0" pos="1179 518 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="c7714e4c9c108a80" memberName="label15" virtualName=""
+         explicitFocusOrder="0" pos="1166 572 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="6fad65a5c825f676" memberName="label16" virtualName=""
+         explicitFocusOrder="0" pos="1195 572 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="d9d895b8fa9bea7f" memberName="label17" virtualName=""
+         explicitFocusOrder="0" pos="1128 608 136 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Example Algorithms"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <GROUPCOMPONENT name="new group" id="d489f4c4cbfaf3a" memberName="groupComponent6"
+                  virtualName="" explicitFocusOrder="0" pos="933 56 168 95" outlinecol="ff008000"
+                  title=""/>
+  <IMAGEBUTTON name="Algorithm Switch On AM" id="3b9987473ffb3a54" memberName="algoSwitchButtonOnEx3"
+               virtualName="" explicitFocusOrder="0" pos="949 82 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="ddfd6855a5c3769a" memberName="label18" virtualName=""
+         explicitFocusOrder="0" pos="966 82 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Algorithm Switch Off FM" id="3bbe951e7d48f558" memberName="algoSwitchButtonOffEx3"
+               virtualName="" explicitFocusOrder="0" pos="949 108 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_off_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_off_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_off_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="ec3250e2f0f72c27" memberName="label19" virtualName=""
+         explicitFocusOrder="0" pos="968 108 32 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Two OP AM Button" id="6dd4e125e7f2454f" memberName="TwoOpAMButton2"
+               virtualName="" explicitFocusOrder="0" pos="1029 77 60 56" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="0"
+               resourceNormal="twoopAm_png" opacityNormal="1" colourNormal="0"
+               resourceOver="twoopAm_png" opacityOver="1" colourOver="0" resourceDown="twoopAm_png"
+               opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="6c2ac34805e7a509" memberName="label20" virtualName=""
+         explicitFocusOrder="0" pos="1035 82 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="68b10a34cd551295" memberName="label21" virtualName=""
+         explicitFocusOrder="0" pos="1035 111 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="5c48c62a06b13a38" memberName="label22" virtualName=""
+         explicitFocusOrder="0" pos="952 160 328 40" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Example Algo Sections w/ Diagram"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <IMAGEBUTTON name="Algorithm Switch Off AM" id="1ca80deedba9b959" memberName="algoSwitchButtonOffEx4"
+               virtualName="" explicitFocusOrder="0" pos="1125 82 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_off_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_off_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_off_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="c7f07212d02cdf5b" memberName="label23" virtualName=""
+         explicitFocusOrder="0" pos="1143 82 32 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Algorithm Switch On3 FM" id="840e067b2b3498f8" memberName="algoSwitchButtonOn3Ex3"
+               virtualName="" explicitFocusOrder="0" pos="1125 109 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on3_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on3_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on3_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="4f6fc36b09626a98" memberName="label24" virtualName=""
+         explicitFocusOrder="0" pos="1143 109 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Two OP FM Button" id="6de80642ad3057e6" memberName="TwoOpFMButton2"
+               virtualName="" explicitFocusOrder="0" pos="1196 94 80 26" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="twoopFm_png" opacityNormal="1" colourNormal="0"
+               resourceOver="twoopFm_png" opacityOver="1" colourOver="0" resourceDown="twoopFm_png"
+               opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="5d9df21ba856feea" memberName="label25" virtualName=""
+         explicitFocusOrder="0" pos="1206 98 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="bc2f20892df7121b" memberName="label26" virtualName=""
+         explicitFocusOrder="0" pos="1235 98 24 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         bold="0" italic="0" justification="36"/>
+  <GROUPCOMPONENT name="new group" id="35d4aeb27da92db" memberName="groupComponent7"
+                  virtualName="" explicitFocusOrder="0" pos="1112 56 168 95" outlinecol="ff008000"
+                  title=""/>
+  <IMAGEBUTTON name="Algorithm Switch Off AM" id="186e15fd17374b39" memberName="algoSwitchButtonOffEx5"
+               virtualName="" explicitFocusOrder="0" pos="1037 250 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_off_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_off_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_off_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="18a95b2639e6ca06" memberName="label27" virtualName=""
+         explicitFocusOrder="0" pos="1055 250 32 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <IMAGEBUTTON name="Algorithm Switch On3 FM" id="a280aa6d341570b7" memberName="algoSwitchButtonOn3Ex4"
+               virtualName="" explicitFocusOrder="0" pos="1103 250 64 24" buttonText="new button"
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="algo_switch_on3_png" opacityNormal="1" colourNormal="0"
+               resourceOver="algo_switch_on3_png" opacityOver="1" colourOver="0"
+               resourceDown="algo_switch_on3_png" opacityDown="1" colourDown="0"/>
+  <LABEL name="new label" id="7f064fc52edca9aa" memberName="label28" virtualName=""
+         explicitFocusOrder="0" pos="1121 250 32 24" textCol="ff000000"
+         edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="33"/>
+  <GROUPCOMPONENT name="new group" id="4c77a30ef34ca25d" memberName="groupComponent8"
+                  virtualName="" explicitFocusOrder="0" pos="1018 200 168 95" outlinecol="ff008000"
+                  title=""/>
+  <LABEL name="frequency label" id="70b9f51419600f29" memberName="frequencyLabel9"
+         virtualName="" explicitFocusOrder="0" pos="1067 216 72 24" tooltip="In additive mode, carrier and modulator output are simply summed rather than modulated"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Algorithm"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="31a16fa32fc39ae9" memberName="label29" virtualName=""
+         explicitFocusOrder="0" pos="944 304 328 40" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Example Algo Section w/o Diagram"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <LABEL name="new label" id="2470d0303393253b" memberName="label30" virtualName=""
+         explicitFocusOrder="0" pos="961 768 319 24" textCol="ff008000"
+         edTextCol="ff000000" edBkgCol="0" labelText="Off             On (Bright)          On (Dark)       On (Solid)"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <LABEL name="frequency label" id="9d58547998708b6b" memberName="frequencyLabel10"
+         virtualName="" explicitFocusOrder="0" pos="328 280 88 48" tooltip="Attenuate amplitude with note frequency in db/8ve"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation (db/8ve)"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <LABEL name="attenuation label" id="63aa860d1d8ae341" memberName="attenuationLabel5"
+         virtualName="" explicitFocusOrder="0" pos="240 280 80 48" tooltip="Set or disable velocity senstivity"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity Sensitivity"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
@@ -2248,6 +3365,135 @@ static const unsigned char resource_PluginGui_channelon_png[] = { 137,80,78,71,1
 
 const char* PluginGui::channelon_png = (const char*) resource_PluginGui_channelon_png;
 const int PluginGui::channelon_pngSize = 326;
+
+// JUCER_RESOURCE: toggle_off_sq_png, 118, "../img/toggle_off_sq.png"
+static const unsigned char resource_PluginGui_toggle_off_sq_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,12,0,0,0,12,8,6,0,0,0,86,117,92,231,0,0,0,1,115,82,71,66,0,174,206,28,233,0,0,
+0,48,73,68,65,84,40,21,99,100,172,103,248,207,64,2,96,1,169,253,223,72,156,14,160,225,12,76,196,41,69,168,26,213,128,8,11,220,44,218,135,18,56,166,65,49,72,44,0,0,186,23,4,27,1,178,34,38,0,0,0,0,73,69,
+78,68,174,66,96,130,0,0};
+
+const char* PluginGui::toggle_off_sq_png = (const char*) resource_PluginGui_toggle_off_sq_png;
+const int PluginGui::toggle_off_sq_pngSize = 118;
+
+// JUCER_RESOURCE: toggle_on_sq_png, 134, "../img/toggle_on_sq.png"
+static const unsigned char resource_PluginGui_toggle_on_sq_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,12,0,0,0,12,8,6,0,0,0,86,117,92,231,0,0,0,1,115,82,71,66,0,174,206,28,233,0,0,0,
+64,73,68,65,84,40,21,99,100,172,103,248,207,64,2,96,1,169,253,223,72,156,14,160,225,12,96,13,32,229,32,14,62,0,51,148,9,159,34,108,114,163,26,176,133,10,186,24,60,30,96,225,140,174,0,157,15,214,64,40,
+210,144,53,1,0,212,234,7,159,245,36,0,105,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::toggle_on_sq_png = (const char*) resource_PluginGui_toggle_on_sq_png;
+const int PluginGui::toggle_on_sq_pngSize = 134;
+
+// JUCER_RESOURCE: line_border_horiz_png, 108, "../img/line_border_horiz.png"
+static const unsigned char resource_PluginGui_line_border_horiz_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,22,0,0,0,6,8,6,0,0,0,199,98,110,160,0,0,0,1,115,82,71,66,0,174,206,28,233,
+0,0,0,38,73,68,65,84,40,21,99,100,96,96,248,15,196,84,7,76,84,55,17,106,32,11,67,176,32,77,204,166,153,139,25,129,206,29,90,97,12,0,88,84,2,111,238,165,1,44,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::line_border_horiz_png = (const char*) resource_PluginGui_line_border_horiz_png;
+const int PluginGui::line_border_horiz_pngSize = 108;
+
+// JUCER_RESOURCE: line_border_vert_png, 107, "../img/line_border_vert.png"
+static const unsigned char resource_PluginGui_line_border_vert_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,6,0,0,0,22,8,6,0,0,0,227,26,237,211,0,0,0,1,115,82,71,66,0,174,206,28,233,0,
+0,0,37,73,68,65,84,40,21,99,100,96,96,248,15,196,12,12,193,130,96,138,97,237,123,48,205,4,225,97,146,163,18,24,97,50,236,131,4,0,123,194,3,43,141,43,209,32,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::line_border_vert_png = (const char*) resource_PluginGui_line_border_vert_png;
+const int PluginGui::line_border_vert_pngSize = 107;
+
+// JUCER_RESOURCE: algo_switch_off_png, 162, "../img/algo_switch_off.png"
+static const unsigned char resource_PluginGui_algo_switch_off_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,52,0,0,0,20,8,6,0,0,0,194,212,30,221,0,0,0,1,115,82,71,66,0,174,206,28,233,0,
+0,0,92,73,68,65,84,88,9,237,151,177,13,0,32,12,195,90,196,223,136,203,129,178,248,133,168,74,167,140,113,60,53,115,197,137,70,55,139,229,236,30,68,79,78,140,30,40,80,24,136,45,52,147,13,105,122,161,149,
+13,177,133,102,178,33,77,47,180,178,33,182,208,76,54,164,233,133,86,54,196,22,154,201,134,52,189,208,234,127,172,245,233,117,185,11,224,6,4,43,49,160,14,163,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::algo_switch_off_png = (const char*) resource_PluginGui_algo_switch_off_png;
+const int PluginGui::algo_switch_off_pngSize = 162;
+
+// JUCER_RESOURCE: algo_switch_on_png, 168, "../img/algo_switch_on.png"
+static const unsigned char resource_PluginGui_algo_switch_on_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,52,0,0,0,20,8,6,0,0,0,194,212,30,221,0,0,0,1,115,82,71,66,0,174,206,28,233,0,
+0,0,98,73,68,65,84,88,9,237,151,177,13,192,48,12,195,236,52,223,244,200,92,153,115,10,7,233,196,19,4,67,158,52,138,226,228,204,21,21,141,110,94,150,231,205,22,72,223,174,24,45,72,0,97,32,140,33,25,109,
+72,82,11,74,217,16,198,144,140,54,36,169,5,165,108,8,99,72,70,27,146,212,130,82,54,132,49,36,163,13,73,106,65,169,255,99,189,159,94,151,59,99,230,7,124,25,120,111,199,0,0,0,0,73,69,78,68,174,66,96,130,
+0,0};
+
+const char* PluginGui::algo_switch_on_png = (const char*) resource_PluginGui_algo_switch_on_png;
+const int PluginGui::algo_switch_on_pngSize = 168;
+
+// JUCER_RESOURCE: algo_switch_on2_png, 169, "../img/algo_switch_on2.png"
+static const unsigned char resource_PluginGui_algo_switch_on2_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,52,0,0,0,20,8,6,0,0,0,194,212,30,221,0,0,0,1,115,82,71,66,0,174,206,28,233,0,
+0,0,99,73,68,65,84,88,9,237,151,177,13,128,48,16,3,31,68,145,58,115,48,123,166,201,48,116,33,130,226,86,176,44,127,229,210,231,171,254,168,209,87,25,221,245,177,204,199,3,233,110,117,122,144,64,17,32,
+182,208,76,49,164,233,133,86,49,196,22,154,41,134,52,189,208,42,134,216,66,51,197,144,166,23,90,197,16,91,104,166,24,210,244,66,171,255,99,221,159,158,203,189,241,194,4,31,18,119,100,16,0,0,0,0,73,69,
+78,68,174,66,96,130,0,0};
+
+const char* PluginGui::algo_switch_on2_png = (const char*) resource_PluginGui_algo_switch_on2_png;
+const int PluginGui::algo_switch_on2_pngSize = 169;
+
+// JUCER_RESOURCE: algo_switch_on3_png, 151, "../img/algo_switch_on3.png"
+static const unsigned char resource_PluginGui_algo_switch_on3_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,52,0,0,0,20,8,6,0,0,0,194,212,30,221,0,0,0,1,115,82,71,66,0,174,206,28,233,0,
+0,0,81,73,68,65,84,88,9,237,146,65,10,0,32,12,195,166,71,159,237,199,21,252,65,47,65,70,118,47,165,201,70,237,117,170,209,205,70,91,222,20,7,253,110,84,67,26,130,9,248,114,48,240,184,78,67,49,50,56,160,
+33,24,120,92,167,161,24,25,28,208,16,12,60,174,211,80,140,12,14,180,51,116,1,132,232,1,179,41,122,114,149,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::algo_switch_on3_png = (const char*) resource_PluginGui_algo_switch_on3_png;
+const int PluginGui::algo_switch_on3_pngSize = 151;
+
+// JUCER_RESOURCE: twoopAm_png, 1872, "../img/Two-OP AM.png"
+static const unsigned char resource_PluginGui_twoopAm_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,183,0,0,0,171,8,6,0,0,0,36,122,13,127,0,0,0,1,115,82,71,66,0,174,206,28,233,0,0,7,10,
+73,68,65,84,120,1,237,157,191,110,84,71,20,135,231,174,221,208,145,221,164,67,72,116,161,112,30,0,185,72,73,210,217,239,1,72,32,37,101,156,50,145,82,36,77,222,194,86,20,41,166,11,5,242,3,64,65,164,20,
+150,44,58,194,138,138,10,103,178,70,1,123,61,123,175,239,222,57,103,207,153,217,143,6,239,253,115,230,204,247,251,52,26,95,175,215,77,216,31,199,80,235,191,102,244,125,216,249,103,175,214,233,49,175,110,
+2,163,238,211,156,133,64,185,4,144,187,220,236,232,252,10,2,200,125,5,32,78,151,75,0,185,203,205,142,206,175,32,128,220,87,0,226,116,185,4,54,91,91,223,157,54,173,231,188,157,56,248,116,47,196,127,191,
+243,214,22,253,216,18,96,229,182,229,207,232,138,4,144,91,17,46,165,109,9,32,183,45,127,70,87,36,128,220,138,112,41,109,75,0,185,109,249,51,186,34,1,228,86,132,75,105,91,2,200,109,203,159,209,21,9,32,
+183,34,92,74,219,18,64,110,91,254,140,174,72,0,185,21,225,82,218,150,0,114,219,242,103,116,69,2,200,173,8,151,210,182,4,144,219,150,63,163,43,18,64,110,69,184,148,182,37,208,180,254,130,176,208,91,94,
+155,237,141,122,127,1,121,65,118,241,233,105,57,111,21,94,208,127,77,135,88,185,107,74,147,185,204,17,64,238,57,28,188,168,137,64,251,111,226,40,204,242,214,157,155,10,85,237,75,30,31,157,216,55,65,7,
+9,1,86,238,4,9,7,106,33,128,220,181,36,201,60,18,2,200,157,32,225,64,45,4,144,187,150,36,153,71,66,0,185,19,36,28,168,133,0,114,215,146,36,243,72,8,32,119,130,132,3,181,16,64,238,90,146,100,30,9,1,228,
+78,144,112,160,22,2,200,93,75,146,204,35,33,128,220,9,18,14,212,66,0,185,107,73,146,121,36,4,144,59,65,194,129,90,8,32,119,45,73,50,143,132,0,114,39,72,56,80,11,1,228,174,37,73,230,145,16,64,238,4,9,7,
+106,33,128,220,181,36,201,60,18,2,200,157,32,225,64,45,4,144,187,150,36,153,71,66,0,185,19,36,28,168,133,0,114,215,146,36,243,72,8,32,119,130,132,3,181,16,88,233,231,150,212,2,173,115,30,251,99,95,31,
+31,39,244,177,120,157,115,118,122,146,149,219,105,48,180,149,79,160,125,229,62,152,252,144,95,126,86,225,167,55,34,101,40,2,129,101,9,180,203,29,227,55,203,22,227,122,8,120,34,192,182,196,83,26,244,34,
+74,0,185,69,113,82,204,19,129,246,109,137,167,46,75,234,197,234,233,132,183,167,52,14,50,99,229,118,16,2,45,232,16,216,12,77,243,173,78,233,143,85,101,158,186,124,44,199,23,16,232,71,96,51,236,188,254,
+177,223,165,3,175,218,222,64,238,129,232,184,45,143,0,219,146,60,126,220,237,152,0,114,59,14,135,214,242,8,32,119,30,63,238,118,76,0,185,29,135,67,107,121,4,144,59,143,31,119,59,38,128,220,142,195,161,
+181,60,2,200,157,199,143,187,29,19,64,110,199,225,208,90,30,1,228,206,227,199,221,142,9,32,183,227,112,104,45,143,0,114,231,241,227,110,199,4,144,219,113,56,180,150,71,0,185,243,248,113,183,99,2,200,237,
+56,28,90,203,35,128,220,121,252,184,219,49,1,228,118,28,14,173,229,17,64,238,60,126,220,237,152,0,114,59,14,135,214,242,8,32,119,30,63,238,118,76,0,185,29,135,67,107,121,4,86,250,185,37,199,71,39,121,
+221,114,55,4,150,32,192,202,189,4,44,46,45,139,0,114,151,149,23,221,46,65,64,125,91,18,159,158,54,75,244,195,165,16,16,35,192,202,45,134,146,66,222,8,32,183,183,68,232,71,140,0,114,139,161,164,80,22,129,
+131,241,31,225,247,201,231,89,53,46,221,140,220,151,128,240,210,136,64,12,95,133,119,241,121,216,159,252,28,30,223,24,75,116,129,220,18,20,169,33,67,32,134,217,3,142,120,63,188,125,251,119,56,152,220,
+11,127,126,153,245,192,3,185,101,98,161,138,44,129,113,136,241,151,240,230,249,179,240,219,103,119,135,150,70,238,161,228,184,79,159,64,140,183,195,233,233,97,24,184,31,71,110,253,136,24,33,151,192,192,
+253,56,114,231,130,231,254,213,16,24,176,31,71,238,213,68,195,40,114,4,122,239,199,145,91,14,58,149,86,73,224,226,126,124,127,114,123,209,208,188,239,99,17,149,18,143,173,243,159,234,107,194,187,16,154,
+95,195,181,107,123,225,238,203,233,135,248,88,185,63,144,224,255,114,9,156,237,199,99,188,119,249,249,56,43,119,185,145,206,119,190,206,43,247,60,137,217,34,222,188,8,97,244,136,149,251,50,24,94,151,79,
+32,134,247,139,54,114,151,31,37,51,56,39,48,13,163,230,65,248,100,107,43,236,188,58,204,250,217,253,121,77,190,130,128,33,129,228,27,202,39,239,155,65,110,195,76,86,50,244,238,180,140,239,171,134,127,
+207,240,56,196,230,97,216,125,61,219,103,207,255,67,238,121,30,188,42,134,64,243,87,104,70,15,207,182,31,109,45,179,231,110,35,195,113,175,4,230,246,213,93,77,178,114,119,209,225,156,31,2,45,251,234,174,
+6,145,187,139,14,231,188,16,104,221,87,119,53,136,220,93,116,56,103,75,224,255,31,198,116,237,171,187,26,100,207,221,69,135,115,86,4,166,179,159,50,222,15,215,183,190,24,42,246,89,227,172,220,86,241,49,
+110,74,96,192,190,58,45,114,126,4,185,207,89,240,149,37,129,38,28,206,158,87,63,90,244,188,122,104,91,200,61,148,28,247,201,18,216,153,126,45,91,112,246,214,41,233,130,212,131,128,23,2,200,237,37,9,250,
+16,39,160,190,45,105,182,55,162,120,215,142,11,242,169,182,126,194,97,229,246,147,5,157,8,19,64,110,97,160,148,243,67,64,125,91,114,113,170,183,238,220,188,248,178,154,175,249,91,63,62,163,100,229,246,
+153,11,93,9,16,64,110,1,136,148,240,73,0,185,125,230,66,87,2,4,144,91,0,34,37,124,18,64,110,159,185,208,149,0,1,228,22,128,72,9,159,4,144,219,103,46,116,37,64,0,185,5,32,82,194,39,1,228,246,153,11,93,
+9,16,64,110,1,136,148,240,73,0,185,125,230,66,87,2,4,144,91,0,34,37,124,18,64,110,159,185,208,149,0,1,228,22,128,72,9,159,4,144,219,103,46,116,37,64,0,185,5,32,82,194,39,1,228,246,153,11,93,9,16,64,110,
+1,136,148,240,73,0,185,125,230,66,87,2,4,144,91,0,34,37,124,18,64,110,159,185,208,149,0,1,228,22,128,72,9,159,4,144,219,103,46,116,37,64,96,165,159,91,34,208,175,255,18,195,255,228,156,255,185,21,214,
+33,43,119,97,129,209,110,127,2,200,221,159,21,87,22,70,0,185,11,11,140,118,251,19,64,238,254,172,184,178,48,2,200,93,88,96,180,219,159,0,79,75,250,179,234,119,229,238,180,233,119,33,87,105,19,96,229,214,
+38,76,125,51,2,200,109,134,158,129,181,9,32,183,54,97,234,155,17,64,110,51,244,12,172,77,0,185,181,9,83,223,140,0,114,155,161,103,96,109,2,200,173,77,152,250,102,4,144,219,12,61,3,107,19,64,110,109,194,
+212,55,35,128,220,102,232,25,88,155,0,114,107,19,166,190,25,1,228,54,67,207,192,218,4,144,91,155,48,245,205,8,32,183,25,122,6,214,38,128,220,218,132,169,111,70,0,185,205,208,51,176,54,1,228,214,38,76,
+125,51,2,200,109,134,158,129,181,9,32,183,54,97,234,155,17,64,110,51,244,12,172,77,0,185,181,9,83,223,140,0,114,155,161,103,96,109,2,200,173,77,152,250,102,4,86,250,185,37,199,71,39,102,19,101,224,245,
+35,192,202,189,126,153,175,205,140,145,123,109,162,94,191,137,254,7,149,161,178,110,197,68,224,25,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::twoopAm_png = (const char*) resource_PluginGui_twoopAm_png;
+const int PluginGui::twoopAm_pngSize = 1872;
+
+// JUCER_RESOURCE: twoopFm_png, 1203, "../img/Two-OP FM.png"
+static const unsigned char resource_PluginGui_twoopFm_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,219,0,0,0,81,8,6,0,0,0,91,168,211,254,0,0,0,1,115,82,71,66,0,174,206,28,233,0,0,4,109,
+73,68,65,84,120,1,237,221,177,79,147,65,24,199,241,231,10,11,147,218,202,102,76,220,100,168,127,128,97,208,193,4,221,202,127,225,0,38,144,232,40,140,154,104,162,131,254,23,109,140,137,176,201,96,248,3,
+100,208,196,129,132,184,41,13,46,76,224,249,86,36,185,148,247,170,190,125,142,222,221,251,197,193,151,123,233,241,220,231,233,47,111,175,77,139,145,110,211,74,174,95,166,177,46,157,239,107,185,46,143,
+117,165,37,208,72,171,92,170,69,32,93,1,194,150,110,239,168,60,49,1,194,150,88,195,40,55,93,1,194,150,110,239,168,60,49,1,194,150,88,195,40,55,93,129,105,111,233,139,125,227,61,23,219,137,222,229,53,177,
+63,31,199,86,22,245,32,224,10,112,101,115,53,56,70,32,160,0,97,11,136,203,212,8,184,2,132,205,213,224,24,129,128,2,132,45,32,46,83,35,224,10,16,54,87,131,99,4,2,10,16,182,128,184,76,141,128,43,64,216,
+92,13,142,17,8,40,64,216,2,226,50,53,2,174,0,97,115,53,56,70,32,160,0,97,11,136,203,212,8,184,2,132,205,213,224,24,129,128,2,132,45,32,46,83,35,224,10,16,54,87,131,99,4,2,10,16,182,128,184,76,141,128,
+43,96,188,31,248,163,244,22,27,51,63,149,239,7,10,185,146,127,142,237,135,227,137,188,53,9,231,146,102,68,54,196,149,45,178,134,80,78,190,2,132,45,223,222,178,178,200,4,252,239,212,14,80,232,181,155,87,
+3,204,58,249,41,119,183,247,38,95,132,83,1,206,14,70,68,135,92,217,34,106,6,165,228,45,64,216,242,238,47,171,139,72,128,176,69,212,12,74,201,91,128,176,229,221,95,86,23,145,0,97,139,168,25,148,146,183,
+0,97,203,187,191,172,46,34,1,194,22,81,51,40,37,111,1,194,150,119,127,89,93,68,2,132,45,162,102,80,74,222,2,132,45,239,254,178,186,136,4,8,91,68,205,160,148,188,5,8,91,222,253,101,117,17,9,16,182,136,
+154,65,41,121,11,16,182,188,251,203,234,34,18,32,108,17,53,131,82,34,18,232,53,223,201,219,214,117,205,138,8,155,166,38,115,229,35,96,229,174,28,217,29,233,182,94,200,230,149,166,198,194,8,155,134,34,
+115,228,41,96,165,120,115,181,93,150,195,195,47,210,107,45,201,251,91,99,189,217,154,176,229,121,55,97,85,186,2,77,177,246,165,28,236,124,148,55,179,11,85,167,38,108,85,229,184,93,253,4,172,157,147,227,
+227,13,169,184,159,35,108,245,187,203,176,226,113,5,42,238,231,8,219,184,240,220,190,158,2,21,246,115,132,173,158,119,21,86,173,39,240,207,251,57,194,166,135,206,76,117,22,112,247,115,221,214,92,25,197,
+88,79,101,150,77,88,251,177,110,115,50,31,183,254,252,71,189,232,39,229,252,55,229,193,126,206,216,59,197,75,5,175,101,102,102,77,22,190,246,79,111,194,149,237,84,130,255,17,208,18,24,236,231,172,93,26,
+126,125,206,127,101,235,181,158,168,252,238,103,7,42,211,48,9,2,9,10,156,238,231,238,75,111,118,213,31,54,107,31,38,184,56,74,70,32,62,1,43,166,248,39,60,140,140,175,53,84,148,143,64,95,26,230,129,92,
+106,183,165,243,109,195,127,101,203,103,193,172,4,129,243,21,48,114,36,98,156,39,72,182,126,255,126,194,166,221,6,165,63,34,249,223,101,213,236,143,78,74,104,231,234,207,118,110,138,53,43,178,184,255,
+105,184,135,132,109,88,132,239,17,168,36,96,62,139,105,172,12,30,46,250,110,62,45,198,60,242,157,84,26,215,121,86,83,169,24,166,65,64,89,96,176,47,91,151,11,237,87,114,123,171,120,248,232,255,154,150,
+206,254,83,255,105,133,51,243,83,132,77,129,145,41,34,19,240,236,203,70,85,201,195,200,81,58,156,67,160,92,192,187,47,43,255,241,147,81,194,54,74,135,115,8,184,2,198,20,79,122,52,86,71,237,203,220,31,
+31,62,230,117,182,97,17,190,71,224,172,64,191,120,110,99,89,46,182,111,84,13,218,96,74,174,108,103,97,25,65,224,68,160,194,190,108,20,29,97,27,165,195,185,250,10,24,217,40,94,47,91,45,123,189,172,42,10,
+97,171,42,199,237,242,22,232,244,239,105,47,144,61,155,182,40,243,33,224,17,32,108,30,24,134,17,208,22,32,108,218,162,204,135,128,71,128,176,121,96,24,70,64,91,128,176,105,139,50,31,2,30,1,194,230,129,
+97,24,1,109,1,194,166,45,202,124,8,120,4,8,155,7,134,97,4,180,5,8,155,182,40,243,33,224,17,32,108,30,24,134,17,208,22,32,108,218,162,204,135,128,71,128,176,121,96,24,70,64,91,128,176,105,139,50,31,2,30,
+1,194,230,129,97,24,1,109,129,115,125,139,205,238,246,158,118,253,204,87,34,128,115,9,74,4,67,92,217,34,104,2,37,212,67,128,176,213,163,207,172,50,2,129,95,213,163,177,117,99,210,56,193,0,0,0,0,73,69,
+78,68,174,66,96,130,0,0};
+
+const char* PluginGui::twoopFm_png = (const char*) resource_PluginGui_twoopFm_png;
+const int PluginGui::twoopFm_pngSize = 1203;
 
 
 //[EndFile] You can add extra defines here...
