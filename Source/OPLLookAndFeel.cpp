@@ -16,6 +16,8 @@ OPLLookAndFeel::OPLLookAndFeel()
 	toggleOff = ImageCache::getFromMemory(PluginGui::toggle_off_sq_png, PluginGui::toggle_off_sq_pngSize), 1.000f, Colour(0x00000000);
 	toggleOn = ImageCache::getFromMemory(PluginGui::toggle_on_sq_png, PluginGui::toggle_on_sq_pngSize), 1.000f, Colour(0x00000000);
 	toggleRect = Rectangle<float>((float)toggleOff.getWidth(), (float)toggleOn.getHeight());
+
+	setColour(Label::ColourIds::outlineWhenEditingColourId, Colours::black);
 }
 
 void OPLLookAndFeel::drawTickBox(Graphics &g,

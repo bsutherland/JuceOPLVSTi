@@ -213,8 +213,23 @@ static const char* STATE[] = {
 	"D",
 	"A",
 };
-const char* Hiopl::GetState(int ch) const {	
-	return STATE[adlib->chip.chan[ch - 1].op[1].state];
+// in-memory ordering of DOSBox emulator
+static int DOSBOX_CH_MAP[] = {
+	-1, // channel numbering starts at 1
+	0,
+	2, // 1
+	4, // 2
+	1, // 3
+	3, // 4
+	5,
+	6,
+	7,
+	8,
+	9,
+};
+const char* Hiopl::GetState(int ch) const {
+	int dosboxCh = DOSBOX_CH_MAP[ch];
+	return STATE[adlib->chip.chan[dosboxCh].op[1].state];
 }
 
 bool Hiopl::IsActive(int ch) {
@@ -277,31 +292,20 @@ Hiopl::~Hiopl() {
 
 };
 
+// Check that _GetOffset parameters are in range.
 bool Hiopl::_CheckParams(int ch, int osc=OSCILLATORS) {
 	return ch > 0 && ch <= CHANNELS && osc > 0 && osc <= OSCILLATORS;
 }
 
+// The register offset for parameters that affect a specific oscillator.
 int Hiopl::_GetOffset(int ch, int osc) {
 	assert(_CheckParams(ch, osc));
 	return (1 == osc) ? _op1offset[ch] : _op2offset[ch];
 }
 
-// re-ordered to match in-memory ordering of DOSBox emulator
-static int OFFSET_MAP[] = {
-	-1,
-	0,
-	3,//1,
-	1,//2,
-	4,//3,
-	2,//4,
-	5,
-	6,
-	7,
-	8,
-	9,
-};
+// The register offset for parameters that affect the entire channel.
 int Hiopl::_GetOffset(int ch) {
 	assert(_CheckParams(ch));
-	return OFFSET_MAP[ch];
+	return ch - 1;
 }
 

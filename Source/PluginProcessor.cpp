@@ -748,10 +748,10 @@ void AdlibBlasterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
 					Opl->SetAttenuation(ch, 2, getEnumParameter("Carrier Attenuation"));
 					break;
 				case 1:
-					Opl->SetAttenuation(ch, 2, 16 - (midi_message.getVelocity() / 8));
+					Opl->SetAttenuation(ch, 2, 32 - (midi_message.getVelocity() / 4));
 					break;
 				case 2:
-					Opl->SetAttenuation(ch, 2, 32 - (midi_message.getVelocity() / 4));
+					Opl->SetAttenuation(ch, 2, 63 - (midi_message.getVelocity() / 2));
 					break;
 				}
 				switch (getEnumParameter("Modulator Velocity Sensitivity")) {

@@ -1983,6 +1983,8 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == velocityComboBox2)
     {
         //[UserComboBoxCode_velocityComboBox2] -- add your combo box handling code here..
+		int id = comboBoxThatHasChanged->getSelectedId() - 1;
+		processor->setEnumParameter("Carrier Velocity Sensitivity", id);
         //[/UserComboBoxCode_velocityComboBox2]
     }
     else if (comboBoxThatHasChanged == algorithmComboBox)
@@ -1995,6 +1997,8 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox2)
     {
         //[UserComboBoxCode_keyscaleAttenuationComboBox2] -- add your combo box handling code here..
+		int id = comboBoxThatHasChanged->getSelectedId() - 1;
+		processor->setEnumParameter("Carrier Keyscale Level", id);
         //[/UserComboBoxCode_keyscaleAttenuationComboBox2]
     }
     else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox)
