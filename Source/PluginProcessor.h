@@ -50,6 +50,7 @@ public:
 	void setIntParameter (String name, int newValue);
 	int getIntParameter (String name);
 	int getEnumParameter (String name);
+	bool getBoolParameter(String name);
 	void loadInstrumentFromFile(String filename);
 	void saveInstrumentToFile(String filename);
 	void setParametersByRegister(int register_base, int op, uint8 value);

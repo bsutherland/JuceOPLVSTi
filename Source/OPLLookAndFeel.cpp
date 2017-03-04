@@ -17,7 +17,9 @@ OPLLookAndFeel::OPLLookAndFeel()
 	toggleOn = ImageCache::getFromMemory(PluginGui::toggle_on_sq_png, PluginGui::toggle_on_sq_pngSize), 1.000f, Colour(0x00000000);
 	toggleRect = Rectangle<float>((float)toggleOff.getWidth(), (float)toggleOn.getHeight());
 
-	setColour(Label::ColourIds::outlineWhenEditingColourId, Colours::black);
+	// Prevents an ugly white border from being drawn around a component with keyboard focus.
+	setColour(TextEditor::ColourIds::focusedOutlineColourId, Colours::black);
+	setColour(Slider::ColourIds::textBoxOutlineColourId, Colour(0xff007f00));
 }
 
 void OPLLookAndFeel::drawTickBox(Graphics &g,

@@ -181,7 +181,7 @@ void Hiopl::EnableAdditiveSynthesis(int ch, bool enable) {
 
 void Hiopl::SetModulatorFeedback(int ch, int level) {
 	int offset = this->_GetOffset(ch);
-	_WriteReg(0xc0+offset, (Bit8u)level, 0x0e);
+	_WriteReg(0xc0+offset, (Bit8u)level << 1, 0x0e);
 }
 
 void Hiopl::SetPercussionMode(bool enable) {

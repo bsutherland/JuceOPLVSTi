@@ -475,6 +475,11 @@ int AdlibBlasterAudioProcessor::getEnumParameter (String name)
 	return p->getParameterIndex();
 }
 
+bool AdlibBlasterAudioProcessor::getBoolParameter(String name)
+{
+	return 0 != getEnumParameter(name);
+}
+
 // Parameters which apply directly to the OPL
 void AdlibBlasterAudioProcessor::setParameter (int index, float newValue)
 {
