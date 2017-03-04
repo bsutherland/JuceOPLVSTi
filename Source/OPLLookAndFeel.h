@@ -35,6 +35,15 @@ public:
 		bool 	isButtonDown
 	);
 
+	int getSliderThumbRadius(Slider& s);
+	void drawLinearSliderThumb(Graphics& g, int x, int y, int width, int height,
+		float sliderPos, float minSliderPos, float maxSliderPos,
+		const Slider::SliderStyle style, Slider& slider);
+	void drawLinearSliderBackground(Graphics& g, int x, int y, int width, int height,
+		float /*sliderPos*/,
+		float /*minSliderPos*/,
+		float /*maxSliderPos*/,
+		const Slider::SliderStyle /*style*/, Slider& slider);
 };
 
 
