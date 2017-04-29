@@ -106,6 +106,18 @@ public:
     static const int twoopAm_pngSize;
     static const char* twoopFm_png;
     static const int twoopFm_pngSize;
+    static const char* bassdrum_png;
+    static const int bassdrum_pngSize;
+    static const char* snare_png;
+    static const int snare_pngSize;
+    static const char* disabled_png;
+    static const int disabled_pngSize;
+    static const char* tom_png;
+    static const int tom_pngSize;
+    static const char* hihat_png;
+    static const int hihat_pngSize;
+    static const char* cymbal_png;
+    static const int cymbal_pngSize;
 
 
 private:
@@ -120,6 +132,9 @@ private:
     //[/UserVariables]
 
     //==============================================================================
+    ScopedPointer<GroupComponent> groupComponent11;
+    ScopedPointer<GroupComponent> groupComponent10;
+    ScopedPointer<GroupComponent> groupComponent9;
     ScopedPointer<GroupComponent> groupComponent;
     ScopedPointer<ComboBox> frequencyComboBox;
     ScopedPointer<Label> frequencyLabel;
@@ -188,8 +203,6 @@ private:
     ScopedPointer<ImageButton> camelsineImageButton2;
     ScopedPointer<ImageButton> squareImageButton2;
     ScopedPointer<ImageButton> logsawImageButton2;
-    ScopedPointer<ComboBox> algorithmComboBox;
-    ScopedPointer<Label> frequencyLabel8;
     ScopedPointer<Label> dbLabel4;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox2;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox;
@@ -199,8 +212,6 @@ private:
     ScopedPointer<Label> emulatorLabel;
     ScopedPointer<Label> emulatorLabel2;
     ScopedPointer<ToggleButton> recordButton;
-    ScopedPointer<ComboBox> percussionComboBox;
-    ScopedPointer<Label> percussionLabel;
     ScopedPointer<TextButton> exportButton;
     ScopedPointer<TextButton> loadButton;
     ScopedPointer<Label> versionLabel;
@@ -212,9 +223,6 @@ private:
     ScopedPointer<ImageButton> LineBorderButton1A;
     ScopedPointer<ImageButton> LineBorderButton1B;
     ScopedPointer<Label> label3;
-    ScopedPointer<ImageButton> LineBorderButton3A;
-    ScopedPointer<ImageButton> LineBorderButton3B;
-    ScopedPointer<ImageButton> LineBorderButton3B2;
     ScopedPointer<ImageButton> LineBorderButton1C2;
     ScopedPointer<ImageButton> LineBorderButton1A2;
     ScopedPointer<ImageButton> LineBorderButton1B2;
@@ -271,6 +279,14 @@ private:
     ScopedPointer<Label> label30;
     ScopedPointer<Label> frequencyLabel10;
     ScopedPointer<Label> attenuationLabel5;
+    ScopedPointer<ImageButton> fmButton;
+    ScopedPointer<ImageButton> additiveButton;
+    ScopedPointer<ImageButton> bassDrumButton;
+    ScopedPointer<ImageButton> snareDrumButton;
+    ScopedPointer<ImageButton> disablePercussionButton;
+    ScopedPointer<ImageButton> tomTomButton;
+    ScopedPointer<ImageButton> cymbalButton;
+    ScopedPointer<ImageButton> hiHatButton;
 
 
     //==============================================================================

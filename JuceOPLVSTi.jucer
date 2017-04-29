@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.14.2"
+<JUCERPROJECT id="wUKQiT" name="JuceOPLVSTi" projectType="audioplug" version="0.14.3"
               bundleIdentifier="com.plainweave.JuceOPLVSTi" buildVST="1" buildAU="1"
               pluginName="JuceOPLVSTi" pluginDesc="JuceOPLVSTi" pluginManufacturer="Plainweave Software"
               pluginManufacturerCode="Pwve" pluginCode="JOPL" pluginChannelConfigs="{0, 1}"
