@@ -4,6 +4,8 @@
 #include "IntFloatParameter.h"
 #include "SbiLoader.h"
 
+#include <iterator>
+
 const char *AdlibBlasterAudioProcessor::PROGRAM_INDEX = "Program Index";
 
 //==============================================================================
@@ -132,6 +134,7 @@ AdlibBlasterAudioProcessor::AdlibBlasterAudioProcessor()
 	setCurrentProgram(0);
 	for (int i = 0; i < Hiopl::CHANNELS+1; i++) {
 		active_notes[i] = NO_NOTE;
+		channel_enabled[i] = true;
 	}
 	currentScaledBend = 1.0f;
 
@@ -904,17 +907,41 @@ void AdlibBlasterAudioProcessor::setStateInformation (const void* data, int size
 	}
 }
 
-// @param idx 1-based channel index
-// @note since this is just reading off pod, "safe" to access without a mutex by other threads such as GUI
-int AdlibBlasterAudioProcessor::isChannelActive(int idx) const
-{
-	return active_notes[idx] != NO_NOTE;
+bool AdlibBlasterAudioProcessor::isChannelEnabled(const int idx) const {
+	return channel_enabled[idx];
 }
+
+// @param idx 1-based channel index
+void AdlibBlasterAudioProcessor::disableChannel(const int idx)
+{
+	if (isChannelEnabled(idx)) {
+		std::deque<int>::const_iterator pos = std::find(available_channels.begin(), available_channels.end(), idx);
+		if (pos != available_channels.end()) {
+			available_channels.erase(pos);
+			channel_enabled[idx] = false;
+		}
+	}
+}
+
+void AdlibBlasterAudioProcessor::enableChannel(const int idx)
+{
+	if (!isChannelEnabled(idx)) {
+		available_channels.push_back(idx);
+		channel_enabled[idx] = true;
+	}
+}
+
+void AdlibBlasterAudioProcessor::toggleChannel(const int idx)
+{
+	isChannelEnabled(idx) ? disableChannel(idx) : enableChannel(idx);
+}
+
+const char* CHANNEL_DISABLED_STRING = "x";
 
 // @param idx 1-based channel index
 const char* AdlibBlasterAudioProcessor::getChannelEnvelopeStage(int idx) const
 {
-	return Opl->GetState(idx);
+	return isChannelEnabled(idx) ? Opl->GetState(idx) : CHANNEL_DISABLED_STRING;
 }
 
 

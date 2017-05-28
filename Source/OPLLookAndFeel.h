@@ -21,6 +21,8 @@ private:
 	Rectangle<float> toggleRect;
 
 public:
+	static const Colour DOS_GREEN;
+
 	OPLLookAndFeel();
 
 	void drawTickBox(Graphics &g,

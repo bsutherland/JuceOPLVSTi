@@ -11,6 +11,8 @@
 #include "OPLLookAndFeel.h"
 #include "PluginGui.h"
 
+const Colour OPLLookAndFeel::DOS_GREEN = Colour(0xff007f00);
+
 OPLLookAndFeel::OPLLookAndFeel()
 {
 	toggleOff = ImageCache::getFromMemory(PluginGui::toggle_off_sq_png, PluginGui::toggle_off_sq_pngSize), 1.000f, Colour(0x00000000);
@@ -19,7 +21,13 @@ OPLLookAndFeel::OPLLookAndFeel()
 
 	// Prevents an ugly white border from being drawn around a component with keyboard focus.
 	setColour(TextEditor::ColourIds::focusedOutlineColourId, Colours::black);
-	setColour(Slider::ColourIds::textBoxOutlineColourId, Colour(0xff007f00));
+	setColour(Slider::ColourIds::textBoxOutlineColourId, DOS_GREEN);
+
+	setColour(TextButton::ColourIds::buttonColourId, DOS_GREEN);
+	setColour(TextButton::ColourIds::buttonOnColourId, DOS_GREEN);
+	setColour(TextButton::ColourIds::textColourOnId, Colours::black);
+	setColour(TextButton::ColourIds::textColourOffId, Colours::black);
+
 }
 
 void OPLLookAndFeel::drawTickBox(Graphics &g,

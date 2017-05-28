@@ -118,6 +118,8 @@ public:
     static const int hihat_pngSize;
     static const char* cymbal_png;
     static const int cymbal_pngSize;
+    static const char* adlib_png;
+    static const int adlib_pngSize;
 
 
 private:
@@ -125,13 +127,15 @@ private:
 	static const uint32 COLOUR_MID = 0xff007f00;
 	static const uint32 COLOUR_RECORDING = 0xffff0000;
 	AdlibBlasterAudioProcessor* processor;
-	std::array<ScopedPointer<Label>, Hiopl::CHANNELS> channels;
+	std::array<ScopedPointer<TextButton>, Hiopl::CHANNELS> channels;
 	TooltipWindow tooltipWindow;
 	File instrumentLoadDirectory = File::nonexistent;
 	File instrumentSaveDirectory = File::nonexistent;
     //[/UserVariables]
 
     //==============================================================================
+    ScopedPointer<GroupComponent> groupComponent2;
+    ScopedPointer<GroupComponent> groupComponent4;
     ScopedPointer<GroupComponent> groupComponent11;
     ScopedPointer<GroupComponent> groupComponent10;
     ScopedPointer<GroupComponent> groupComponent9;
@@ -159,7 +163,6 @@ private:
     ScopedPointer<ToggleButton> sustainButton;
     ScopedPointer<ToggleButton> keyscaleEnvButton;
     ScopedPointer<Label> dbLabel2;
-    ScopedPointer<GroupComponent> groupComponent2;
     ScopedPointer<ComboBox> frequencyComboBox2;
     ScopedPointer<Label> frequencyLabel3;
     ScopedPointer<Slider> aSlider2;
@@ -206,7 +209,6 @@ private:
     ScopedPointer<Label> dbLabel4;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox2;
     ScopedPointer<ComboBox> keyscaleAttenuationComboBox;
-    ScopedPointer<GroupComponent> groupComponent4;
     ScopedPointer<GroupComponent> groupComponent5;
     ScopedPointer<Slider> emulatorSlider;
     ScopedPointer<Label> emulatorLabel;
@@ -287,6 +289,9 @@ private:
     ScopedPointer<ImageButton> tomTomButton;
     ScopedPointer<ImageButton> cymbalButton;
     ScopedPointer<ImageButton> hiHatButton;
+    ScopedPointer<Label> dbLabel7;
+    ScopedPointer<Label> dbLabel8;
+    ScopedPointer<ImageButton> imageButton;
 
 
     //==============================================================================

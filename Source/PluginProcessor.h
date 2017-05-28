@@ -55,7 +55,10 @@ public:
 	void saveInstrumentToFile(String filename);
 	void setParametersByRegister(int register_base, int op, uint8 value);
 
-	int isChannelActive(int idx) const;
+	void disableChannel(const int idx);
+	void enableChannel(const int idx);
+	void toggleChannel(const int idx);
+	bool isChannelEnabled(const int idx) const;
 	const char* getChannelEnvelopeStage(int idx) const;
 
 	void updateGuiIfPresent();
@@ -94,9 +97,10 @@ private:
 	bool velocity;
 	static const int NO_NOTE=-1;
 	static const char *PROGRAM_INDEX;
-	int active_notes[Hiopl::CHANNELS+1];	// keyed by channel
-	std::deque<int> available_channels;		// most recently freed at end
-	std::deque<int> used_channels;			// most recently used at end
+	int active_notes[Hiopl::CHANNELS + 1];		// keyed by 1-based channel index
+	bool channel_enabled[Hiopl::CHANNELS + 1];  // keyed by 1-based channel index
+	std::deque<int> available_channels;			// most recently freed at end
+	std::deque<int> used_channels;				// most recently used at end
 	float currentScaledBend;
 
     //==============================================================================

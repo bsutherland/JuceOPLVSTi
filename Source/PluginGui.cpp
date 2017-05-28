@@ -166,6 +166,18 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
+    addAndMakeVisible (groupComponent2 = new GroupComponent ("new group",
+                                                             TRANS("Carrier")));
+    groupComponent2->setTextLabelPosition (Justification::centredLeft);
+    groupComponent2->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
+    groupComponent2->setColour (GroupComponent::textColourId, Colour (0xff007f00));
+
+    addAndMakeVisible (groupComponent4 = new GroupComponent ("new group",
+                                                             TRANS("Channels")));
+    groupComponent4->setTextLabelPosition (Justification::centredLeft);
+    groupComponent4->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
+    groupComponent4->setColour (GroupComponent::textColourId, Colour (0xff007f00));
+
     addAndMakeVisible (groupComponent11 = new GroupComponent ("new group",
                                                               TRANS("Percussion")));
     groupComponent11->setTextLabelPosition (Justification::centredLeft);
@@ -198,7 +210,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     frequencyComboBox->addListener (this);
 
     addAndMakeVisible (frequencyLabel = new Label ("frequency label",
-                                                   TRANS("Base Frequency")));
+                                                   TRANS("Frequency Multiplier")));
     frequencyLabel->setTooltip (TRANS("Multiplier applied to base note frequency"));
     frequencyLabel->setFont (Font (15.00f, Font::plain));
     frequencyLabel->setJustificationType (Justification::centredLeft);
@@ -297,8 +309,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (attenuationSlider = new Slider ("attenuation slider"));
     attenuationSlider->setRange (-47.25, 0, 0.75);
-    attenuationSlider->setSliderStyle (Slider::LinearHorizontal);
-    attenuationSlider->setTextBoxStyle (Slider::TextBoxRight, true, 64, 20);
+    attenuationSlider->setSliderStyle (Slider::LinearVertical);
+    attenuationSlider->setTextBoxStyle (Slider::TextBoxBelow, true, 64, 20);
     attenuationSlider->setColour (Slider::thumbColourId, Colour (0xff007f00));
     attenuationSlider->setColour (Slider::trackColourId, Colour (0x7f007f00));
     attenuationSlider->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -405,12 +417,6 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     dbLabel2->setColour (TextEditor::textColourId, Colours::black);
     dbLabel2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (groupComponent2 = new GroupComponent ("new group",
-                                                             TRANS("Carrier")));
-    groupComponent2->setTextLabelPosition (Justification::centredLeft);
-    groupComponent2->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
-    groupComponent2->setColour (GroupComponent::textColourId, Colour (0xff007f00));
-
     addAndMakeVisible (frequencyComboBox2 = new ComboBox ("frequency combo box"));
     frequencyComboBox2->setEditableText (false);
     frequencyComboBox2->setJustificationType (Justification::centredLeft);
@@ -419,7 +425,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     frequencyComboBox2->addListener (this);
 
     addAndMakeVisible (frequencyLabel3 = new Label ("frequency label",
-                                                    TRANS("Base Frequency")));
+                                                    TRANS("Frequency Multiplier")));
     frequencyLabel3->setTooltip (TRANS("Multiplier applied to base note frequency"));
     frequencyLabel3->setFont (Font (15.00f, Font::plain));
     frequencyLabel3->setJustificationType (Justification::centredLeft);
@@ -514,8 +520,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (attenuationSlider2 = new Slider ("attenuation slider"));
     attenuationSlider2->setRange (-47.25, 0, 0.75);
-    attenuationSlider2->setSliderStyle (Slider::LinearHorizontal);
-    attenuationSlider2->setTextBoxStyle (Slider::TextBoxRight, true, 64, 20);
+    attenuationSlider2->setSliderStyle (Slider::LinearVertical);
+    attenuationSlider2->setTextBoxStyle (Slider::TextBoxBelow, true, 64, 20);
     attenuationSlider2->setColour (Slider::thumbColourId, Colour (0xff007f00));
     attenuationSlider2->setColour (Slider::trackColourId, Colour (0x7f007f00));
     attenuationSlider2->setColour (Slider::textBoxTextColourId, Colour (0xff007f00));
@@ -613,8 +619,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     keyscaleEnvButton2->setColour (ToggleButton::textColourId, Colour (0xff007f00));
 
     addAndMakeVisible (frequencyLabel4 = new Label ("frequency label",
-                                                    TRANS("Keyscale Attenuation (db/8ve)")));
-    frequencyLabel4->setTooltip (TRANS("Attenuate amplitude with note frequency in db/8ve"));
+                                                    TRANS("Keyscale Attenuation")));
+    frequencyLabel4->setTooltip (TRANS("Attenuate amplitude with note frequency in dB per octave"));
     frequencyLabel4->setFont (Font (15.00f, Font::plain));
     frequencyLabel4->setJustificationType (Justification::centred);
     frequencyLabel4->setEditable (false, false, false);
@@ -705,7 +711,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     feedbackSlider->addListener (this);
 
     addAndMakeVisible (frequencyLabel7 = new Label ("frequency label",
-                                                    TRANS("F")));
+                                                    TRANS("Feedback")));
     frequencyLabel7->setTooltip (TRANS("Extent to which modulator output is fed back into itself"));
     frequencyLabel7->setFont (Font (15.00f, Font::plain));
     frequencyLabel7->setJustificationType (Justification::centred);
@@ -842,17 +848,11 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     keyscaleAttenuationComboBox->setJustificationType (Justification::centredLeft);
     keyscaleAttenuationComboBox->setTextWhenNothingSelected (String());
     keyscaleAttenuationComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    keyscaleAttenuationComboBox->addItem (TRANS("-0.0"), 1);
-    keyscaleAttenuationComboBox->addItem (TRANS("-3.0"), 2);
-    keyscaleAttenuationComboBox->addItem (TRANS("-1.5"), 3);
-    keyscaleAttenuationComboBox->addItem (TRANS("-6.0"), 4);
+    keyscaleAttenuationComboBox->addItem (TRANS("-0.0 db/8ve"), 1);
+    keyscaleAttenuationComboBox->addItem (TRANS("-3.0 db/8ve"), 2);
+    keyscaleAttenuationComboBox->addItem (TRANS("-1.5 db/8ve"), 3);
+    keyscaleAttenuationComboBox->addItem (TRANS("-6.0 db/8ve"), 4);
     keyscaleAttenuationComboBox->addListener (this);
-
-    addAndMakeVisible (groupComponent4 = new GroupComponent ("new group",
-                                                             TRANS("Channels")));
-    groupComponent4->setTextLabelPosition (Justification::centredLeft);
-    groupComponent4->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
-    groupComponent4->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     addAndMakeVisible (groupComponent5 = new GroupComponent ("new group",
                                                              TRANS("Emulator (currently locked)")));
@@ -1421,8 +1421,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     label30->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (frequencyLabel10 = new Label ("frequency label",
-                                                     TRANS("Keyscale Attenuation (db/8ve)")));
-    frequencyLabel10->setTooltip (TRANS("Attenuate amplitude with note frequency in db/8ve"));
+                                                     TRANS("Keyscale Attenuation")));
+    frequencyLabel10->setTooltip (TRANS("Attenuate amplitude with note frequency in dB per octave"));
     frequencyLabel10->setFont (Font (15.00f, Font::plain));
     frequencyLabel10->setJustificationType (Justification::centred);
     frequencyLabel10->setEditable (false, false, false);
@@ -1519,6 +1519,32 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     hiHatButton->setImages (false, true, true,
                             ImageCache::getFromMemory (hihat_png, hihat_pngSize), 0.500f, Colour (0x00000000),
                             Image(), 0.500f, Colour (0x00000000),
+                            Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (dbLabel7 = new Label ("db label",
+                                             TRANS("FM")));
+    dbLabel7->setFont (Font (15.00f, Font::plain));
+    dbLabel7->setJustificationType (Justification::centredLeft);
+    dbLabel7->setEditable (false, false, false);
+    dbLabel7->setColour (Label::textColourId, Colour (0xff007f00));
+    dbLabel7->setColour (Label::outlineColourId, Colour (0x00000000));
+    dbLabel7->setColour (TextEditor::textColourId, Colours::black);
+    dbLabel7->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (dbLabel8 = new Label ("db label",
+                                             TRANS("Additive")));
+    dbLabel8->setFont (Font (15.00f, Font::plain));
+    dbLabel8->setJustificationType (Justification::centred);
+    dbLabel8->setEditable (false, false, false);
+    dbLabel8->setColour (Label::textColourId, Colour (0xff007f00));
+    dbLabel8->setColour (Label::outlineColourId, Colour (0x00000000));
+    dbLabel8->setColour (TextEditor::textColourId, Colours::black);
+    dbLabel8->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (imageButton = new ImageButton ("new button"));
+
+    imageButton->setImages (false, true, true,
+                            ImageCache::getFromMemory (adlib_png, adlib_pngSize), 1.000f, Colour (0x00000000),
+                            Image(), 1.000f, Colour (0x00000000),
                             Image(), 1.000f, Colour (0x00000000));
 
     //[UserPreSize]
@@ -1651,9 +1677,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 	Font fw(Font::getDefaultMonospacedFontName(), 14, Font::bold);
 	for (unsigned int i = 0; i < channels.size(); ++i)
 	{
-		Label *channel = new Label("chan label", TRANS("-"));
+		TextButton *channel = new TextButton(TRANS("-"), String("Disable channel %d", i + 1));
 		channel->setColour(Label::textColourId, Colour(COLOUR_MID));
-		channel->setJustificationType(Justification::centred);
+		channel->addListener(this);
 		addAndMakeVisible(channel);
 		channels[i] = channel;
 	}
@@ -1674,6 +1700,8 @@ PluginGui::~PluginGui()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
+    groupComponent2 = nullptr;
+    groupComponent4 = nullptr;
     groupComponent11 = nullptr;
     groupComponent10 = nullptr;
     groupComponent9 = nullptr;
@@ -1701,7 +1729,6 @@ PluginGui::~PluginGui()
     sustainButton = nullptr;
     keyscaleEnvButton = nullptr;
     dbLabel2 = nullptr;
-    groupComponent2 = nullptr;
     frequencyComboBox2 = nullptr;
     frequencyLabel3 = nullptr;
     aSlider2 = nullptr;
@@ -1748,7 +1775,6 @@ PluginGui::~PluginGui()
     dbLabel4 = nullptr;
     keyscaleAttenuationComboBox2 = nullptr;
     keyscaleAttenuationComboBox = nullptr;
-    groupComponent4 = nullptr;
     groupComponent5 = nullptr;
     emulatorSlider = nullptr;
     emulatorLabel = nullptr;
@@ -1829,6 +1855,9 @@ PluginGui::~PluginGui()
     tomTomButton = nullptr;
     cymbalButton = nullptr;
     hiHatButton = nullptr;
+    dbLabel7 = nullptr;
+    dbLabel8 = nullptr;
+    imageButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1852,69 +1881,70 @@ void PluginGui::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    groupComponent11->setBounds (496, 416, 192, 144);
-    groupComponent10->setBounds (280, 416, 200, 144);
-    groupComponent9->setBounds (704, 416, 144, 144);
-    groupComponent->setBounds (16, 88, 408, 312);
-    frequencyComboBox->setBounds (149, 173, 66, 24);
-    frequencyLabel->setBounds (32, 173, 112, 24);
-    aSlider->setBounds (30, 211, 30, 88);
-    aLabel->setBounds (30, 301, 30, 24);
-    dSlider->setBounds (70, 211, 30, 88);
-    dLabel->setBounds (70, 301, 30, 24);
-    sSlider->setBounds (110, 211, 30, 88);
-    dLabel2->setBounds (110, 301, 30, 24);
-    rSlider->setBounds (150, 211, 30, 88);
-    rLabel->setBounds (150, 301, 30, 24);
-    attenuationSlider->setBounds (130, 358, 232, 24);
-    attenuationLabel->setBounds (32, 358, 106, 24);
-    dbLabel->setBounds (362, 358, 32, 24);
+    groupComponent2->setBounds (440, 88, 408, 344);
+    groupComponent4->setBounds (16, 8, 832, 64);
+    groupComponent11->setBounds (496, 440, 192, 120);
+    groupComponent10->setBounds (280, 440, 200, 120);
+    groupComponent9->setBounds (704, 440, 144, 120);
+    groupComponent->setBounds (16, 88, 408, 344);
+    frequencyComboBox->setBounds (200, 168, 64, 24);
+    frequencyLabel->setBounds (40, 168, 152, 24);
+    aSlider->setBounds (40, 208, 30, 88);
+    aLabel->setBounds (40, 304, 30, 24);
+    dSlider->setBounds (88, 208, 30, 88);
+    dLabel->setBounds (88, 304, 30, 24);
+    sSlider->setBounds (136, 208, 30, 88);
+    dLabel2->setBounds (136, 304, 30, 24);
+    rSlider->setBounds (184, 208, 30, 88);
+    rLabel->setBounds (184, 304, 30, 24);
+    attenuationSlider->setBounds (328, 200, 56, 126);
+    attenuationLabel->setBounds (304, 168, 112, 24);
+    dbLabel->setBounds (384, 304, 32, 24);
     sineImageButton->setBounds (88, 113, 34, 30);
     halfsineImageButton->setBounds (128, 113, 34, 30);
     abssineImageButton->setBounds (168, 113, 34, 30);
     quartersineImageButton->setBounds (208, 113, 34, 30);
     waveLabel->setBounds (32, 115, 48, 24);
-    tremoloButton->setBounds (323, 170, 80, 24);
-    vibratoButton->setBounds (243, 170, 72, 24);
-    sustainButton->setBounds (243, 206, 70, 24);
-    keyscaleEnvButton->setBounds (323, 194, 101, 48);
+    tremoloButton->setBounds (120, 352, 80, 24);
+    vibratoButton->setBounds (32, 352, 72, 24);
+    sustainButton->setBounds (32, 384, 70, 32);
+    keyscaleEnvButton->setBounds (120, 376, 101, 48);
     dbLabel2->setBounds (792, 712, 72, 16);
-    groupComponent2->setBounds (440, 88, 408, 312);
-    frequencyComboBox2->setBounds (573, 173, 66, 24);
-    frequencyLabel3->setBounds (456, 173, 112, 24);
-    aSlider2->setBounds (462, 211, 30, 88);
-    aLabel2->setBounds (462, 301, 30, 24);
-    dSlider2->setBounds (510, 211, 30, 88);
-    dLabel3->setBounds (510, 301, 30, 24);
-    sSlider2->setBounds (558, 211, 30, 88);
-    dLabel4->setBounds (558, 301, 30, 24);
-    rSlider2->setBounds (606, 211, 30, 88);
-    rLabel2->setBounds (606, 301, 30, 24);
-    attenuationSlider2->setBounds (554, 358, 232, 24);
-    attenuationLabel2->setBounds (456, 358, 106, 24);
-    dbLabel3->setBounds (782, 358, 40, 24);
+    frequencyComboBox2->setBounds (624, 168, 66, 24);
+    frequencyLabel3->setBounds (464, 168, 152, 24);
+    aSlider2->setBounds (464, 208, 30, 88);
+    aLabel2->setBounds (464, 304, 30, 24);
+    dSlider2->setBounds (512, 208, 30, 88);
+    dLabel3->setBounds (512, 304, 30, 24);
+    sSlider2->setBounds (560, 208, 30, 88);
+    dLabel4->setBounds (560, 304, 30, 24);
+    rSlider2->setBounds (608, 208, 30, 88);
+    rLabel2->setBounds (608, 304, 30, 24);
+    attenuationSlider2->setBounds (752, 200, 56, 126);
+    attenuationLabel2->setBounds (728, 168, 112, 24);
+    dbLabel3->setBounds (800, 304, 40, 24);
     sineImageButton2->setBounds (512, 113, 34, 30);
     halfsineImageButton2->setBounds (552, 113, 34, 30);
     abssineImageButton2->setBounds (592, 113, 34, 30);
     quartersineImageButton2->setBounds (632, 113, 34, 30);
     waveLabel2->setBounds (456, 115, 48, 24);
-    tremoloButton2->setBounds (746, 170, 80, 24);
-    vibratoButton2->setBounds (666, 170, 72, 24);
-    sustainButton2->setBounds (666, 206, 70, 24);
-    keyscaleEnvButton2->setBounds (746, 194, 102, 48);
-    frequencyLabel4->setBounds (752, 288, 88, 48);
-    groupComponent3->setBounds (16, 416, 248, 144);
-    tremoloSlider->setBounds (112, 456, 80, 24);
-    frequencyLabel5->setBounds (32, 456, 104, 24);
-    dbLabel5->setBounds (200, 448, 32, 40);
-    vibratoSlider->setBounds (112, 504, 80, 24);
-    frequencyLabel6->setBounds (32, 504, 96, 24);
-    dbLabel6->setBounds (200, 496, 48, 40);
-    feedbackSlider->setBounds (190, 240, 30, 59);
-    frequencyLabel7->setBounds (190, 301, 30, 24);
-    velocityComboBox->setBounds (244, 257, 72, 24);
-    velocityComboBox2->setBounds (672, 257, 72, 24);
-    attenuationLabel4->setBounds (664, 288, 80, 48);
+    tremoloButton2->setBounds (544, 352, 80, 24);
+    vibratoButton2->setBounds (456, 352, 72, 24);
+    sustainButton2->setBounds (456, 384, 70, 24);
+    keyscaleEnvButton2->setBounds (544, 376, 102, 48);
+    frequencyLabel4->setBounds (656, 376, 88, 48);
+    groupComponent3->setBounds (16, 440, 248, 120);
+    tremoloSlider->setBounds (112, 472, 80, 24);
+    frequencyLabel5->setBounds (32, 472, 80, 24);
+    dbLabel5->setBounds (200, 464, 32, 40);
+    vibratoSlider->setBounds (112, 512, 80, 24);
+    frequencyLabel6->setBounds (32, 512, 80, 24);
+    dbLabel6->setBounds (200, 504, 48, 40);
+    feedbackSlider->setBounds (248, 237, 30, 59);
+    frequencyLabel7->setBounds (224, 304, 80, 24);
+    velocityComboBox->setBounds (328, 352, 76, 24);
+    velocityComboBox2->setBounds (760, 352, 72, 24);
+    attenuationLabel4->setBounds (760, 376, 80, 48);
     alternatingsineImageButton->setBounds (288, 113, 34, 30);
     camelsineImageButton->setBounds (248, 113, 34, 30);
     squareImageButton->setBounds (328, 113, 34, 30);
@@ -1924,28 +1954,27 @@ void PluginGui::resized()
     squareImageButton2->setBounds (754, 114, 34, 30);
     logsawImageButton2->setBounds (794, 114, 34, 30);
     dbLabel4->setBounds (792, 688, 72, 16);
-    keyscaleAttenuationComboBox2->setBounds (763, 257, 60, 24);
-    keyscaleAttenuationComboBox->setBounds (338, 257, 60, 24);
-    groupComponent4->setBounds (16, 8, 832, 64);
+    keyscaleAttenuationComboBox2->setBounds (664, 352, 76, 24);
+    keyscaleAttenuationComboBox->setBounds (232, 352, 76, 24);
     groupComponent5->setBounds (24, 712, 408, 64);
     emulatorSlider->setBounds (208, 736, 40, 24);
     emulatorLabel->setBounds (120, 736, 72, 24);
     emulatorLabel2->setBounds (256, 736, 72, 24);
     recordButton->setBounds (32, 680, 224, 24);
-    exportButton->setBounds (728, 504, 96, 24);
-    loadButton->setBounds (728, 456, 96, 24);
+    exportButton->setBounds (728, 512, 96, 24);
+    loadButton->setBounds (728, 472, 96, 24);
     versionLabel->setBounds (648, 560, 198, 16);
     ToggleButtonOffExample->setBounds (1032, 584, 12, 12);
     ToggleButtonOnExample->setBounds (1064, 584, 12, 12);
     label->setBounds (1000, 608, 104, 24);
     label2->setBounds (872, 608, 104, 24);
-    LineBorderButton1C->setBounds (20, 340, 400, 6);
+    LineBorderButton1C->setBounds (20, 336, 400, 6);
     LineBorderButton1A->setBounds (20, 152, 400, 6);
-    LineBorderButton1B->setBounds (230, 156, 6, 186);
+    LineBorderButton1B->setBounds (296, 156, 6, 182);
     label3->setBounds (776, 736, 104, 56);
-    LineBorderButton1C2->setBounds (444, 340, 400, 6);
+    LineBorderButton1C2->setBounds (444, 336, 400, 6);
     LineBorderButton1A2->setBounds (444, 152, 400, 6);
-    LineBorderButton1B2->setBounds (654, 156, 6, 186);
+    LineBorderButton1B2->setBounds (720, 156, 6, 182);
     LineBorderButton1C3->setBounds (892, 584, 20, 6);
     LineBorderButton1B3->setBounds (936, 576, 6, 20);
     algoSwitchButtonOffEx1->setBounds (952, 701, 64, 24);
@@ -1993,23 +2022,26 @@ void PluginGui::resized()
     label27->setBounds (1055, 250, 32, 24);
     algoSwitchButtonOn3Ex4->setBounds (1103, 250, 64, 24);
     label28->setBounds (1121, 250, 32, 24);
-    groupComponent8->setBounds (1018, 200, 168, 95);
+    groupComponent8->setBounds (1008, 208, 168, 95);
     frequencyLabel9->setBounds (1067, 216, 72, 24);
     label29->setBounds (944, 304, 328, 40);
     label30->setBounds (961, 768, 319, 24);
-    frequencyLabel10->setBounds (328, 288, 88, 48);
-    attenuationLabel5->setBounds (240, 288, 80, 48);
-    fmButton->setBounds (304, 464, 56, 56);
-    additiveButton->setBounds (384, 456, 72, 72);
-    bassDrumButton->setBounds (576, 448, 30, 30);
-    snareDrumButton->setBounds (632, 448, 30, 30);
-    disablePercussionButton->setBounds (520, 448, 30, 30);
-    tomTomButton->setBounds (520, 504, 30, 30);
-    cymbalButton->setBounds (576, 504, 30, 30);
-    hiHatButton->setBounds (632, 504, 30, 30);
+    frequencyLabel10->setBounds (224, 376, 88, 48);
+    attenuationLabel5->setBounds (328, 376, 80, 48);
+    fmButton->setBounds (304, 472, 56, 56);
+    additiveButton->setBounds (392, 464, 72, 72);
+    bassDrumButton->setBounds (576, 464, 30, 30);
+    snareDrumButton->setBounds (632, 464, 30, 30);
+    disablePercussionButton->setBounds (520, 464, 30, 30);
+    tomTomButton->setBounds (520, 512, 30, 30);
+    cymbalButton->setBounds (576, 512, 30, 30);
+    hiHatButton->setBounds (632, 512, 30, 30);
+    dbLabel7->setBounds (320, 520, 32, 40);
+    dbLabel8->setBounds (392, 520, 72, 40);
+    imageButton->setBounds (656, 232, 64, 64);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
-		channels[i]->setBounds(68+88*i, 36, 20, 20);
+		channels[i]->setBounds(64+88*i, 30, 28, 28);
     //[/UserResized]
 }
 
@@ -2164,6 +2196,28 @@ void PluginGui::sliderValueChanged (Slider* sliderThatWasMoved)
 void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
+	// TODO:
+	// - prevent all channels from being disabled
+	// - fix button tooltip text
+	// - button styling
+	// - automatically select channel(s) by default
+	// - record output to file
+	for (int i = 1; i <= Hiopl::CHANNELS; ++i) {
+		Button* channelButton = channels[i - 1];
+		if (buttonThatWasClicked == channelButton) {
+			processor->toggleChannel(i);
+			const bool channelEnabled = processor->isChannelEnabled(i);
+			const Colour fg = channelEnabled ? Colours::black : OPLLookAndFeel::DOS_GREEN;
+			const Colour bg = channelEnabled ? OPLLookAndFeel::DOS_GREEN : Colours::black;
+
+			channelButton->setColour(TextButton::ColourIds::buttonColourId, bg);
+			channelButton->setColour(TextButton::ColourIds::buttonOnColourId, bg);
+			channelButton->setColour(TextButton::ColourIds::textColourOnId, fg);
+			channelButton->setColour(TextButton::ColourIds::textColourOffId, fg);
+
+			return;
+		}
+	}
     //[/UserbuttonClicked_Pre]
 
     if (buttonThatWasClicked == sineImageButton)
@@ -2548,9 +2602,8 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 	void PluginGui::timerCallback()
 	{
 		for (int i = 0; i < Hiopl::CHANNELS; ++i) {
-			channels[i]->setText(processor->getChannelEnvelopeStage(i + 1), NotificationType::dontSendNotification);
+			channels[i]->setButtonText(processor->getChannelEnvelopeStage(i + 1));
 		}
-			//channels[i]->setState(processor->isChannelActive(i+1) ? Button::buttonDown : Button::buttonNormal);
 	}
 //[/MiscUserCode]
 
@@ -2570,83 +2623,89 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="1" initialWidth="860" initialHeight="580">
   <BACKGROUND backgroundColour="ff000000"/>
+  <GROUPCOMPONENT name="new group" id="93b9aaeb75040aed" memberName="groupComponent2"
+                  virtualName="" explicitFocusOrder="0" pos="440 88 408 344" outlinecol="ff007f00"
+                  textcol="ff007f00" title="Carrier" textpos="33"/>
+  <GROUPCOMPONENT name="new group" id="52f9803abb342980" memberName="groupComponent4"
+                  virtualName="" explicitFocusOrder="0" pos="16 8 832 64" outlinecol="ff007f00"
+                  textcol="ff007f00" title="Channels" textpos="33"/>
   <GROUPCOMPONENT name="new group" id="6cc98dbf76b41b7b" memberName="groupComponent11"
-                  virtualName="" explicitFocusOrder="0" pos="496 416 192 144" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="496 440 192 120" outlinecol="ff007f00"
                   textcol="ff007f00" title="Percussion" textpos="33"/>
   <GROUPCOMPONENT name="new group" id="e8d476c7f6d163e9" memberName="groupComponent10"
-                  virtualName="" explicitFocusOrder="0" pos="280 416 200 144" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="280 440 200 120" outlinecol="ff007f00"
                   textcol="ff007f00" title="Algorithm" textpos="33"/>
   <GROUPCOMPONENT name="new group" id="791b6f04e9fd52bb" memberName="groupComponent9"
-                  virtualName="" explicitFocusOrder="0" pos="704 416 144 144" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="704 440 144 120" outlinecol="ff007f00"
                   textcol="ff007f00" title="File" textpos="33"/>
   <GROUPCOMPONENT name="new group" id="d2c7c07bf2d78c30" memberName="groupComponent"
-                  virtualName="" explicitFocusOrder="0" pos="16 88 408 312" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="16 88 408 344" outlinecol="ff007f00"
                   textcol="ff007f00" title="Modulator" textpos="33"/>
   <COMBOBOX name="frequency combo box" id="4e65faf3d9442460" memberName="frequencyComboBox"
-            virtualName="" explicitFocusOrder="0" pos="149 173 66 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="200 168 64 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="frequency label" id="7414532477c7f744" memberName="frequencyLabel"
-         virtualName="" explicitFocusOrder="0" pos="32 173 112 24" tooltip="Multiplier applied to base note frequency"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Base Frequency"
+         virtualName="" explicitFocusOrder="0" pos="40 168 152 24" tooltip="Multiplier applied to base note frequency"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Frequency Multiplier"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="a slider" id="1b9be27726a5b3ae" memberName="aSlider" virtualName=""
-          explicitFocusOrder="0" pos="30 211 30 88" tooltip="Envelope attack rate"
+          explicitFocusOrder="0" pos="40 208 30 88" tooltip="Envelope attack rate"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="0"
           textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="a label" id="9dd0b13f00b4de42" memberName="aLabel" virtualName=""
-         explicitFocusOrder="0" pos="30 301 30 24" tooltip="Attack rate"
+         explicitFocusOrder="0" pos="40 304 30 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="d slider" id="d4cc8ddf2fc9cf2b" memberName="dSlider" virtualName=""
-          explicitFocusOrder="0" pos="70 211 30 88" tooltip="Envelope decay rate"
+          explicitFocusOrder="0" pos="88 208 30 88" tooltip="Envelope decay rate"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="0"
           textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="a7f17b098b85f10b" memberName="dLabel" virtualName=""
-         explicitFocusOrder="0" pos="70 301 30 24" tooltip="Decay rate"
+         explicitFocusOrder="0" pos="88 304 30 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="s slider" id="9bcadfc61e498bce" memberName="sSlider" virtualName=""
-          explicitFocusOrder="0" pos="110 211 30 88" tooltip="Envelope sustain level"
+          explicitFocusOrder="0" pos="136 208 30 88" tooltip="Envelope sustain level"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="0"
           textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="6467455c7573fefa" memberName="dLabel2" virtualName=""
-         explicitFocusOrder="0" pos="110 301 30 24" tooltip="Sustain level"
+         explicitFocusOrder="0" pos="136 304 30 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="r slider" id="5616976a8c5a3f5f" memberName="rSlider" virtualName=""
-          explicitFocusOrder="0" pos="150 211 30 88" tooltip="Envelope release rate"
+          explicitFocusOrder="0" pos="184 208 30 88" tooltip="Envelope release rate"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
           textboxbkgd="ff000000" textboxhighlight="ff00af00" min="0" max="15"
           int="1" style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="0"
           textBoxWidth="30" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="r label" id="ef30d2907e867666" memberName="rLabel" virtualName=""
-         explicitFocusOrder="0" pos="150 301 30 24" tooltip="Release rate"
+         explicitFocusOrder="0" pos="184 304 30 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="attenuation slider" id="dfb943cd83b3977f" memberName="attenuationSlider"
-          virtualName="" explicitFocusOrder="0" pos="130 358 232 24" thumbcol="ff007f00"
+          virtualName="" explicitFocusOrder="0" pos="328 200 56 126" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearHorizontal"
-          textBoxPos="TextBoxRight" textBoxEditable="0" textBoxWidth="64"
+          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
+          textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="64"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="643f88854c82ca3e" memberName="attenuationLabel"
-         virtualName="" explicitFocusOrder="0" pos="32 358 106 24" tooltip="Final output level adjustment"
+         virtualName="" explicitFocusOrder="0" pos="304 168 112 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="db label" id="666be8c96c85c9f1" memberName="dbLabel" virtualName=""
-         explicitFocusOrder="0" pos="362 358 32 24" textCol="ff007f00"
+         explicitFocusOrder="0" pos="384 304 32 24" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
@@ -2680,19 +2739,19 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="tremolo button" id="1e6ab9b2f1fee312" memberName="tremoloButton"
-                virtualName="" explicitFocusOrder="0" pos="323 170 80 24" tooltip="Modulate amplitude at 3.7 Hz"
+                virtualName="" explicitFocusOrder="0" pos="120 352 80 24" tooltip="Modulate amplitude at 3.7 Hz"
                 txtcol="ff007f00" buttonText="Tremolo" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="vibrato button" id="a989eb6692e3dbd8" memberName="vibratoButton"
-                virtualName="" explicitFocusOrder="0" pos="243 170 72 24" tooltip="Modulate frequency at 6.1 Hz"
+                virtualName="" explicitFocusOrder="0" pos="32 352 72 24" tooltip="Modulate frequency at 6.1 Hz"
                 txtcol="ff007f00" buttonText="Vibrato" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="sustain button" id="e0ae2bc46ec1861c" memberName="sustainButton"
-                virtualName="" explicitFocusOrder="0" pos="243 206 70 24" tooltip="Enable or disable sustain when note is held"
+                virtualName="" explicitFocusOrder="0" pos="32 384 70 32" tooltip="Enable or disable sustain when note is held"
                 txtcol="ff007f00" buttonText="Sustain" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="keyscale env button" id="a3f62a22526b4b49" memberName="keyscaleEnvButton"
-                virtualName="" explicitFocusOrder="0" pos="323 194 101 48" tooltip="Speed up envelope rate with note frequency"
+                virtualName="" explicitFocusOrder="0" pos="120 376 101 48" tooltip="Speed up envelope rate with note frequency"
                 txtcol="ff007f00" buttonText="Keyscale Env. Rate" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="db label" id="b9b3cedf2b541262" memberName="dbLabel2" virtualName=""
@@ -2700,74 +2759,71 @@ BEGIN_JUCER_METADATA
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB/8ve&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
-  <GROUPCOMPONENT name="new group" id="93b9aaeb75040aed" memberName="groupComponent2"
-                  virtualName="" explicitFocusOrder="0" pos="440 88 408 312" outlinecol="ff007f00"
-                  textcol="ff007f00" title="Carrier" textpos="33"/>
   <COMBOBOX name="frequency combo box" id="30b8c81b6bd2a17" memberName="frequencyComboBox2"
-            virtualName="" explicitFocusOrder="0" pos="573 173 66 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="624 168 66 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="frequency label" id="65d58d2259c13bf1" memberName="frequencyLabel3"
-         virtualName="" explicitFocusOrder="0" pos="456 173 112 24" tooltip="Multiplier applied to base note frequency"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Base Frequency"
+         virtualName="" explicitFocusOrder="0" pos="464 168 152 24" tooltip="Multiplier applied to base note frequency"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Frequency Multiplier"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="a slider" id="d6d2f4556ea9394" memberName="aSlider2" virtualName=""
-          explicitFocusOrder="0" pos="462 211 30 88" thumbcol="ff007f00"
+          explicitFocusOrder="0" pos="464 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="a label" id="9ec6412cc79720bc" memberName="aLabel2" virtualName=""
-         explicitFocusOrder="0" pos="462 301 30 24" tooltip="Attack rate"
+         explicitFocusOrder="0" pos="464 304 30 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="d slider" id="4a1f1b6038500f67" memberName="dSlider2" virtualName=""
-          explicitFocusOrder="0" pos="510 211 30 88" thumbcol="ff007f00"
+          explicitFocusOrder="0" pos="512 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="10231adaf9e23e14" memberName="dLabel3" virtualName=""
-         explicitFocusOrder="0" pos="510 301 30 24" tooltip="Decay rate"
+         explicitFocusOrder="0" pos="512 304 30 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="s slider" id="2fc057248a815958" memberName="sSlider2" virtualName=""
-          explicitFocusOrder="0" pos="558 211 30 88" thumbcol="ff007f00"
+          explicitFocusOrder="0" pos="560 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="d label" id="5b881f2381defac" memberName="dLabel4" virtualName=""
-         explicitFocusOrder="0" pos="558 301 30 24" tooltip="Sustain level"
+         explicitFocusOrder="0" pos="560 304 30 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="r slider" id="5474ad005fb58e97" memberName="rSlider2" virtualName=""
-          explicitFocusOrder="0" pos="606 211 30 88" thumbcol="ff007f00"
+          explicitFocusOrder="0" pos="608 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="0" max="15" int="1" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="40"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="r label" id="ca2834438bee82a9" memberName="rLabel2" virtualName=""
-         explicitFocusOrder="0" pos="606 301 30 24" tooltip="Release rate"
+         explicitFocusOrder="0" pos="608 304 30 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <SLIDER name="attenuation slider" id="edb48da87d7535dd" memberName="attenuationSlider2"
-          virtualName="" explicitFocusOrder="0" pos="554 358 232 24" thumbcol="ff007f00"
+          virtualName="" explicitFocusOrder="0" pos="752 200 56 126" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
-          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearHorizontal"
-          textBoxPos="TextBoxRight" textBoxEditable="0" textBoxWidth="64"
+          textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
+          textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="64"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="958314f88253f461" memberName="attenuationLabel2"
-         virtualName="" explicitFocusOrder="0" pos="456 358 106 24" tooltip="Final output level adjustment"
+         virtualName="" explicitFocusOrder="0" pos="728 168 112 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="db label" id="7efc6195ef5e25d1" memberName="dbLabel3" virtualName=""
-         explicitFocusOrder="0" pos="782 358 40 24" textCol="ff007f00"
+         explicitFocusOrder="0" pos="800 304 40 24" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
@@ -2801,85 +2857,85 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="tremolo button" id="a517934e39704073" memberName="tremoloButton2"
-                virtualName="" explicitFocusOrder="0" pos="746 170 80 24" tooltip="Modulate amplitude at 3.7 Hz"
+                virtualName="" explicitFocusOrder="0" pos="544 352 80 24" tooltip="Modulate amplitude at 3.7 Hz"
                 txtcol="ff007f00" buttonText="Tremolo" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="vibrato button" id="736b965a99641077" memberName="vibratoButton2"
-                virtualName="" explicitFocusOrder="0" pos="666 170 72 24" tooltip="Modulate frequency at 6.1 Hz"
+                virtualName="" explicitFocusOrder="0" pos="456 352 72 24" tooltip="Modulate frequency at 6.1 Hz"
                 txtcol="ff007f00" buttonText="Vibrato" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="sustain button" id="a3832cb840cae1f2" memberName="sustainButton2"
-                virtualName="" explicitFocusOrder="0" pos="666 206 70 24" tooltip="Enable or disable sustain when note is held"
+                virtualName="" explicitFocusOrder="0" pos="456 384 70 24" tooltip="Enable or disable sustain when note is held"
                 txtcol="ff007f00" buttonText="Sustain" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="keyscale env button" id="4cd968dae86d143c" memberName="keyscaleEnvButton2"
-                virtualName="" explicitFocusOrder="0" pos="746 194 102 48" tooltip="Speed up envelope rate with note frequency"
+                virtualName="" explicitFocusOrder="0" pos="544 376 102 48" tooltip="Speed up envelope rate with note frequency"
                 txtcol="ff007f00" buttonText="Keyscale Env. Rate" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="frequency label" id="a1e2dd50c2835d73" memberName="frequencyLabel4"
-         virtualName="" explicitFocusOrder="0" pos="752 288 88 48" tooltip="Attenuate amplitude with note frequency in db/8ve"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation (db/8ve)"
+         virtualName="" explicitFocusOrder="0" pos="656 376 88 48" tooltip="Attenuate amplitude with note frequency in dB per octave"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <GROUPCOMPONENT name="new group" id="7392f7d1c8cf6e74" memberName="groupComponent3"
-                  virtualName="" explicitFocusOrder="0" pos="16 416 248 144" outlinecol="ff007f00"
+                  virtualName="" explicitFocusOrder="0" pos="16 440 248 120" outlinecol="ff007f00"
                   textcol="ff007f00" title="Effect depth" textpos="33"/>
   <SLIDER name="tremolo slider" id="ab64abee7ac8874b" memberName="tremoloSlider"
-          virtualName="" explicitFocusOrder="0" pos="112 456 80 24" thumbcol="ff007f00"
+          virtualName="" explicitFocusOrder="0" pos="112 472 80 24" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="1" max="4.7999999999999998224"
           int="3.7999999999999998224" style="LinearHorizontal" textBoxPos="TextBoxRight"
           textBoxEditable="0" textBoxWidth="32" textBoxHeight="20" skewFactor="1"
           needsCallback="1"/>
   <LABEL name="frequency label" id="134ce8f87da62b88" memberName="frequencyLabel5"
-         virtualName="" explicitFocusOrder="0" pos="32 456 104 24" tooltip="OPL global tremolo depth"
+         virtualName="" explicitFocusOrder="0" pos="32 472 80 24" tooltip="OPL global tremolo depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Tremolo&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="db label" id="720df8e7c502dd91" memberName="dbLabel5" virtualName=""
-         explicitFocusOrder="0" pos="200 448 32 40" textCol="ff007f00"
+         explicitFocusOrder="0" pos="200 464 32 40" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="vibrato slider" id="b45a1f20f22cf5ca" memberName="vibratoSlider"
-          virtualName="" explicitFocusOrder="0" pos="112 504 80 24" thumbcol="ff007f00"
+          virtualName="" explicitFocusOrder="0" pos="112 512 80 24" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="7" max="14" int="7" style="LinearHorizontal"
           textBoxPos="TextBoxRight" textBoxEditable="0" textBoxWidth="32"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="frequency label" id="1412b9d14e37bcbe" memberName="frequencyLabel6"
-         virtualName="" explicitFocusOrder="0" pos="32 504 96 24" tooltip="OPL global vibrato depth"
+         virtualName="" explicitFocusOrder="0" pos="32 512 80 24" tooltip="OPL global vibrato depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Vibrato"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="db label" id="e13e0aff8b974a36" memberName="dbLabel6" virtualName=""
-         explicitFocusOrder="0" pos="200 496 48 40" tooltip="A unit of pitch; 100 cents per semitone"
+         explicitFocusOrder="0" pos="200 504 48 40" tooltip="A unit of pitch; 100 cents per semitone"
          textCol="ff007f00" outlineCol="0" edTextCol="ff000000" edBkgCol="0"
          labelText="cents&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <SLIDER name="feedback slider" id="f9d22e12f5e417e4" memberName="feedbackSlider"
-          virtualName="" explicitFocusOrder="0" pos="190 240 30 59" thumbcol="ff00af00"
+          virtualName="" explicitFocusOrder="0" pos="248 237 30 59" thumbcol="ff00af00"
           trackcol="7f007f00" rotarysliderfill="ff00af00" rotaryslideroutline="ff007f00"
           textboxtext="ff007f00" textboxbkgd="ff000000" textboxhighlight="ff00af00"
           min="0" max="7" int="1" style="RotaryHorizontalVerticalDrag"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="30"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="frequency label" id="880eaf14af62578a" memberName="frequencyLabel7"
-         virtualName="" explicitFocusOrder="0" pos="190 301 30 24" tooltip="Extent to which modulator output is fed back into itself"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="F"
+         virtualName="" explicitFocusOrder="0" pos="224 304 80 24" tooltip="Extent to which modulator output is fed back into itself"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Feedback"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <COMBOBOX name="velocity combo box" id="cbe10e5236447f15" memberName="velocityComboBox"
-            virtualName="" explicitFocusOrder="0" pos="244 257 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="328 352 76 24" editable="0"
             layout="33" items="Off&#10;Light&#10;Heavy" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <COMBOBOX name="velocity combo box" id="f5c4883d9feaa700" memberName="velocityComboBox2"
-            virtualName="" explicitFocusOrder="0" pos="672 257 72 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="760 352 72 24" editable="0"
             layout="33" items="Off&#10;Light&#10;Heavy" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <LABEL name="attenuation label" id="d9297cdef25630de" memberName="attenuationLabel4"
-         virtualName="" explicitFocusOrder="0" pos="664 288 80 48" tooltip="Set or disable velocity senstivity"
+         virtualName="" explicitFocusOrder="0" pos="760 376 80 48" tooltip="Set or disable velocity senstivity"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity Sensitivity"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
@@ -2937,16 +2993,13 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <COMBOBOX name="keyscale combo box" id="9b766b7b6a67cbf4" memberName="keyscaleAttenuationComboBox2"
-            virtualName="" explicitFocusOrder="0" pos="763 257 60 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="664 352 76 24" editable="0"
             layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <COMBOBOX name="keyscale combo box" id="7d8e1de0e1579999" memberName="keyscaleAttenuationComboBox"
-            virtualName="" explicitFocusOrder="0" pos="338 257 60 24" editable="0"
-            layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
-            textWhenNoItems="(no choices)"/>
-  <GROUPCOMPONENT name="new group" id="52f9803abb342980" memberName="groupComponent4"
-                  virtualName="" explicitFocusOrder="0" pos="16 8 832 64" outlinecol="ff007f00"
-                  textcol="ff007f00" title="Channels" textpos="33"/>
+            virtualName="" explicitFocusOrder="0" pos="232 352 76 24" editable="0"
+            layout="33" items="-0.0 db/8ve&#10;-3.0 db/8ve&#10;-1.5 db/8ve&#10;-6.0 db/8ve"
+            textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <GROUPCOMPONENT name="new group" id="7abc643f4d6a2dbf" memberName="groupComponent5"
                   virtualName="" explicitFocusOrder="0" pos="24 712 408 64" outlinecol="ff007f00"
                   textcol="ff007f00" title="Emulator (currently locked)" textpos="33"/>
@@ -2971,11 +3024,11 @@ BEGIN_JUCER_METADATA
                 txtcol="ff007f00" buttonText="Record to DRO (not working yet)"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <TEXTBUTTON name="export button" id="88c84ed1e2b284d3" memberName="exportButton"
-              virtualName="" explicitFocusOrder="0" pos="728 504 96 24" bgColOff="ff007f00"
+              virtualName="" explicitFocusOrder="0" pos="728 512 96 24" bgColOff="ff007f00"
               bgColOn="ff00ff00" buttonText="Export .SBI" connectedEdges="3"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="load button" id="a42176161523f448" memberName="loadButton"
-              virtualName="" explicitFocusOrder="0" pos="728 456 96 24" bgColOff="ff007f00"
+              virtualName="" explicitFocusOrder="0" pos="728 472 96 24" bgColOff="ff007f00"
               bgColOn="ff00ff00" buttonText="Load .SBI" connectedEdges="3"
               needsCallback="1" radioGroupId="0"/>
   <LABEL name="version label" id="cd68ca110847cc18" memberName="versionLabel"
@@ -3006,7 +3059,7 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="Line Border 1C" id="d189b7564dfbe6f4" memberName="LineBorderButton1C"
-               virtualName="" explicitFocusOrder="0" pos="20 340 400 6" buttonText="new button"
+               virtualName="" explicitFocusOrder="0" pos="20 336 400 6" buttonText="new button"
                connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
                resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
                colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
@@ -3020,7 +3073,7 @@ BEGIN_JUCER_METADATA
                colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
                colourDown="0"/>
   <IMAGEBUTTON name="Line Border 1B" id="c602d4512bd5e4ad" memberName="LineBorderButton1B"
-               virtualName="" explicitFocusOrder="0" pos="230 156 6 186" buttonText="new button"
+               virtualName="" explicitFocusOrder="0" pos="296 156 6 182" buttonText="new button"
                connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
                resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
                colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
@@ -3032,7 +3085,7 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="Line Border 1C" id="fb69fc397f48c0b2" memberName="LineBorderButton1C2"
-               virtualName="" explicitFocusOrder="0" pos="444 340 400 6" buttonText="new button"
+               virtualName="" explicitFocusOrder="0" pos="444 336 400 6" buttonText="new button"
                connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
                resourceNormal="line_border_horiz_png" opacityNormal="0.60000002384185791016"
                colourNormal="0" resourceOver="line_border_horiz_png" opacityOver="0.60000002384185791016"
@@ -3046,7 +3099,7 @@ BEGIN_JUCER_METADATA
                colourOver="0" resourceDown="line_border_horiz_png" opacityDown="0.60000002384185791016"
                colourDown="0"/>
   <IMAGEBUTTON name="Line Border 1B" id="84b521f64fc5ec24" memberName="LineBorderButton1B2"
-               virtualName="" explicitFocusOrder="0" pos="654 156 6 186" buttonText="new button"
+               virtualName="" explicitFocusOrder="0" pos="720 156 6 182" buttonText="new button"
                connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
                resourceNormal="line_border_vert_png" opacityNormal="0.60000002384185791016"
                colourNormal="0" resourceOver="line_border_vert_png" opacityOver="0.60000002384185791016"
@@ -3306,7 +3359,7 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <GROUPCOMPONENT name="new group" id="4c77a30ef34ca25d" memberName="groupComponent8"
-                  virtualName="" explicitFocusOrder="0" pos="1018 200 168 95" outlinecol="ff008000"
+                  virtualName="" explicitFocusOrder="0" pos="1008 208 168 95" outlinecol="ff008000"
                   title=""/>
   <LABEL name="frequency label" id="70b9f51419600f29" memberName="frequencyLabel9"
          virtualName="" explicitFocusOrder="0" pos="1067 216 72 24" tooltip="In additive mode, carrier and modulator output are simply summed rather than modulated"
@@ -3324,63 +3377,79 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="frequency label" id="9d58547998708b6b" memberName="frequencyLabel10"
-         virtualName="" explicitFocusOrder="0" pos="328 288 88 48" tooltip="Attenuate amplitude with note frequency in db/8ve"
-         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation (db/8ve)"
+         virtualName="" explicitFocusOrder="0" pos="224 376 88 48" tooltip="Attenuate amplitude with note frequency in dB per octave"
+         textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="attenuation label" id="63aa860d1d8ae341" memberName="attenuationLabel5"
-         virtualName="" explicitFocusOrder="0" pos="240 288 80 48" tooltip="Set or disable velocity senstivity"
+         virtualName="" explicitFocusOrder="0" pos="328 376 80 48" tooltip="Set or disable velocity senstivity"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity Sensitivity"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="fm button" id="19b03dffaa7fc94" memberName="fmButton" virtualName=""
-               explicitFocusOrder="0" pos="304 464 56 56" tooltip="FM: carrier frequency is modulated by the modulator"
+               explicitFocusOrder="0" pos="304 472 56 56" tooltip="FM: carrier frequency is modulated by the modulator"
                buttonText="FM" connectedEdges="0" needsCallback="1" radioGroupId="3"
                keepProportions="1" resourceNormal="twoopAm_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="Additive mode button" id="d3cf9bfa8c4d4885" memberName="additiveButton"
-               virtualName="" explicitFocusOrder="0" pos="384 456 72 72" tooltip="Additive: output the sum of the modulator and carrier"
+               virtualName="" explicitFocusOrder="0" pos="392 464 72 72" tooltip="Additive: output the sum of the modulator and carrier"
                buttonText="Additive Mode" connectedEdges="0" needsCallback="1"
                radioGroupId="3" keepProportions="1" resourceNormal="twoopFm_png"
                opacityNormal="0.5" colourNormal="0" resourceOver="" opacityOver="0.5"
                colourOver="0" resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="bass drum button" id="2c8905c4541593a7" memberName="bassDrumButton"
-               virtualName="" explicitFocusOrder="0" pos="576 448 30 30" tooltip="Bass drum"
+               virtualName="" explicitFocusOrder="0" pos="576 464 30 30" tooltip="Bass drum"
                buttonText="bass drum" connectedEdges="0" needsCallback="1" radioGroupId="4"
                keepProportions="1" resourceNormal="bassdrum_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="snare drum button" id="bcbb7e2c191a56e8" memberName="snareDrumButton"
-               virtualName="" explicitFocusOrder="0" pos="632 448 30 30" tooltip="Snare"
+               virtualName="" explicitFocusOrder="0" pos="632 464 30 30" tooltip="Snare"
                buttonText="snare" connectedEdges="0" needsCallback="1" radioGroupId="4"
                keepProportions="1" resourceNormal="snare_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="percussion disabled button" id="fcecada70009babc" memberName="disablePercussionButton"
-               virtualName="" explicitFocusOrder="0" pos="520 448 30 30" tooltip="Disable percussion"
+               virtualName="" explicitFocusOrder="0" pos="520 464 30 30" tooltip="Disable percussion"
                buttonText="disabled" connectedEdges="0" needsCallback="1" radioGroupId="4"
                keepProportions="1" resourceNormal="disabled_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="tom tom button" id="7ab8c7e4677552" memberName="tomTomButton"
-               virtualName="" explicitFocusOrder="0" pos="520 504 30 30" tooltip="Tom-tom"
+               virtualName="" explicitFocusOrder="0" pos="520 512 30 30" tooltip="Tom-tom"
                buttonText="tom tom" connectedEdges="0" needsCallback="1" radioGroupId="4"
                keepProportions="1" resourceNormal="tom_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="cymbalButton" id="a4334a83ef3cbbde" memberName="cymbalButton"
-               virtualName="" explicitFocusOrder="0" pos="576 504 30 30" tooltip="Cymbal"
+               virtualName="" explicitFocusOrder="0" pos="576 512 30 30" tooltip="Cymbal"
                buttonText="snare" connectedEdges="0" needsCallback="1" radioGroupId="4"
                keepProportions="1" resourceNormal="cymbal_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="hi hat button" id="49d70294c1d75708" memberName="hiHatButton"
-               virtualName="" explicitFocusOrder="0" pos="632 504 30 30" tooltip="Hi-hat"
+               virtualName="" explicitFocusOrder="0" pos="632 512 30 30" tooltip="Hi-hat"
                buttonText="hi-hat" connectedEdges="0" needsCallback="1" radioGroupId="4"
                keepProportions="1" resourceNormal="hihat_png" opacityNormal="0.5"
                colourNormal="0" resourceOver="" opacityOver="0.5" colourOver="0"
                resourceDown="" opacityDown="1" colourDown="0"/>
+  <LABEL name="db label" id="56a8c68b3fd380e8" memberName="dbLabel7" virtualName=""
+         explicitFocusOrder="0" pos="320 520 32 40" textCol="ff007f00"
+         outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="FM"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+  <LABEL name="db label" id="a358d95f525350f5" memberName="dbLabel8" virtualName=""
+         explicitFocusOrder="0" pos="392 520 72 40" textCol="ff007f00"
+         outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="Additive"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+  <IMAGEBUTTON name="new button" id="d6966805474ef2c" memberName="imageButton"
+               virtualName="" explicitFocusOrder="0" pos="656 232 64 64" buttonText="new button"
+               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="1"
+               resourceNormal="adlib_png" opacityNormal="1" colourNormal="0"
+               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
+               opacityDown="1" colourDown="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
@@ -3672,6 +3741,40 @@ static const unsigned char resource_PluginGui_cymbal_png[] = { 137,80,78,71,13,1
 
 const char* PluginGui::cymbal_png = (const char*) resource_PluginGui_cymbal_png;
 const int PluginGui::cymbal_pngSize = 237;
+
+// JUCER_RESOURCE: adlib_png, 1605, "../img/adlib.png"
+static const unsigned char resource_PluginGui_adlib_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,85,0,0,0,87,8,2,0,0,0,250,95,158,6,0,0,0,1,115,82,71,66,0,174,206,28,233,0,0,0,4,103,65,
+77,65,0,0,177,143,11,252,97,5,0,0,0,9,112,72,89,115,0,0,14,195,0,0,14,195,1,199,111,168,100,0,0,5,218,73,68,65,84,120,94,237,156,107,79,34,73,20,134,253,15,26,227,7,163,162,130,220,193,75,54,222,88,84,
+226,10,49,198,104,212,168,49,70,116,8,1,1,47,136,72,200,122,93,64,205,70,252,201,251,174,117,166,211,67,87,99,119,139,125,153,244,243,145,145,234,122,207,121,79,213,169,238,102,186,108,108,108,108,108,
+108,108,108,108,108,100,137,70,163,139,139,139,127,118,148,165,165,165,191,20,19,143,199,167,166,166,104,54,250,51,61,61,93,171,213,26,141,198,63,50,188,190,190,254,171,134,247,247,247,108,54,171,60,4,
+6,235,7,161,80,232,250,250,250,246,246,246,111,9,143,143,143,137,68,2,243,251,67,49,179,179,179,61,61,61,52,180,85,184,188,188,124,120,120,32,209,34,52,232,7,8,129,134,42,192,23,105,54,250,19,14,135,171,
+213,234,253,253,61,233,22,129,16,104,171,130,92,46,167,170,10,140,212,15,2,129,64,169,84,146,171,130,213,213,85,181,85,208,219,219,75,67,91,133,124,62,15,169,36,90,132,6,253,128,85,1,54,23,74,177,2,224,
+2,172,199,52,27,253,9,6,131,149,74,165,77,21,188,188,188,144,191,149,129,42,40,20,10,202,67,96,176,126,224,243,249,138,197,162,92,21,172,173,173,77,78,78,82,126,21,0,11,244,245,245,209,208,86,33,147,201,
+200,85,129,90,253,64,91,21,224,91,52,27,253,193,66,136,237,240,238,238,142,116,139,208,86,5,205,102,243,252,252,92,85,21,24,169,31,164,211,233,167,167,39,18,253,43,104,19,214,215,215,21,186,64,72,254,
+240,240,48,13,109,9,252,126,255,197,197,5,215,2,202,245,91,178,248,5,82,169,84,27,11,252,127,48,144,225,249,249,153,217,30,139,63,130,56,58,58,74,35,90,11,108,4,56,20,112,155,98,1,105,32,32,254,248,248,
+152,217,30,44,47,47,187,221,110,26,209,114,96,234,103,103,103,220,42,0,16,191,185,185,217,82,8,80,222,221,221,77,223,255,13,72,38,147,200,42,41,254,21,174,126,32,36,95,14,85,123,225,202,202,74,52,26,165,
+217,232,143,199,227,185,186,186,146,171,2,124,174,97,47,196,128,202,67,96,176,126,224,114,185,208,17,114,59,34,232,223,218,218,82,213,17,205,204,204,12,12,12,208,208,86,193,233,116,226,104,36,93,8,52,
+232,7,8,129,134,42,192,223,211,108,12,225,224,224,128,187,16,32,4,248,92,67,21,96,115,81,85,5,6,235,31,27,27,203,229,114,114,29,209,206,206,142,218,42,24,26,26,162,161,173,194,222,222,94,173,86,35,209,
+34,52,232,7,218,170,32,22,139,209,108,244,7,11,33,250,57,185,133,144,53,63,228,111,101,160,10,110,110,110,84,85,129,145,250,193,200,200,72,54,155,149,171,130,221,221,221,137,137,9,202,175,2,96,1,12,72,
+67,91,133,237,237,109,185,42,80,171,31,176,42,88,88,88,160,20,43,0,46,64,91,77,179,209,31,156,103,208,20,115,143,70,218,170,224,237,237,173,90,173,42,15,129,193,250,129,195,225,200,100,50,220,219,132,
+248,112,127,127,255,83,23,176,180,51,160,28,199,109,26,218,42,108,108,108,212,235,117,18,45,66,137,126,75,110,126,45,96,221,66,71,200,173,2,132,0,85,192,165,209,104,192,240,172,249,193,74,62,62,62,78,
+195,89,145,193,193,193,116,58,205,173,2,32,141,2,196,99,239,16,182,253,120,60,110,109,253,0,235,144,156,5,208,47,183,84,1,148,247,247,247,211,55,173,14,118,129,72,36,242,227,199,15,110,254,185,250,1,66,
+208,210,237,192,5,104,28,105,80,75,128,46,112,126,126,30,78,134,159,229,204,15,152,255,91,246,66,233,225,223,74,250,221,110,55,148,99,217,107,175,92,0,127,115,120,120,40,118,1,242,111,189,195,63,240,122,
+189,115,115,115,104,123,160,92,238,118,160,20,169,126,192,214,63,182,4,146,7,62,128,17,240,175,116,61,243,128,206,4,202,113,236,81,165,92,128,91,5,64,122,254,55,163,126,24,190,84,42,105,83,46,128,16,28,
+29,29,73,93,96,246,22,200,227,241,124,122,255,95,9,92,253,128,21,130,180,10,12,126,254,205,128,248,114,185,252,117,241,12,86,5,240,17,185,255,39,210,243,191,41,244,251,124,190,14,138,103,32,4,199,199,
+199,210,42,48,221,249,63,16,8,84,42,149,206,138,7,92,253,128,85,65,203,225,23,46,152,53,234,249,247,233,233,41,247,14,215,215,145,171,2,233,249,223,48,253,193,96,80,238,229,151,142,128,125,4,45,51,142,
+61,148,253,15,96,1,167,211,73,51,48,22,185,247,191,58,5,87,63,64,8,164,37,128,190,131,166,165,15,161,80,72,238,253,191,14,130,16,40,44,1,189,245,163,189,253,214,228,51,160,63,149,74,181,88,0,123,158,193,
+37,16,14,135,117,72,62,224,234,7,200,54,165,254,3,189,243,143,101,175,227,123,158,28,112,25,249,254,39,198,251,31,219,30,246,39,154,224,119,98,70,255,99,54,104,245,117,48,63,48,163,255,219,188,225,241,
+29,152,206,255,133,66,65,31,243,3,51,250,223,112,253,45,253,15,146,175,107,255,171,155,126,238,17,192,248,254,95,31,253,184,196,201,201,137,116,229,51,190,255,55,92,191,144,124,100,222,128,251,31,58,172,
+255,92,231,131,102,179,89,169,84,12,214,143,156,124,235,254,15,241,201,100,82,122,243,3,32,249,166,184,5,36,247,251,191,142,32,167,31,226,133,155,63,200,60,62,161,217,232,207,119,156,127,152,231,25,220,
+71,0,229,114,89,184,249,105,176,126,208,217,243,47,196,115,31,129,10,32,249,14,135,131,174,109,6,66,161,16,246,97,204,155,20,124,141,54,250,153,237,65,44,22,195,31,208,229,205,0,187,249,171,57,4,88,65,
+200,238,31,112,95,132,18,63,2,134,231,205,165,31,248,124,62,109,247,191,241,21,37,239,191,153,206,246,82,180,61,255,104,163,95,252,139,8,100,222,227,241,208,149,76,11,123,254,85,175,215,113,92,33,125,
+34,90,124,46,32,103,120,241,143,255,18,137,68,48,24,164,203,152,25,204,18,39,240,98,177,136,166,13,218,132,64,64,188,242,223,255,129,72,36,98,118,195,183,193,239,247,163,63,65,209,34,135,44,16,224,83,
+253,130,225,145,118,203,191,234,199,240,122,189,16,131,64,228,243,121,114,182,12,226,255,255,3,110,183,240,239,223,184,184,92,46,4,130,165,151,11,148,255,62,239,185,217,216,216,216,216,88,133,174,174,
+255,0,140,50,58,48,137,109,192,72,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* PluginGui::adlib_png = (const char*) resource_PluginGui_adlib_png;
+const int PluginGui::adlib_pngSize = 1605;
 
 
 //[EndFile] You can add extra defines here...
