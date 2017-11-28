@@ -936,6 +936,11 @@ void AdlibBlasterAudioProcessor::toggleChannel(const int idx)
 	isChannelEnabled(idx) ? disableChannel(idx) : enableChannel(idx);
 }
 
+size_t AdlibBlasterAudioProcessor::nChannelsEnabled()
+{
+	return available_channels.size();
+}
+
 const char* CHANNEL_DISABLED_STRING = "x";
 
 // @param idx 1-based channel index

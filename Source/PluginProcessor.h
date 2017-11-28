@@ -59,6 +59,7 @@ public:
 	void enableChannel(const int idx);
 	void toggleChannel(const int idx);
 	bool isChannelEnabled(const int idx) const;
+	size_t nChannelsEnabled();
 	const char* getChannelEnvelopeStage(int idx) const;
 
 	void updateGuiIfPresent();

@@ -22,6 +22,7 @@ private:
 
 public:
 	static const Colour DOS_GREEN;
+	static const Colour DOS_GREEN_DARK;
 
 	OPLLookAndFeel();
 

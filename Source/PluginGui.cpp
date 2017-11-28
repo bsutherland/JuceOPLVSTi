@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 4.3.1
+  Created with Projucer version: 5.0.2
 
   ------------------------------------------------------------------------------
 
@@ -19,6 +19,7 @@
 
 //[Headers] You can add your own extra header files here...
 #include "OPLLookAndFeel.h"
+#include "ChannelButtonLookAndFeel.h"
 //[/Headers]
 
 #include "PluginGui.h"
@@ -212,7 +213,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel = new Label ("frequency label",
                                                    TRANS("Frequency Multiplier")));
     frequencyLabel->setTooltip (TRANS("Multiplier applied to base note frequency"));
-    frequencyLabel->setFont (Font (15.00f, Font::plain));
+    frequencyLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel->setJustificationType (Justification::centredLeft);
     frequencyLabel->setEditable (false, false, false);
     frequencyLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -234,7 +235,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (aLabel = new Label ("a label",
                                            TRANS("A")));
     aLabel->setTooltip (TRANS("Attack rate"));
-    aLabel->setFont (Font (15.00f, Font::plain));
+    aLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     aLabel->setJustificationType (Justification::centred);
     aLabel->setEditable (false, false, false);
     aLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -256,7 +257,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (dLabel = new Label ("d label",
                                            TRANS("D")));
     dLabel->setTooltip (TRANS("Decay rate"));
-    dLabel->setFont (Font (15.00f, Font::plain));
+    dLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel->setJustificationType (Justification::centred);
     dLabel->setEditable (false, false, false);
     dLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -278,7 +279,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (dLabel2 = new Label ("d label",
                                             TRANS("S")));
     dLabel2->setTooltip (TRANS("Sustain level"));
-    dLabel2->setFont (Font (15.00f, Font::plain));
+    dLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel2->setJustificationType (Justification::centred);
     dLabel2->setEditable (false, false, false);
     dLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -300,7 +301,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (rLabel = new Label ("r label",
                                            TRANS("R")));
     rLabel->setTooltip (TRANS("Release rate"));
-    rLabel->setFont (Font (15.00f, Font::plain));
+    rLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     rLabel->setJustificationType (Justification::centred);
     rLabel->setEditable (false, false, false);
     rLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -321,7 +322,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (attenuationLabel = new Label ("attenuation label",
                                                      TRANS("Attenuation")));
     attenuationLabel->setTooltip (TRANS("Final output level adjustment"));
-    attenuationLabel->setFont (Font (15.00f, Font::plain));
+    attenuationLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel->setJustificationType (Justification::centred);
     attenuationLabel->setEditable (false, false, false);
     attenuationLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -330,7 +331,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (dbLabel = new Label ("db label",
                                             TRANS("dB")));
-    dbLabel->setFont (Font (15.00f, Font::plain));
+    dbLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel->setJustificationType (Justification::centred);
     dbLabel->setEditable (false, false, false);
     dbLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -376,7 +377,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        Image(), 1.000f, Colour (0x00000000));
     addAndMakeVisible (waveLabel = new Label ("wave label",
                                               TRANS("Wave")));
-    waveLabel->setFont (Font (15.00f, Font::plain));
+    waveLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     waveLabel->setJustificationType (Justification::centredLeft);
     waveLabel->setEditable (false, false, false);
     waveLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -409,7 +410,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (dbLabel2 = new Label ("db label",
                                              TRANS("dB/8ve\n")));
-    dbLabel2->setFont (Font (15.00f, Font::plain));
+    dbLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel2->setJustificationType (Justification::centred);
     dbLabel2->setEditable (false, false, false);
     dbLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -427,7 +428,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel3 = new Label ("frequency label",
                                                     TRANS("Frequency Multiplier")));
     frequencyLabel3->setTooltip (TRANS("Multiplier applied to base note frequency"));
-    frequencyLabel3->setFont (Font (15.00f, Font::plain));
+    frequencyLabel3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel3->setJustificationType (Justification::centredLeft);
     frequencyLabel3->setEditable (false, false, false);
     frequencyLabel3->setColour (Label::textColourId, Colour (0xff007f00));
@@ -448,7 +449,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (aLabel2 = new Label ("a label",
                                             TRANS("A")));
     aLabel2->setTooltip (TRANS("Attack rate"));
-    aLabel2->setFont (Font (15.00f, Font::plain));
+    aLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     aLabel2->setJustificationType (Justification::centred);
     aLabel2->setEditable (false, false, false);
     aLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -469,7 +470,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (dLabel3 = new Label ("d label",
                                             TRANS("D")));
     dLabel3->setTooltip (TRANS("Decay rate"));
-    dLabel3->setFont (Font (15.00f, Font::plain));
+    dLabel3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel3->setJustificationType (Justification::centred);
     dLabel3->setEditable (false, false, false);
     dLabel3->setColour (Label::textColourId, Colour (0xff007f00));
@@ -490,7 +491,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (dLabel4 = new Label ("d label",
                                             TRANS("S")));
     dLabel4->setTooltip (TRANS("Sustain level"));
-    dLabel4->setFont (Font (15.00f, Font::plain));
+    dLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel4->setJustificationType (Justification::centred);
     dLabel4->setEditable (false, false, false);
     dLabel4->setColour (Label::textColourId, Colour (0xff007f00));
@@ -511,7 +512,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (rLabel2 = new Label ("r label",
                                             TRANS("R")));
     rLabel2->setTooltip (TRANS("Release rate"));
-    rLabel2->setFont (Font (15.00f, Font::plain));
+    rLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     rLabel2->setJustificationType (Justification::centred);
     rLabel2->setEditable (false, false, false);
     rLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -532,7 +533,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (attenuationLabel2 = new Label ("attenuation label",
                                                       TRANS("Attenuation")));
     attenuationLabel2->setTooltip (TRANS("Final output level adjustment"));
-    attenuationLabel2->setFont (Font (15.00f, Font::plain));
+    attenuationLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel2->setJustificationType (Justification::centred);
     attenuationLabel2->setEditable (false, false, false);
     attenuationLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -541,7 +542,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (dbLabel3 = new Label ("db label",
                                              TRANS("dB")));
-    dbLabel3->setFont (Font (15.00f, Font::plain));
+    dbLabel3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel3->setJustificationType (Justification::centred);
     dbLabel3->setEditable (false, false, false);
     dbLabel3->setColour (Label::textColourId, Colour (0xff007f00));
@@ -587,7 +588,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                         Image(), 1.000f, Colour (0x00000000));
     addAndMakeVisible (waveLabel2 = new Label ("wave label",
                                                TRANS("Wave")));
-    waveLabel2->setFont (Font (15.00f, Font::plain));
+    waveLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     waveLabel2->setJustificationType (Justification::centredLeft);
     waveLabel2->setEditable (false, false, false);
     waveLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -621,7 +622,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel4 = new Label ("frequency label",
                                                     TRANS("Keyscale Attenuation")));
     frequencyLabel4->setTooltip (TRANS("Attenuate amplitude with note frequency in dB per octave"));
-    frequencyLabel4->setFont (Font (15.00f, Font::plain));
+    frequencyLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel4->setJustificationType (Justification::centred);
     frequencyLabel4->setEditable (false, false, false);
     frequencyLabel4->setColour (Label::textColourId, Colour (0xff007f00));
@@ -648,7 +649,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel5 = new Label ("frequency label",
                                                     TRANS("Tremolo\n")));
     frequencyLabel5->setTooltip (TRANS("OPL global tremolo depth"));
-    frequencyLabel5->setFont (Font (15.00f, Font::plain));
+    frequencyLabel5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel5->setJustificationType (Justification::centredLeft);
     frequencyLabel5->setEditable (false, false, false);
     frequencyLabel5->setColour (Label::textColourId, Colour (0xff007f00));
@@ -657,7 +658,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (dbLabel5 = new Label ("db label",
                                              TRANS("dB")));
-    dbLabel5->setFont (Font (15.00f, Font::plain));
+    dbLabel5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel5->setJustificationType (Justification::centredLeft);
     dbLabel5->setEditable (false, false, false);
     dbLabel5->setColour (Label::textColourId, Colour (0xff007f00));
@@ -679,7 +680,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel6 = new Label ("frequency label",
                                                     TRANS("Vibrato")));
     frequencyLabel6->setTooltip (TRANS("OPL global vibrato depth"));
-    frequencyLabel6->setFont (Font (15.00f, Font::plain));
+    frequencyLabel6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel6->setJustificationType (Justification::centredLeft);
     frequencyLabel6->setEditable (false, false, false);
     frequencyLabel6->setColour (Label::textColourId, Colour (0xff007f00));
@@ -689,7 +690,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (dbLabel6 = new Label ("db label",
                                              TRANS("cents\n")));
     dbLabel6->setTooltip (TRANS("A unit of pitch; 100 cents per semitone"));
-    dbLabel6->setFont (Font (15.00f, Font::plain));
+    dbLabel6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel6->setJustificationType (Justification::centredLeft);
     dbLabel6->setEditable (false, false, false);
     dbLabel6->setColour (Label::textColourId, Colour (0xff007f00));
@@ -713,7 +714,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel7 = new Label ("frequency label",
                                                     TRANS("Feedback")));
     frequencyLabel7->setTooltip (TRANS("Extent to which modulator output is fed back into itself"));
-    frequencyLabel7->setFont (Font (15.00f, Font::plain));
+    frequencyLabel7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel7->setJustificationType (Justification::centred);
     frequencyLabel7->setEditable (false, false, false);
     frequencyLabel7->setColour (Label::textColourId, Colour (0xff007f00));
@@ -743,7 +744,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (attenuationLabel4 = new Label ("attenuation label",
                                                       TRANS("Velocity Sensitivity")));
     attenuationLabel4->setTooltip (TRANS("Set or disable velocity senstivity"));
-    attenuationLabel4->setFont (Font (15.00f, Font::plain));
+    attenuationLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel4->setJustificationType (Justification::centred);
     attenuationLabel4->setEditable (false, false, false);
     attenuationLabel4->setColour (Label::textColourId, Colour (0xff007f00));
@@ -824,7 +825,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    Image(), 1.000f, Colour (0x00000000));
     addAndMakeVisible (dbLabel4 = new Label ("db label",
                                              TRANS("dB/8ve\n")));
-    dbLabel4->setFont (Font (15.00f, Font::plain));
+    dbLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel4->setJustificationType (Justification::centred);
     dbLabel4->setEditable (false, false, false);
     dbLabel4->setColour (Label::textColourId, Colour (0xff007f00));
@@ -848,10 +849,10 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     keyscaleAttenuationComboBox->setJustificationType (Justification::centredLeft);
     keyscaleAttenuationComboBox->setTextWhenNothingSelected (String());
     keyscaleAttenuationComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    keyscaleAttenuationComboBox->addItem (TRANS("-0.0 db/8ve"), 1);
-    keyscaleAttenuationComboBox->addItem (TRANS("-3.0 db/8ve"), 2);
-    keyscaleAttenuationComboBox->addItem (TRANS("-1.5 db/8ve"), 3);
-    keyscaleAttenuationComboBox->addItem (TRANS("-6.0 db/8ve"), 4);
+    keyscaleAttenuationComboBox->addItem (TRANS("-0.0"), 1);
+    keyscaleAttenuationComboBox->addItem (TRANS("-3.0"), 2);
+    keyscaleAttenuationComboBox->addItem (TRANS("-1.5"), 3);
+    keyscaleAttenuationComboBox->addItem (TRANS("-6.0"), 4);
     keyscaleAttenuationComboBox->addListener (this);
 
     addAndMakeVisible (groupComponent5 = new GroupComponent ("new group",
@@ -874,7 +875,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (emulatorLabel = new Label ("emulator label",
                                                   TRANS("DOSBox")));
     emulatorLabel->setTooltip (TRANS("Use the OPL emulator from the DOSBox project"));
-    emulatorLabel->setFont (Font (15.00f, Font::plain));
+    emulatorLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     emulatorLabel->setJustificationType (Justification::centredRight);
     emulatorLabel->setEditable (false, false, false);
     emulatorLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -884,7 +885,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (emulatorLabel2 = new Label ("emulator label",
                                                    TRANS("ZDoom")));
     emulatorLabel2->setTooltip (TRANS("Use the OPL emulator from the ZDoom project"));
-    emulatorLabel2->setFont (Font (15.00f, Font::plain));
+    emulatorLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     emulatorLabel2->setJustificationType (Justification::centredLeft);
     emulatorLabel2->setEditable (false, false, false);
     emulatorLabel2->setColour (Label::textColourId, Colour (0xff007f00));
@@ -913,7 +914,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (versionLabel = new Label ("version label",
                                                  String()));
-    versionLabel->setFont (Font (12.00f, Font::plain));
+    versionLabel->setFont (Font (12.00f, Font::plain).withTypefaceStyle ("Regular"));
     versionLabel->setJustificationType (Justification::centredRight);
     versionLabel->setEditable (false, false, false);
     versionLabel->setColour (Label::textColourId, Colour (0xff007f00));
@@ -938,7 +939,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       Image(), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label = new Label ("new label",
                                           TRANS("Toggle buttons")));
-    label->setFont (Font (15.00f, Font::plain));
+    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label->setJustificationType (Justification::centred);
     label->setEditable (false, false, false);
     label->setColour (Label::textColourId, Colours::green);
@@ -947,7 +948,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label2 = new Label ("new label",
                                            TRANS("Line borders")));
-    label2->setFont (Font (15.00f, Font::plain));
+    label2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label2->setJustificationType (Justification::centred);
     label2->setEditable (false, false, false);
     label2->setColour (Label::textColourId, Colours::green);
@@ -977,7 +978,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
     addAndMakeVisible (label3 = new Label ("new label",
                                            TRANS("Temporarily removed labels to avoid making wider boxes.")));
-    label3->setFont (Font (15.00f, Font::plain));
+    label3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label3->setJustificationType (Justification::centred);
     label3->setEditable (false, false, false);
     label3->setColour (Label::textColourId, Colours::green);
@@ -1053,7 +1054,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label4 = new Label ("new label",
                                            TRANS("AM")));
-    label4->setFont (Font (15.00f, Font::plain));
+    label4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label4->setJustificationType (Justification::centredLeft);
     label4->setEditable (false, false, false);
     label4->setColour (Label::textColourId, Colours::green);
@@ -1062,7 +1063,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label5 = new Label ("new label",
                                            TRANS("FM")));
-    label5->setFont (Font (15.00f, Font::plain));
+    label5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label5->setJustificationType (Justification::centredLeft);
     label5->setEditable (false, false, false);
     label5->setColour (Label::textColourId, Colours::green);
@@ -1071,7 +1072,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label6 = new Label ("new label",
                                            TRANS("AM")));
-    label6->setFont (Font (15.00f, Font::plain));
+    label6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label6->setJustificationType (Justification::centredLeft);
     label6->setEditable (false, false, false);
     label6->setColour (Label::textColourId, Colours::black);
@@ -1080,7 +1081,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label7 = new Label ("new label",
                                            TRANS("FM")));
-    label7->setFont (Font (15.00f, Font::plain));
+    label7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label7->setJustificationType (Justification::centredLeft);
     label7->setEditable (false, false, false);
     label7->setColour (Label::textColourId, Colours::black);
@@ -1089,7 +1090,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label8 = new Label ("new label",
                                            TRANS("Example AM/FM switches")));
-    label8->setFont (Font (15.00f, Font::plain));
+    label8->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label8->setJustificationType (Justification::centred);
     label8->setEditable (false, false, false);
     label8->setColour (Label::textColourId, Colours::green);
@@ -1114,7 +1115,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label9 = new Label ("new label",
                                            TRANS("AM")));
-    label9->setFont (Font (15.00f, Font::plain));
+    label9->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label9->setJustificationType (Justification::centredLeft);
     label9->setEditable (false, false, false);
     label9->setColour (Label::textColourId, Colours::black);
@@ -1123,7 +1124,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label10 = new Label ("new label",
                                             TRANS("FM")));
-    label10->setFont (Font (15.00f, Font::plain));
+    label10->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label10->setJustificationType (Justification::centredLeft);
     label10->setEditable (false, false, false);
     label10->setColour (Label::textColourId, Colours::black);
@@ -1148,7 +1149,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label11 = new Label ("new label",
                                             TRANS("AM")));
-    label11->setFont (Font (15.00f, Font::plain));
+    label11->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label11->setJustificationType (Justification::centredLeft);
     label11->setEditable (false, false, false);
     label11->setColour (Label::textColourId, Colours::black);
@@ -1157,7 +1158,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label12 = new Label ("new label",
                                             TRANS("FM")));
-    label12->setFont (Font (15.00f, Font::plain));
+    label12->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label12->setJustificationType (Justification::centredLeft);
     label12->setEditable (false, false, false);
     label12->setColour (Label::textColourId, Colours::black);
@@ -1182,7 +1183,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                               ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label13 = new Label ("new label",
                                             TRANS("M")));
-    label13->setFont (Font (15.00f, Font::plain));
+    label13->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label13->setJustificationType (Justification::centred);
     label13->setEditable (false, false, false);
     label13->setColour (TextEditor::textColourId, Colours::black);
@@ -1190,7 +1191,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label14 = new Label ("new label",
                                             TRANS("C")));
-    label14->setFont (Font (15.00f, Font::plain));
+    label14->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label14->setJustificationType (Justification::centred);
     label14->setEditable (false, false, false);
     label14->setColour (TextEditor::textColourId, Colours::black);
@@ -1198,7 +1199,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label15 = new Label ("new label",
                                             TRANS("M")));
-    label15->setFont (Font (15.00f, Font::plain));
+    label15->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label15->setJustificationType (Justification::centred);
     label15->setEditable (false, false, false);
     label15->setColour (TextEditor::textColourId, Colours::black);
@@ -1206,7 +1207,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label16 = new Label ("new label",
                                             TRANS("C")));
-    label16->setFont (Font (15.00f, Font::plain));
+    label16->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label16->setJustificationType (Justification::centred);
     label16->setEditable (false, false, false);
     label16->setColour (TextEditor::textColourId, Colours::black);
@@ -1214,7 +1215,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label17 = new Label ("new label",
                                             TRANS("Example Algorithms")));
-    label17->setFont (Font (15.00f, Font::plain));
+    label17->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label17->setJustificationType (Justification::centred);
     label17->setEditable (false, false, false);
     label17->setColour (Label::textColourId, Colours::green);
@@ -1235,7 +1236,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label18 = new Label ("new label",
                                             TRANS("AM")));
-    label18->setFont (Font (15.00f, Font::plain));
+    label18->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label18->setJustificationType (Justification::centredLeft);
     label18->setEditable (false, false, false);
     label18->setColour (Label::textColourId, Colours::black);
@@ -1252,7 +1253,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label19 = new Label ("new label",
                                             TRANS("FM")));
-    label19->setFont (Font (15.00f, Font::plain));
+    label19->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label19->setJustificationType (Justification::centredLeft);
     label19->setEditable (false, false, false);
     label19->setColour (Label::textColourId, Colours::green);
@@ -1269,7 +1270,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label20 = new Label ("new label",
                                             TRANS("M")));
-    label20->setFont (Font (15.00f, Font::plain));
+    label20->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label20->setJustificationType (Justification::centred);
     label20->setEditable (false, false, false);
     label20->setColour (TextEditor::textColourId, Colours::black);
@@ -1277,7 +1278,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label21 = new Label ("new label",
                                             TRANS("C")));
-    label21->setFont (Font (15.00f, Font::plain));
+    label21->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label21->setJustificationType (Justification::centred);
     label21->setEditable (false, false, false);
     label21->setColour (TextEditor::textColourId, Colours::black);
@@ -1285,7 +1286,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label22 = new Label ("new label",
                                             TRANS("Example Algo Sections w/ Diagram")));
-    label22->setFont (Font (15.00f, Font::plain));
+    label22->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label22->setJustificationType (Justification::centred);
     label22->setEditable (false, false, false);
     label22->setColour (Label::textColourId, Colours::green);
@@ -1302,7 +1303,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label23 = new Label ("new label",
                                             TRANS("AM")));
-    label23->setFont (Font (15.00f, Font::plain));
+    label23->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label23->setJustificationType (Justification::centredLeft);
     label23->setEditable (false, false, false);
     label23->setColour (Label::textColourId, Colours::green);
@@ -1319,7 +1320,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label24 = new Label ("new label",
                                             TRANS("FM")));
-    label24->setFont (Font (15.00f, Font::plain));
+    label24->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label24->setJustificationType (Justification::centredLeft);
     label24->setEditable (false, false, false);
     label24->setColour (Label::textColourId, Colours::black);
@@ -1336,7 +1337,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label25 = new Label ("new label",
                                             TRANS("M")));
-    label25->setFont (Font (15.00f, Font::plain));
+    label25->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label25->setJustificationType (Justification::centred);
     label25->setEditable (false, false, false);
     label25->setColour (TextEditor::textColourId, Colours::black);
@@ -1344,7 +1345,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label26 = new Label ("new label",
                                             TRANS("C")));
-    label26->setFont (Font (15.00f, Font::plain));
+    label26->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label26->setJustificationType (Justification::centred);
     label26->setEditable (false, false, false);
     label26->setColour (TextEditor::textColourId, Colours::black);
@@ -1364,7 +1365,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label27 = new Label ("new label",
                                             TRANS("AM")));
-    label27->setFont (Font (15.00f, Font::plain));
+    label27->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label27->setJustificationType (Justification::centredLeft);
     label27->setEditable (false, false, false);
     label27->setColour (Label::textColourId, Colours::green);
@@ -1381,7 +1382,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     addAndMakeVisible (label28 = new Label ("new label",
                                             TRANS("FM")));
-    label28->setFont (Font (15.00f, Font::plain));
+    label28->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label28->setJustificationType (Justification::centredLeft);
     label28->setEditable (false, false, false);
     label28->setColour (Label::textColourId, Colours::black);
@@ -1395,7 +1396,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel9 = new Label ("frequency label",
                                                     TRANS("Algorithm")));
     frequencyLabel9->setTooltip (TRANS("In additive mode, carrier and modulator output are simply summed rather than modulated"));
-    frequencyLabel9->setFont (Font (15.00f, Font::plain));
+    frequencyLabel9->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel9->setJustificationType (Justification::centredLeft);
     frequencyLabel9->setEditable (false, false, false);
     frequencyLabel9->setColour (Label::textColourId, Colour (0xff007f00));
@@ -1404,7 +1405,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label29 = new Label ("new label",
                                             TRANS("Example Algo Section w/o Diagram")));
-    label29->setFont (Font (15.00f, Font::plain));
+    label29->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label29->setJustificationType (Justification::centred);
     label29->setEditable (false, false, false);
     label29->setColour (Label::textColourId, Colours::green);
@@ -1413,7 +1414,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (label30 = new Label ("new label",
                                             TRANS("Off             On (Bright)          On (Dark)       On (Solid)")));
-    label30->setFont (Font (15.00f, Font::plain));
+    label30->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label30->setJustificationType (Justification::centred);
     label30->setEditable (false, false, false);
     label30->setColour (Label::textColourId, Colours::green);
@@ -1423,7 +1424,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (frequencyLabel10 = new Label ("frequency label",
                                                      TRANS("Keyscale Attenuation")));
     frequencyLabel10->setTooltip (TRANS("Attenuate amplitude with note frequency in dB per octave"));
-    frequencyLabel10->setFont (Font (15.00f, Font::plain));
+    frequencyLabel10->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel10->setJustificationType (Justification::centred);
     frequencyLabel10->setEditable (false, false, false);
     frequencyLabel10->setColour (Label::textColourId, Colour (0xff007f00));
@@ -1433,7 +1434,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     addAndMakeVisible (attenuationLabel5 = new Label ("attenuation label",
                                                       TRANS("Velocity Sensitivity")));
     attenuationLabel5->setTooltip (TRANS("Set or disable velocity senstivity"));
-    attenuationLabel5->setFont (Font (15.00f, Font::plain));
+    attenuationLabel5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel5->setJustificationType (Justification::centred);
     attenuationLabel5->setEditable (false, false, false);
     attenuationLabel5->setColour (Label::textColourId, Colour (0xff007f00));
@@ -1522,7 +1523,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                             Image(), 1.000f, Colour (0x00000000));
     addAndMakeVisible (dbLabel7 = new Label ("db label",
                                              TRANS("FM")));
-    dbLabel7->setFont (Font (15.00f, Font::plain));
+    dbLabel7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel7->setJustificationType (Justification::centredLeft);
     dbLabel7->setEditable (false, false, false);
     dbLabel7->setColour (Label::textColourId, Colour (0xff007f00));
@@ -1532,7 +1533,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     addAndMakeVisible (dbLabel8 = new Label ("db label",
                                              TRANS("Additive")));
-    dbLabel8->setFont (Font (15.00f, Font::plain));
+    dbLabel8->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel8->setJustificationType (Justification::centred);
     dbLabel8->setEditable (false, false, false);
     dbLabel8->setColour (Label::textColourId, Colour (0xff007f00));
@@ -1540,12 +1541,6 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     dbLabel8->setColour (TextEditor::textColourId, Colours::black);
     dbLabel8->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (imageButton = new ImageButton ("new button"));
-
-    imageButton->setImages (false, true, true,
-                            ImageCache::getFromMemory (adlib_png, adlib_pngSize), 1.000f, Colour (0x00000000),
-                            Image(), 1.000f, Colour (0x00000000),
-                            Image(), 1.000f, Colour (0x00000000));
 
     //[UserPreSize]
 	LookAndFeel::setDefaultLookAndFeel(new OPLLookAndFeel());
@@ -1675,10 +1670,16 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 	sustainButton2->setColour(TextButton::buttonColourId, Colour(COLOUR_MID));
 
 	Font fw(Font::getDefaultMonospacedFontName(), 14, Font::bold);
+	ChannelButtonLookAndFeel *channelButtonLookAndFeel = new ChannelButtonLookAndFeel();
+	String context = String("Disable channel ");
 	for (unsigned int i = 0; i < channels.size(); ++i)
 	{
-		TextButton *channel = new TextButton(TRANS("-"), String("Disable channel %d", i + 1));
-		channel->setColour(Label::textColourId, Colour(COLOUR_MID));
+		TextButton *channel = new TextButton(TRANS("-"), context + (i + 1));
+		channel->setLookAndFeel(channelButtonLookAndFeel);
+		channel->setColour(TextButton::ColourIds::buttonColourId, Colours::black);
+		channel->setColour(TextButton::ColourIds::buttonOnColourId, Colours::black);
+		channel->setColour(TextButton::ColourIds::textColourOnId, OPLLookAndFeel::DOS_GREEN);
+		channel->setColour(TextButton::ColourIds::textColourOffId, OPLLookAndFeel::DOS_GREEN);
 		channel->addListener(this);
 		addAndMakeVisible(channel);
 		channels[i] = channel;
@@ -1857,7 +1858,6 @@ PluginGui::~PluginGui()
     hiHatButton = nullptr;
     dbLabel7 = nullptr;
     dbLabel8 = nullptr;
-    imageButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -1897,8 +1897,8 @@ void PluginGui::resized()
     dLabel2->setBounds (136, 304, 30, 24);
     rSlider->setBounds (184, 208, 30, 88);
     rLabel->setBounds (184, 304, 30, 24);
-    attenuationSlider->setBounds (328, 200, 56, 126);
-    attenuationLabel->setBounds (304, 168, 112, 24);
+    attenuationSlider->setBounds (328, 184, 56, 142);
+    attenuationLabel->setBounds (304, 160, 112, 24);
     dbLabel->setBounds (384, 304, 32, 24);
     sineImageButton->setBounds (88, 113, 34, 30);
     halfsineImageButton->setBounds (128, 113, 34, 30);
@@ -1920,8 +1920,8 @@ void PluginGui::resized()
     dLabel4->setBounds (560, 304, 30, 24);
     rSlider2->setBounds (608, 208, 30, 88);
     rLabel2->setBounds (608, 304, 30, 24);
-    attenuationSlider2->setBounds (752, 200, 56, 126);
-    attenuationLabel2->setBounds (728, 168, 112, 24);
+    attenuationSlider2->setBounds (752, 184, 56, 142);
+    attenuationLabel2->setBounds (728, 160, 112, 24);
     dbLabel3->setBounds (800, 304, 40, 24);
     sineImageButton2->setBounds (512, 113, 34, 30);
     halfsineImageButton2->setBounds (552, 113, 34, 30);
@@ -2038,7 +2038,6 @@ void PluginGui::resized()
     hiHatButton->setBounds (632, 512, 30, 30);
     dbLabel7->setBounds (320, 520, 32, 40);
     dbLabel8->setBounds (392, 520, 72, 40);
-    imageButton->setBounds (656, 232, 64, 64);
     //[UserResized] Add your own custom resize handling here..
 	for (unsigned int i = 0; i < channels.size(); ++i)
 		channels[i]->setBounds(64+88*i, 30, 28, 28);
@@ -2197,24 +2196,19 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 {
     //[UserbuttonClicked_Pre]
 	// TODO:
-	// - prevent all channels from being disabled
 	// - fix button tooltip text
-	// - button styling
-	// - automatically select channel(s) by default
+	// - automatically select channel(s) by default?
 	// - record output to file
 	for (int i = 1; i <= Hiopl::CHANNELS; ++i) {
 		Button* channelButton = channels[i - 1];
 		if (buttonThatWasClicked == channelButton) {
-			processor->toggleChannel(i);
+			if (processor->nChannelsEnabled() > 1 || !processor->isChannelEnabled(i)) {
+				processor->toggleChannel(i);
+			}
 			const bool channelEnabled = processor->isChannelEnabled(i);
-			const Colour fg = channelEnabled ? Colours::black : OPLLookAndFeel::DOS_GREEN;
-			const Colour bg = channelEnabled ? OPLLookAndFeel::DOS_GREEN : Colours::black;
-
-			channelButton->setColour(TextButton::ColourIds::buttonColourId, bg);
-			channelButton->setColour(TextButton::ColourIds::buttonOnColourId, bg);
-			channelButton->setColour(TextButton::ColourIds::textColourOnId, fg);
-			channelButton->setColour(TextButton::ColourIds::textColourOffId, fg);
-
+			Colour textColour = channelEnabled ? OPLLookAndFeel::DOS_GREEN : OPLLookAndFeel::DOS_GREEN_DARK;
+			channelButton->setColour(TextButton::ColourIds::textColourOnId, textColour);
+			channelButton->setColour(TextButton::ColourIds::textColourOffId, textColour);
 			return;
 		}
 	}
@@ -2648,7 +2642,8 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="40 168 152 24" tooltip="Multiplier applied to base note frequency"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Frequency Multiplier"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <SLIDER name="a slider" id="1b9be27726a5b3ae" memberName="aSlider" virtualName=""
           explicitFocusOrder="0" pos="40 208 30 88" tooltip="Envelope attack rate"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
@@ -2659,7 +2654,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="40 304 30 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="d slider" id="d4cc8ddf2fc9cf2b" memberName="dSlider" virtualName=""
           explicitFocusOrder="0" pos="88 208 30 88" tooltip="Envelope decay rate"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
@@ -2670,7 +2666,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="88 304 30 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="s slider" id="9bcadfc61e498bce" memberName="sSlider" virtualName=""
           explicitFocusOrder="0" pos="136 208 30 88" tooltip="Envelope sustain level"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
@@ -2681,7 +2678,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="136 304 30 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="r slider" id="5616976a8c5a3f5f" memberName="rSlider" virtualName=""
           explicitFocusOrder="0" pos="184 208 30 88" tooltip="Envelope release rate"
           thumbcol="ff007f00" trackcol="7f007f00" textboxtext="ff007f00"
@@ -2692,23 +2690,26 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="184 304 30 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="attenuation slider" id="dfb943cd83b3977f" memberName="attenuationSlider"
-          virtualName="" explicitFocusOrder="0" pos="328 200 56 126" thumbcol="ff007f00"
+          virtualName="" explicitFocusOrder="0" pos="328 184 56 142" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="64"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="643f88854c82ca3e" memberName="attenuationLabel"
-         virtualName="" explicitFocusOrder="0" pos="304 168 112 24" tooltip="Final output level adjustment"
+         virtualName="" explicitFocusOrder="0" pos="304 160 112 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <LABEL name="db label" id="666be8c96c85c9f1" memberName="dbLabel" virtualName=""
          explicitFocusOrder="0" pos="384 304 32 24" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="sine image button" id="5e72e0ec4fc09c1a" memberName="sineImageButton"
                virtualName="" explicitFocusOrder="0" pos="88 113 34 30" buttonText="Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
@@ -2737,7 +2738,7 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="32 115 48 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="Wave" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="tremolo button" id="1e6ab9b2f1fee312" memberName="tremoloButton"
                 virtualName="" explicitFocusOrder="0" pos="120 352 80 24" tooltip="Modulate amplitude at 3.7 Hz"
                 txtcol="ff007f00" buttonText="Tremolo" connectedEdges="0" needsCallback="1"
@@ -2758,7 +2759,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="792 712 72 16" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB/8ve&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <COMBOBOX name="frequency combo box" id="30b8c81b6bd2a17" memberName="frequencyComboBox2"
             virtualName="" explicitFocusOrder="0" pos="624 168 66 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
@@ -2766,7 +2768,8 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="464 168 152 24" tooltip="Multiplier applied to base note frequency"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Frequency Multiplier"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <SLIDER name="a slider" id="d6d2f4556ea9394" memberName="aSlider2" virtualName=""
           explicitFocusOrder="0" pos="464 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
@@ -2777,7 +2780,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="464 304 30 24" tooltip="Attack rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="A"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="d slider" id="4a1f1b6038500f67" memberName="dSlider2" virtualName=""
           explicitFocusOrder="0" pos="512 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
@@ -2788,7 +2792,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="512 304 30 24" tooltip="Decay rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="D"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="s slider" id="2fc057248a815958" memberName="sSlider2" virtualName=""
           explicitFocusOrder="0" pos="560 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
@@ -2799,7 +2804,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="560 304 30 24" tooltip="Sustain level"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="S"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="r slider" id="5474ad005fb58e97" memberName="rSlider2" virtualName=""
           explicitFocusOrder="0" pos="608 208 30 88" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
@@ -2810,23 +2816,26 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="608 304 30 24" tooltip="Release rate"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="R"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <SLIDER name="attenuation slider" id="edb48da87d7535dd" memberName="attenuationSlider2"
-          virtualName="" explicitFocusOrder="0" pos="752 200 56 126" thumbcol="ff007f00"
+          virtualName="" explicitFocusOrder="0" pos="752 184 56 142" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
           textboxhighlight="ff00af00" min="-47.25" max="0" int="0.75" style="LinearVertical"
           textBoxPos="TextBoxBelow" textBoxEditable="0" textBoxWidth="64"
           textBoxHeight="20" skewFactor="1" needsCallback="1"/>
   <LABEL name="attenuation label" id="958314f88253f461" memberName="attenuationLabel2"
-         virtualName="" explicitFocusOrder="0" pos="728 168 112 24" tooltip="Final output level adjustment"
+         virtualName="" explicitFocusOrder="0" pos="728 160 112 24" tooltip="Final output level adjustment"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <LABEL name="db label" id="7efc6195ef5e25d1" memberName="dbLabel3" virtualName=""
          explicitFocusOrder="0" pos="800 304 40 24" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="sine image button" id="27e01d31ba835965" memberName="sineImageButton2"
                virtualName="" explicitFocusOrder="0" pos="512 113 34 30" buttonText="Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="2" keepProportions="1"
@@ -2855,7 +2864,7 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="456 115 48 24" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="Wave" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="tremolo button" id="a517934e39704073" memberName="tremoloButton2"
                 virtualName="" explicitFocusOrder="0" pos="544 352 80 24" tooltip="Modulate amplitude at 3.7 Hz"
                 txtcol="ff007f00" buttonText="Tremolo" connectedEdges="0" needsCallback="1"
@@ -2876,7 +2885,8 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="656 376 88 48" tooltip="Attenuate amplitude with note frequency in dB per octave"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <GROUPCOMPONENT name="new group" id="7392f7d1c8cf6e74" memberName="groupComponent3"
                   virtualName="" explicitFocusOrder="0" pos="16 440 248 120" outlinecol="ff007f00"
                   textcol="ff007f00" title="Effect depth" textpos="33"/>
@@ -2891,12 +2901,14 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="32 472 80 24" tooltip="OPL global tremolo depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Tremolo&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <LABEL name="db label" id="720df8e7c502dd91" memberName="dbLabel5" virtualName=""
          explicitFocusOrder="0" pos="200 464 32 40" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <SLIDER name="vibrato slider" id="b45a1f20f22cf5ca" memberName="vibratoSlider"
           virtualName="" explicitFocusOrder="0" pos="112 512 80 24" thumbcol="ff007f00"
           trackcol="7f007f00" textboxtext="ff007f00" textboxbkgd="ff000000"
@@ -2907,13 +2919,14 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="32 512 80 24" tooltip="OPL global vibrato depth"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Vibrato"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <LABEL name="db label" id="e13e0aff8b974a36" memberName="dbLabel6" virtualName=""
          explicitFocusOrder="0" pos="200 504 48 40" tooltip="A unit of pitch; 100 cents per semitone"
          textCol="ff007f00" outlineCol="0" edTextCol="ff000000" edBkgCol="0"
          labelText="cents&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="33"/>
+         kerning="0" bold="0" italic="0" justification="33"/>
   <SLIDER name="feedback slider" id="f9d22e12f5e417e4" memberName="feedbackSlider"
           virtualName="" explicitFocusOrder="0" pos="248 237 30 59" thumbcol="ff00af00"
           trackcol="7f007f00" rotarysliderfill="ff00af00" rotaryslideroutline="ff007f00"
@@ -2925,7 +2938,8 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="224 304 80 24" tooltip="Extent to which modulator output is fed back into itself"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Feedback"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <COMBOBOX name="velocity combo box" id="cbe10e5236447f15" memberName="velocityComboBox"
             virtualName="" explicitFocusOrder="0" pos="328 352 76 24" editable="0"
             layout="33" items="Off&#10;Light&#10;Heavy" textWhenNonSelected=""
@@ -2938,7 +2952,8 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="760 376 80 48" tooltip="Set or disable velocity senstivity"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity Sensitivity"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="alternating sine image button" id="2a054359a782e92d" memberName="alternatingsineImageButton"
                virtualName="" explicitFocusOrder="0" pos="288 113 34 30" buttonText="Alternating Sine"
                connectedEdges="0" needsCallback="1" radioGroupId="1" keepProportions="1"
@@ -2991,15 +3006,16 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="792 688 72 16" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="dB/8ve&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <COMBOBOX name="keyscale combo box" id="9b766b7b6a67cbf4" memberName="keyscaleAttenuationComboBox2"
             virtualName="" explicitFocusOrder="0" pos="664 352 76 24" editable="0"
             layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
             textWhenNoItems="(no choices)"/>
   <COMBOBOX name="keyscale combo box" id="7d8e1de0e1579999" memberName="keyscaleAttenuationComboBox"
             virtualName="" explicitFocusOrder="0" pos="232 352 76 24" editable="0"
-            layout="33" items="-0.0 db/8ve&#10;-3.0 db/8ve&#10;-1.5 db/8ve&#10;-6.0 db/8ve"
-            textWhenNonSelected="" textWhenNoItems="(no choices)"/>
+            layout="33" items="-0.0&#10;-3.0&#10;-1.5&#10;-6.0" textWhenNonSelected=""
+            textWhenNoItems="(no choices)"/>
   <GROUPCOMPONENT name="new group" id="7abc643f4d6a2dbf" memberName="groupComponent5"
                   virtualName="" explicitFocusOrder="0" pos="24 712 408 64" outlinecol="ff007f00"
                   textcol="ff007f00" title="Emulator (currently locked)" textpos="33"/>
@@ -3013,12 +3029,14 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="120 736 72 24" tooltip="Use the OPL emulator from the DOSBox project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="DOSBox"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="34"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="34"/>
   <LABEL name="emulator label" id="4f8869b5724c0195" memberName="emulatorLabel2"
          virtualName="" explicitFocusOrder="0" pos="256 736 72 24" tooltip="Use the OPL emulator from the ZDoom project"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="ZDoom"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <TOGGLEBUTTON name="record button" id="880010ee79039cbe" memberName="recordButton"
                 virtualName="" explicitFocusOrder="0" pos="32 680 224 24" tooltip="Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"
                 txtcol="ff007f00" buttonText="Record to DRO (not working yet)"
@@ -3035,7 +3053,7 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="648 560 198 16" textCol="ff007f00"
          edTextCol="ff000000" edBkgCol="0" labelText="" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="12" bold="0" italic="0" justification="34"/>
+         fontsize="12" kerning="0" bold="0" italic="0" justification="34"/>
   <IMAGEBUTTON name="Toggle Button Off Example" id="672bea5ea2e1fabd" memberName="ToggleButtonOffExample"
                virtualName="" explicitFocusOrder="0" pos="1032 584 12 12" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3052,12 +3070,13 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1000 608 104 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Toggle buttons"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <LABEL name="new label" id="75faa73445635a7f" memberName="label2" virtualName=""
          explicitFocusOrder="0" pos="872 608 104 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Line borders" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="36"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="36"/>
   <IMAGEBUTTON name="Line Border 1C" id="d189b7564dfbe6f4" memberName="LineBorderButton1C"
                virtualName="" explicitFocusOrder="0" pos="20 336 400 6" buttonText="new button"
                connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
@@ -3083,7 +3102,8 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="776 736 104 56" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Temporarily removed labels to avoid making wider boxes."
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="Line Border 1C" id="fb69fc397f48c0b2" memberName="LineBorderButton1C2"
                virtualName="" explicitFocusOrder="0" pos="444 336 400 6" buttonText="new button"
                connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="0"
@@ -3147,27 +3167,28 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="970 701 32 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="1f98e50cc47ec1a6" memberName="label5" virtualName=""
          explicitFocusOrder="0" pos="971 727 32 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="8cfbc479cf413916" memberName="label6" virtualName=""
          explicitFocusOrder="0" pos="1057 701 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="e231c8016dbdd4b" memberName="label7" virtualName=""
          explicitFocusOrder="0" pos="1058 727 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="58e93cab537ef6c0" memberName="label8" virtualName=""
          explicitFocusOrder="0" pos="944 816 320 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Example AM/FM switches"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="Algorithm Switch On2 AM" id="afdb65f653352953" memberName="algoSwitchButtonOn2Ex1"
                virtualName="" explicitFocusOrder="0" pos="1128 700 64 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3184,12 +3205,12 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1145 700 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="aec882448be58719" memberName="label10" virtualName=""
          explicitFocusOrder="0" pos="1146 727 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Algorithm Switch On3 AM" id="9c9fbd61392d18d7" memberName="algoSwitchButtonOn3Ex1"
                virtualName="" explicitFocusOrder="0" pos="1216 700 64 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3206,12 +3227,12 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1233 700 31 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="281e5575b4c17d57" memberName="label12" virtualName=""
          explicitFocusOrder="0" pos="1234 727 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Two OP AM Button" id="bc89b5f960a478ae" memberName="TwoOpAMButton"
                virtualName="" explicitFocusOrder="0" pos="1173 484 60 56" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="0"
@@ -3228,27 +3249,28 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1179 489 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="a73d54281a9f1e4b" memberName="label14" virtualName=""
          explicitFocusOrder="0" pos="1179 518 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="c7714e4c9c108a80" memberName="label15" virtualName=""
          explicitFocusOrder="0" pos="1166 572 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="6fad65a5c825f676" memberName="label16" virtualName=""
          explicitFocusOrder="0" pos="1195 572 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="d9d895b8fa9bea7f" memberName="label17" virtualName=""
          explicitFocusOrder="0" pos="1128 608 136 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Example Algorithms"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <GROUPCOMPONENT name="new group" id="d489f4c4cbfaf3a" memberName="groupComponent6"
                   virtualName="" explicitFocusOrder="0" pos="933 56 168 95" outlinecol="ff008000"
                   title=""/>
@@ -3262,7 +3284,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="966 82 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Algorithm Switch Off FM" id="3bbe951e7d48f558" memberName="algoSwitchButtonOffEx3"
                virtualName="" explicitFocusOrder="0" pos="949 108 64 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3273,7 +3295,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="968 108 32 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Two OP AM Button" id="6dd4e125e7f2454f" memberName="TwoOpAMButton2"
                virtualName="" explicitFocusOrder="0" pos="1029 77 60 56" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="0"
@@ -3284,17 +3306,18 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1035 82 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="68b10a34cd551295" memberName="label21" virtualName=""
          explicitFocusOrder="0" pos="1035 111 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="5c48c62a06b13a38" memberName="label22" virtualName=""
          explicitFocusOrder="0" pos="952 160 328 40" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Example Algo Sections w/ Diagram"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="Algorithm Switch Off AM" id="1ca80deedba9b959" memberName="algoSwitchButtonOffEx4"
                virtualName="" explicitFocusOrder="0" pos="1125 82 64 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3305,7 +3328,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1143 82 32 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Algorithm Switch On3 FM" id="840e067b2b3498f8" memberName="algoSwitchButtonOn3Ex3"
                virtualName="" explicitFocusOrder="0" pos="1125 109 64 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3316,7 +3339,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1143 109 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Two OP FM Button" id="6de80642ad3057e6" memberName="TwoOpFMButton2"
                virtualName="" explicitFocusOrder="0" pos="1196 94 80 26" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3327,12 +3350,12 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1206 98 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="M" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="bc2f20892df7121b" memberName="label26" virtualName=""
          explicitFocusOrder="0" pos="1235 98 24 24" edTextCol="ff000000"
          edBkgCol="0" labelText="C" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         kerning="0" bold="0" italic="0" justification="36"/>
   <GROUPCOMPONENT name="new group" id="35d4aeb27da92db" memberName="groupComponent7"
                   virtualName="" explicitFocusOrder="0" pos="1112 56 168 95" outlinecol="ff008000"
                   title=""/>
@@ -3346,7 +3369,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1055 250 32 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="AM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="Algorithm Switch On3 FM" id="a280aa6d341570b7" memberName="algoSwitchButtonOn3Ex4"
                virtualName="" explicitFocusOrder="0" pos="1103 250 64 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
@@ -3357,7 +3380,7 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="1121 250 32 24" textCol="ff000000"
          edTextCol="ff000000" edBkgCol="0" labelText="FM" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15" bold="0" italic="0" justification="33"/>
+         fontsize="15" kerning="0" bold="0" italic="0" justification="33"/>
   <GROUPCOMPONENT name="new group" id="4c77a30ef34ca25d" memberName="groupComponent8"
                   virtualName="" explicitFocusOrder="0" pos="1008 208 168 95" outlinecol="ff008000"
                   title=""/>
@@ -3365,27 +3388,32 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="1067 216 72 24" tooltip="In additive mode, carrier and modulator output are simply summed rather than modulated"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Algorithm"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <LABEL name="new label" id="31a16fa32fc39ae9" memberName="label29" virtualName=""
          explicitFocusOrder="0" pos="944 304 328 40" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Example Algo Section w/o Diagram"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <LABEL name="new label" id="2470d0303393253b" memberName="label30" virtualName=""
          explicitFocusOrder="0" pos="961 768 319 24" textCol="ff008000"
          edTextCol="ff000000" edBkgCol="0" labelText="Off             On (Bright)          On (Dark)       On (Solid)"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <LABEL name="frequency label" id="9d58547998708b6b" memberName="frequencyLabel10"
          virtualName="" explicitFocusOrder="0" pos="224 376 88 48" tooltip="Attenuate amplitude with note frequency in dB per octave"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Keyscale Attenuation"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <LABEL name="attenuation label" id="63aa860d1d8ae341" memberName="attenuationLabel5"
          virtualName="" explicitFocusOrder="0" pos="328 376 80 48" tooltip="Set or disable velocity senstivity"
          textCol="ff007f00" edTextCol="ff000000" edBkgCol="0" labelText="Velocity Sensitivity"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
   <IMAGEBUTTON name="fm button" id="19b03dffaa7fc94" memberName="fmButton" virtualName=""
                explicitFocusOrder="0" pos="304 472 56 56" tooltip="FM: carrier frequency is modulated by the modulator"
                buttonText="FM" connectedEdges="0" needsCallback="1" radioGroupId="3"
@@ -3438,18 +3466,14 @@ BEGIN_JUCER_METADATA
          explicitFocusOrder="0" pos="320 520 32 40" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="FM"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="33"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="33"/>
   <LABEL name="db label" id="a358d95f525350f5" memberName="dbLabel8" virtualName=""
          explicitFocusOrder="0" pos="392 520 72 40" textCol="ff007f00"
          outlineCol="0" edTextCol="ff000000" edBkgCol="0" labelText="Additive"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
-  <IMAGEBUTTON name="new button" id="d6966805474ef2c" memberName="imageButton"
-               virtualName="" explicitFocusOrder="0" pos="656 232 64 64" buttonText="new button"
-               connectedEdges="0" needsCallback="0" radioGroupId="0" keepProportions="1"
-               resourceNormal="adlib_png" opacityNormal="1" colourNormal="0"
-               resourceOver="" opacityOver="1" colourOver="0" resourceDown=""
-               opacityDown="1" colourDown="0"/>
+         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
+         justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

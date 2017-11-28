@@ -7,12 +7,17 @@
               pluginIsSynth="1" pluginWantsMidiIn="1" pluginProducesMidiOut="0"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="JuceOPLVSTiAU" pluginRTASCategory="" aaxIdentifier="com.plainweave.JuceOPLVSTi"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.3.1"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="5.0.2"
               buildVST3="0" buildRTAS="0" buildAAX="0" includeBinaryInAppConfig="1"
               pluginIsMidiEffectPlugin="0" companyWebsite="https://bsutherland.github.io/JuceOPLVSTi/"
-              buildAUv3="0">
+              buildAUv3="0" displaySplashScreen="1" reportAppUsage="1" splashScreenColour="Dark"
+              buildStandalone="0" enableIAA="0">
   <MAINGROUP id="TOefyq" name="JuceOPLVSTi">
     <GROUP id="{DCA755EB-7953-0641-E719-95C7850E5B2B}" name="Source">
+      <FILE id="AqQcu5" name="ChannelButtonLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/ChannelButtonLookAndFeel.cpp"/>
+      <FILE id="yqL2ZN" name="ChannelButtonLookAndFeel.h" compile="0" resource="0"
+            file="Source/ChannelButtonLookAndFeel.h"/>
       <FILE id="mSWBsr" name="OPLLookAndFeel.cpp" compile="1" resource="0"
             file="Source/OPLLookAndFeel.cpp"/>
       <FILE id="igacSV" name="OPLLookAndFeel.h" compile="0" resource="0"
@@ -63,7 +68,7 @@
     </GROUP>
   </MAINGROUP>
   <MODULES>
-    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
@@ -93,24 +98,25 @@
                        warningsAreErrors="1" headerPath=""/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_opengl" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="..\Juce-grapefruit\JUCE\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\Juce-grapefruit5\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\Juce-grapefruit5\JUCE\modules"/>
       </MODULEPATHS>
     </VS2015>
   </EXPORTFORMATS>
   <LIVE_SETTINGS>
-    <WINDOWS/>
+    <WINDOWS systemHeaderPath="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include"
+             liveWindowsTargetPlatformVersion="10.0.10586.0" defines=""/>
   </LIVE_SETTINGS>
 </JUCERPROJECT>

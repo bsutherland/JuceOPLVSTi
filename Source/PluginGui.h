@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 4.3.1
+  Created with Projucer version: 5.0.2
 
   ------------------------------------------------------------------------------
 
@@ -17,8 +17,7 @@
   ==============================================================================
 */
 
-#ifndef __JUCE_HEADER_450C07F5C14097B8__
-#define __JUCE_HEADER_450C07F5C14097B8__
+#pragma once
 
 //[Headers]     -- You can add your own extra header files here --
 #include <array>
@@ -291,7 +290,6 @@ private:
     ScopedPointer<ImageButton> hiHatButton;
     ScopedPointer<Label> dbLabel7;
     ScopedPointer<Label> dbLabel8;
-    ScopedPointer<ImageButton> imageButton;
 
 
     //==============================================================================
@@ -300,5 +298,3 @@ private:
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-
-#endif   // __JUCE_HEADER_450C07F5C14097B8__

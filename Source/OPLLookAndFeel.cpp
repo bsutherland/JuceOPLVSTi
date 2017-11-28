@@ -12,6 +12,7 @@
 #include "PluginGui.h"
 
 const Colour OPLLookAndFeel::DOS_GREEN = Colour(0xff007f00);
+const Colour OPLLookAndFeel::DOS_GREEN_DARK = Colour(0xff003f00);
 
 OPLLookAndFeel::OPLLookAndFeel()
 {
