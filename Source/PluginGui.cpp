@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.2
+  Created with Projucer version: 5.2.0
 
   ------------------------------------------------------------------------------
 
@@ -1908,7 +1908,7 @@ void PluginGui::resized()
     tremoloButton->setBounds (120, 352, 80, 24);
     vibratoButton->setBounds (32, 352, 72, 24);
     sustainButton->setBounds (32, 384, 70, 32);
-    keyscaleEnvButton->setBounds (120, 376, 101, 48);
+    keyscaleEnvButton->setBounds (128, 376, 101, 48);
     dbLabel2->setBounds (792, 712, 72, 16);
     frequencyComboBox2->setBounds (624, 168, 66, 24);
     frequencyLabel3->setBounds (464, 168, 152, 24);
@@ -2752,7 +2752,7 @@ BEGIN_JUCER_METADATA
                 txtcol="ff007f00" buttonText="Sustain" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
   <TOGGLEBUTTON name="keyscale env button" id="a3f62a22526b4b49" memberName="keyscaleEnvButton"
-                virtualName="" explicitFocusOrder="0" pos="120 376 101 48" tooltip="Speed up envelope rate with note frequency"
+                virtualName="" explicitFocusOrder="0" pos="128 376 101 48" tooltip="Speed up envelope rate with note frequency"
                 txtcol="ff007f00" buttonText="Keyscale Env. Rate" connectedEdges="0"
                 needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="db label" id="b9b3cedf2b541262" memberName="dbLabel2" virtualName=""

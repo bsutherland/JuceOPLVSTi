@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.2
+  Created with Projucer version: 5.2.0
 
   ------------------------------------------------------------------------------
 
@@ -37,9 +37,9 @@ class PluginGui  : public AudioProcessorEditor,
                    public FileDragAndDropTarget,
                    public DragAndDropContainer,
                    public Timer,
-                   public ComboBoxListener,
-                   public SliderListener,
-                   public ButtonListener
+                   public ComboBox::Listener,
+                   public Slider::Listener,
+                   public Button::Listener
 {
 public:
     //==============================================================================
