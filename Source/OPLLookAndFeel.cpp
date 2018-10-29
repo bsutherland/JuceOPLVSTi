@@ -29,6 +29,11 @@ OPLLookAndFeel::OPLLookAndFeel()
 	setColour(TextButton::ColourIds::textColourOnId, Colours::black);
 	setColour(TextButton::ColourIds::textColourOffId, Colours::black);
 
+	setColour(ComboBox::ColourIds::focusedOutlineColourId, DOS_GREEN);
+	setColour(PopupMenu::ColourIds::backgroundColourId, Colours::black);
+	setColour(PopupMenu::ColourIds::textColourId, DOS_GREEN);
+	setColour(PopupMenu::ColourIds::highlightedBackgroundColourId, DOS_GREEN);
+	setColour(PopupMenu::ColourIds::highlightedTextColourId, Colours::black);
 }
 
 void OPLLookAndFeel::drawTickBox(Graphics &g,
