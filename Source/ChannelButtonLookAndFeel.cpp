@@ -19,8 +19,8 @@ ChannelButtonLookAndFeel::ChannelButtonLookAndFeel()
 
 static void drawButtonShape(Graphics& g, const Path& outline, Colour baseColour, float height)
 {
-	const float mainBrightness = baseColour.getBrightness();
-	const float mainAlpha = baseColour.getFloatAlpha();
+	//const float mainBrightness = baseColour.getBrightness();
+	//const float mainAlpha = baseColour.getFloatAlpha();
 
 	g.setFillType(FillType(baseColour));
 	g.fillPath(outline);

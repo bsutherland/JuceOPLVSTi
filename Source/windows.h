@@ -50,7 +50,7 @@ typedef uint16_t WORD;
 
 // BOOL  -  A boolean variable
 //          This type is declared in WinDef.h as follows:
-typedef BYTE BOOL;
+// typedef BYTE BOOL;
 
 DWORD GetStdHandle (DWORD handle) { return handle; }
 
@@ -70,7 +70,7 @@ void WriteConsole(DWORD conout,const char* strPtr,
     
     std::string message (const char* str, uint32_t count);
     
-    std::cout << std::endl << msgType << message;
+    std::cout << std::endl << msgType << &message;
 }
 
 void AllocConsole()

@@ -88,26 +88,26 @@ public:
 	DbxValue(std::string const& in,Etype _t) :_string(0),type(V_NONE) {SetDbxValue(in,_t);}
 	
 	/* Assigment operators */
-	DbxValue& operator= (Hex in) throw(WrongType)                { return copy(DbxValue(in));}
-	DbxValue& operator= (int in) throw(WrongType)                { return copy(DbxValue(in));}
-	DbxValue& operator= (bool in) throw(WrongType)               { return copy(DbxValue(in));}
-	DbxValue& operator= (double in) throw(WrongType)             { return copy(DbxValue(in));}
-	DbxValue& operator= (std::string const& in) throw(WrongType) { return copy(DbxValue(in));}
-	DbxValue& operator= (char const * const in) throw(WrongType) { return copy(DbxValue(in));}
-	DbxValue& operator= (DbxValue const& in) throw(WrongType)       { return copy(DbxValue(in));}
+	DbxValue& operator= (Hex in) noexcept(false)                { return copy(DbxValue(in));}
+	DbxValue& operator= (int in) noexcept(false)                { return copy(DbxValue(in));}
+	DbxValue& operator= (bool in) noexcept(false)               { return copy(DbxValue(in));}
+	DbxValue& operator= (double in) noexcept(false)             { return copy(DbxValue(in));}
+	DbxValue& operator= (std::string const& in) noexcept(false) { return copy(DbxValue(in));}
+	DbxValue& operator= (char const * const in) noexcept(false) { return copy(DbxValue(in));}
+	DbxValue& operator= (DbxValue const& in) noexcept(false)       { return copy(DbxValue(in));}
 
 	bool operator== (DbxValue const & other);
-	operator bool () const throw(WrongType);
-	operator Hex () const throw(WrongType);
-	operator int () const throw(WrongType);
-	operator double () const throw(WrongType);
-	operator char const* () const throw(WrongType);
-	void SetDbxValue(std::string const& in,Etype _type = V_CURRENT) throw(WrongType);
+	operator bool () const noexcept(false);
+	operator Hex () const noexcept(false);
+	operator int () const noexcept(false);
+	operator double () const noexcept(false);
+	operator char const* () const noexcept(false);
+	void SetDbxValue(std::string const& in,Etype _type = V_CURRENT) noexcept(false);
 	std::string ToString() const;
 
 private:
 	void destroy() throw();
-	DbxValue& copy(DbxValue const& in) throw(WrongType);
+	DbxValue& copy(DbxValue const& in) noexcept(false);
 	void plaincopy(DbxValue const& in) throw();
 	void set_hex(std::string const& in);
 	void set_int(std::string const&in);
@@ -159,7 +159,7 @@ public:
 		min = _min;
 		max = _max;
 	}
-	void SetMinMax(DbxValue const& min,DbxValue const& max) {this->min = min; this->max=max;}
+	void SetMinMax(DbxValue const& _min,DbxValue const& _max) {this->min = _min; this->max=_max;}
 	void SetDbxValue(std::string const& in);
 	~Prop_int(){ }
 	virtual bool CheckDbxValue(DbxValue const& in, bool warn);

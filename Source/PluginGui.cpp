@@ -2145,7 +2145,7 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 	String context = String("Disable channel ");
 	for (unsigned int i = 0; i < channels.size(); ++i)
 	{
-		TextButton *channel = new TextButton(TRANS("-"), context + (i + 1));
+		TextButton *channel = new TextButton(TRANS("-"), context + String(i + 1));
 		channel->setLookAndFeel(channelButtonLookAndFeel);
 		channel->setColour(TextButton::ColourIds::buttonColourId, Colours::black);
 		channel->setColour(TextButton::ColourIds::buttonOnColourId, Colours::black);
@@ -2680,7 +2680,7 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == exportButton.get())
     {
         //[UserButtonCode_exportButton] -- add your button handler code here..
-		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
+		WildcardFileFilter wildcardFilter("*.sbi", String(), "SBI files");
 		FileBrowserComponent browser(FileBrowserComponent::saveMode + FileBrowserComponent::canSelectFiles,
 			instrumentSaveDirectory,
 			&wildcardFilter,
@@ -2701,7 +2701,7 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == loadButton.get())
     {
         //[UserButtonCode_loadButton] -- add your button handler code here..
-		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
+		WildcardFileFilter wildcardFilter("*.sbi", String(), "SBI files");
 		FileBrowserComponent browser(FileBrowserComponent::openMode + FileBrowserComponent::canSelectFiles,
 			instrumentLoadDirectory,
 			&wildcardFilter,

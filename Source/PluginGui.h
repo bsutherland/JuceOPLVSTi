@@ -49,12 +49,12 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
 	void updateFromParameters();
-    bool isInterestedInFileDrag (const StringArray& files);
-    void fileDragEnter (const StringArray& files, int x, int y);
-    void fileDragMove (const StringArray& files, int x, int y);
-    void fileDragExit (const StringArray& files);
-    void filesDropped (const StringArray& files, int x, int y);
-	void timerCallback();
+    bool isInterestedInFileDrag (const StringArray& files) override;
+    void fileDragEnter (const StringArray& files, int x, int y) override;
+    void fileDragMove (const StringArray& files, int x, int y) override;
+    void fileDragExit (const StringArray& files) override;
+    void filesDropped (const StringArray& files, int x, int y) override;
+	void timerCallback() override;
 	void setRecordButtonState(bool recording);
     //[/UserMethods]
 

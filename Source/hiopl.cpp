@@ -43,8 +43,8 @@ void Hiopl::_ClearRegisters() {
 	}
 }
 
-void Hiopl::SetEmulator(Emulator emulator) {
-	this->emulator = emulator;
+void Hiopl::SetEmulator(Emulator _emulator) {
+	this->emulator = _emulator;
 }
 
 void Hiopl::Generate(int length, float* buffer) {
