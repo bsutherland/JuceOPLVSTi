@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.3.1
+  Created with Projucer version: 5.3.2
 
   ------------------------------------------------------------------------------
 
@@ -167,55 +167,62 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (groupComponent2 = new GroupComponent ("new group",
-                                                             TRANS("Carrier")));
+    groupComponent2.reset (new GroupComponent ("new group",
+                                               TRANS("Carrier")));
+    addAndMakeVisible (groupComponent2.get());
     groupComponent2->setTextLabelPosition (Justification::centredLeft);
     groupComponent2->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent2->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent2->setBounds (440, 88, 408, 344);
 
-    addAndMakeVisible (groupComponent4 = new GroupComponent ("new group",
-                                                             TRANS("Channels")));
+    groupComponent4.reset (new GroupComponent ("new group",
+                                               TRANS("Channels")));
+    addAndMakeVisible (groupComponent4.get());
     groupComponent4->setTextLabelPosition (Justification::centredLeft);
     groupComponent4->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent4->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent4->setBounds (16, 8, 832, 64);
 
-    addAndMakeVisible (groupComponent11 = new GroupComponent ("new group",
-                                                              TRANS("Percussion")));
+    groupComponent11.reset (new GroupComponent ("new group",
+                                                TRANS("Percussion")));
+    addAndMakeVisible (groupComponent11.get());
     groupComponent11->setTextLabelPosition (Justification::centredLeft);
     groupComponent11->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent11->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent11->setBounds (496, 440, 192, 120);
 
-    addAndMakeVisible (groupComponent10 = new GroupComponent ("new group",
-                                                              TRANS("Algorithm")));
+    groupComponent10.reset (new GroupComponent ("new group",
+                                                TRANS("Algorithm")));
+    addAndMakeVisible (groupComponent10.get());
     groupComponent10->setTextLabelPosition (Justification::centredLeft);
     groupComponent10->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent10->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent10->setBounds (280, 440, 200, 120);
 
-    addAndMakeVisible (groupComponent9 = new GroupComponent ("new group",
-                                                             TRANS("File")));
+    groupComponent9.reset (new GroupComponent ("new group",
+                                               TRANS("File")));
+    addAndMakeVisible (groupComponent9.get());
     groupComponent9->setTextLabelPosition (Justification::centredLeft);
     groupComponent9->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent9->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent9->setBounds (704, 440, 144, 120);
 
-    addAndMakeVisible (groupComponent = new GroupComponent ("new group",
-                                                            TRANS("Modulator")));
+    groupComponent.reset (new GroupComponent ("new group",
+                                              TRANS("Modulator")));
+    addAndMakeVisible (groupComponent.get());
     groupComponent->setTextLabelPosition (Justification::centredLeft);
     groupComponent->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent->setBounds (16, 88, 408, 344);
 
-    addAndMakeVisible (frequencyComboBox = new ComboBox ("frequency combo box"));
+    frequencyComboBox.reset (new ComboBox ("frequency combo box"));
+    addAndMakeVisible (frequencyComboBox.get());
     frequencyComboBox->setEditableText (false);
     frequencyComboBox->setJustificationType (Justification::centredLeft);
     frequencyComboBox->setTextWhenNothingSelected (String());
@@ -224,8 +231,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyComboBox->setBounds (200, 168, 64, 24);
 
-    addAndMakeVisible (frequencyLabel = new Label ("frequency label",
-                                                   TRANS("Frequency Multiplier")));
+    frequencyLabel.reset (new Label ("frequency label",
+                                     TRANS("Frequency Multiplier")));
+    addAndMakeVisible (frequencyLabel.get());
     frequencyLabel->setTooltip (TRANS("Multiplier applied to base note frequency"));
     frequencyLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel->setJustificationType (Justification::centredLeft);
@@ -236,7 +244,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel->setBounds (40, 168, 152, 24);
 
-    addAndMakeVisible (aSlider = new Slider ("a slider"));
+    aSlider.reset (new Slider ("a slider"));
+    addAndMakeVisible (aSlider.get());
     aSlider->setTooltip (TRANS("Envelope attack rate"));
     aSlider->setRange (0, 15, 1);
     aSlider->setSliderStyle (Slider::LinearVertical);
@@ -250,8 +259,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     aSlider->setBounds (40, 208, 30, 88);
 
-    addAndMakeVisible (aLabel = new Label ("a label",
-                                           TRANS("A")));
+    aLabel.reset (new Label ("a label",
+                             TRANS("A")));
+    addAndMakeVisible (aLabel.get());
     aLabel->setTooltip (TRANS("Attack rate"));
     aLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     aLabel->setJustificationType (Justification::centred);
@@ -262,7 +272,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     aLabel->setBounds (40, 304, 30, 24);
 
-    addAndMakeVisible (dSlider = new Slider ("d slider"));
+    dSlider.reset (new Slider ("d slider"));
+    addAndMakeVisible (dSlider.get());
     dSlider->setTooltip (TRANS("Envelope decay rate"));
     dSlider->setRange (0, 15, 1);
     dSlider->setSliderStyle (Slider::LinearVertical);
@@ -276,8 +287,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dSlider->setBounds (88, 208, 30, 88);
 
-    addAndMakeVisible (dLabel = new Label ("d label",
-                                           TRANS("D")));
+    dLabel.reset (new Label ("d label",
+                             TRANS("D")));
+    addAndMakeVisible (dLabel.get());
     dLabel->setTooltip (TRANS("Decay rate"));
     dLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel->setJustificationType (Justification::centred);
@@ -288,7 +300,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dLabel->setBounds (88, 304, 30, 24);
 
-    addAndMakeVisible (sSlider = new Slider ("s slider"));
+    sSlider.reset (new Slider ("s slider"));
+    addAndMakeVisible (sSlider.get());
     sSlider->setTooltip (TRANS("Envelope sustain level"));
     sSlider->setRange (0, 15, 1);
     sSlider->setSliderStyle (Slider::LinearVertical);
@@ -302,8 +315,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     sSlider->setBounds (136, 208, 30, 88);
 
-    addAndMakeVisible (dLabel2 = new Label ("d label",
-                                            TRANS("S")));
+    dLabel2.reset (new Label ("d label",
+                              TRANS("S")));
+    addAndMakeVisible (dLabel2.get());
     dLabel2->setTooltip (TRANS("Sustain level"));
     dLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel2->setJustificationType (Justification::centred);
@@ -314,7 +328,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dLabel2->setBounds (136, 304, 30, 24);
 
-    addAndMakeVisible (rSlider = new Slider ("r slider"));
+    rSlider.reset (new Slider ("r slider"));
+    addAndMakeVisible (rSlider.get());
     rSlider->setTooltip (TRANS("Envelope release rate"));
     rSlider->setRange (0, 15, 1);
     rSlider->setSliderStyle (Slider::LinearVertical);
@@ -328,8 +343,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     rSlider->setBounds (184, 208, 30, 88);
 
-    addAndMakeVisible (rLabel = new Label ("r label",
-                                           TRANS("R")));
+    rLabel.reset (new Label ("r label",
+                             TRANS("R")));
+    addAndMakeVisible (rLabel.get());
     rLabel->setTooltip (TRANS("Release rate"));
     rLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     rLabel->setJustificationType (Justification::centred);
@@ -340,7 +356,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     rLabel->setBounds (184, 304, 30, 24);
 
-    addAndMakeVisible (attenuationSlider = new Slider ("attenuation slider"));
+    attenuationSlider.reset (new Slider ("attenuation slider"));
+    addAndMakeVisible (attenuationSlider.get());
     attenuationSlider->setRange (-47.25, 0, 0.75);
     attenuationSlider->setSliderStyle (Slider::LinearVertical);
     attenuationSlider->setTextBoxStyle (Slider::TextBoxBelow, true, 64, 20);
@@ -353,8 +370,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     attenuationSlider->setBounds (328, 184, 56, 142);
 
-    addAndMakeVisible (attenuationLabel = new Label ("attenuation label",
-                                                     TRANS("Attenuation")));
+    attenuationLabel.reset (new Label ("attenuation label",
+                                       TRANS("Attenuation")));
+    addAndMakeVisible (attenuationLabel.get());
     attenuationLabel->setTooltip (TRANS("Final output level adjustment"));
     attenuationLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel->setJustificationType (Justification::centred);
@@ -365,8 +383,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     attenuationLabel->setBounds (304, 160, 112, 24);
 
-    addAndMakeVisible (dbLabel = new Label ("db label",
-                                            TRANS("dB")));
+    dbLabel.reset (new Label ("db label",
+                              TRANS("dB")));
+    addAndMakeVisible (dbLabel.get());
     dbLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel->setJustificationType (Justification::centred);
     dbLabel->setEditable (false, false, false);
@@ -377,7 +396,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel->setBounds (384, 304, 32, 24);
 
-    addAndMakeVisible (sineImageButton = new ImageButton ("sine image button"));
+    sineImageButton.reset (new ImageButton ("sine image button"));
+    addAndMakeVisible (sineImageButton.get());
     sineImageButton->setButtonText (TRANS("Sine"));
     sineImageButton->setRadioGroupId (1);
     sineImageButton->addListener (this);
@@ -388,7 +408,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                 Image(), 1.000f, Colour (0x00000000));
     sineImageButton->setBounds (88, 113, 34, 30);
 
-    addAndMakeVisible (halfsineImageButton = new ImageButton ("half sine image button"));
+    halfsineImageButton.reset (new ImageButton ("half sine image button"));
+    addAndMakeVisible (halfsineImageButton.get());
     halfsineImageButton->setButtonText (TRANS("Half Sine"));
     halfsineImageButton->setRadioGroupId (1);
     halfsineImageButton->addListener (this);
@@ -399,7 +420,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     Image(), 1.000f, Colour (0x00000000));
     halfsineImageButton->setBounds (128, 113, 34, 30);
 
-    addAndMakeVisible (abssineImageButton = new ImageButton ("abs sine image button"));
+    abssineImageButton.reset (new ImageButton ("abs sine image button"));
+    addAndMakeVisible (abssineImageButton.get());
     abssineImageButton->setButtonText (TRANS("Abs Sine"));
     abssineImageButton->setRadioGroupId (1);
     abssineImageButton->addListener (this);
@@ -410,7 +432,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    Image(), 1.000f, Colour (0x00000000));
     abssineImageButton->setBounds (168, 113, 34, 30);
 
-    addAndMakeVisible (quartersineImageButton = new ImageButton ("quarter sine image button"));
+    quartersineImageButton.reset (new ImageButton ("quarter sine image button"));
+    addAndMakeVisible (quartersineImageButton.get());
     quartersineImageButton->setButtonText (TRANS("Quarter Sine"));
     quartersineImageButton->setRadioGroupId (1);
     quartersineImageButton->addListener (this);
@@ -421,8 +444,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        Image(), 1.000f, Colour (0x00000000));
     quartersineImageButton->setBounds (208, 113, 34, 30);
 
-    addAndMakeVisible (waveLabel = new Label ("wave label",
-                                              TRANS("Wave")));
+    waveLabel.reset (new Label ("wave label",
+                                TRANS("Wave")));
+    addAndMakeVisible (waveLabel.get());
     waveLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     waveLabel->setJustificationType (Justification::centredLeft);
     waveLabel->setEditable (false, false, false);
@@ -432,7 +456,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     waveLabel->setBounds (32, 115, 48, 24);
 
-    addAndMakeVisible (tremoloButton = new ToggleButton ("tremolo button"));
+    tremoloButton.reset (new ToggleButton ("tremolo button"));
+    addAndMakeVisible (tremoloButton.get());
     tremoloButton->setTooltip (TRANS("Modulate amplitude at 3.7 Hz"));
     tremoloButton->setButtonText (TRANS("Tremolo"));
     tremoloButton->addListener (this);
@@ -440,7 +465,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     tremoloButton->setBounds (120, 352, 80, 24);
 
-    addAndMakeVisible (vibratoButton = new ToggleButton ("vibrato button"));
+    vibratoButton.reset (new ToggleButton ("vibrato button"));
+    addAndMakeVisible (vibratoButton.get());
     vibratoButton->setTooltip (TRANS("Modulate frequency at 6.1 Hz"));
     vibratoButton->setButtonText (TRANS("Vibrato"));
     vibratoButton->addListener (this);
@@ -448,7 +474,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     vibratoButton->setBounds (32, 352, 72, 24);
 
-    addAndMakeVisible (sustainButton = new ToggleButton ("sustain button"));
+    sustainButton.reset (new ToggleButton ("sustain button"));
+    addAndMakeVisible (sustainButton.get());
     sustainButton->setTooltip (TRANS("Enable or disable sustain when note is held"));
     sustainButton->setButtonText (TRANS("Sustain"));
     sustainButton->addListener (this);
@@ -456,7 +483,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     sustainButton->setBounds (32, 384, 70, 32);
 
-    addAndMakeVisible (keyscaleEnvButton = new ToggleButton ("keyscale env button"));
+    keyscaleEnvButton.reset (new ToggleButton ("keyscale env button"));
+    addAndMakeVisible (keyscaleEnvButton.get());
     keyscaleEnvButton->setTooltip (TRANS("Speed up envelope rate with note frequency"));
     keyscaleEnvButton->setButtonText (TRANS("Keyscale Env. Rate"));
     keyscaleEnvButton->addListener (this);
@@ -464,8 +492,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     keyscaleEnvButton->setBounds (120, 376, 101, 48);
 
-    addAndMakeVisible (dbLabel2 = new Label ("db label",
-                                             TRANS("dB/8ve\n")));
+    dbLabel2.reset (new Label ("db label",
+                               TRANS("dB/8ve\n")));
+    addAndMakeVisible (dbLabel2.get());
     dbLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel2->setJustificationType (Justification::centred);
     dbLabel2->setEditable (false, false, false);
@@ -476,7 +505,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel2->setBounds (792, 712, 72, 16);
 
-    addAndMakeVisible (frequencyComboBox2 = new ComboBox ("frequency combo box"));
+    frequencyComboBox2.reset (new ComboBox ("frequency combo box"));
+    addAndMakeVisible (frequencyComboBox2.get());
     frequencyComboBox2->setEditableText (false);
     frequencyComboBox2->setJustificationType (Justification::centredLeft);
     frequencyComboBox2->setTextWhenNothingSelected (String());
@@ -485,8 +515,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyComboBox2->setBounds (624, 168, 66, 24);
 
-    addAndMakeVisible (frequencyLabel3 = new Label ("frequency label",
-                                                    TRANS("Frequency Multiplier")));
+    frequencyLabel3.reset (new Label ("frequency label",
+                                      TRANS("Frequency Multiplier")));
+    addAndMakeVisible (frequencyLabel3.get());
     frequencyLabel3->setTooltip (TRANS("Multiplier applied to base note frequency"));
     frequencyLabel3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel3->setJustificationType (Justification::centredLeft);
@@ -497,7 +528,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel3->setBounds (464, 168, 152, 24);
 
-    addAndMakeVisible (aSlider2 = new Slider ("a slider"));
+    aSlider2.reset (new Slider ("a slider"));
+    addAndMakeVisible (aSlider2.get());
     aSlider2->setRange (0, 15, 1);
     aSlider2->setSliderStyle (Slider::LinearVertical);
     aSlider2->setTextBoxStyle (Slider::TextBoxBelow, true, 40, 20);
@@ -510,8 +542,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     aSlider2->setBounds (464, 208, 30, 88);
 
-    addAndMakeVisible (aLabel2 = new Label ("a label",
-                                            TRANS("A")));
+    aLabel2.reset (new Label ("a label",
+                              TRANS("A")));
+    addAndMakeVisible (aLabel2.get());
     aLabel2->setTooltip (TRANS("Attack rate"));
     aLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     aLabel2->setJustificationType (Justification::centred);
@@ -522,7 +555,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     aLabel2->setBounds (464, 304, 30, 24);
 
-    addAndMakeVisible (dSlider2 = new Slider ("d slider"));
+    dSlider2.reset (new Slider ("d slider"));
+    addAndMakeVisible (dSlider2.get());
     dSlider2->setRange (0, 15, 1);
     dSlider2->setSliderStyle (Slider::LinearVertical);
     dSlider2->setTextBoxStyle (Slider::TextBoxBelow, true, 40, 20);
@@ -535,8 +569,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dSlider2->setBounds (512, 208, 30, 88);
 
-    addAndMakeVisible (dLabel3 = new Label ("d label",
-                                            TRANS("D")));
+    dLabel3.reset (new Label ("d label",
+                              TRANS("D")));
+    addAndMakeVisible (dLabel3.get());
     dLabel3->setTooltip (TRANS("Decay rate"));
     dLabel3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel3->setJustificationType (Justification::centred);
@@ -547,7 +582,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dLabel3->setBounds (512, 304, 30, 24);
 
-    addAndMakeVisible (sSlider2 = new Slider ("s slider"));
+    sSlider2.reset (new Slider ("s slider"));
+    addAndMakeVisible (sSlider2.get());
     sSlider2->setRange (0, 15, 1);
     sSlider2->setSliderStyle (Slider::LinearVertical);
     sSlider2->setTextBoxStyle (Slider::TextBoxBelow, true, 40, 20);
@@ -560,8 +596,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     sSlider2->setBounds (560, 208, 30, 88);
 
-    addAndMakeVisible (dLabel4 = new Label ("d label",
-                                            TRANS("S")));
+    dLabel4.reset (new Label ("d label",
+                              TRANS("S")));
+    addAndMakeVisible (dLabel4.get());
     dLabel4->setTooltip (TRANS("Sustain level"));
     dLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dLabel4->setJustificationType (Justification::centred);
@@ -572,7 +609,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dLabel4->setBounds (560, 304, 30, 24);
 
-    addAndMakeVisible (rSlider2 = new Slider ("r slider"));
+    rSlider2.reset (new Slider ("r slider"));
+    addAndMakeVisible (rSlider2.get());
     rSlider2->setRange (0, 15, 1);
     rSlider2->setSliderStyle (Slider::LinearVertical);
     rSlider2->setTextBoxStyle (Slider::TextBoxBelow, true, 40, 20);
@@ -585,8 +623,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     rSlider2->setBounds (608, 208, 30, 88);
 
-    addAndMakeVisible (rLabel2 = new Label ("r label",
-                                            TRANS("R")));
+    rLabel2.reset (new Label ("r label",
+                              TRANS("R")));
+    addAndMakeVisible (rLabel2.get());
     rLabel2->setTooltip (TRANS("Release rate"));
     rLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     rLabel2->setJustificationType (Justification::centred);
@@ -597,7 +636,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     rLabel2->setBounds (608, 304, 30, 24);
 
-    addAndMakeVisible (attenuationSlider2 = new Slider ("attenuation slider"));
+    attenuationSlider2.reset (new Slider ("attenuation slider"));
+    addAndMakeVisible (attenuationSlider2.get());
     attenuationSlider2->setRange (-47.25, 0, 0.75);
     attenuationSlider2->setSliderStyle (Slider::LinearVertical);
     attenuationSlider2->setTextBoxStyle (Slider::TextBoxBelow, true, 64, 20);
@@ -610,8 +650,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     attenuationSlider2->setBounds (752, 184, 56, 142);
 
-    addAndMakeVisible (attenuationLabel2 = new Label ("attenuation label",
-                                                      TRANS("Attenuation")));
+    attenuationLabel2.reset (new Label ("attenuation label",
+                                        TRANS("Attenuation")));
+    addAndMakeVisible (attenuationLabel2.get());
     attenuationLabel2->setTooltip (TRANS("Final output level adjustment"));
     attenuationLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel2->setJustificationType (Justification::centred);
@@ -622,8 +663,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     attenuationLabel2->setBounds (728, 160, 112, 24);
 
-    addAndMakeVisible (dbLabel3 = new Label ("db label",
-                                             TRANS("dB")));
+    dbLabel3.reset (new Label ("db label",
+                               TRANS("dB")));
+    addAndMakeVisible (dbLabel3.get());
     dbLabel3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel3->setJustificationType (Justification::centred);
     dbLabel3->setEditable (false, false, false);
@@ -634,7 +676,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel3->setBounds (800, 304, 40, 24);
 
-    addAndMakeVisible (sineImageButton2 = new ImageButton ("sine image button"));
+    sineImageButton2.reset (new ImageButton ("sine image button"));
+    addAndMakeVisible (sineImageButton2.get());
     sineImageButton2->setButtonText (TRANS("Sine"));
     sineImageButton2->setRadioGroupId (2);
     sineImageButton2->addListener (this);
@@ -645,7 +688,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                  Image(), 1.000f, Colour (0x00000000));
     sineImageButton2->setBounds (512, 113, 34, 30);
 
-    addAndMakeVisible (halfsineImageButton2 = new ImageButton ("half sine image button"));
+    halfsineImageButton2.reset (new ImageButton ("half sine image button"));
+    addAndMakeVisible (halfsineImageButton2.get());
     halfsineImageButton2->setButtonText (TRANS("Half Sine"));
     halfsineImageButton2->setRadioGroupId (2);
     halfsineImageButton2->addListener (this);
@@ -656,7 +700,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                      Image(), 1.000f, Colour (0x00000000));
     halfsineImageButton2->setBounds (552, 113, 34, 30);
 
-    addAndMakeVisible (abssineImageButton2 = new ImageButton ("abs sine image button"));
+    abssineImageButton2.reset (new ImageButton ("abs sine image button"));
+    addAndMakeVisible (abssineImageButton2.get());
     abssineImageButton2->setButtonText (TRANS("Abs Sine"));
     abssineImageButton2->setRadioGroupId (2);
     abssineImageButton2->addListener (this);
@@ -667,7 +712,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     Image(), 1.000f, Colour (0x00000000));
     abssineImageButton2->setBounds (592, 113, 34, 30);
 
-    addAndMakeVisible (quartersineImageButton2 = new ImageButton ("quarter sine image button"));
+    quartersineImageButton2.reset (new ImageButton ("quarter sine image button"));
+    addAndMakeVisible (quartersineImageButton2.get());
     quartersineImageButton2->setButtonText (TRANS("Quarter Sine"));
     quartersineImageButton2->setRadioGroupId (2);
     quartersineImageButton2->addListener (this);
@@ -678,8 +724,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                         Image(), 1.000f, Colour (0x00000000));
     quartersineImageButton2->setBounds (632, 113, 34, 30);
 
-    addAndMakeVisible (waveLabel2 = new Label ("wave label",
-                                               TRANS("Wave")));
+    waveLabel2.reset (new Label ("wave label",
+                                 TRANS("Wave")));
+    addAndMakeVisible (waveLabel2.get());
     waveLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     waveLabel2->setJustificationType (Justification::centredLeft);
     waveLabel2->setEditable (false, false, false);
@@ -689,7 +736,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     waveLabel2->setBounds (456, 115, 48, 24);
 
-    addAndMakeVisible (tremoloButton2 = new ToggleButton ("tremolo button"));
+    tremoloButton2.reset (new ToggleButton ("tremolo button"));
+    addAndMakeVisible (tremoloButton2.get());
     tremoloButton2->setTooltip (TRANS("Modulate amplitude at 3.7 Hz"));
     tremoloButton2->setButtonText (TRANS("Tremolo"));
     tremoloButton2->addListener (this);
@@ -697,7 +745,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     tremoloButton2->setBounds (544, 352, 80, 24);
 
-    addAndMakeVisible (vibratoButton2 = new ToggleButton ("vibrato button"));
+    vibratoButton2.reset (new ToggleButton ("vibrato button"));
+    addAndMakeVisible (vibratoButton2.get());
     vibratoButton2->setTooltip (TRANS("Modulate frequency at 6.1 Hz"));
     vibratoButton2->setButtonText (TRANS("Vibrato"));
     vibratoButton2->addListener (this);
@@ -705,7 +754,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     vibratoButton2->setBounds (456, 352, 72, 24);
 
-    addAndMakeVisible (sustainButton2 = new ToggleButton ("sustain button"));
+    sustainButton2.reset (new ToggleButton ("sustain button"));
+    addAndMakeVisible (sustainButton2.get());
     sustainButton2->setTooltip (TRANS("Enable or disable sustain when note is held"));
     sustainButton2->setButtonText (TRANS("Sustain"));
     sustainButton2->addListener (this);
@@ -713,7 +763,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     sustainButton2->setBounds (456, 384, 70, 24);
 
-    addAndMakeVisible (keyscaleEnvButton2 = new ToggleButton ("keyscale env button"));
+    keyscaleEnvButton2.reset (new ToggleButton ("keyscale env button"));
+    addAndMakeVisible (keyscaleEnvButton2.get());
     keyscaleEnvButton2->setTooltip (TRANS("Speed up envelope rate with note frequency"));
     keyscaleEnvButton2->setButtonText (TRANS("Keyscale Env. Rate"));
     keyscaleEnvButton2->addListener (this);
@@ -721,8 +772,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     keyscaleEnvButton2->setBounds (544, 376, 102, 48);
 
-    addAndMakeVisible (frequencyLabel4 = new Label ("frequency label",
-                                                    TRANS("Keyscale Attenuation")));
+    frequencyLabel4.reset (new Label ("frequency label",
+                                      TRANS("Keyscale Attenuation")));
+    addAndMakeVisible (frequencyLabel4.get());
     frequencyLabel4->setTooltip (TRANS("Attenuate amplitude with note frequency in dB per octave"));
     frequencyLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel4->setJustificationType (Justification::centred);
@@ -733,15 +785,17 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel4->setBounds (656, 376, 88, 48);
 
-    addAndMakeVisible (groupComponent3 = new GroupComponent ("new group",
-                                                             TRANS("Effect depth")));
+    groupComponent3.reset (new GroupComponent ("new group",
+                                               TRANS("Effect depth")));
+    addAndMakeVisible (groupComponent3.get());
     groupComponent3->setTextLabelPosition (Justification::centredLeft);
     groupComponent3->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent3->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent3->setBounds (16, 440, 248, 120);
 
-    addAndMakeVisible (tremoloSlider = new Slider ("tremolo slider"));
+    tremoloSlider.reset (new Slider ("tremolo slider"));
+    addAndMakeVisible (tremoloSlider.get());
     tremoloSlider->setRange (1, 4.8, 3.8);
     tremoloSlider->setSliderStyle (Slider::LinearHorizontal);
     tremoloSlider->setTextBoxStyle (Slider::TextBoxRight, true, 32, 20);
@@ -754,8 +808,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     tremoloSlider->setBounds (112, 472, 80, 24);
 
-    addAndMakeVisible (frequencyLabel5 = new Label ("frequency label",
-                                                    TRANS("Tremolo\n")));
+    frequencyLabel5.reset (new Label ("frequency label",
+                                      TRANS("Tremolo\n")));
+    addAndMakeVisible (frequencyLabel5.get());
     frequencyLabel5->setTooltip (TRANS("OPL global tremolo depth"));
     frequencyLabel5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel5->setJustificationType (Justification::centredLeft);
@@ -766,8 +821,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel5->setBounds (32, 472, 80, 24);
 
-    addAndMakeVisible (dbLabel5 = new Label ("db label",
-                                             TRANS("dB")));
+    dbLabel5.reset (new Label ("db label",
+                               TRANS("dB")));
+    addAndMakeVisible (dbLabel5.get());
     dbLabel5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel5->setJustificationType (Justification::centredLeft);
     dbLabel5->setEditable (false, false, false);
@@ -778,7 +834,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel5->setBounds (200, 464, 32, 40);
 
-    addAndMakeVisible (vibratoSlider = new Slider ("vibrato slider"));
+    vibratoSlider.reset (new Slider ("vibrato slider"));
+    addAndMakeVisible (vibratoSlider.get());
     vibratoSlider->setRange (7, 14, 7);
     vibratoSlider->setSliderStyle (Slider::LinearHorizontal);
     vibratoSlider->setTextBoxStyle (Slider::TextBoxRight, true, 32, 20);
@@ -791,8 +848,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     vibratoSlider->setBounds (112, 512, 80, 24);
 
-    addAndMakeVisible (frequencyLabel6 = new Label ("frequency label",
-                                                    TRANS("Vibrato")));
+    frequencyLabel6.reset (new Label ("frequency label",
+                                      TRANS("Vibrato")));
+    addAndMakeVisible (frequencyLabel6.get());
     frequencyLabel6->setTooltip (TRANS("OPL global vibrato depth"));
     frequencyLabel6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel6->setJustificationType (Justification::centredLeft);
@@ -803,8 +861,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel6->setBounds (32, 512, 80, 24);
 
-    addAndMakeVisible (dbLabel6 = new Label ("db label",
-                                             TRANS("cents\n")));
+    dbLabel6.reset (new Label ("db label",
+                               TRANS("cents\n")));
+    addAndMakeVisible (dbLabel6.get());
     dbLabel6->setTooltip (TRANS("A unit of pitch; 100 cents per semitone"));
     dbLabel6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel6->setJustificationType (Justification::centredLeft);
@@ -816,7 +875,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel6->setBounds (200, 504, 48, 40);
 
-    addAndMakeVisible (feedbackSlider = new Slider ("feedback slider"));
+    feedbackSlider.reset (new Slider ("feedback slider"));
+    addAndMakeVisible (feedbackSlider.get());
     feedbackSlider->setRange (0, 7, 1);
     feedbackSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     feedbackSlider->setTextBoxStyle (Slider::TextBoxBelow, true, 30, 20);
@@ -831,8 +891,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     feedbackSlider->setBounds (248, 237, 30, 59);
 
-    addAndMakeVisible (frequencyLabel7 = new Label ("frequency label",
-                                                    TRANS("Feedback")));
+    frequencyLabel7.reset (new Label ("frequency label",
+                                      TRANS("Feedback")));
+    addAndMakeVisible (frequencyLabel7.get());
     frequencyLabel7->setTooltip (TRANS("Extent to which modulator output is fed back into itself"));
     frequencyLabel7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel7->setJustificationType (Justification::centred);
@@ -843,7 +904,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel7->setBounds (224, 304, 80, 24);
 
-    addAndMakeVisible (velocityComboBox = new ComboBox ("velocity combo box"));
+    velocityComboBox.reset (new ComboBox ("velocity combo box"));
+    addAndMakeVisible (velocityComboBox.get());
     velocityComboBox->setEditableText (false);
     velocityComboBox->setJustificationType (Justification::centredLeft);
     velocityComboBox->setTextWhenNothingSelected (String());
@@ -855,7 +917,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     velocityComboBox->setBounds (328, 352, 76, 24);
 
-    addAndMakeVisible (velocityComboBox2 = new ComboBox ("velocity combo box"));
+    velocityComboBox2.reset (new ComboBox ("velocity combo box"));
+    addAndMakeVisible (velocityComboBox2.get());
     velocityComboBox2->setEditableText (false);
     velocityComboBox2->setJustificationType (Justification::centredLeft);
     velocityComboBox2->setTextWhenNothingSelected (String());
@@ -867,8 +930,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     velocityComboBox2->setBounds (760, 352, 72, 24);
 
-    addAndMakeVisible (attenuationLabel4 = new Label ("attenuation label",
-                                                      TRANS("Velocity Sensitivity")));
+    attenuationLabel4.reset (new Label ("attenuation label",
+                                        TRANS("Velocity Sensitivity")));
+    addAndMakeVisible (attenuationLabel4.get());
     attenuationLabel4->setTooltip (TRANS("Set or disable velocity senstivity"));
     attenuationLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel4->setJustificationType (Justification::centred);
@@ -879,7 +943,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     attenuationLabel4->setBounds (760, 376, 80, 48);
 
-    addAndMakeVisible (alternatingsineImageButton = new ImageButton ("alternating sine image button"));
+    alternatingsineImageButton.reset (new ImageButton ("alternating sine image button"));
+    addAndMakeVisible (alternatingsineImageButton.get());
     alternatingsineImageButton->setButtonText (TRANS("Alternating Sine"));
     alternatingsineImageButton->setRadioGroupId (1);
     alternatingsineImageButton->addListener (this);
@@ -890,7 +955,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                            Image(), 1.000f, Colour (0x00000000));
     alternatingsineImageButton->setBounds (288, 113, 34, 30);
 
-    addAndMakeVisible (camelsineImageButton = new ImageButton ("camel sine image button"));
+    camelsineImageButton.reset (new ImageButton ("camel sine image button"));
+    addAndMakeVisible (camelsineImageButton.get());
     camelsineImageButton->setButtonText (TRANS("Camel Sine"));
     camelsineImageButton->setRadioGroupId (1);
     camelsineImageButton->addListener (this);
@@ -901,7 +967,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                      Image(), 1.000f, Colour (0x00000000));
     camelsineImageButton->setBounds (248, 113, 34, 30);
 
-    addAndMakeVisible (squareImageButton = new ImageButton ("square image button"));
+    squareImageButton.reset (new ImageButton ("square image button"));
+    addAndMakeVisible (squareImageButton.get());
     squareImageButton->setButtonText (TRANS("Square"));
     squareImageButton->setRadioGroupId (1);
     squareImageButton->addListener (this);
@@ -912,7 +979,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                   Image(), 1.000f, Colour (0x00000000));
     squareImageButton->setBounds (328, 113, 34, 30);
 
-    addAndMakeVisible (logsawImageButton = new ImageButton ("logsaw image button"));
+    logsawImageButton.reset (new ImageButton ("logsaw image button"));
+    addAndMakeVisible (logsawImageButton.get());
     logsawImageButton->setButtonText (TRANS("Logarithmic Sawtooth"));
     logsawImageButton->setRadioGroupId (1);
     logsawImageButton->addListener (this);
@@ -923,7 +991,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                   Image(), 1.000f, Colour (0x00000000));
     logsawImageButton->setBounds (368, 113, 34, 30);
 
-    addAndMakeVisible (alternatingsineImageButton2 = new ImageButton ("alternating sine image button"));
+    alternatingsineImageButton2.reset (new ImageButton ("alternating sine image button"));
+    addAndMakeVisible (alternatingsineImageButton2.get());
     alternatingsineImageButton2->setButtonText (TRANS("Alternating Sine"));
     alternatingsineImageButton2->setRadioGroupId (2);
     alternatingsineImageButton2->addListener (this);
@@ -934,7 +1003,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                             Image(), 1.000f, Colour (0x00000000));
     alternatingsineImageButton2->setBounds (714, 114, 34, 30);
 
-    addAndMakeVisible (camelsineImageButton2 = new ImageButton ("camel sine image button"));
+    camelsineImageButton2.reset (new ImageButton ("camel sine image button"));
+    addAndMakeVisible (camelsineImageButton2.get());
     camelsineImageButton2->setButtonText (TRANS("Camel Sine"));
     camelsineImageButton2->setRadioGroupId (2);
     camelsineImageButton2->addListener (this);
@@ -945,7 +1015,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       Image(), 1.000f, Colour (0x00000000));
     camelsineImageButton2->setBounds (674, 114, 34, 30);
 
-    addAndMakeVisible (squareImageButton2 = new ImageButton ("square image button"));
+    squareImageButton2.reset (new ImageButton ("square image button"));
+    addAndMakeVisible (squareImageButton2.get());
     squareImageButton2->setButtonText (TRANS("Square"));
     squareImageButton2->setRadioGroupId (2);
     squareImageButton2->addListener (this);
@@ -956,7 +1027,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    Image(), 1.000f, Colour (0x00000000));
     squareImageButton2->setBounds (754, 114, 34, 30);
 
-    addAndMakeVisible (logsawImageButton2 = new ImageButton ("logsaw image button"));
+    logsawImageButton2.reset (new ImageButton ("logsaw image button"));
+    addAndMakeVisible (logsawImageButton2.get());
     logsawImageButton2->setButtonText (TRANS("Logarithmic Sawtooth"));
     logsawImageButton2->setRadioGroupId (2);
     logsawImageButton2->addListener (this);
@@ -967,8 +1039,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    Image(), 1.000f, Colour (0x00000000));
     logsawImageButton2->setBounds (794, 114, 34, 30);
 
-    addAndMakeVisible (dbLabel4 = new Label ("db label",
-                                             TRANS("dB/8ve\n")));
+    dbLabel4.reset (new Label ("db label",
+                               TRANS("dB/8ve\n")));
+    addAndMakeVisible (dbLabel4.get());
     dbLabel4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel4->setJustificationType (Justification::centred);
     dbLabel4->setEditable (false, false, false);
@@ -979,7 +1052,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel4->setBounds (792, 688, 72, 16);
 
-    addAndMakeVisible (keyscaleAttenuationComboBox2 = new ComboBox ("keyscale combo box"));
+    keyscaleAttenuationComboBox2.reset (new ComboBox ("keyscale combo box"));
+    addAndMakeVisible (keyscaleAttenuationComboBox2.get());
     keyscaleAttenuationComboBox2->setEditableText (false);
     keyscaleAttenuationComboBox2->setJustificationType (Justification::centredLeft);
     keyscaleAttenuationComboBox2->setTextWhenNothingSelected (String());
@@ -992,7 +1066,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     keyscaleAttenuationComboBox2->setBounds (664, 352, 76, 24);
 
-    addAndMakeVisible (keyscaleAttenuationComboBox = new ComboBox ("keyscale combo box"));
+    keyscaleAttenuationComboBox.reset (new ComboBox ("keyscale combo box"));
+    addAndMakeVisible (keyscaleAttenuationComboBox.get());
     keyscaleAttenuationComboBox->setEditableText (false);
     keyscaleAttenuationComboBox->setJustificationType (Justification::centredLeft);
     keyscaleAttenuationComboBox->setTextWhenNothingSelected (String());
@@ -1005,15 +1080,17 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     keyscaleAttenuationComboBox->setBounds (232, 352, 76, 24);
 
-    addAndMakeVisible (groupComponent5 = new GroupComponent ("new group",
-                                                             TRANS("Emulator (currently locked)")));
+    groupComponent5.reset (new GroupComponent ("new group",
+                                               TRANS("Emulator (currently locked)")));
+    addAndMakeVisible (groupComponent5.get());
     groupComponent5->setTextLabelPosition (Justification::centredLeft);
     groupComponent5->setColour (GroupComponent::outlineColourId, Colour (0xff007f00));
     groupComponent5->setColour (GroupComponent::textColourId, Colour (0xff007f00));
 
     groupComponent5->setBounds (24, 712, 408, 64);
 
-    addAndMakeVisible (emulatorSlider = new Slider ("emulator slider"));
+    emulatorSlider.reset (new Slider ("emulator slider"));
+    addAndMakeVisible (emulatorSlider.get());
     emulatorSlider->setRange (0, 1, 1);
     emulatorSlider->setSliderStyle (Slider::LinearHorizontal);
     emulatorSlider->setTextBoxStyle (Slider::NoTextBox, true, 44, 20);
@@ -1026,8 +1103,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     emulatorSlider->setBounds (208, 736, 40, 24);
 
-    addAndMakeVisible (emulatorLabel = new Label ("emulator label",
-                                                  TRANS("DOSBox")));
+    emulatorLabel.reset (new Label ("emulator label",
+                                    TRANS("DOSBox")));
+    addAndMakeVisible (emulatorLabel.get());
     emulatorLabel->setTooltip (TRANS("Use the OPL emulator from the DOSBox project"));
     emulatorLabel->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     emulatorLabel->setJustificationType (Justification::centredRight);
@@ -1038,8 +1116,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     emulatorLabel->setBounds (120, 736, 72, 24);
 
-    addAndMakeVisible (emulatorLabel2 = new Label ("emulator label",
-                                                   TRANS("ZDoom")));
+    emulatorLabel2.reset (new Label ("emulator label",
+                                     TRANS("ZDoom")));
+    addAndMakeVisible (emulatorLabel2.get());
     emulatorLabel2->setTooltip (TRANS("Use the OPL emulator from the ZDoom project"));
     emulatorLabel2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     emulatorLabel2->setJustificationType (Justification::centredLeft);
@@ -1050,7 +1129,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     emulatorLabel2->setBounds (256, 736, 72, 24);
 
-    addAndMakeVisible (recordButton = new ToggleButton ("record button"));
+    recordButton.reset (new ToggleButton ("record button"));
+    addAndMakeVisible (recordButton.get());
     recordButton->setTooltip (TRANS("Start recording all register writes to a DRO file - an OPL recording file format defined by DOSBox"));
     recordButton->setButtonText (TRANS("Record to DRO (not working yet)"));
     recordButton->addListener (this);
@@ -1058,7 +1138,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     recordButton->setBounds (32, 680, 224, 24);
 
-    addAndMakeVisible (exportButton = new TextButton ("export button"));
+    exportButton.reset (new TextButton ("export button"));
+    addAndMakeVisible (exportButton.get());
     exportButton->setButtonText (TRANS("Export .SBI"));
     exportButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight);
     exportButton->addListener (this);
@@ -1067,7 +1148,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     exportButton->setBounds (728, 512, 96, 24);
 
-    addAndMakeVisible (loadButton = new TextButton ("load button"));
+    loadButton.reset (new TextButton ("load button"));
+    addAndMakeVisible (loadButton.get());
     loadButton->setButtonText (TRANS("Load .SBI"));
     loadButton->setConnectedEdges (Button::ConnectedOnLeft | Button::ConnectedOnRight);
     loadButton->addListener (this);
@@ -1076,8 +1158,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     loadButton->setBounds (728, 472, 96, 24);
 
-    addAndMakeVisible (versionLabel = new Label ("version label",
-                                                 String()));
+    versionLabel.reset (new Label ("version label",
+                                   String()));
+    addAndMakeVisible (versionLabel.get());
     versionLabel->setFont (Font (12.00f, Font::plain).withTypefaceStyle ("Regular"));
     versionLabel->setJustificationType (Justification::centredRight);
     versionLabel->setEditable (false, false, false);
@@ -1087,7 +1170,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     versionLabel->setBounds (648, 560, 198, 16);
 
-    addAndMakeVisible (ToggleButtonOffExample = new ImageButton ("Toggle Button Off Example"));
+    ToggleButtonOffExample.reset (new ImageButton ("Toggle Button Off Example"));
+    addAndMakeVisible (ToggleButtonOffExample.get());
     ToggleButtonOffExample->setButtonText (TRANS("new button"));
     ToggleButtonOffExample->addListener (this);
 
@@ -1097,7 +1181,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        Image(), 1.000f, Colour (0x00000000));
     ToggleButtonOffExample->setBounds (1032, 584, 12, 12);
 
-    addAndMakeVisible (ToggleButtonOnExample = new ImageButton ("Toggle Button On Example"));
+    ToggleButtonOnExample.reset (new ImageButton ("Toggle Button On Example"));
+    addAndMakeVisible (ToggleButtonOnExample.get());
     ToggleButtonOnExample->setButtonText (TRANS("new button"));
     ToggleButtonOnExample->addListener (this);
 
@@ -1107,8 +1192,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       Image(), 1.000f, Colour (0x00000000));
     ToggleButtonOnExample->setBounds (1064, 584, 12, 12);
 
-    addAndMakeVisible (label = new Label ("new label",
-                                          TRANS("Toggle buttons")));
+    label.reset (new Label ("new label",
+                            TRANS("Toggle buttons")));
+    addAndMakeVisible (label.get());
     label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label->setJustificationType (Justification::centred);
     label->setEditable (false, false, false);
@@ -1118,8 +1204,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label->setBounds (1000, 608, 104, 24);
 
-    addAndMakeVisible (label2 = new Label ("new label",
-                                           TRANS("Line borders")));
+    label2.reset (new Label ("new label",
+                             TRANS("Line borders")));
+    addAndMakeVisible (label2.get());
     label2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label2->setJustificationType (Justification::centred);
     label2->setEditable (false, false, false);
@@ -1129,7 +1216,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label2->setBounds (872, 608, 104, 24);
 
-    addAndMakeVisible (LineBorderButton1C = new ImageButton ("Line Border 1C"));
+    LineBorderButton1C.reset (new ImageButton ("Line Border 1C"));
+    addAndMakeVisible (LineBorderButton1C.get());
     LineBorderButton1C->setButtonText (TRANS("new button"));
 
     LineBorderButton1C->setImages (false, true, false,
@@ -1138,7 +1226,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1C->setBounds (20, 336, 400, 6);
 
-    addAndMakeVisible (LineBorderButton1A = new ImageButton ("Line Border 1A"));
+    LineBorderButton1A.reset (new ImageButton ("Line Border 1A"));
+    addAndMakeVisible (LineBorderButton1A.get());
     LineBorderButton1A->setButtonText (TRANS("new button"));
 
     LineBorderButton1A->setImages (false, true, false,
@@ -1147,7 +1236,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1A->setBounds (20, 152, 400, 6);
 
-    addAndMakeVisible (LineBorderButton1B = new ImageButton ("Line Border 1B"));
+    LineBorderButton1B.reset (new ImageButton ("Line Border 1B"));
+    addAndMakeVisible (LineBorderButton1B.get());
     LineBorderButton1B->setButtonText (TRANS("new button"));
 
     LineBorderButton1B->setImages (false, true, false,
@@ -1156,8 +1246,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                    ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1B->setBounds (296, 156, 6, 182);
 
-    addAndMakeVisible (label3 = new Label ("new label",
-                                           TRANS("Temporarily removed labels to avoid making wider boxes.")));
+    label3.reset (new Label ("new label",
+                             TRANS("Temporarily removed labels to avoid making wider boxes.")));
+    addAndMakeVisible (label3.get());
     label3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label3->setJustificationType (Justification::centred);
     label3->setEditable (false, false, false);
@@ -1167,7 +1258,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label3->setBounds (776, 736, 104, 56);
 
-    addAndMakeVisible (LineBorderButton1C2 = new ImageButton ("Line Border 1C"));
+    LineBorderButton1C2.reset (new ImageButton ("Line Border 1C"));
+    addAndMakeVisible (LineBorderButton1C2.get());
     LineBorderButton1C2->setButtonText (TRANS("new button"));
 
     LineBorderButton1C2->setImages (false, true, false,
@@ -1176,7 +1268,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1C2->setBounds (444, 336, 400, 6);
 
-    addAndMakeVisible (LineBorderButton1A2 = new ImageButton ("Line Border 1A"));
+    LineBorderButton1A2.reset (new ImageButton ("Line Border 1A"));
+    addAndMakeVisible (LineBorderButton1A2.get());
     LineBorderButton1A2->setButtonText (TRANS("new button"));
 
     LineBorderButton1A2->setImages (false, true, false,
@@ -1185,7 +1278,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1A2->setBounds (444, 152, 400, 6);
 
-    addAndMakeVisible (LineBorderButton1B2 = new ImageButton ("Line Border 1B"));
+    LineBorderButton1B2.reset (new ImageButton ("Line Border 1B"));
+    addAndMakeVisible (LineBorderButton1B2.get());
     LineBorderButton1B2->setButtonText (TRANS("new button"));
 
     LineBorderButton1B2->setImages (false, true, false,
@@ -1194,7 +1288,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1B2->setBounds (720, 156, 6, 182);
 
-    addAndMakeVisible (LineBorderButton1C3 = new ImageButton ("Line Border 1C"));
+    LineBorderButton1C3.reset (new ImageButton ("Line Border 1C"));
+    addAndMakeVisible (LineBorderButton1C3.get());
     LineBorderButton1C3->setButtonText (TRANS("new button"));
 
     LineBorderButton1C3->setImages (false, true, false,
@@ -1203,7 +1298,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     ImageCache::getFromMemory (line_border_horiz_png, line_border_horiz_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1C3->setBounds (892, 584, 20, 6);
 
-    addAndMakeVisible (LineBorderButton1B3 = new ImageButton ("Line Border 1B"));
+    LineBorderButton1B3.reset (new ImageButton ("Line Border 1B"));
+    addAndMakeVisible (LineBorderButton1B3.get());
     LineBorderButton1B3->setButtonText (TRANS("new button"));
 
     LineBorderButton1B3->setImages (false, true, false,
@@ -1212,7 +1308,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                     ImageCache::getFromMemory (line_border_vert_png, line_border_vert_pngSize), 0.600f, Colour (0x00000000));
     LineBorderButton1B3->setBounds (936, 576, 6, 20);
 
-    addAndMakeVisible (algoSwitchButtonOffEx1 = new ImageButton ("Algorithm Switch Off AM"));
+    algoSwitchButtonOffEx1.reset (new ImageButton ("Algorithm Switch Off AM"));
+    addAndMakeVisible (algoSwitchButtonOffEx1.get());
     algoSwitchButtonOffEx1->setButtonText (TRANS("new button"));
     algoSwitchButtonOffEx1->addListener (this);
 
@@ -1222,7 +1319,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOffEx1->setBounds (952, 701, 64, 24);
 
-    addAndMakeVisible (algoSwitchButtonOffEx2 = new ImageButton ("Algorithm Switch Off FM"));
+    algoSwitchButtonOffEx2.reset (new ImageButton ("Algorithm Switch Off FM"));
+    addAndMakeVisible (algoSwitchButtonOffEx2.get());
     algoSwitchButtonOffEx2->setButtonText (TRANS("new button"));
     algoSwitchButtonOffEx2->addListener (this);
 
@@ -1232,7 +1330,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOffEx2->setBounds (952, 727, 64, 24);
 
-    addAndMakeVisible (algoSwitchButtonOnEx1 = new ImageButton ("Algorithm Switch On AM"));
+    algoSwitchButtonOnEx1.reset (new ImageButton ("Algorithm Switch On AM"));
+    addAndMakeVisible (algoSwitchButtonOnEx1.get());
     algoSwitchButtonOnEx1->setButtonText (TRANS("new button"));
     algoSwitchButtonOnEx1->addListener (this);
 
@@ -1242,7 +1341,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOnEx1->setBounds (1040, 701, 64, 24);
 
-    addAndMakeVisible (algoSwitchButtonOnEx2 = new ImageButton ("Algorithm Switch On FM"));
+    algoSwitchButtonOnEx2.reset (new ImageButton ("Algorithm Switch On FM"));
+    addAndMakeVisible (algoSwitchButtonOnEx2.get());
     algoSwitchButtonOnEx2->setButtonText (TRANS("new button"));
     algoSwitchButtonOnEx2->addListener (this);
 
@@ -1252,8 +1352,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOnEx2->setBounds (1040, 727, 64, 24);
 
-    addAndMakeVisible (label4 = new Label ("new label",
-                                           TRANS("AM")));
+    label4.reset (new Label ("new label",
+                             TRANS("AM")));
+    addAndMakeVisible (label4.get());
     label4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label4->setJustificationType (Justification::centredLeft);
     label4->setEditable (false, false, false);
@@ -1263,8 +1364,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label4->setBounds (970, 701, 32, 24);
 
-    addAndMakeVisible (label5 = new Label ("new label",
-                                           TRANS("FM")));
+    label5.reset (new Label ("new label",
+                             TRANS("FM")));
+    addAndMakeVisible (label5.get());
     label5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label5->setJustificationType (Justification::centredLeft);
     label5->setEditable (false, false, false);
@@ -1274,8 +1376,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label5->setBounds (971, 727, 32, 24);
 
-    addAndMakeVisible (label6 = new Label ("new label",
-                                           TRANS("AM")));
+    label6.reset (new Label ("new label",
+                             TRANS("AM")));
+    addAndMakeVisible (label6.get());
     label6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label6->setJustificationType (Justification::centredLeft);
     label6->setEditable (false, false, false);
@@ -1285,8 +1388,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label6->setBounds (1057, 701, 32, 24);
 
-    addAndMakeVisible (label7 = new Label ("new label",
-                                           TRANS("FM")));
+    label7.reset (new Label ("new label",
+                             TRANS("FM")));
+    addAndMakeVisible (label7.get());
     label7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label7->setJustificationType (Justification::centredLeft);
     label7->setEditable (false, false, false);
@@ -1296,8 +1400,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label7->setBounds (1058, 727, 32, 24);
 
-    addAndMakeVisible (label8 = new Label ("new label",
-                                           TRANS("Example AM/FM switches")));
+    label8.reset (new Label ("new label",
+                             TRANS("Example AM/FM switches")));
+    addAndMakeVisible (label8.get());
     label8->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label8->setJustificationType (Justification::centred);
     label8->setEditable (false, false, false);
@@ -1307,7 +1412,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label8->setBounds (944, 816, 320, 24);
 
-    addAndMakeVisible (algoSwitchButtonOn2Ex1 = new ImageButton ("Algorithm Switch On2 AM"));
+    algoSwitchButtonOn2Ex1.reset (new ImageButton ("Algorithm Switch On2 AM"));
+    addAndMakeVisible (algoSwitchButtonOn2Ex1.get());
     algoSwitchButtonOn2Ex1->setButtonText (TRANS("new button"));
     algoSwitchButtonOn2Ex1->addListener (this);
 
@@ -1317,7 +1423,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOn2Ex1->setBounds (1128, 700, 64, 24);
 
-    addAndMakeVisible (algoSwitchButtonOn2Ex2 = new ImageButton ("Algorithm Switch On2 FM"));
+    algoSwitchButtonOn2Ex2.reset (new ImageButton ("Algorithm Switch On2 FM"));
+    addAndMakeVisible (algoSwitchButtonOn2Ex2.get());
     algoSwitchButtonOn2Ex2->setButtonText (TRANS("new button"));
     algoSwitchButtonOn2Ex2->addListener (this);
 
@@ -1327,8 +1434,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on2_png, algo_switch_on2_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOn2Ex2->setBounds (1128, 727, 64, 24);
 
-    addAndMakeVisible (label9 = new Label ("new label",
-                                           TRANS("AM")));
+    label9.reset (new Label ("new label",
+                             TRANS("AM")));
+    addAndMakeVisible (label9.get());
     label9->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label9->setJustificationType (Justification::centredLeft);
     label9->setEditable (false, false, false);
@@ -1338,8 +1446,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label9->setBounds (1145, 700, 32, 24);
 
-    addAndMakeVisible (label10 = new Label ("new label",
-                                            TRANS("FM")));
+    label10.reset (new Label ("new label",
+                              TRANS("FM")));
+    addAndMakeVisible (label10.get());
     label10->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label10->setJustificationType (Justification::centredLeft);
     label10->setEditable (false, false, false);
@@ -1349,7 +1458,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label10->setBounds (1146, 727, 32, 24);
 
-    addAndMakeVisible (algoSwitchButtonOn3Ex1 = new ImageButton ("Algorithm Switch On3 AM"));
+    algoSwitchButtonOn3Ex1.reset (new ImageButton ("Algorithm Switch On3 AM"));
+    addAndMakeVisible (algoSwitchButtonOn3Ex1.get());
     algoSwitchButtonOn3Ex1->setButtonText (TRANS("new button"));
     algoSwitchButtonOn3Ex1->addListener (this);
 
@@ -1359,7 +1469,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOn3Ex1->setBounds (1216, 700, 64, 24);
 
-    addAndMakeVisible (algoSwitchButtonOn3Ex2 = new ImageButton ("Algorithm Switch On3 FM"));
+    algoSwitchButtonOn3Ex2.reset (new ImageButton ("Algorithm Switch On3 FM"));
+    addAndMakeVisible (algoSwitchButtonOn3Ex2.get());
     algoSwitchButtonOn3Ex2->setButtonText (TRANS("new button"));
     algoSwitchButtonOn3Ex2->addListener (this);
 
@@ -1369,8 +1480,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOn3Ex2->setBounds (1216, 727, 64, 24);
 
-    addAndMakeVisible (label11 = new Label ("new label",
-                                            TRANS("AM")));
+    label11.reset (new Label ("new label",
+                              TRANS("AM")));
+    addAndMakeVisible (label11.get());
     label11->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label11->setJustificationType (Justification::centredLeft);
     label11->setEditable (false, false, false);
@@ -1380,8 +1492,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label11->setBounds (1233, 700, 31, 24);
 
-    addAndMakeVisible (label12 = new Label ("new label",
-                                            TRANS("FM")));
+    label12.reset (new Label ("new label",
+                              TRANS("FM")));
+    addAndMakeVisible (label12.get());
     label12->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label12->setJustificationType (Justification::centredLeft);
     label12->setEditable (false, false, false);
@@ -1391,7 +1504,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label12->setBounds (1234, 727, 32, 24);
 
-    addAndMakeVisible (TwoOpAMButton = new ImageButton ("Two OP AM Button"));
+    TwoOpAMButton.reset (new ImageButton ("Two OP AM Button"));
+    addAndMakeVisible (TwoOpAMButton.get());
     TwoOpAMButton->setButtonText (TRANS("new button"));
     TwoOpAMButton->addListener (this);
 
@@ -1401,7 +1515,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                               ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000));
     TwoOpAMButton->setBounds (1173, 484, 60, 56);
 
-    addAndMakeVisible (TwoOpFMButton = new ImageButton ("Two OP FM Button"));
+    TwoOpFMButton.reset (new ImageButton ("Two OP FM Button"));
+    addAndMakeVisible (TwoOpFMButton.get());
     TwoOpFMButton->setButtonText (TRANS("new button"));
     TwoOpFMButton->addListener (this);
 
@@ -1411,8 +1526,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                               ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000));
     TwoOpFMButton->setBounds (1156, 568, 80, 26);
 
-    addAndMakeVisible (label13 = new Label ("new label",
-                                            TRANS("M")));
+    label13.reset (new Label ("new label",
+                              TRANS("M")));
+    addAndMakeVisible (label13.get());
     label13->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label13->setJustificationType (Justification::centred);
     label13->setEditable (false, false, false);
@@ -1421,8 +1537,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label13->setBounds (1179, 489, 24, 24);
 
-    addAndMakeVisible (label14 = new Label ("new label",
-                                            TRANS("C")));
+    label14.reset (new Label ("new label",
+                              TRANS("C")));
+    addAndMakeVisible (label14.get());
     label14->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label14->setJustificationType (Justification::centred);
     label14->setEditable (false, false, false);
@@ -1431,8 +1548,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label14->setBounds (1179, 518, 24, 24);
 
-    addAndMakeVisible (label15 = new Label ("new label",
-                                            TRANS("M")));
+    label15.reset (new Label ("new label",
+                              TRANS("M")));
+    addAndMakeVisible (label15.get());
     label15->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label15->setJustificationType (Justification::centred);
     label15->setEditable (false, false, false);
@@ -1441,8 +1559,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label15->setBounds (1166, 572, 24, 24);
 
-    addAndMakeVisible (label16 = new Label ("new label",
-                                            TRANS("C")));
+    label16.reset (new Label ("new label",
+                              TRANS("C")));
+    addAndMakeVisible (label16.get());
     label16->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label16->setJustificationType (Justification::centred);
     label16->setEditable (false, false, false);
@@ -1451,8 +1570,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label16->setBounds (1195, 572, 24, 24);
 
-    addAndMakeVisible (label17 = new Label ("new label",
-                                            TRANS("Example Algorithms")));
+    label17.reset (new Label ("new label",
+                              TRANS("Example Algorithms")));
+    addAndMakeVisible (label17.get());
     label17->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label17->setJustificationType (Justification::centred);
     label17->setEditable (false, false, false);
@@ -1462,13 +1582,15 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label17->setBounds (1128, 608, 136, 24);
 
-    addAndMakeVisible (groupComponent6 = new GroupComponent ("new group",
-                                                             String()));
+    groupComponent6.reset (new GroupComponent ("new group",
+                                               String()));
+    addAndMakeVisible (groupComponent6.get());
     groupComponent6->setColour (GroupComponent::outlineColourId, Colours::green);
 
     groupComponent6->setBounds (933, 56, 168, 95);
 
-    addAndMakeVisible (algoSwitchButtonOnEx3 = new ImageButton ("Algorithm Switch On AM"));
+    algoSwitchButtonOnEx3.reset (new ImageButton ("Algorithm Switch On AM"));
+    addAndMakeVisible (algoSwitchButtonOnEx3.get());
     algoSwitchButtonOnEx3->setButtonText (TRANS("new button"));
     algoSwitchButtonOnEx3->addListener (this);
 
@@ -1478,8 +1600,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                       ImageCache::getFromMemory (algo_switch_on_png, algo_switch_on_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOnEx3->setBounds (949, 82, 64, 24);
 
-    addAndMakeVisible (label18 = new Label ("new label",
-                                            TRANS("AM")));
+    label18.reset (new Label ("new label",
+                              TRANS("AM")));
+    addAndMakeVisible (label18.get());
     label18->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label18->setJustificationType (Justification::centredLeft);
     label18->setEditable (false, false, false);
@@ -1489,7 +1612,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label18->setBounds (966, 82, 32, 24);
 
-    addAndMakeVisible (algoSwitchButtonOffEx3 = new ImageButton ("Algorithm Switch Off FM"));
+    algoSwitchButtonOffEx3.reset (new ImageButton ("Algorithm Switch Off FM"));
+    addAndMakeVisible (algoSwitchButtonOffEx3.get());
     algoSwitchButtonOffEx3->setButtonText (TRANS("new button"));
     algoSwitchButtonOffEx3->addListener (this);
 
@@ -1499,8 +1623,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOffEx3->setBounds (949, 108, 64, 24);
 
-    addAndMakeVisible (label19 = new Label ("new label",
-                                            TRANS("FM")));
+    label19.reset (new Label ("new label",
+                              TRANS("FM")));
+    addAndMakeVisible (label19.get());
     label19->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label19->setJustificationType (Justification::centredLeft);
     label19->setEditable (false, false, false);
@@ -1510,7 +1635,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label19->setBounds (968, 108, 32, 24);
 
-    addAndMakeVisible (TwoOpAMButton2 = new ImageButton ("Two OP AM Button"));
+    TwoOpAMButton2.reset (new ImageButton ("Two OP AM Button"));
+    addAndMakeVisible (TwoOpAMButton2.get());
     TwoOpAMButton2->setButtonText (TRANS("new button"));
     TwoOpAMButton2->addListener (this);
 
@@ -1520,8 +1646,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                ImageCache::getFromMemory (twoopAm_png, twoopAm_pngSize), 1.000f, Colour (0x00000000));
     TwoOpAMButton2->setBounds (1029, 77, 60, 56);
 
-    addAndMakeVisible (label20 = new Label ("new label",
-                                            TRANS("M")));
+    label20.reset (new Label ("new label",
+                              TRANS("M")));
+    addAndMakeVisible (label20.get());
     label20->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label20->setJustificationType (Justification::centred);
     label20->setEditable (false, false, false);
@@ -1530,8 +1657,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label20->setBounds (1035, 82, 24, 24);
 
-    addAndMakeVisible (label21 = new Label ("new label",
-                                            TRANS("C")));
+    label21.reset (new Label ("new label",
+                              TRANS("C")));
+    addAndMakeVisible (label21.get());
     label21->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label21->setJustificationType (Justification::centred);
     label21->setEditable (false, false, false);
@@ -1540,8 +1668,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label21->setBounds (1035, 111, 24, 24);
 
-    addAndMakeVisible (label22 = new Label ("new label",
-                                            TRANS("Example Algo Sections w/ Diagram")));
+    label22.reset (new Label ("new label",
+                              TRANS("Example Algo Sections w/ Diagram")));
+    addAndMakeVisible (label22.get());
     label22->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label22->setJustificationType (Justification::centred);
     label22->setEditable (false, false, false);
@@ -1551,7 +1680,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label22->setBounds (952, 160, 328, 40);
 
-    addAndMakeVisible (algoSwitchButtonOffEx4 = new ImageButton ("Algorithm Switch Off AM"));
+    algoSwitchButtonOffEx4.reset (new ImageButton ("Algorithm Switch Off AM"));
+    addAndMakeVisible (algoSwitchButtonOffEx4.get());
     algoSwitchButtonOffEx4->setButtonText (TRANS("new button"));
     algoSwitchButtonOffEx4->addListener (this);
 
@@ -1561,8 +1691,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOffEx4->setBounds (1125, 82, 64, 24);
 
-    addAndMakeVisible (label23 = new Label ("new label",
-                                            TRANS("AM")));
+    label23.reset (new Label ("new label",
+                              TRANS("AM")));
+    addAndMakeVisible (label23.get());
     label23->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label23->setJustificationType (Justification::centredLeft);
     label23->setEditable (false, false, false);
@@ -1572,7 +1703,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label23->setBounds (1143, 82, 32, 24);
 
-    addAndMakeVisible (algoSwitchButtonOn3Ex3 = new ImageButton ("Algorithm Switch On3 FM"));
+    algoSwitchButtonOn3Ex3.reset (new ImageButton ("Algorithm Switch On3 FM"));
+    addAndMakeVisible (algoSwitchButtonOn3Ex3.get());
     algoSwitchButtonOn3Ex3->setButtonText (TRANS("new button"));
     algoSwitchButtonOn3Ex3->addListener (this);
 
@@ -1582,8 +1714,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOn3Ex3->setBounds (1125, 109, 64, 24);
 
-    addAndMakeVisible (label24 = new Label ("new label",
-                                            TRANS("FM")));
+    label24.reset (new Label ("new label",
+                              TRANS("FM")));
+    addAndMakeVisible (label24.get());
     label24->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label24->setJustificationType (Justification::centredLeft);
     label24->setEditable (false, false, false);
@@ -1593,7 +1726,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label24->setBounds (1143, 109, 32, 24);
 
-    addAndMakeVisible (TwoOpFMButton2 = new ImageButton ("Two OP FM Button"));
+    TwoOpFMButton2.reset (new ImageButton ("Two OP FM Button"));
+    addAndMakeVisible (TwoOpFMButton2.get());
     TwoOpFMButton2->setButtonText (TRANS("new button"));
     TwoOpFMButton2->addListener (this);
 
@@ -1603,8 +1737,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                ImageCache::getFromMemory (twoopFm_png, twoopFm_pngSize), 1.000f, Colour (0x00000000));
     TwoOpFMButton2->setBounds (1196, 94, 80, 26);
 
-    addAndMakeVisible (label25 = new Label ("new label",
-                                            TRANS("M")));
+    label25.reset (new Label ("new label",
+                              TRANS("M")));
+    addAndMakeVisible (label25.get());
     label25->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label25->setJustificationType (Justification::centred);
     label25->setEditable (false, false, false);
@@ -1613,8 +1748,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label25->setBounds (1206, 98, 24, 24);
 
-    addAndMakeVisible (label26 = new Label ("new label",
-                                            TRANS("C")));
+    label26.reset (new Label ("new label",
+                              TRANS("C")));
+    addAndMakeVisible (label26.get());
     label26->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label26->setJustificationType (Justification::centred);
     label26->setEditable (false, false, false);
@@ -1623,13 +1759,15 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label26->setBounds (1235, 98, 24, 24);
 
-    addAndMakeVisible (groupComponent7 = new GroupComponent ("new group",
-                                                             String()));
+    groupComponent7.reset (new GroupComponent ("new group",
+                                               String()));
+    addAndMakeVisible (groupComponent7.get());
     groupComponent7->setColour (GroupComponent::outlineColourId, Colours::green);
 
     groupComponent7->setBounds (1112, 56, 168, 95);
 
-    addAndMakeVisible (algoSwitchButtonOffEx5 = new ImageButton ("Algorithm Switch Off AM"));
+    algoSwitchButtonOffEx5.reset (new ImageButton ("Algorithm Switch Off AM"));
+    addAndMakeVisible (algoSwitchButtonOffEx5.get());
     algoSwitchButtonOffEx5->setButtonText (TRANS("new button"));
     algoSwitchButtonOffEx5->addListener (this);
 
@@ -1639,8 +1777,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_off_png, algo_switch_off_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOffEx5->setBounds (1037, 250, 64, 24);
 
-    addAndMakeVisible (label27 = new Label ("new label",
-                                            TRANS("AM")));
+    label27.reset (new Label ("new label",
+                              TRANS("AM")));
+    addAndMakeVisible (label27.get());
     label27->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label27->setJustificationType (Justification::centredLeft);
     label27->setEditable (false, false, false);
@@ -1650,7 +1789,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label27->setBounds (1055, 250, 32, 24);
 
-    addAndMakeVisible (algoSwitchButtonOn3Ex4 = new ImageButton ("Algorithm Switch On3 FM"));
+    algoSwitchButtonOn3Ex4.reset (new ImageButton ("Algorithm Switch On3 FM"));
+    addAndMakeVisible (algoSwitchButtonOn3Ex4.get());
     algoSwitchButtonOn3Ex4->setButtonText (TRANS("new button"));
     algoSwitchButtonOn3Ex4->addListener (this);
 
@@ -1660,8 +1800,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                        ImageCache::getFromMemory (algo_switch_on3_png, algo_switch_on3_pngSize), 1.000f, Colour (0x00000000));
     algoSwitchButtonOn3Ex4->setBounds (1103, 250, 64, 24);
 
-    addAndMakeVisible (label28 = new Label ("new label",
-                                            TRANS("FM")));
+    label28.reset (new Label ("new label",
+                              TRANS("FM")));
+    addAndMakeVisible (label28.get());
     label28->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label28->setJustificationType (Justification::centredLeft);
     label28->setEditable (false, false, false);
@@ -1671,14 +1812,16 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label28->setBounds (1121, 250, 32, 24);
 
-    addAndMakeVisible (groupComponent8 = new GroupComponent ("new group",
-                                                             String()));
+    groupComponent8.reset (new GroupComponent ("new group",
+                                               String()));
+    addAndMakeVisible (groupComponent8.get());
     groupComponent8->setColour (GroupComponent::outlineColourId, Colours::green);
 
     groupComponent8->setBounds (1008, 208, 168, 95);
 
-    addAndMakeVisible (frequencyLabel9 = new Label ("frequency label",
-                                                    TRANS("Algorithm")));
+    frequencyLabel9.reset (new Label ("frequency label",
+                                      TRANS("Algorithm")));
+    addAndMakeVisible (frequencyLabel9.get());
     frequencyLabel9->setTooltip (TRANS("In additive mode, carrier and modulator output are simply summed rather than modulated"));
     frequencyLabel9->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel9->setJustificationType (Justification::centredLeft);
@@ -1689,8 +1832,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel9->setBounds (1067, 216, 72, 24);
 
-    addAndMakeVisible (label29 = new Label ("new label",
-                                            TRANS("Example Algo Section w/o Diagram")));
+    label29.reset (new Label ("new label",
+                              TRANS("Example Algo Section w/o Diagram")));
+    addAndMakeVisible (label29.get());
     label29->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label29->setJustificationType (Justification::centred);
     label29->setEditable (false, false, false);
@@ -1700,8 +1844,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label29->setBounds (944, 304, 328, 40);
 
-    addAndMakeVisible (label30 = new Label ("new label",
-                                            TRANS("Off             On (Bright)          On (Dark)       On (Solid)")));
+    label30.reset (new Label ("new label",
+                              TRANS("Off             On (Bright)          On (Dark)       On (Solid)")));
+    addAndMakeVisible (label30.get());
     label30->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label30->setJustificationType (Justification::centred);
     label30->setEditable (false, false, false);
@@ -1711,8 +1856,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     label30->setBounds (961, 768, 319, 24);
 
-    addAndMakeVisible (frequencyLabel10 = new Label ("frequency label",
-                                                     TRANS("Keyscale Attenuation")));
+    frequencyLabel10.reset (new Label ("frequency label",
+                                       TRANS("Keyscale Attenuation")));
+    addAndMakeVisible (frequencyLabel10.get());
     frequencyLabel10->setTooltip (TRANS("Attenuate amplitude with note frequency in dB per octave"));
     frequencyLabel10->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     frequencyLabel10->setJustificationType (Justification::centred);
@@ -1723,8 +1869,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     frequencyLabel10->setBounds (224, 376, 88, 48);
 
-    addAndMakeVisible (attenuationLabel5 = new Label ("attenuation label",
-                                                      TRANS("Velocity Sensitivity")));
+    attenuationLabel5.reset (new Label ("attenuation label",
+                                        TRANS("Velocity Sensitivity")));
+    addAndMakeVisible (attenuationLabel5.get());
     attenuationLabel5->setTooltip (TRANS("Set or disable velocity senstivity"));
     attenuationLabel5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     attenuationLabel5->setJustificationType (Justification::centred);
@@ -1735,7 +1882,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     attenuationLabel5->setBounds (328, 376, 80, 48);
 
-    addAndMakeVisible (fmButton = new ImageButton ("fm button"));
+    fmButton.reset (new ImageButton ("fm button"));
+    addAndMakeVisible (fmButton.get());
     fmButton->setTooltip (TRANS("FM: carrier frequency is modulated by the modulator"));
     fmButton->setButtonText (TRANS("FM"));
     fmButton->setRadioGroupId (3);
@@ -1747,7 +1895,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                          Image(), 1.000f, Colour (0x00000000));
     fmButton->setBounds (304, 472, 56, 56);
 
-    addAndMakeVisible (additiveButton = new ImageButton ("Additive mode button"));
+    additiveButton.reset (new ImageButton ("Additive mode button"));
+    addAndMakeVisible (additiveButton.get());
     additiveButton->setTooltip (TRANS("Additive: output the sum of the modulator and carrier"));
     additiveButton->setButtonText (TRANS("Additive Mode"));
     additiveButton->setRadioGroupId (3);
@@ -1759,7 +1908,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                Image(), 1.000f, Colour (0x00000000));
     additiveButton->setBounds (392, 464, 72, 72);
 
-    addAndMakeVisible (bassDrumButton = new ImageButton ("bass drum button"));
+    bassDrumButton.reset (new ImageButton ("bass drum button"));
+    addAndMakeVisible (bassDrumButton.get());
     bassDrumButton->setTooltip (TRANS("Bass drum"));
     bassDrumButton->setButtonText (TRANS("bass drum"));
     bassDrumButton->setRadioGroupId (4);
@@ -1771,7 +1921,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                Image(), 1.000f, Colour (0x00000000));
     bassDrumButton->setBounds (576, 464, 30, 30);
 
-    addAndMakeVisible (snareDrumButton = new ImageButton ("snare drum button"));
+    snareDrumButton.reset (new ImageButton ("snare drum button"));
+    addAndMakeVisible (snareDrumButton.get());
     snareDrumButton->setTooltip (TRANS("Snare"));
     snareDrumButton->setButtonText (TRANS("snare"));
     snareDrumButton->setRadioGroupId (4);
@@ -1783,7 +1934,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                 Image(), 1.000f, Colour (0x00000000));
     snareDrumButton->setBounds (632, 464, 30, 30);
 
-    addAndMakeVisible (disablePercussionButton = new ImageButton ("percussion disabled button"));
+    disablePercussionButton.reset (new ImageButton ("percussion disabled button"));
+    addAndMakeVisible (disablePercussionButton.get());
     disablePercussionButton->setTooltip (TRANS("Disable percussion"));
     disablePercussionButton->setButtonText (TRANS("disabled"));
     disablePercussionButton->setRadioGroupId (4);
@@ -1795,7 +1947,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                                         Image(), 1.000f, Colour (0x00000000));
     disablePercussionButton->setBounds (520, 464, 30, 30);
 
-    addAndMakeVisible (tomTomButton = new ImageButton ("tom tom button"));
+    tomTomButton.reset (new ImageButton ("tom tom button"));
+    addAndMakeVisible (tomTomButton.get());
     tomTomButton->setTooltip (TRANS("Tom-tom"));
     tomTomButton->setButtonText (TRANS("tom tom"));
     tomTomButton->setRadioGroupId (4);
@@ -1807,7 +1960,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                              Image(), 1.000f, Colour (0x00000000));
     tomTomButton->setBounds (520, 512, 30, 30);
 
-    addAndMakeVisible (cymbalButton = new ImageButton ("cymbalButton"));
+    cymbalButton.reset (new ImageButton ("cymbalButton"));
+    addAndMakeVisible (cymbalButton.get());
     cymbalButton->setTooltip (TRANS("Cymbal"));
     cymbalButton->setButtonText (TRANS("snare"));
     cymbalButton->setRadioGroupId (4);
@@ -1819,7 +1973,8 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                              Image(), 1.000f, Colour (0x00000000));
     cymbalButton->setBounds (576, 512, 30, 30);
 
-    addAndMakeVisible (hiHatButton = new ImageButton ("hi hat button"));
+    hiHatButton.reset (new ImageButton ("hi hat button"));
+    addAndMakeVisible (hiHatButton.get());
     hiHatButton->setTooltip (TRANS("Hi-hat"));
     hiHatButton->setButtonText (TRANS("hi-hat"));
     hiHatButton->setRadioGroupId (4);
@@ -1831,8 +1986,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
                             Image(), 1.000f, Colour (0x00000000));
     hiHatButton->setBounds (632, 512, 30, 30);
 
-    addAndMakeVisible (dbLabel7 = new Label ("db label",
-                                             TRANS("FM")));
+    dbLabel7.reset (new Label ("db label",
+                               TRANS("FM")));
+    addAndMakeVisible (dbLabel7.get());
     dbLabel7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel7->setJustificationType (Justification::centredLeft);
     dbLabel7->setEditable (false, false, false);
@@ -1843,8 +1999,9 @@ PluginGui::PluginGui (AdlibBlasterAudioProcessor* ownerFilter)
 
     dbLabel7->setBounds (320, 520, 32, 40);
 
-    addAndMakeVisible (dbLabel8 = new Label ("db label",
-                                             TRANS("Additive")));
+    dbLabel8.reset (new Label ("db label",
+                               TRANS("Additive")));
+    addAndMakeVisible (dbLabel8.get());
     dbLabel8->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     dbLabel8->setJustificationType (Justification::centred);
     dbLabel8->setEditable (false, false, false);
@@ -2207,7 +2364,7 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == frequencyComboBox)
+    if (comboBoxThatHasChanged == frequencyComboBox.get())
     {
         //[UserComboBoxCode_frequencyComboBox] -- add your combo box handling code here..
 		int id = comboBoxThatHasChanged->getSelectedId();
@@ -2215,7 +2372,7 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 		processor->setEnumParameter("Modulator Frequency Multiplier", id);
         //[/UserComboBoxCode_frequencyComboBox]
     }
-    else if (comboBoxThatHasChanged == frequencyComboBox2)
+    else if (comboBoxThatHasChanged == frequencyComboBox2.get())
     {
         //[UserComboBoxCode_frequencyComboBox2] -- add your combo box handling code here..
 		int id = comboBoxThatHasChanged->getSelectedId();
@@ -2223,28 +2380,28 @@ void PluginGui::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 		processor->setEnumParameter("Carrier Frequency Multiplier", id);
         //[/UserComboBoxCode_frequencyComboBox2]
     }
-    else if (comboBoxThatHasChanged == velocityComboBox)
+    else if (comboBoxThatHasChanged == velocityComboBox.get())
     {
         //[UserComboBoxCode_velocityComboBox] -- add your combo box handling code here..
 		int id = comboBoxThatHasChanged->getSelectedId() - 1;
 		processor->setEnumParameter("Modulator Velocity Sensitivity", id);
         //[/UserComboBoxCode_velocityComboBox]
     }
-    else if (comboBoxThatHasChanged == velocityComboBox2)
+    else if (comboBoxThatHasChanged == velocityComboBox2.get())
     {
         //[UserComboBoxCode_velocityComboBox2] -- add your combo box handling code here..
 		int id = comboBoxThatHasChanged->getSelectedId() - 1;
 		processor->setEnumParameter("Carrier Velocity Sensitivity", id);
         //[/UserComboBoxCode_velocityComboBox2]
     }
-    else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox2)
+    else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox2.get())
     {
         //[UserComboBoxCode_keyscaleAttenuationComboBox2] -- add your combo box handling code here..
 		int id = comboBoxThatHasChanged->getSelectedId() - 1;
 		processor->setEnumParameter("Carrier Keyscale Level", id);
         //[/UserComboBoxCode_keyscaleAttenuationComboBox2]
     }
-    else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox)
+    else if (comboBoxThatHasChanged == keyscaleAttenuationComboBox.get())
     {
         //[UserComboBoxCode_keyscaleAttenuationComboBox] -- add your combo box handling code here..
 		int id = comboBoxThatHasChanged->getSelectedId() - 1;
@@ -2261,85 +2418,85 @@ void PluginGui::sliderValueChanged (Slider* sliderThatWasMoved)
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
 
-    if (sliderThatWasMoved == aSlider)
+    if (sliderThatWasMoved == aSlider.get())
     {
         //[UserSliderCode_aSlider] -- add your slider handling code here..
 		processor->setIntParameter("Modulator Attack", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_aSlider]
     }
-    else if (sliderThatWasMoved == dSlider)
+    else if (sliderThatWasMoved == dSlider.get())
     {
         //[UserSliderCode_dSlider] -- add your slider handling code here..
 		processor->setIntParameter("Modulator Decay", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_dSlider]
     }
-    else if (sliderThatWasMoved == sSlider)
+    else if (sliderThatWasMoved == sSlider.get())
     {
         //[UserSliderCode_sSlider] -- add your slider handling code here..
 		processor->setIntParameter("Modulator Sustain Level", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_sSlider]
     }
-    else if (sliderThatWasMoved == rSlider)
+    else if (sliderThatWasMoved == rSlider.get())
     {
         //[UserSliderCode_rSlider] -- add your slider handling code here..
 		processor->setIntParameter("Modulator Release", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_rSlider]
     }
-    else if (sliderThatWasMoved == attenuationSlider)
+    else if (sliderThatWasMoved == attenuationSlider.get())
     {
         //[UserSliderCode_attenuationSlider] -- add your slider handling code here..
 		processor->setEnumParameter("Modulator Attenuation", -(int)(sliderThatWasMoved->getValue()/0.75));
         //[/UserSliderCode_attenuationSlider]
     }
-    else if (sliderThatWasMoved == aSlider2)
+    else if (sliderThatWasMoved == aSlider2.get())
     {
         //[UserSliderCode_aSlider2] -- add your slider handling code here..
 		processor->setIntParameter("Carrier Attack", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_aSlider2]
     }
-    else if (sliderThatWasMoved == dSlider2)
+    else if (sliderThatWasMoved == dSlider2.get())
     {
         //[UserSliderCode_dSlider2] -- add your slider handling code here..
 		processor->setIntParameter("Carrier Decay", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_dSlider2]
     }
-    else if (sliderThatWasMoved == sSlider2)
+    else if (sliderThatWasMoved == sSlider2.get())
     {
         //[UserSliderCode_sSlider2] -- add your slider handling code here..
 		processor->setIntParameter("Carrier Sustain Level", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_sSlider2]
     }
-    else if (sliderThatWasMoved == rSlider2)
+    else if (sliderThatWasMoved == rSlider2.get())
     {
         //[UserSliderCode_rSlider2] -- add your slider handling code here..
 		processor->setIntParameter("Carrier Release", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_rSlider2]
     }
-    else if (sliderThatWasMoved == attenuationSlider2)
+    else if (sliderThatWasMoved == attenuationSlider2.get())
     {
         //[UserSliderCode_attenuationSlider2] -- add your slider handling code here..
 		processor->setEnumParameter("Carrier Attenuation", -(int)(sliderThatWasMoved->getValue()/0.75));
         //[/UserSliderCode_attenuationSlider2]
     }
-    else if (sliderThatWasMoved == tremoloSlider)
+    else if (sliderThatWasMoved == tremoloSlider.get())
     {
         //[UserSliderCode_tremoloSlider] -- add your slider handling code here..
 		processor->setEnumParameter("Tremolo Depth", sliderThatWasMoved->getValue() < 2.0 ? 0 : 1);
         //[/UserSliderCode_tremoloSlider]
     }
-    else if (sliderThatWasMoved == vibratoSlider)
+    else if (sliderThatWasMoved == vibratoSlider.get())
     {
         //[UserSliderCode_vibratoSlider] -- add your slider handling code here..
 		processor->setEnumParameter("Vibrato Depth", sliderThatWasMoved->getValue() < 8.0 ? 0 : 1);
         //[/UserSliderCode_vibratoSlider]
     }
-    else if (sliderThatWasMoved == feedbackSlider)
+    else if (sliderThatWasMoved == feedbackSlider.get())
     {
         //[UserSliderCode_feedbackSlider] -- add your slider handling code here..
 		processor->setIntParameter("Modulator Feedback", (int)sliderThatWasMoved->getValue());
         //[/UserSliderCode_feedbackSlider]
     }
-    else if (sliderThatWasMoved == emulatorSlider)
+    else if (sliderThatWasMoved == emulatorSlider.get())
     {
         //[UserSliderCode_emulatorSlider] -- add your slider handling code here..
         //[/UserSliderCode_emulatorSlider]
@@ -2371,156 +2528,156 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 	}
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == sineImageButton)
+    if (buttonThatWasClicked == sineImageButton.get())
     {
         //[UserButtonCode_sineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 0);
         //[/UserButtonCode_sineImageButton]
     }
-    else if (buttonThatWasClicked == halfsineImageButton)
+    else if (buttonThatWasClicked == halfsineImageButton.get())
     {
         //[UserButtonCode_halfsineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 1);
         //[/UserButtonCode_halfsineImageButton]
     }
-    else if (buttonThatWasClicked == abssineImageButton)
+    else if (buttonThatWasClicked == abssineImageButton.get())
     {
         //[UserButtonCode_abssineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 2);
         //[/UserButtonCode_abssineImageButton]
     }
-    else if (buttonThatWasClicked == quartersineImageButton)
+    else if (buttonThatWasClicked == quartersineImageButton.get())
     {
         //[UserButtonCode_quartersineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 3);
         //[/UserButtonCode_quartersineImageButton]
     }
-    else if (buttonThatWasClicked == tremoloButton)
+    else if (buttonThatWasClicked == tremoloButton.get())
     {
         //[UserButtonCode_tremoloButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Tremolo", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_tremoloButton]
     }
-    else if (buttonThatWasClicked == vibratoButton)
+    else if (buttonThatWasClicked == vibratoButton.get())
     {
         //[UserButtonCode_vibratoButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Vibrato", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_vibratoButton]
     }
-    else if (buttonThatWasClicked == sustainButton)
+    else if (buttonThatWasClicked == sustainButton.get())
     {
         //[UserButtonCode_sustainButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Sustain", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_sustainButton]
     }
-    else if (buttonThatWasClicked == keyscaleEnvButton)
+    else if (buttonThatWasClicked == keyscaleEnvButton.get())
     {
         //[UserButtonCode_keyscaleEnvButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Keyscale Rate", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_keyscaleEnvButton]
     }
-    else if (buttonThatWasClicked == sineImageButton2)
+    else if (buttonThatWasClicked == sineImageButton2.get())
     {
         //[UserButtonCode_sineImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 0);
         //[/UserButtonCode_sineImageButton2]
     }
-    else if (buttonThatWasClicked == halfsineImageButton2)
+    else if (buttonThatWasClicked == halfsineImageButton2.get())
     {
         //[UserButtonCode_halfsineImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 1);
         //[/UserButtonCode_halfsineImageButton2]
     }
-    else if (buttonThatWasClicked == abssineImageButton2)
+    else if (buttonThatWasClicked == abssineImageButton2.get())
     {
         //[UserButtonCode_abssineImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 2);
         //[/UserButtonCode_abssineImageButton2]
     }
-    else if (buttonThatWasClicked == quartersineImageButton2)
+    else if (buttonThatWasClicked == quartersineImageButton2.get())
     {
         //[UserButtonCode_quartersineImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 3);
         //[/UserButtonCode_quartersineImageButton2]
     }
-    else if (buttonThatWasClicked == tremoloButton2)
+    else if (buttonThatWasClicked == tremoloButton2.get())
     {
         //[UserButtonCode_tremoloButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Tremolo", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_tremoloButton2]
     }
-    else if (buttonThatWasClicked == vibratoButton2)
+    else if (buttonThatWasClicked == vibratoButton2.get())
     {
         //[UserButtonCode_vibratoButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Vibrato", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_vibratoButton2]
     }
-    else if (buttonThatWasClicked == sustainButton2)
+    else if (buttonThatWasClicked == sustainButton2.get())
     {
         //[UserButtonCode_sustainButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Sustain", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_sustainButton2]
     }
-    else if (buttonThatWasClicked == keyscaleEnvButton2)
+    else if (buttonThatWasClicked == keyscaleEnvButton2.get())
     {
         //[UserButtonCode_keyscaleEnvButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Keyscale Rate", buttonThatWasClicked->getToggleState() ? 1 : 0);
         //[/UserButtonCode_keyscaleEnvButton2]
     }
-    else if (buttonThatWasClicked == alternatingsineImageButton)
+    else if (buttonThatWasClicked == alternatingsineImageButton.get())
     {
         //[UserButtonCode_alternatingsineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 4);
         //[/UserButtonCode_alternatingsineImageButton]
     }
-    else if (buttonThatWasClicked == camelsineImageButton)
+    else if (buttonThatWasClicked == camelsineImageButton.get())
     {
         //[UserButtonCode_camelsineImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 5);
         //[/UserButtonCode_camelsineImageButton]
     }
-    else if (buttonThatWasClicked == squareImageButton)
+    else if (buttonThatWasClicked == squareImageButton.get())
     {
         //[UserButtonCode_squareImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 6);
         //[/UserButtonCode_squareImageButton]
     }
-    else if (buttonThatWasClicked == logsawImageButton)
+    else if (buttonThatWasClicked == logsawImageButton.get())
     {
         //[UserButtonCode_logsawImageButton] -- add your button handler code here..
 		processor->setEnumParameter("Modulator Wave", 7);
         //[/UserButtonCode_logsawImageButton]
     }
-    else if (buttonThatWasClicked == alternatingsineImageButton2)
+    else if (buttonThatWasClicked == alternatingsineImageButton2.get())
     {
         //[UserButtonCode_alternatingsineImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 4);
         //[/UserButtonCode_alternatingsineImageButton2]
     }
-    else if (buttonThatWasClicked == camelsineImageButton2)
+    else if (buttonThatWasClicked == camelsineImageButton2.get())
     {
         //[UserButtonCode_camelsineImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 5);
         //[/UserButtonCode_camelsineImageButton2]
     }
-    else if (buttonThatWasClicked == squareImageButton2)
+    else if (buttonThatWasClicked == squareImageButton2.get())
     {
         //[UserButtonCode_squareImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 6);
         //[/UserButtonCode_squareImageButton2]
     }
-    else if (buttonThatWasClicked == logsawImageButton2)
+    else if (buttonThatWasClicked == logsawImageButton2.get())
     {
         //[UserButtonCode_logsawImageButton2] -- add your button handler code here..
 		processor->setEnumParameter("Carrier Wave", 7);
         //[/UserButtonCode_logsawImageButton2]
     }
-    else if (buttonThatWasClicked == recordButton)
+    else if (buttonThatWasClicked == recordButton.get())
     {
         //[UserButtonCode_recordButton] -- add your button handler code here..
         //[/UserButtonCode_recordButton]
     }
-    else if (buttonThatWasClicked == exportButton)
+    else if (buttonThatWasClicked == exportButton.get())
     {
         //[UserButtonCode_exportButton] -- add your button handler code here..
 		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
@@ -2541,7 +2698,7 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 		}
         //[/UserButtonCode_exportButton]
     }
-    else if (buttonThatWasClicked == loadButton)
+    else if (buttonThatWasClicked == loadButton.get())
     {
         //[UserButtonCode_loadButton] -- add your button handler code here..
 		WildcardFileFilter wildcardFilter("*.sbi", String::empty, "SBI files");
@@ -2562,149 +2719,149 @@ void PluginGui::buttonClicked (Button* buttonThatWasClicked)
 		}
         //[/UserButtonCode_loadButton]
     }
-    else if (buttonThatWasClicked == ToggleButtonOffExample)
+    else if (buttonThatWasClicked == ToggleButtonOffExample.get())
     {
         //[UserButtonCode_ToggleButtonOffExample] -- add your button handler code here..
         //[/UserButtonCode_ToggleButtonOffExample]
     }
-    else if (buttonThatWasClicked == ToggleButtonOnExample)
+    else if (buttonThatWasClicked == ToggleButtonOnExample.get())
     {
         //[UserButtonCode_ToggleButtonOnExample] -- add your button handler code here..
         //[/UserButtonCode_ToggleButtonOnExample]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOffEx1)
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx1.get())
     {
         //[UserButtonCode_algoSwitchButtonOffEx1] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOffEx1]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOffEx2)
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx2.get())
     {
         //[UserButtonCode_algoSwitchButtonOffEx2] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOffEx2]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOnEx1)
+    else if (buttonThatWasClicked == algoSwitchButtonOnEx1.get())
     {
         //[UserButtonCode_algoSwitchButtonOnEx1] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOnEx1]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOnEx2)
+    else if (buttonThatWasClicked == algoSwitchButtonOnEx2.get())
     {
         //[UserButtonCode_algoSwitchButtonOnEx2] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOnEx2]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOn2Ex1)
+    else if (buttonThatWasClicked == algoSwitchButtonOn2Ex1.get())
     {
         //[UserButtonCode_algoSwitchButtonOn2Ex1] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOn2Ex1]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOn2Ex2)
+    else if (buttonThatWasClicked == algoSwitchButtonOn2Ex2.get())
     {
         //[UserButtonCode_algoSwitchButtonOn2Ex2] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOn2Ex2]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex1)
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex1.get())
     {
         //[UserButtonCode_algoSwitchButtonOn3Ex1] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOn3Ex1]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex2)
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex2.get())
     {
         //[UserButtonCode_algoSwitchButtonOn3Ex2] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOn3Ex2]
     }
-    else if (buttonThatWasClicked == TwoOpAMButton)
+    else if (buttonThatWasClicked == TwoOpAMButton.get())
     {
         //[UserButtonCode_TwoOpAMButton] -- add your button handler code here..
         //[/UserButtonCode_TwoOpAMButton]
     }
-    else if (buttonThatWasClicked == TwoOpFMButton)
+    else if (buttonThatWasClicked == TwoOpFMButton.get())
     {
         //[UserButtonCode_TwoOpFMButton] -- add your button handler code here..
         //[/UserButtonCode_TwoOpFMButton]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOnEx3)
+    else if (buttonThatWasClicked == algoSwitchButtonOnEx3.get())
     {
         //[UserButtonCode_algoSwitchButtonOnEx3] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOnEx3]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOffEx3)
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx3.get())
     {
         //[UserButtonCode_algoSwitchButtonOffEx3] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOffEx3]
     }
-    else if (buttonThatWasClicked == TwoOpAMButton2)
+    else if (buttonThatWasClicked == TwoOpAMButton2.get())
     {
         //[UserButtonCode_TwoOpAMButton2] -- add your button handler code here..
         //[/UserButtonCode_TwoOpAMButton2]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOffEx4)
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx4.get())
     {
         //[UserButtonCode_algoSwitchButtonOffEx4] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOffEx4]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex3)
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex3.get())
     {
         //[UserButtonCode_algoSwitchButtonOn3Ex3] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOn3Ex3]
     }
-    else if (buttonThatWasClicked == TwoOpFMButton2)
+    else if (buttonThatWasClicked == TwoOpFMButton2.get())
     {
         //[UserButtonCode_TwoOpFMButton2] -- add your button handler code here..
         //[/UserButtonCode_TwoOpFMButton2]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOffEx5)
+    else if (buttonThatWasClicked == algoSwitchButtonOffEx5.get())
     {
         //[UserButtonCode_algoSwitchButtonOffEx5] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOffEx5]
     }
-    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex4)
+    else if (buttonThatWasClicked == algoSwitchButtonOn3Ex4.get())
     {
         //[UserButtonCode_algoSwitchButtonOn3Ex4] -- add your button handler code here..
         //[/UserButtonCode_algoSwitchButtonOn3Ex4]
     }
-    else if (buttonThatWasClicked == fmButton)
+    else if (buttonThatWasClicked == fmButton.get())
     {
         //[UserButtonCode_fmButton] -- add your button handler code here..
 		processor->setEnumParameter("Algorithm", 0);
         //[/UserButtonCode_fmButton]
     }
-    else if (buttonThatWasClicked == additiveButton)
+    else if (buttonThatWasClicked == additiveButton.get())
     {
         //[UserButtonCode_additiveButton] -- add your button handler code here..
 		processor->setEnumParameter("Algorithm", 1);
         //[/UserButtonCode_additiveButton]
     }
-    else if (buttonThatWasClicked == bassDrumButton)
+    else if (buttonThatWasClicked == bassDrumButton.get())
     {
         //[UserButtonCode_bassDrumButton] -- add your button handler code here..
 		processor->setEnumParameter("Percussion Mode", 1);
         //[/UserButtonCode_bassDrumButton]
     }
-    else if (buttonThatWasClicked == snareDrumButton)
+    else if (buttonThatWasClicked == snareDrumButton.get())
     {
         //[UserButtonCode_snareDrumButton] -- add your button handler code here..
 		processor->setEnumParameter("Percussion Mode", 2);
         //[/UserButtonCode_snareDrumButton]
     }
-    else if (buttonThatWasClicked == disablePercussionButton)
+    else if (buttonThatWasClicked == disablePercussionButton.get())
     {
         //[UserButtonCode_disablePercussionButton] -- add your button handler code here..
 		processor->setEnumParameter("Percussion Mode", 0);
         //[/UserButtonCode_disablePercussionButton]
     }
-    else if (buttonThatWasClicked == tomTomButton)
+    else if (buttonThatWasClicked == tomTomButton.get())
     {
         //[UserButtonCode_tomTomButton] -- add your button handler code here..
 		processor->setEnumParameter("Percussion Mode", 3);
         //[/UserButtonCode_tomTomButton]
     }
-    else if (buttonThatWasClicked == cymbalButton)
+    else if (buttonThatWasClicked == cymbalButton.get())
     {
         //[UserButtonCode_cymbalButton] -- add your button handler code here..
 		processor->setEnumParameter("Percussion Mode", 4);
         //[/UserButtonCode_cymbalButton]
     }
-    else if (buttonThatWasClicked == hiHatButton)
+    else if (buttonThatWasClicked == hiHatButton.get())
     {
         //[UserButtonCode_hiHatButton] -- add your button handler code here..
 		processor->setEnumParameter("Percussion Mode", 5);
