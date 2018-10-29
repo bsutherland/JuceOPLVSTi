@@ -16,9 +16,9 @@ float FloatParameter::getParameter(void)
 	return value;
 }
 
-void FloatParameter::setParameter(float value)
+void FloatParameter::setParameter(float _value)
 {
-	this->value = value;
+	this->value = _value;
 }
 
 String FloatParameter::getName(void)

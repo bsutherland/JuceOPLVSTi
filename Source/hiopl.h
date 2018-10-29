@@ -3,7 +3,6 @@
 
 #include "adlib.h"
 #include "dbopl.h"
-#include "zdopl.h"
 // Integer buffer used by DOSBox OPL emulator, later converted to floating point.
 
 // Number of 32-bit samples to use. ~1 MB per buffer. Probably excessive, but should be safe.
@@ -89,7 +88,6 @@ class Hiopl {
 	private:
 		Emulator emulator;
 		DBOPL::Handler *adlib;
-		OPLEmul *zdoom;
 		Bit8u regCache[OPL_N_REG];
 		int intermediateBufIdx;
 		Bit32s intermediateBuf[INTERMEDIATE_BUF_N][INTERMEDIATE_BUF_SAMPLES];

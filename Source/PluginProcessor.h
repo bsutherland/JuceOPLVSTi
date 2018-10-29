@@ -13,7 +13,6 @@
 #include <deque>
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "hiopl.h"
-#include "DROMultiplexer.h"
 #include "FloatParameter.h"
 
 

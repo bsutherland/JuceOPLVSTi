@@ -9,7 +9,6 @@ Hiopl::Hiopl(Emulator emulator) {
 	//InitCaptureVariables();
 
 	adlib = new DBOPL::Handler();
-	//zdoom = JavaOPLCreate(false);
 
 	// channels reordered to match
 	// 'in-memory' order in DOSBox emulator
@@ -67,10 +66,6 @@ void Hiopl::Generate(int length, float* buffer) {
 		const float z = y < -1.0f ? -1.0f : y;
 		buffer[i] = z > 1.0f ? 1.0f : z;
 	}
-	//} else if (ZDOOM == emulator) {
-		// ZDoom hacked to write mono samples
-	//	zdoom->Update(buffer, length);
-	//}
 }
 
 void Hiopl::SetSampleRate(int hz) {
