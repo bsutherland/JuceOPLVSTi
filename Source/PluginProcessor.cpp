@@ -552,13 +552,14 @@ void AdlibBlasterAudioProcessor::saveInstrumentToFile(String filename)
 	};
 	FILE* f = fopen(filename.toUTF8(), "wb");
 	if (f) {
-		fwrite("SBI\x1d", 1, 4, f);
+		fwrite("SBI\x1a", 1, 4, f);
 		fwrite("JuceOPLVSTi instrument         \0", 1, 32, f);
 		for (int i = 0; i < 11; i++) {
 			Bit8u regVal = Opl->_ReadReg(sbi_registers[i]);
 			fwrite(&regVal, 1, 1, f);
 		}
-		fwrite("     ", 1, 5, f);
+		char padding[5] = { 0x00, 0x00, 0x00, 0x00, 0x00 };
+		fwrite(padding, 1, 5, f);
 		fclose(f);
 	}
 }
