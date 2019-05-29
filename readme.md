@@ -4,6 +4,18 @@ This VST instrument provides an emulated OPL sound chip. It provides all feature
 
 See here for binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi/
 
+## Maintenance status ##
+
+I'm sorry to say, this project is now essentially unmaintained.
+
+If you're looking for an alternative, I'd like to recommend ADLplug (https://github.com/jpcima/ADLplug). I'm not affiliated with the project, but it looks like an excellent alternative:
+
+- maintained
+- 32/64 bit builds for Windows and OSX
+- OPL3 support
+- multiple emulator cores
+- etc!!!
+
 ## What's an OPL? ##
 
 The OPL is a digital sound synthesis chip developed by Yamaha in the mid 1980s. Among other products, it was used in sound cards for PC, including the Ad Lib card and early Sound Blaster series.
