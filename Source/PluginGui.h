@@ -128,8 +128,8 @@ private:
 	AdlibBlasterAudioProcessor* processor;
 	std::array<ScopedPointer<TextButton>, Hiopl::CHANNELS> channels;
 	TooltipWindow tooltipWindow;
-	File instrumentLoadDirectory = File::nonexistent;
-	File instrumentSaveDirectory = File::nonexistent;
+	File instrumentLoadDirectory = File();
+	File instrumentSaveDirectory = File();
     //[/UserVariables]
 
     //==============================================================================
