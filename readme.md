@@ -8,7 +8,7 @@ See here for binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi
 
 I'm sorry to say, this project is now essentially unmaintained.
 
-If you're looking for an alternative, I'd like to recommend ADLplug (https://github.com/jpcima/ADLplug). I'm not affiliated with the project, but it looks like an excellent alternative:
+If you're looking for an alternative, I'd like to recommend ADLplug (https://github.com/jpcima/ADLplug). I'm not affiliated with the project, but it looks like an excellent plugin:
 
 - maintained
 - 32/64 bit builds for Windows and OSX
@@ -24,13 +24,13 @@ At a technical level: the emulator has channels comprised of 2 oscillators each.
 
 ## Caveats and Limitations ##
 
-Before I wrote this, I didn't know much about VST or the OPL at a technical level. This is the first VST plugin I've written. In hindsight I would have implemented things a bit differently, but it all basically works, and is now reasonably well tested.
+Before I wrote this, I didn't know much about VST or the OPL at a technical level. This is the first VST plugin I've written, and my knowledge of C++ was extremely limited. In hindsight I would have implemented things a bit differently, but it all basically works, and is now reasonably well tested.
 
-One thing I have learned is that all VST hosts are not created equal. I only really work with Renoise. Your mileage may vary.
+One thing I have learned is that all VST hosts are not created equal. I only really work with Renoise. Your mileage may vary. I also don't have a Mac at home, so unfortunately I have no way to build / test on OSX. Working binaries for OSX would be gladly accepted.
 
-Note that I started and work on this project for fun. I'm not accepting donations, but any contributions in the form of code, SBI files, links to music you've created etc are very welcome and help keep me motivated.
+Note that I started and work on this project for fun. I'm not accepting donations, but any contributions in the form of code, SBI files, links to music you've created etc are very welcome.
 
-Please also understand that I also write software full time for a living and have a life outside of software development.
+While I'm very happy that a lot of people are enjoying the plugin, please also understand that I also write software full time for a living and have a life outside of software development.
 
 ## How do I use it? ##
 
