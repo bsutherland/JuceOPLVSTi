@@ -1,6 +1,6 @@
 # OPL VST plugin #
 
-This VST instrument provides an emulated OPL sound chip. It provides all features of the OPL2, and some features of the OPL3.
+This VST instrument provides an emulated OPL sound chip. It provides all features of the OPL2, and some features of the OPL3. It is distributed under the GPLv2 or later.
 
 See here for binaries, screenshots etc: http://bsutherland.github.io/JuceOPLVSTi/
 
