@@ -487,6 +487,7 @@ bool AdlibBlasterAudioProcessor::getBoolParameter(String name)
 void AdlibBlasterAudioProcessor::setParameter (int index, float newValue)
 {
 	FloatParameter* p = params[index];
+	bool changed = p->getParameter() != newValue;
 	p->setParameter(newValue);
 	String name = p->getName();
 	int osc = 2;	// Carrier
@@ -529,6 +530,10 @@ void AdlibBlasterAudioProcessor::setParameter (int index, float newValue)
 		Opl->SetEmulator((Emulator)((EnumFloatParameter*)p)->getParameterIndex());
 	} else if (name.startsWith("Percussion")) {
 		Opl->SetPercussionMode(((EnumFloatParameter*)p)->getParameterIndex() > 0);
+	}
+
+	if (changed) {
+		updateGuiIfPresent();
 	}
 }
 
