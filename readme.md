@@ -54,7 +54,7 @@ Here are some examples:
 - [Syndicate theme](https://www.youtube.com/watch?v=HI7U5XxTSW0) demo I created for the first release
 - (your link here...)
 
-### SBI FIles ###
+### SBI Files ###
 
 SBI files are an instrument file format developed by Creative Labs back in the day for the Sound Blaster. Essentially they work as presets for this plugin. Just drag and drop them into the plugin window!
 
